@@ -1,0 +1,184 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:fragment="head">
+    <meta charset="utf-8">
+   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" href="../assets/img/logo.png" type="image/x-icon">
+    <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
+    <title>fineapple</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        body div.container .member-icon {
+            font-size: 36px;
+        }
+
+        body div.container .logo-wrap {
+            position: relative;
+        }
+
+        body div.container img.logo {
+            position: absolute;
+            width: 92px;
+            height: 113px;
+            transform: rotate(0.184336rad);
+            top: -26px;
+            left: 156px;
+            z-index: -1;
+        }
+
+        body div.container header {
+            border-top: 18px solid rgba(241, 196, 15, 0.5);
+            height: 160px;
+        }
+
+        body div.container .logo-typo {
+            z-index: 10;
+            font-weight: bold;
+            font-size: 36px;
+            font-family: "Arial Black", serif;
+        }
+
+        body div.container .navbar {
+            border-top: 1px solid black;
+        }
+
+        body div.container .navbar-light .navbar-nav .nav-link {
+            color: #000000;
+            font-weight: bold;
+            padding: 2px 40px;
+        }
+
+        body div.container button.btn-default {
+            color: #000;
+            background: none;
+            padding: 2px 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        body div.container button.btn-default:hover {
+
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+</head>
+<body>
+<div th:fragment="toolbar">
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-3 border-bottom">
+<div class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <div class="me-2">
+                <i class="las la-user member-icon"></i>
+            </div>
+            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그인</button>
+            <button type="button" class="btn btn-default">회원가입</button>
+       </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
+            <li>
+                <div class="logo-wrap">
+                <a th:href="@{../user/banner}" style="text-decoration:none; color:black;">
+                    <p class="logo-typo">FineApple</p>
+                    <img alt="logo" class="logo" src="../assets/img/logo.png"/></a>
+                </div>
+            </li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            <div class="mb-2">
+                <button type="button" class="btn btn-default me-2">문의하기</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-default">내정보보기</button>
+            </div>
+        </div>
+    </header>
+</div>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light" aria-label="Twelfth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarsExample10"
+                    aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+                <ul class="navbar-nav">
+                   <li class="nav-item dropdown">
+                        <a class="nav-link" href="#">식품구매</a>
+                    </li>
+
+               
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownfood" data-bs-toggle="dropdown"
+                           aria-expanded="false">식단관리</a>
+						     <ul class="dropdown-menu" aria-labelledby="dropdownfood">
+                            <li><a class="dropdown-item" th:href="@{../diet/addDietService}">서비스활성화</a></li>
+                            <li><a class="dropdown-item" href="#">식품검색</a></li>
+                            <li><a class="dropdown-item" href="#">일일섭취식단</a></li>
+							 <li><a class="dropdown-item" href="#">즐겨찾는식단</a></li>
+							 <li><a class="dropdown-item" href="#">식품추천</a></li>
+                        </ul>
+
+                    </li>
+                       <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownworkout" data-bs-toggle="dropdown"
+                           aria-expanded="false">운동관리</a>
+						     <ul class="dropdown-menu" aria-labelledby="dropdownworkout">
+                            <li><a class="dropdown-item" href="#">서비스활성화</a></li>
+                            <li><a class="dropdown-item" href="#">운동검색</a></li>
+                            <li><a class="dropdown-item" href="#">일일운동량</a></li>
+							 <li><a class="dropdown-item" href="#">루틴</a></li>
+							 <li><a class="dropdown-item" href="#">운동장소찾기</a></li>
+							 <li><a class="dropdown-item" href="#">타이머</a></li>
+                        </ul>
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownsep" data-bs-toggle="dropdown"
+                           aria-expanded="false">습관관리</a>
+						     <ul class="dropdown-menu" aria-labelledby="dropdownsep">
+                            <li><a class="dropdown-item" href="#">간헐적단식</a></li>
+                            <li><a class="dropdown-item" href="#">나의목표설정</a></li>
+                            <li><a class="dropdown-item" href="#">복욕량</a></li>
+
+                        </ul>
+
+                    </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown08" data-bs-toggle="dropdown"
+                           aria-expanded="false">다이어리</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown08">
+                            <li><a class="dropdown-item" href="#">다이어리 조회</a></li>
+                            <li><a class="dropdown-item" href="#">신체 변화 추이 조회</a></li>
+                            <li><a class="dropdown-item" href="#">주간 레포트</a></li>
+							<li><a class="dropdown-item" href="#">월간 레포트</a></li>
+                        </ul>
+					</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-bs-toggle="dropdown"
+                           aria-expanded="false">커뮤니티</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown09">
+                            <li><a class="dropdown-item" href="#">게시판</a></li>
+                            <li><a class="dropdown-item" href="#">소그룹</a></li>
+                            <li><a class="dropdown-item" href="#">승부</a></li>
+							<li><a class="dropdown-item" href="#">팔로우</a></li>
+                            <li><a class="dropdown-item" href="#">검색</a></li>
+                        </ul>
+					</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+</div>
+</div>
+
+</body>
+</html>
+
