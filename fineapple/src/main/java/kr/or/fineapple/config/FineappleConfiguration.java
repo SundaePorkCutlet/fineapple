@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class FineappleConfiguration implements WebMvcConfigurer {
 
-
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry){
         registry.addResourceHandler("/**")
