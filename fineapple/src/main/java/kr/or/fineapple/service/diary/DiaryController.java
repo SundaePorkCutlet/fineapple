@@ -9,7 +9,7 @@ public class DiaryController {
 	
 	@RequestMapping(value="getUserBodyInfo")
 	public String getUserBodyInfo() {
-		return "diary/getUserBodyInfo.html";
+		return "diary/getUserBodyInfo.htmlsssss";
 	}
 
 }
