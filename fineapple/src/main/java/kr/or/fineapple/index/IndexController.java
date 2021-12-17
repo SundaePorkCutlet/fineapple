@@ -1,4 +1,4 @@
-package kr.or.fineapple.controller;
+package kr.or.fineapple.index;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
