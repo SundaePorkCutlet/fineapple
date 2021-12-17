@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface dietMapper {
 
-	 @Select("select user_name from users")
-	    public String password();
+	 @Select("select sysdate from dual")
+	    public String getTime();
 	}
 
