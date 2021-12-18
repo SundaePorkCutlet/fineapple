@@ -13,20 +13,20 @@ import lombok.ToString;
 public class IntakeRecord {
 
 	int intakeRecordNo;
-	int dailyTrgtIntakeKcal;
-	int dailyTrgtIntakeCarb;
-	int dailyTrgtIntakeProtein;
-	int dailyTrgtIntakeFat;
-	int foodKcal;
-	int foodCarb;
-	int foodProtein;
-	int foodFat;
+	float dailyTrgtIntakeKcal;
+	float dailyTrgtIntakeCarb;
+	float dailyTrgtIntakeProtein;
+	float dailyTrgtIntakeFat;
+	float foodKcal;
+	float foodCarb;
+	float foodProtein;
+	float foodFat;
 	String dietServiceTrgt;
-	int userFoodIntake;
-	int remainKcal;
+	float userFoodIntake;
+	float remainKcal;
 	String meal;
-	int bodyFat;
-	int trgtBodyFat;
+	float bodyFat;
+	float trgtBodyFat;
 	LocalDate date;
 	Food food;
 	

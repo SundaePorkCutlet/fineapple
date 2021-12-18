@@ -1,5 +1,7 @@
 package kr.or.fineapple.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +14,7 @@ public class FavMeal {
 	int favMealNo;
 	String favMealName;
 	int favMealKcal;
-	Food food;
+	List<Food> food;
 	
 	
 	public FavMeal() {

@@ -11,7 +11,7 @@ public class Food {
 
 	int foodNo;
 	String foodCate;
-	Boolean foodIntoStt;
+	int foodIntoStt;
 	String foodName;
 	int servingSize;
 	int foodKcal;
@@ -27,7 +27,7 @@ public class Food {
 	String foodImg;
 	String purchaseConnLink;
 	String storeName;
-	Boolean isAPI;
+	int isAPI;
 	
 	
 	
