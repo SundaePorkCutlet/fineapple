@@ -1,5 +1,6 @@
 package kr.or.fineapple.community;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,5 +13,10 @@ public class AlarmTest {
 	
 	@Autowired
 	private CommunityMapper c;
+	
+	@Test
+	public void TestAlarm() {
+		System.out.println("alarm ¸®½ºÆ®" + c.getAlarmList());
+	}
 
 }
