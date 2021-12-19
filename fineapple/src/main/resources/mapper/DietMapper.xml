@@ -13,9 +13,9 @@
 
 	<insert id="insertDietService" parameterType="IntakeRecord">
 	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
-	VALUES (seq_product_prod_no.nextval,
+	VALUES (seq_intake_record_no,
 			0,
-			#{foodNo:INTEGER},
+			#{food.foodNo:INTEGER},
 			#{userId:VARCHAR},
 			SYSDATE,
 			#{meal:VARCHAR},

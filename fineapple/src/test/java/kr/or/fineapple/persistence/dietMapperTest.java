@@ -50,7 +50,8 @@ class dietMapperTest {
 		record.setDietServiceTrgt("체중증량");
 		record.setFood(food);
 		record.setUserFoodIntake(313);
-		record.setMeal("아침");
+		record.setMeal("아");
+		record.setUserId("aaa123@naver.com");
 		
 		
         log.info("timeMapper time: " + dietMapper.insertDietService(record));
