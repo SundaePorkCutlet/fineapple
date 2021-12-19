@@ -39,6 +39,60 @@
 <div align="center">
 <div align="center" data-text-content="true" style="font-size: 17px; color: rgb(64, 64, 64); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(224, 224, 224, 0.71);  width: 300px; height: 40px;" class="">회원가입</div>
 </div>
+<div align = "center">
+<br>
+<a href= "javascript:kakaoLogin();"><img src = "../assets/img/kakao_login_medium_narrow.png"></a>
+<script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+
+window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
+
+function kakaoLogin(){
+	window.Kakao.Auth.login({
+		scope:'profile_nickname, profile_image,account_email,gender',
+		success : function(authObj){
+			console.log(authObj);
+			window.Kakao.API.request({
+				url:'/v2/user/me',
+				success:res => {		
+					const kakao_account = res.kakao_account;
+					console.log(kakao_account);
+					var email =kakao_account.email;
+					var gender = kakao_account.gender;
+					var profile = kakao_account.profile;
+					//var data = {email : email, gender : gender}
+					console.log(email);
+					console.log(gender);
+					console.log(profile);
+				
+					$.ajax({
+				          type : "POST",
+		                  url : "/user/loginResult",
+		                  cache : false,
+		                  data: JSON.stringify({
+		                	  email : email,
+		                  }),
+		                  success : function(value){
+		                	 // console.log(data);
+		                	 console.log("됐다");
+		                	 location.href ="../index/index.html"
+		                	  }
+		                  
+		                  
+		               });
+					}
+					
+				
+			});
+			
+		}
+		
+	})
+
+}
+</script>
+</div>
 </div>
 </div>
 </div>
