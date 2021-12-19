@@ -4,10 +4,10 @@ package kr.or.fineapple.persistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import kr.or.fineapple.FineappleApplication;
-import kr.or.fineapple.mapper.dietMapper;
+import kr.or.fineapple.domain.Food;
+import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.mapper.DietMapper;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 class dietMapperTest {
 
 	 @Autowired
-	 private dietMapper dietMapper;
+	 private DietMapper dietMapper;
 	
 	@Test
 	public void contextLoads() {
