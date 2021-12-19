@@ -19,6 +19,4 @@ public class DietServiceImpl implements DietService{
 	}
 
 	
-	
-	
 }
