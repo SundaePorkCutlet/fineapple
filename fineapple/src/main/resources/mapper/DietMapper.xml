@@ -3,13 +3,25 @@
 <mapper namespace="kr.or.fineapple.mapper.DietMapper">
 
 		<resultMap id ="IntakeRecordMap" type="IntakeRecord">
-
+		<result property="food.foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
+		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
+		<result property="meal" 				column="MEAL" 		jdbcType="VARCHAR"/>
+		<result property="userFoodIntake" 	column="USER_FOOD_INTAKE" 		jdbcType="INTEGER"/>
+  		<result property="userWtrIntake" 	column="USER_WTR_INTAKE" 		jdbcType="INTEGER"/>
 		</resultMap>
 		
 
-	<insert id="insertDietService" parameterType="IntakeRecordMap">
+	<insert id="insertDietService" parameterType="IntakeRecord">
 	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
-	VALUES (seq_product_prod_no.nextval,0,{foodNo},{user})
+	VALUES (seq_product_prod_no.nextval,
+			0,
+			#{foodNo:INTEGER},
+			#{userId:VARCHAR},
+			SYSDATE,
+			#{meal:VARCHAR},
+			#{userFoodIntake:INTEGER},
+			#{userWtrIntake:INTEGER}
+			)
 	
 	</insert>
 

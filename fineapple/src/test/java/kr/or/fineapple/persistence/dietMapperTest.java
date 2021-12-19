@@ -20,8 +20,8 @@ class dietMapperTest {
 	
 	@Test
 	public void contextLoads() {
-		IntakeRecord record = null;
-		Food food = null;
+		IntakeRecord record = new IntakeRecord();
+		Food food = new Food() ;
 		food.setFoodCarb(1.1);
 		food.setFoodCholesterol(2.1);
 		food.setFoodImg(null);

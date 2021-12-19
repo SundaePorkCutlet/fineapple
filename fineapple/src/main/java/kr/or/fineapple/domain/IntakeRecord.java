@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class IntakeRecord {
 
+	String userId;
 	int intakeRecordNo;
 	double dailyTrgtIntakeKcal;
 	double dailyTrgtIntakeCarb;
@@ -23,6 +24,7 @@ public class IntakeRecord {
 	double foodFat;
 	String dietServiceTrgt;
 	double userFoodIntake;
+	double userWtrIntake;
 	double remainKcal;
 	String meal;
 	double bodyFat;
