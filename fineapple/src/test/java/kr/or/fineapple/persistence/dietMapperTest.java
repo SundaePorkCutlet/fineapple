@@ -20,6 +20,6 @@ class dietMapperTest {
 	
 	@Test
 	public void contextLoads() {
-        log.info("timeMapper time: " + dietMapper.password());
+        log.info("timeMapper time: ");
 	}
 }
