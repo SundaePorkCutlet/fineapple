@@ -20,9 +20,9 @@ class dietMapperTest {
 	
 	@Test
 	public void contextLoads() {
-<<<<<<< HEAD
+
         log.info("timeMapper time: ");
-=======
+
 		IntakeRecord record = new IntakeRecord();
 		Food food = new Food() ;
 		food.setFoodCarb(1.1);
@@ -57,6 +57,6 @@ class dietMapperTest {
 		
 		
         log.info("timeMapper time: " + dietMapper.insertDietService(record));
->>>>>>> refs/remotes/origin/JUN
+
 	}
 }
