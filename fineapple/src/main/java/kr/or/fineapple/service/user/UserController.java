@@ -13,13 +13,9 @@ public class UserController {
     	return "index/index.html";
     }
 	
-	
-	
-	
-	@RequestMapping(value="login")
-    public String login(){
-     System.out.println("login");
-    	return "user/login.html";
-    }
+	/*
+	 * @RequestMapping(value="login") public String login(){
+	 * System.out.println("login"); return "user/login.html"; }
+	 */
 
 }
