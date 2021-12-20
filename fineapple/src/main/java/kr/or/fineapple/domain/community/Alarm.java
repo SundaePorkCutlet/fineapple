@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import kr.or.fineapple.domain.User;
 
-public class alarm {
+public class Alarm {
 	private int alarmNo;
 	private User user;
 	private User otherUser;

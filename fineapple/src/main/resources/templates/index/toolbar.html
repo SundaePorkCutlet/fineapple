@@ -75,7 +75,7 @@
                 <i class="las la-user member-icon"></i>
             </div>
             <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그인</button>
-            <button type="button" class="btn btn-default">회원가입</button>
+            <button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
        </div>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
@@ -117,7 +117,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownfood" data-bs-toggle="dropdown"
                            aria-expanded="false">식단관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownfood">
-                            <li><a class="dropdown-item" th:href="@{../diet/addDietService}">서비스활성화</a></li>
+                            <li><a class="dropdown-item" th:href="@{../diet/addDietService?menu=1}">서비스활성화</a></li>
                             <li><a class="dropdown-item" href="#">식품검색</a></li>
                             <li><a class="dropdown-item" href="#">일일섭취식단</a></li>
 							 <li><a class="dropdown-item" href="#">즐겨찾는식단</a></li>
@@ -143,9 +143,9 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownsep" data-bs-toggle="dropdown"
                            aria-expanded="false">습관관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownsep">
-                            <li><a class="dropdown-item" href="#">간헐적단식</a></li>
-                            <li><a class="dropdown-item" href="#">나의목표설정</a></li>
-                            <li><a class="dropdown-item" href="#">복욕량</a></li>
+                            <li><a class="dropdown-item" th:href="@{../trgtHabit/getTrgtHabit}">습관 관리</a></li>
+                            <li><a class="dropdown-item" href="#">없애야지</a></li>
+                            <li><a class="dropdown-item" href="#">없애장</a></li>
 
                         </ul>
 

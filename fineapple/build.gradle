@@ -28,7 +28,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+<<<<<<< HEAD
 	annotationProcessor 'org.projectlombok:lombok'
+=======
+>>>>>>> refs/remotes/origin/master
 	implementation 'org.mybatis:mybatis-typehandlers-jsr310:1.0.2'
 
 

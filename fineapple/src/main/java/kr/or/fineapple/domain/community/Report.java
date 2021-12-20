@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import kr.or.fineapple.domain.User;
 
-public class report {
+public class Report {
 	private int reportNo;
 	private User user;
 	private User reportedUser;

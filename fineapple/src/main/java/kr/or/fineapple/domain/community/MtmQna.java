@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class mtmQna {
+public class MtmQna {
 	private int mtmQnaNo;
 	private int mtmCate;
 	private User user;
