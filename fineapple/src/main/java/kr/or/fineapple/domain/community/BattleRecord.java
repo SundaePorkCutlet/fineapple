@@ -1,6 +1,6 @@
 package kr.or.fineapple.domain.community;
 
-public class battleRecord {
+public class BattleRecord {
 	private int battleCount;
 	private int winCount;
 	private int loseCount;

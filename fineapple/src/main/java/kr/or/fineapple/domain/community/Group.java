@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class group {
+public class Group {
 	private int groupNo;
 	private String groupName;
 	private String groupIntro;
