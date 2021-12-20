@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class battle {
+public class Battle {
 	private int battleNo;
 	private int battleResultCate;
 	private int battleItemCate;

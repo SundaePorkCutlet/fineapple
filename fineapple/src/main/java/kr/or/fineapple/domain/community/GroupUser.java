@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class groupUser {
+public class GroupUser {
 	
 	private int groupUserNo;
 	private User user;
