@@ -16,10 +16,6 @@ public class Food {
 	double foodKcal;
 	double foodCarb;
 	double foodProtein;
-	double foodSaturatedFattyAcid;
-	double foodUnsaturatedFattyAcid;
-	double foodCholesterol;
-	double foodTransFat;
 	double foodSodium;
 	double foodSugar;
 	int price;
