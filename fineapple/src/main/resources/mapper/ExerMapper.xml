@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.fineapple.mapper.ExerMapper">
+
+	<resultMap id="BurnningRecordMap" type="BurnningRecord">
+		<result property="exerNo" 			column="EXER_NO" 			jdbcType="INTEGER"/>
+		<result property="burnningRecordDate"	column="BURNNING_RECORD_DATE" 		jdbcType="DATE" />	
+		<result property="exerLv" 	column="EXER_LV" 		jdbcType="INTEGER" />
+		<result property="anExerTime" 				column="AN_EXER_TIME" 					jdbcType="INTEGER" />
+		<result property="userExerBurnning" 				column="USER_EXER_BURNNING" 	jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<resultMap id="exerMap" type="Exer">
+		<result property="exerCate"	column="EXER_CATE" 		jdbcType="VARCHAR" />
+		<result property="exerLv" 	column="EXER_LV" 		jdbcType="INTEGER" />
+		<result property="exerName" 				column="EXER_NAME" 					jdbcType="VARCHAR" />
+		<result property="exerKcal" 				column="EXER_KCAL" 					jdbcType="INTEGER" />
+		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
+		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="TIMESTAMP" />	
+	</resultMap>
+
+	<!-- <resultMap id="routineInfoMap" type="RoutineInfo">
+		<result property="routine.routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
+		<result property="exer.exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
+		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="TIMESTAMP" />
+		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 					jdbcType="INTEGER" />
+		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="TIMESTAMP" />
+		<result property="restTime" 				column="REST_TIME" 					jdbcType="TIMESTAMP" />
+	</resultMap> -->
+	
+     <!--  <resultMap id ="FavMealMap" type="FavMeal">
+      <result property="favMealNo"             column="FOOD_NO"       jdbcType="INTEGER"/>
+      <result property="favMealName"    column="USER_ID"       jdbcType="VARCHAR"/>
+      <result property="favMealKcal"             column="MEAL"       jdbcType="VARCHAR"/>
+      <collection property="food" column="FOOD_NO" javaType="java.util.ArrayList">
+      </collection>
+      </resultMap>
+       -->
+      
+	<resultMap id="routineMap" type="Routine">
+		<result property="routineName" 	column="ROUTINE_NAME" 		jdbcType="VARCHAR" />
+		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="TIMESTAMP" />
+		<result property="routineKcal" 				column="ROUTINE_KCAL" 					jdbcType="INTEGER" />
+	</resultMap>
+
+<insert id="insertExerService" parameterType="BurnningRecord">
+	INSERT INTO BURNNING_RECORD (BURNNING_RECORD_NO, USER_SERVICE_NO, EXER_NO, BURNNING_RECORD_DATE, EXER_LV, AN_EXER_TIME, USER_EXER_BURNNING) 
+	VALUES (5,
+			(SELECT user_service_no from user_service where user_id ='hc@gmail.com'),
+			#{exer.exerNo:INTEGER},
+			SYSDATE,
+			#{exerLv:INTEGER},
+			#{anExerTime:INTEGER},
+			#{userExerBurnning:INTEGER}
+			)
+	
+	</insert>
+	
+	
+
+</mapper>

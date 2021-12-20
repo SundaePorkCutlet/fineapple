@@ -54,6 +54,7 @@ class dietMapperTest {
 		record.setUserId("aaa123@naver.com");
 		
 		
+		
         log.info("timeMapper time: " + dietMapper.insertDietService(record));
 	}
 }
