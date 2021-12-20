@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.fineapple.mapper.TrgtHabitMapper">
+
+	<resultMap id="TrgtHabitMap" type="TrgtHabit">	
+		<result property="trgtHabitServiceNo" column="TRGT_HABIT_SERVICE_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="trgtHabitCateNo" column="TRGT_HABIT_CATE_NO" jdbcType="INTEGER"/>
+		<result property="trgtHabitCateName" column="TRGT_HABIT_CATE_NAME" jdbcType="VARCHAR"/>
+		<result property="trgtHabitStartDate" column="TRGT_HABIT_START_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="trgtHabitInitDate" column="TRGT_HABIT_INIT_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+	</resultMap>
+	
+	<resultMap id="WtrIntakeMap" type="WtrIntake">
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="date" column="BADGE_DATE" jdbcType="DATE"/>
+		<result property="userWtrIntake" column="USER_WTR_INTAKE" jdbcType="DOUBLE"/>
+	</resultMap>
+	
+	<!-- INSERT : 목표습관관리 시작 -->
+	<insert id="addTrgtHabit" parameterType="TrgtHabit">
+	INSERT INTO TRGT_HABIT_SERVICE (TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE)
+	VALUES (SEQ_TRGT_HABIT_SERVICE_NO.nextval,
+			#{userId:VARCHAR},
+			#{trgtHabitCateNo:INTEGER},
+			#{trgtHabitCateName:VARCHAR},
+			#{trgtHabitStartDate:DATE})
+	</insert>
+	
+	<!-- SELECT : 목표습관관리 조회 -->
+	<select id="getTrgtHabit" resultMap="TrgtHabitMap">
+	SELECT TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE, TRGT_HABIT_INIT_DATE
+	FROM trgt_habit_service
+	WHERE user_id=#{userId}
+		AND trgt_habit_init_date IS NULL
+		AND trgt_habit_start_date <![CDATA[<]]> #{viewDate}
+		AND trgt_habit_cate_no = #{trgtHabitCateNo}
+	</select>
+	
+	<!-- SELECT : 목표습관초기화 -->
+	<update id="endTrgtHabit" parameterType="int">
+	UPDATE trgt_habit_service
+		<set>
+			trgt_habit_init_date = SYSDATE
+		</set>
+	WHERE trgt_habit_service_no = #{trgtHabitServiceNo}
+	</update>
+	
+	<insert id="addWtrIntake">
+	INSERT INTO badge (badge_no, user_id, badge_date)
+	VALUES (SEQ_BADGE_BADGE_NO.nextval,
+			#{userId:VARCHAR},
+			SYSDATE)
+	</insert>
+	
+	<!-- 수분섭취량 조회 -->
+	<select id="getWtrIntake" resultType="double">
+	SELECT user_wtr_intake
+	FROM badge
+	WHERE TRUNC(badge_date) = TRUNC(#{date})
+		AND user_id = #{userId}
+	</select>
+	
+	<!-- 수분섭취량 기록 -->
+	<update id="updateWtrIntake">
+	UPDATE badge
+	<set>user_wtr_intake = #{user_wtr_intake} </set>
+	</update>
+
+</mapper>
