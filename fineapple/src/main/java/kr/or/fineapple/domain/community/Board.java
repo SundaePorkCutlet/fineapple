@@ -15,6 +15,7 @@ public class Board {
 	private int postLikeCount;
 	private Boolean updateStt;
 	private int cateName;
+	private int groupNo;
 	private String imgName;
 	public int getPostNo() {
 		return postNo;
@@ -76,6 +77,12 @@ public class Board {
 	public void setCateName(int cateName) {
 		this.cateName = cateName;
 	}
+	public int getGroupNo() {
+		return groupNo;
+	}
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
 	public String getImgName() {
 		return imgName;
 	}
@@ -87,8 +94,11 @@ public class Board {
 		return "Board [postNo=" + postNo + ", user=" + user + ", title=" + title + ", content=" + content
 				+ ", postDate=" + postDate + ", viewCount=" + viewCount + ", cmntCount=" + cmntCount
 				+ ", postLikeCount=" + postLikeCount + ", updateStt=" + updateStt + ", cateName=" + cateName
-				+ ", imgName=" + imgName + "]";
+				+ ", groupNo=" + groupNo + ", imgName=" + imgName + "]";
 	}
+	
+	
+	
 	
 	
 }

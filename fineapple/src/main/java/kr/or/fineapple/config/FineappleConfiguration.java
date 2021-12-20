@@ -15,5 +15,6 @@ public class FineappleConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/templates/")
                 .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES));
+  
     }
 }
