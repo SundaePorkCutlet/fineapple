@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+
+
+</head>
+<body>
+<div th:insert="index/toolbar :: toolbar">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script th:inline="javascript">
+
+	$(function(){
+		$("button.agreement-button").on("click",function(){
+			popWin = window.open("/user/agreement.html")
+		});
+	});
+	
+   $(function(){
+      $("input.addUser").on("click",function(){
+         fncAddUser();
+      });
+   });
+   
+   function fncAddUser(){
+	  console.log("fncAddUser시작");
+      var userId=$("#userId").val();
+      console.log(userId);
+      var userName=$("#userName").val();
+      console.log(userName);
+      var userImg = $("#userImg").val();
+      var password=$("#password").val();
+      var cellphone=$("#cellphone").val();
+      //var weight=$("input[name='weight']").val();
+      var age =$("#age").val();
+  
+      console.log("fncAddUser끝");
+
+      $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
+      alert("")
+      
+   }
+   
+</script>
+
+<ins>
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">회원가입</div>
+</ins>
+<br>
+
+<div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원가입은 무료이며</div>
+<div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">기능별 추가 기입사항은 기능 활성화시 요구됩니다.</div>
+<br>
+<ins>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">정보입력</div>
+</ins>
+<form method="POST"  >
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">이메일</div>
+<div align="center">
+<input id ="userId" name="userId" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="userId" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div>
+<div align ="center" data-text-content="true" style="font-weight:bold;font-size:18px ;color: rgb(41, 96, 47)" class="">인증번호</div>
+<p align = "center"> <input type = "text" id = "agreeNum" name="agreeNum" value ="인증번호를 입력해주세요." class = "agreement"><input type = "button" value = "인증번호 확인 "></p>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">이름</div>
+<div align="center">
+<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">휴대폰번호(숫자만 입력)</div>
+<div align="center">
+<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">비밀번호</div>
+<div align="center">
+<input id ="password" name = "password" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">프로필사진</div>
+<div align="center"><input id="userImg" name = "userImg" type = "file" ></div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">몸무게</div>
+<div align="center">
+<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">성별</div>
+<div align = "center">
+<span><input class = "gender" id="male" type = "radio" name = "male" value ="남" checked = "checked" style = "font-size : 20px;">남</span>
+<span><input class = "gender" id="famale" type = "radio" value ="여" name = "female" style = "font-size : 20px;">여</span>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">키</div>
+<div align="center">
+<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);"required>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">나이</div>
+<div align="center">
+<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div align = "center">
+<span style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >약관동의</span>
+<span><input id = "agree" type = "radio" name = "agree" checked = "checked" style = "font-size : 20px;">약관동의</span>
+<span><input id = "disagree"type = "radio" name = "disagree" style = "font-size : 20px;">비동의</span>
+<span><input type = "button" class="agreement-button" value = "약관동의서" ></span>
+</div>
+<br>
+<div align = "center">
+<input class = "addUser" type = "submit" value = "회원가입" style = "background-color : rgb(21, 119, 210) ; color : white; border : none;border-radius: 10px; padding: 7px 50px">
+</div>
+</form>
+</body>

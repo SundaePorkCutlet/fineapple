@@ -54,5 +54,8 @@ class dietMapperTest {
 		
 		
         log.info("timeMapper time: " + dietMapper.insertDietService(record));
+
+       // log.info("timeMapper time: " + dietMapper.password());
+
 	}
 }

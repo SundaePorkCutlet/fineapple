@@ -12,26 +12,35 @@ import lombok.ToString;
 @ToString
 public class User {
 	String userId;
-	String gender;
-	int blcRgsStt;
-	int userLeaveStt;
-	String userImg;
-	String cellNum;
 	String userName;
 	String password;
-	float heignt;
-	float age;
+	String gender;
+	String cellphone;
+	String userImg;
+	String role; 
+	int blcRgsStt;
+	int userLeaveStt;
+	double height;
+	double age;
 	LocalDate regDate;
-	float strdWtrIntake;
-	String UserSttMsg;
+	double strdWtrIntake;
+	String userSttMsg;
 	LocalDateTime lastConTime;
 	LocalDate blcAddDate;
 	String blcAddWhy;
 	int dietServiceNo;
 	int exerServiceNo;
-	String role; 
-	float trgtweight;
-	float trgtbodyFat;
-	float trgtbodyMuscle;
+	double trgtWeight;
+	double trgtBodyFat;
+	double trgtBodyMuscle;
+	String serviceTrgt;
+	
+	public User() {
+		
+	}
+
 	
 }
+
+
+
