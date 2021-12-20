@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.fineapple.mapper.UserMapper">
+<resultMap id = "userSelectMap"	type = "User">
+	<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
+	<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
+	<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+	<result	property="userImg"	column="user_img"	jdbcType="VARCHAR"/>
+	<result property="role" 				column="role" 					jdbcType="VARCHAR" />
+	<result property="gender"	column="gender"	jdbcType="VARCHAR"/>
+	<result property="cellphone"	column="cellphone"	jdbcType="VARCHAR"/>
+	<result property="age"	column="age"	jdbcType="INTEGER"/>
+	<result property="height"	column="height"	jdbcType="INTEGER"/>
+	<result property="blcRgsStt" column="blc_rgs_stt" jdbcType="INTEGER"/>
+	<result property="userLeaveStt" column="user_leave_stt"	jdbcType="INTEGER"/>
+	<result property="lastConTime"	column="last_con_time"	jdbcType="DATE"/>
+	<result property="regDate"	column="reg_date"	jdbcType="DATE"/>
+	<result property="strdWtrIntake"	column="str_wtr_intake"	jdbcType="DOUBLE"/>
+	<result	property="userSttMsg"	column="user_stt_msg"	jdbcType="VARCHAR"/>
+	<result property="blcAddDate"	column="blc_add_date"	jdbcType="DATE"/>
+	<result property="blcAddWhy"	column="blc_add_why"	jdbcType="VARCHAR"/>
+	<result property="dietServiceNo"	column="diet_service_no"	jdbcType="INTEGER"/>
+	<result property="exerServiceNo"	column="exer_service_no"	jdbcType="INTEGER"/>
+	<result property="trgtWeight"		column="trgt_weight"		jdbcType="DOUBLE"/>
+	<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
+	<result	property="trgtBodyMuscle"	column="trgt_body_muscle"	jdbcType="DOUBLE"/>
+	<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
+</resultMap>
+
+<insert id="addUser"	parameterType="User">
+INSERT into USERS (USER_ID,DIET_SERVICE_NO,EXER_SERVICE_NO,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,SERVICE_TRGT,TRGT_WEIGHT,TRGT_BODY_FAT,TRGT_BODY_MUSCLE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
+VALUES (#{userId:VARCHAR},
+		#{dietServiceNo:INTEGER},
+		#{exerServiceNo:INTEGER},
+		'user',
+		#{gender:VARCHAR},		
+		0,
+		0,
+		#{userImg:VARCHAR},
+		#{cellphone:VARCHAR},
+		#{userName:VARCHAR},
+		#{password:VARCHAR},
+		#{height:INTEGER},
+		#{age:INTEGER},
+		#{regDate:DATE},
+		#{strdWtrIntake:DOUBLE},
+		#{serviceTrgt:VARCHAR},
+		#{trgtWeight:DOUBLE},
+		#{trgtBodyFat:DOUBLE},
+		#{trgtBodyMuscle:DOUBLE},
+		#{blcAddDate:DATE},
+		#{blcAddWhy:VARCHAR},
+		#{lastConTime:DATE},
+		#{userSttMsg:VARCHAR})
+</insert>
+
+</mapper>
+
