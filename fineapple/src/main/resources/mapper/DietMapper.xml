@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.DietMapper">
 
+		<resultMap id="DietServMap" type="DietServ">
+		<result property="userId" 				column="USER_ID" 		jdbcType="VARCHAR"/>
+		<result property="dietServiceTrgt" 				column="SERVICE_TRGT" 		jdbcType="VARCHAR"/>
+		<result property="dailyTrgtIntakeKcal" 				column="DAILY_TRGT_INTAKE_KCAL" 		jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeCarb" 				column="DAILY_TRGT_INTAKE_CARB" 		jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeProtein" 			column="DAILY_TRGT_INTAKE_PROTEIN" 		jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeFat" 				column="DAILY_TRGT_INTAKE_FAT" 		jdbcType="DOUBLE"/>
+		<result property="bodyFat" 				column="BODY_FAT" 		jdbcType="DOUBLE"/>
+		<result property="trgtBodyFat" 				column="TRGT_BODY_FAT" 		jdbcType="DOUBLE"/>
+		
+		
+		</resultMap>
+		
 		<resultMap id ="IntakeRecordMap" type="IntakeRecord">
 		<result property="food.foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
 		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
@@ -10,20 +23,74 @@
   		<result property="userWtrIntake" 	column="USER_WTR_INTAKE" 		jdbcType="INTEGER"/>
 		</resultMap>
 		
+		<resultMap id ="FoodMap" type="Food">
+		<result property="foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
+		<result property="foodIntoStt" 	column="FOOD_INTO_STT" 		jdbcType="INTEGER"/>
+		<result property="foodName" 				column="FOOD_NAME" 		jdbcType="VARCHAR"/>
+		<result property="servingSize" 	column="SERVING_SIZE" 		jdbcType="INTEGER"/>
+  		<result property="foodKcal" 	column="FOOD_KCAL" 		jdbcType="DOUBLE"/>
+  		<result property="foodCarb" 	column="FOOD_CARB" 		jdbcType="DOUBLE"/>
+  		<result property="foodProtein" 	column="FOOD_PROTEIN" 		jdbcType="DOUBLE"/>
+  		<result property="foodSodium" 	column="FOOD_SODIUM" 		jdbcType="DOUBLE"/>
+  		<result property="foodSugar" 	column="FOOD_SUGAR" 		jdbcType="DOUBLE"/>
+  		<result property="price" 	column="PRICE" 		jdbcType="INTEGER"/>
+  		<result property="isAPI" 	column="IS_API" 		jdbcType="INTEGER"/>
+		</resultMap>
+		
+		<resultMap id ="FavMealMap" type="FavMeal">
+		<result property="favMealNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
+		<result property="favMealName" 	column="USER_ID" 		jdbcType="VARCHAR"/>
+		<result property="favMealKcal" 				column="MEAL" 		jdbcType="DOUBLE"/>
+		<collection property="food" column="FOOD_NO" javaType="java.util.ArrayList">
+		</collection>
+		</resultMap>
 
-	<insert id="insertDietService" parameterType="intakeRecord">
+
+
+	<insert id="insertDietService" parameterType="DietServ">
+	INSERT INTO USER_SERVICE (USER_SERVICE_NO,USER_ID,DAILY_TRGT_INTAKE_KCAL,DAILY_TRGT_INTAKE_CARB,DAILY_TRGT_INTAKE_PROTEIN,DAILY_TRGT_INTAKE_FAT,TRGT_BODY_FAT)
+	VALUES (seq_user_service_no.NEXTVAL,
+			#{userId:DOUBLE},
+			#{dailyTrgtIntakeKcal:DOUBLE},
+			#{dailyTrgtIntakeCarb:DOUBLE},
+			#{dailyTrgtIntakeProtein:DOUBLE},
+			#{dailyTrgtIntakeFat:DOUBLE},
+			#{trgtBodyFat:DOUBLE})
+	
+	</insert>
+	
+	<update id="updateServiceTrgt" parameterType="DietServ">
+	UPDATE USERS 
+	SET SERVICE_TRGT=#{serviceTrgt:VARCHAR}
+	WHERE USER_ID=#{userId:VARCHAR
+	</update>
+
+	<insert id="insertIntakeRecord" parameterType="IntakeRecord">
 	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
-	VALUES (seq_product_prod_no.nextval,
-			0,
-			#{foodNo:INTEGER},
+	VALUES (seq_intake_record_no.NEXTVAL,
+			(SELECT user_service_no from USER_SERVICE WHERE USER_ID = #{userId:VARCHAR}),
+			#{food.foodNo:INTEGER},
 			#{userId:VARCHAR},
 			SYSDATE,
 			#{meal:VARCHAR},
-			#{userFoodIntake:INTEGER},
-			#{userWtrIntake:INTEGER}
+			#{userFoodIntake:DOUBLE},
+			#{userWtrIntake:DOUBLE}
 			)
 	
 	</insert>
+	
+	
+	   <update id="updateBodyInfo" parameterType="DietServ">
+  	 UPDATE user_body_info
+  	 SET BODY_FAT=#{bodyFat:FLOAT}
+  	 WHERE USER_ID = #{userId:VARCHAR}
+      </update>
+
+	<select id="getDietService" parameterType="String" resultType="DietServ">
+	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
+	
+	</select>
+	
 
 
 </mapper>

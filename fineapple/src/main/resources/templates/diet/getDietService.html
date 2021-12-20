@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
+
+
 </head>
 <body>
 <div th:insert="index/toolbar :: toolbar">
@@ -66,56 +68,52 @@
 			
 			<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표체중</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input value="33" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">체지방율</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input value="35" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표체지방율</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리섭취량</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input value="1900" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 칼로리는 입니다.</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표탄수화물섭취량</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표단백질섭취량</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표지방섭취량</span>
 			<div style="position:absolute; left:800px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br><br>
-			<div style="position:absolute; left:750px;">
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >등 &nbsp;록</button>
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >취 &nbsp;소</button>
-			</div>
-			<br><br>
-			<div style="position:absolute; left:790px;">
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >초기화</button>
-			</div>
+			<div style="position:absolute; left:800px;">
+			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" onclick="dataSend()" >수 &nbsp;정</button>
+		
 			
-			
-			
+			  
+		
+	
 			
 			</div>
 			</div>

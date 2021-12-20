@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>
+			
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="">운동 리스트</div>
+			<br><br><br><br><br>
+
+
+				<div align="right">
+			    <form class="form-inline" name="detailForm">
+			    
+			    
+				
+				  	<div align="right" class="form-group">
+				    <select style="width: 150px;" class="form-control" name="searchCondition" >
+					<option value="0" >이름순</option>
+				    <option value="1" >칼로리순</option>
+					</select>
+				
+									  
+			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);">
+			<button data-text-content="true" style="font-size: 14px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgb(52, 152, 219);" class="">검색</button>
+			<br>
+			<a href="#">이름순</a>
+			<a href="#">칼로리순</a>
+			
+			
+			</div>
+			</form>
+			</div>
+	
+ 		<table class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">운동명</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">운동종류</th>           
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">소모칼로리(10분당)</th>                       
+        
+          </tr>
+        </thead>
+	</table>
+			
+			</div>
+			</div>
+			</div>
+
+</body>
+</html>

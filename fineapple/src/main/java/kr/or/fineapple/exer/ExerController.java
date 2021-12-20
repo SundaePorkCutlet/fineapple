@@ -1,4 +1,4 @@
-package kr.or.fineapple.service.exer;
+package kr.or.fineapple.exer;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,15 @@ public String addExerService() {
 
 	return "exer/addExerService.html";
 	
+}
+
+
+@RequestMapping(value="listExer")
+public String listExer() {
+	
+	  System.out.println("listExer");
+	
+	return "exer/listExer.html";	
 }
 	
 }
