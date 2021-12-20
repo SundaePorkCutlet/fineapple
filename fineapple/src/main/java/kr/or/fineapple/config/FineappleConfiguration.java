@@ -7,7 +7,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+@Configuration 
 public class FineappleConfiguration implements WebMvcConfigurer {
 
     @Override

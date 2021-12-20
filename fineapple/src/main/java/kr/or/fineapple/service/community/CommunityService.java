@@ -4,6 +4,8 @@ import kr.or.fineapple.domain.community.Board;
 
 public interface CommunityService {
 	
-	public void insertPost(Board board);
+	public int insertPost(Board board);
+	
+	public int getPostNo();
 
 }

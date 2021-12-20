@@ -11,7 +11,7 @@
 		</resultMap>
 		
 
-	<insert id="insertDietService" parameterType="IntakeRecord">
+	<insert id="insertDietService" parameterType="intakeRecord">
 	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
 	VALUES (seq_product_prod_no.nextval,
 			0,

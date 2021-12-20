@@ -2,39 +2,50 @@
 
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="kr.or.fineapple.mapper.CommunityMapper">
 	<resultMap type="Board" id="boardMap">
 	
-		<result property="postNo" column="post_no" javaType="" jdbcType=""/>
-		<result property="user.userId" column="user_id" javaType="" jdbcType=""/>
-		<result property="title" column="title" javaType="" jdbcType=""/>
-		<result property="content" column="content" javaType="" jdbcType=""/>
-		<result property="postDate" column="post_date" javaType="" jdbcType=""/>
-		<result property="viewCount" column="view_count" javaType="" jdbcType=""/>
-		<result property="cmntCount" column="cmnt_count" javaType="" jdbcType=""/>
-		<result property="postLikeCount" column="post_like_count" javaType="" jdbcType=""/>
-		<result property="updateStt" column="update_stt" javaType="" jdbcType=""/>
-		<result property="cateName" column="post_cate" javaType="" jdbcType=""/>
-		<result property="cateName" column="post_cate" javaType="" jdbcType=""/>
+		<result property="postNo" column="post_no"/>
+		<result property="user.userId" column="user_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="postDate" column="post_date" />
+		<result property="viewCount" column="view_count" />
+		<result property="cmntCount" column="cmnt_count" />
+		<result property="postLikeCount" column="post_like_count" />
+		<result property="updateStt" column="update_stt"/>
+		<result property="cateName" column="post_cate"/>
+		<result property="groupNo" column="group_no"/>
 		
 	</resultMap>
-	<insert id="insertPost" parameterType="">
+	<insert id="insertPost" parameterType="board">
+		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
+		SELECT seq_board_post_no.CURRVAL FROM dual
+		</selectKey>
 		INSERT INTO BOARD (
-		POST_NO, 
+		POST_NO,
 		USER_ID,
 		GROUP_NO,
 		POST_CATE,
 		UPDATE_STT,
-		TITLE, CONTENT,
-		POST_DATE,
-		POST_LIKE_COUNT,
-		CMNT_COUNT,
-		VIEW_COUNT
+		TITLE, 
+		CONTENT,
+		POST_DATE
 		)
 		VALUES (
 		seq_board_post_no.NEXTVAL,
 		#{user.userId},
-		#{},
+		<if test="groupNo == 0">
+		null,
+		</if>
+		<if test="groupNo != 0">
+		#{groupNo},
+		</if>
+		#{cateName},
+		#{updateStt},
+		#{title},
+		#{content},
+		#{postDate}
 		
 		)
 	</insert>
