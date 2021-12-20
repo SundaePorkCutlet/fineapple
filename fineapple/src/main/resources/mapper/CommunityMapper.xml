@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+	<resultMap type="" id="">
+		
+	</resultMap>
+	<insert id="insertPost" parameterType="d">
+		INSERT INTO BOARD (POST_NO, USER_ID,
+		GROUP_NO,
+		POST_CATE,
+		UPDATE_STT,
+		TITLE, CONTENT,
+		POST_DATE,
+		POST_LIKE_COUNT,
+		CMNT_COUNT,
+		VIEW_COUNT)
+		VALUES 
+		(
+		)
+	</insert>
+</mapper>

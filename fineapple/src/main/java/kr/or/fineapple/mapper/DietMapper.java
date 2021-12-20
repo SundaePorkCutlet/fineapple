@@ -1,16 +1,13 @@
 package kr.or.fineapple.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import org.springframework.stereotype.Repository;
 
-import kr.or.fineapple.domain.community.Board;
+import kr.or.fineapple.domain.IntakeRecord;
 
 @Mapper
 @Repository
-public interface CommunityMapper {
-	
-	public void insertPost(Board board);
+public interface DietMapper {
 
-
-}
+       int insertDietService(IntakeRecord record);
+   }
