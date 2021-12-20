@@ -13,13 +13,9 @@ public class BurnningRecord {
 
 	String userId;
 	int burnningRecordNo;
-	double dailyTrgtBurnningKcal;
 	double recommendExerKcal;
-	String exerServiceTrgt;
 	double trgtWeight;
-	double bodyMuscle;
-	double trgtBodyMuscle;
-	int anExerTime;
+	LocalTime anExerTime;
 	LocalTime dailyExerTime;
 	double dailyExerKcal;
 	/*ist<Exer> exer;*/
