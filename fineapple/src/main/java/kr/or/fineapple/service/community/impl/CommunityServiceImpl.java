@@ -56,7 +56,9 @@ public class CommunityServiceImpl implements CommunityService {
 	public void updateCmntLike(Cmnt cmnt, int flag) {
 		
 		Map map = new HashMap();
+		
 		map.put(cmnt, flag);
+		
 		communityMapper.updateCmntLike(map);
 		
 	}
