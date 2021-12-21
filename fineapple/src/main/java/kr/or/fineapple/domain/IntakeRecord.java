@@ -14,32 +14,18 @@ public class IntakeRecord {
 
 	String userId;
 	int intakeRecordNo;
-<<<<<<< HEAD
-	double dailyTrgtIntakeKcal;
-	double dailyTrgtIntakeCarb;
-	double dailyTrgtIntakeProtein;
-	double dailyTrgtIntakeFat;
-	double foodKcal;
-	double foodCarb;
-	double foodProtein;
-	double foodFat;
-	String dietServiceTrgt;
-=======
+
 	
 	double foodKcal;
 	double foodCarb;
 	double foodProtein;
 	double foodFat;
->>>>>>> refs/remotes/origin/master
 	double userFoodIntake;
 	double userWtrIntake;
 	double remainKcal;
 	String meal;
-<<<<<<< HEAD
 	double bodyFat;
 	double trgtBodyFat;
-=======
->>>>>>> refs/remotes/origin/master
 	LocalDate date;
 	Food food;
 	

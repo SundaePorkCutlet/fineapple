@@ -8,6 +8,29 @@
 <body>
 <div th:insert="index/toolbar :: toolbar">
 	</div>
+	
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script>
+		function dataSend() {
+		
+		var name = "핫도그";	
+		$.ajax(
+		{ type: "GET",
+		url: "/diet/rest/apiSearch", 
+		data: {"foodName":name}, 
+		success: function(response){ 
+		console.log(response) 
+		
+		var html='<div><h3>'+response+'<h3><div>'
+		
+		$("#hongjinho").after(html);
+		}
+		}
+		)
+		}
+
+		</script>
+	
 			
 <div class="container show-grid">
 		<div class="row">
@@ -109,11 +132,11 @@
 			</div><br><br><br>
 			<div style="position:absolute; left:800px;">
 			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" onclick="dataSend()" >수 &nbsp;정</button>
-		
-			
-			  
+	
+	
 		
 	
+		<input id="hongjinho">		
 			
 			</div>
 			</div>
