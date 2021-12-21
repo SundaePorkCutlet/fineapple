@@ -12,12 +12,6 @@
 		<result property="trgtHabitInitDate" column="TRGT_HABIT_INIT_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
 	</resultMap>
 	
-	<resultMap id="WtrIntakeMap" type="WtrIntake">
-		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
-		<result property="date" column="BADGE_DATE" jdbcType="DATE"/>
-		<result property="userWtrIntake" column="USER_WTR_INTAKE" jdbcType="DOUBLE"/>
-	</resultMap>
-	
 	<!-- INSERT : 목표습관관리 시작 -->
 	<insert id="addTrgtHabit" parameterType="TrgtHabit">
 	INSERT INTO TRGT_HABIT_SERVICE (TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE)
@@ -65,7 +59,7 @@
 	<!-- 수분섭취량 기록 -->
 	<update id="updateWtrIntake">
 	UPDATE badge
-	<set>user_wtr_intake = #{user_wtr_intake} </set>
+	<set>user_wtr_intake = #{userWtrIntake}</set>
 	</update>
 
 </mapper>

@@ -72,6 +72,7 @@ public class TrgtHabitMapperTest {
 		System.out.println(userWtrIntake);
 		userWtrIntake = userWtrIntake + 0.25;
 		System.out.println(userWtrIntake);
-		trgtHabitMapper.updateWtrIntake(userWtrIntake);	
+//		trgtHabitMapper.updateWtrIntake(userWtrIntake);
+
 	}
 }
