@@ -3,7 +3,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.CommunityMapper">
-	<resultMap type="Board" id="boardMap">
+<!-- 	<resultMap type="Board" id="boardMap">
 	
 		<result property="postNo" column="post_no"/>
 		<result property="user.userId" column="user_id" />
@@ -18,6 +18,7 @@
 		<result property="groupNo" column="group_no"/>
 		
 	</resultMap>
+	
 	<insert id="insertPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual
@@ -46,7 +47,6 @@
 		#{title},
 		#{content},
 		#{postDate}
-		
 		)
-	</insert>
+	</insert> -->
 </mapper>
