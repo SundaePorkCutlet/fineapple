@@ -74,6 +74,10 @@ class dietMapperTest {
 	
 		
 		
+<<<<<<< HEAD
+		
+        log.info("timeMapper time: " + dietMapper.insertDietService(record));
+=======
 
 
 
@@ -82,5 +86,6 @@ class dietMapperTest {
 //        log.info("addIntakeRecord : " + dietService.addIntakeRecord(record));
 //        log.info("getDietService : " + dietService.getDietService(userId));
 		  log.info("updatetrgt : " + dietMapper.updateBodyInfo(dietServ));
+>>>>>>> refs/remotes/origin/master
 	}
 }

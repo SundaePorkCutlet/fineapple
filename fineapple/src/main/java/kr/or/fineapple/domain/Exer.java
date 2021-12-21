@@ -1,6 +1,6 @@
 package kr.or.fineapple.domain;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +18,17 @@ public class Exer {
 	String exerName;
 	double exerKcal;
 	String exerVideoName;
-	Time exerVideoTime;
+	LocalTime exerVideoTime;
 	
 	
 	public Exer() {
 		
 	}
+
+
+	public String setExerVideoTime(int h, int m, int s) {
+		
+		return h+":"+m+":"+s;
+	}
+	
 }

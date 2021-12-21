@@ -1,4 +1,4 @@
-package kr.or.fineapple.service.user;
+package kr.or.fineapple.user;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,15 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/user/*")
 public class UserRestController {
 	
-	@RequestMapping(value="login",method=RequestMethod.GET )
-    public ModelAndView login(){
-		System.out.println("/user/login:GET");
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/user/login.html");
-		System.out.println("redirect:/user/login.html:GET");
-		return mav;
-    }
-	
+
 	@RequestMapping(value="loginResult",method=RequestMethod.POST )
     public ModelAndView login(HttpSession session) throws Exception{
 		System.out.println("/user/login:POST");
