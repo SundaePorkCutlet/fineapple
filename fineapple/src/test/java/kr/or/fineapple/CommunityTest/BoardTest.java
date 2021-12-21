@@ -1,6 +1,8 @@
 package kr.or.fineapple.CommunityTest;
 
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class BoardTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void InsertPost() {
 		
 		Board board = new Board();
@@ -53,5 +55,43 @@ public class BoardTest {
 		System.out.println(postNo +"aaaaaaaaaa");
 		
 	}
+	
+	//@Test
+	public void getPostList() {
+		
+		List<Board> list = communityService.getPostList();
+		
+		for (Board board : list) {
+			System.out.println(board);
+		}
+		
+	}
+	
+	@Test
+	public void updatePostviewCount() {
+		
+		
+		
+		Board board = new Board();
+		
+		board.setPostNo(4);
+		
+		for (int i = 0; i < 100; i++) {
+			communityService.updatePostViewCount(board);
+			
+		}
+	}
+	
+	public void updatePostLike() {
+		Board board = new Board();
+		board.setPostNo(4);
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }

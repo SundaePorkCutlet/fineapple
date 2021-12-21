@@ -1,5 +1,7 @@
 package kr.or.fineapple.service.community.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +31,17 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public int getPostNo() {
+	public List<Board> getPostList() {
 		// TODO Auto-generated method stub
-		return communityMapper.getPostNo();
+		return communityMapper.getPostList();
 	}
+	
+	public void updatePostViewCount(Board board) {
+		communityMapper.updatePostViewCount(board);
+	}
+	
+	
+
 	
 	
 	

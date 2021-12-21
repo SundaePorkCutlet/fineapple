@@ -18,6 +18,11 @@
 		<result property="groupNo" column="group_no"/>
 		
 	</resultMap>
+	
+	<sql id="orderBy">
+	ORDER BY post_no
+	</sql>
+	
 	<insert id="insertPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual
@@ -49,4 +54,29 @@
 		
 		)
 	</insert>
+	
+	
+	
+	<select id="getPostList" resultMap="boardMap">
+	SELECT
+	*
+	FROM
+	board	
+	<include refid="orderBy"></include>
+	
+	
+	</select>
+	
+	<update id="updatePostViewCount" parameterType="board">
+	<!-- <selectKey keyProperty="p"> </selectKey> -->
+	UPDATE BOARD
+	<set>
+	VIEW_COUNT = NVL(VIEW_COUNT,0) + 1
+	</set>
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	post_no = #{postNo}
+	</trim>
+	
+	</update>
+	
 </mapper>

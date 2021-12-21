@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
 <meta charset="EUC-KR">
-<title>게시글작성</title>
-<style>body {margin:0;padding:0;}
-#webView {overflow:hidden;position:relative;background:#FFFFFF;width:1200px;height:1384px;margin:0 auto;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
-#webView[data-show-memo='true'] {overflow:visible}
-</style>
+<head th:replace="index/toolbar :: head">
 </head>
 <body>
 <div th:insert="index/toolbar :: toolbar">
 </div>
+<div data-obj-id="iy5zk" data-obj-type="element" data-text-editable="true" class=""><div data-text-content="true" style="font-weight:bold;font-size:32px;" class="">자유게시판</div></div>
+<div data-obj-id="Xmyt7" data-obj-type="element" class=""><div data-image-content="true" style="background-image: url(/static/images/shape/wireframe.svg);"></div></div>
+<div data-obj-id="PgjEI" data-obj-type="element" data-text-editable="true" class="" ><div data-text-content="true" style="font-weight:bold;font-size:24px" class="">제목 : </div></div>
+<div data-obj-id="3NKAA" data-obj-type="element" data-text-editable="true" class="" >
+<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class=""></div>
+<div data-obj-id="MM0mp" data-obj-type="element" data-text-editable="true" class="" ><div data-text-content="true" style="font-size: 16px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(52, 152, 219);" class="">업로드</div></div>
 
-<div data-obj-id="iy5zk" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 211.007px; left: 532.91px; width: 300px; height: 100px;"><div data-text-content="true" style="font-weight:bold;font-size:32px;" class="">자유게시판</div></div>
-<div data-obj-id="Xmyt7" data-obj-type="element" class="" style="position: absolute; top: 377px; left: 332px; width: 552px; height: 438px;"><div data-image-content="true" style="background-image: url(/static/images/shape/wireframe.svg);"></div></div>
-<div data-obj-id="PgjEI" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 315px; left: 334px; width: 80px; height: 60px;"><div data-text-content="true" style="font-weight:bold;font-size:24px" class="">제목 : </div></div>
-<div data-obj-id="3NKAA" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 847.754px; left: 408.906px; width: 300px; height: 40px;"><input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="내용을 입력해주세요" style="color: rgb(94, 94, 94);"></div>
-<div data-obj-id="MM0mp" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 846.781px; left: 707.969px; width: 100px; height: 40px;"><div data-text-content="true" style="font-size: 16px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(52, 152, 219);" class="">업로드</div></div>
-
-<div data-obj-id="V6OAh" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 315px; left: 401px; width: 468px; height: 40px;">
-<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="내용을 입력해주세요" style="color: rgb(94, 94, 94);"></div>
-<div data-obj-id="A4UGK" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 927px; left: 342.403px; width: 5370px; height: 1850px;"><textarea data-text-content="true" data-min-width="1000" data-min-height="600" style="color: rgb(94, 94, 94);" class="">내용을 입력해주세요</textarea></div>
+<div data-obj-id="V6OAh" data-obj-type="element" data-text-editable="true" class="">
+<input type="text" data-min-width="6000" data-min-height="3000" data-text-content="true" value="내용을 입력해주세요" style="color: rgb(94, 94, 94);"></div>
+<div data-obj-id="A4UGK" data-obj-type="element" data-text-editable="true" class="">
+<input style="height:300px; width:1000px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class=""></div>
+<button type="button" class="btn btn-primary" comm_title="" >등 &nbsp;록</button>
+<button type="button" class="btn btn-primary" data-prodNo="$" >취 &nbsp;소</button>
 
 
 
 
-
+	
 </body>
 </html>
+

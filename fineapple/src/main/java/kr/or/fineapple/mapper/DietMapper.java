@@ -12,7 +12,7 @@ import kr.or.fineapple.domain.IntakeRecord;
 public interface DietMapper {
 
        int insertDietService(DietServ diet);
-     
+       
        DietServ getDietService(String userId);
        
        int insertIntakeRecord(IntakeRecord record);
