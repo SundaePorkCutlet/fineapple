@@ -82,11 +82,19 @@ public class BoardTest {
 		}
 	}
 	
+	@Test
 	public void updatePostLike() {
 		Board board = new Board();
 		board.setPostNo(4);
 		
+		
+		
+		
 	}
+	
+	
+	
+	
 	
 	
 	

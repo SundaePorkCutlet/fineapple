@@ -1,11 +1,14 @@
 package kr.or.fineapple.service.community.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.community.Board;
+import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
 
@@ -35,15 +38,35 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getPostList();
 	}
-	
+	@Override
 	public void updatePostViewCount(Board board) {
 		communityMapper.updatePostViewCount(board);
 	}
+
+	@Override
+	public void updatePostLike(Board board, int flag) {
+		
+		Map map = new HashMap();
+		map.put(board, flag);
+		communityMapper.updatePostLike(map);
+		
+	}
+
+	@Override
+	public void updateCmntLike(Cmnt cmnt, int flag) {
+		
+		Map map = new HashMap();
+		map.put(cmnt, flag);
+		communityMapper.updateCmntLike(map);
+		
+	}
+	
+	
+	
 	
 	
 
 	
-	
-	
+
 
 }

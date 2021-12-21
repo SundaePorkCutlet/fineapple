@@ -19,6 +19,16 @@
 		
 	</resultMap>
 	
+	<resultMap type="Cmnt" id="cmntMap">
+	<result property="cmntNo" column=""/>
+	<result property="board.boardNo" column=""/>
+	<result property="user.userId" column=""/>
+	<result property="cmntContent" column=""/>
+	<result property="cmntDate" column=""/>
+	<result property="cmntLikeCount" column=""/>
+	<result property="updateStt" column=""/>
+	</resultMap>
+	
 	<sql id="orderBy">
 	ORDER BY post_no
 	</sql>
@@ -67,9 +77,14 @@
 	
 	</select>
 	
+	
+	
+	
+	
 	<update id="updatePostViewCount" parameterType="board">
-	<!-- <selectKey keyProperty="p"> </selectKey> -->
-	UPDATE BOARD
+	<selectKey keyProperty="postNo">
+	</selectKey>
+	UPDATE BOARD 
 	<set>
 	VIEW_COUNT = NVL(VIEW_COUNT,0) + 1
 	</set>
@@ -78,5 +93,83 @@
 	</trim>
 	
 	</update>
+	
+	<update id="updatePostLike" parameterType="map">
+	UPDATE
+	INTO
+	board
+	<trim prefix="SET" suffixOverrides=",">
+	<if test="flag == 0">
+	POST_LIKE_COUNT = POST_LIKE_COUNT + 1
+	</if>
+	<if test="flag == 1">
+	POST_LIKE_COUNT = POST_LIKE_COUNT - 1
+	</if>
+	</trim>
+	<where> 
+	post_no = #{board.postNo}
+	</where>
+	
+	</update>
+	
+	
+	
+	<update id="updateCmntLike" parameterType="map" parameterMap="">
+	
+	UPDATE
+	INTO
+	cmnt
+	<trim prefix="SET" suffixOverrides=",">
+	<if test="flag == 0">
+	POST_LIKE_COUNT = POST_LIKE_COUNT + 1
+	</if>
+	<if test="flag == 1">
+	POST_LIKE_COUNT = POST_LIKE_COUNT - 1
+	</if>
+	</trim>
+	<where> 
+	post_no = #{board.postNo}
+	</where>
+	
+	</update>
+	
+	
+	
+	<insert id="" parameterType="cmnt">
+	INSERT INTO COMMENTS 
+	(
+	CMNT_NO, 
+	POST_NO,
+	CMNT_USER_ID, 
+	UPDATE_STT, 
+	CMNT_CONTENT, 
+	CMNT_DATE
+	) 
+	VALUES
+	(
+	seq_comments_cmnt_no,
+	#{board.postNo},
+	#{user.userId},
+	#{updateStt},
+	#{cmntContenct},
+	#{cmntDate}
+	
+	)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
