@@ -1,6 +1,5 @@
 package kr.or.fineapple.mapper;
 
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,8 +19,3 @@ public interface DietMapper {
        int updateBodyInfo(DietServ diet);
    }
 
-=======
-public interface DietMapper {
-
-}
->>>>>>> refs/heads/KIM

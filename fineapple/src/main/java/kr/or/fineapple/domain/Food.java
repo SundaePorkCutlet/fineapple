@@ -16,13 +16,10 @@ public class Food {
 	double foodKcal;
 	double foodCarb;
 	double foodProtein;
-<<<<<<< HEAD
 	double foodSaturatedFattyAcid;
 	double foodUnsaturatedFattyAcid;
 	double foodCholesterol;
 	double foodTransFat;
-=======
->>>>>>> refs/remotes/origin/master
 	double foodSodium;
 	double foodSugar;
 	int price;
@@ -30,9 +27,6 @@ public class Food {
 	String purchaseConnLink;
 	String storeName;
 	int isAPI;
-	
-	
-	
 	
 	public Food() {
 	
