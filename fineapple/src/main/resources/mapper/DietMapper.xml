@@ -42,8 +42,6 @@
 		<result property="favMealNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
 		<result property="favMealName" 	column="USER_ID" 		jdbcType="VARCHAR"/>
 		<result property="favMealKcal" 				column="MEAL" 		jdbcType="DOUBLE"/>
-		<collection property="food" column="FOOD_NO" javaType="java.util.ArrayList">
-		</collection>
 		</resultMap>
 
 
@@ -91,7 +89,6 @@
 	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
 	
 	</select>
-
 
 
 </mapper>

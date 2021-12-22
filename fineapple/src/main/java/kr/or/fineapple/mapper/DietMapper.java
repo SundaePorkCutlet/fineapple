@@ -19,3 +19,4 @@ public interface DietMapper {
        
        int updateBodyInfo(DietServ diet);
    }
+
