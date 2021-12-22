@@ -101,7 +101,7 @@
 	</where>
 	</update>
 	
-	<update id="updateCmntLike" parameterType="map" parameterMap="">
+	<update id="updateCmntLike" parameterType="map">
 	UPDATE
 	INTO
 	cmnt
