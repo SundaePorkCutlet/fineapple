@@ -27,5 +27,5 @@ public interface TrgtHabitMapper {
 	Double getWtrIntake(Map map);
 	
 	////수분 섭취량 기록 변경
-	Double updateWtrIntake(double userWtrIntake);
+	void updateWtrIntake(Map map);
 }

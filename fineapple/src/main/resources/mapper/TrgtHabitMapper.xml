@@ -59,7 +59,9 @@
 	<!-- 수분섭취량 기록 -->
 	<update id="updateWtrIntake">
 	UPDATE badge
-	<set>user_wtr_intake = #{userWtrIntake}</set>
+	<set>user_wtr_intake = #{userWtrIntake:DOUBLE}</set>
+	WHERE TRUNC(badge_date) = TRUNC(SYSDATE)
+		AND user_id = #{userId}
 	</update>
 
 </mapper>

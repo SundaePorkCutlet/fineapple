@@ -2,22 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- BootStrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div th:insert="index/toolbar :: toolbar"></div>
 <div class="container show-grid">
-		<div class="row">
-			<div class="col-md-12">
-			<div align="center" data-text-content="true" style="font-weight:bold;font-size:24px">목표 습관 관리</div>
-			<div class="col-md-3">
-	          <h2>커피끊기</h2>
-	          <p>총 0일차</p><br>
-	          <p>00:00:00</p>
-	          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+	<div class="row">
+		<div align="center" data-text-content="true" style="font-weight:bold;font-size:24px">목표 습관 관리</div>
+		<div align="center" data-text-content="true" style="font-weight:bold;font-size:20px">목표 습관</div>
+		
+		<!-- 습관 3종+사용자 습관 조회 및 기록 --> 
+		<div class="container">
+			<div class="col-md-12 text-center">
+				<span name="coffee">커피끊기</span>
+		        <span name="alchol">금주</span>
+		        <span name="smoking">금연</span>
+		        <span name="userHabit">사용자항목</span>
 	        </div>
+	        <div class="col-md-12 text-center">
+	          <p>총 0일차</p>
+	          <p>00:00:00</p>
+	          <p><a class="btn btn-primary" href="#" role="button">시작</a>
+	          <a class="btn btn-default" href="#" role="button">초기화</a>
+	          </p>
+	        </div>
+        </div>
 
-</div>	
-</div>
+		<!-- 수분섭취량 조회 및 기록 -->
+        <div class="container">
+        	<div align="center" data-text-content="true" style="font-weight:bold;font-size:20px">오늘의 물 마시기 기록</div>
+        	<div class="col-md-12 text-center">
+        		<p>오늘 마신 총 물의 양 : 0.0L</p>
+        		<p>로이님의 일일 수분 섭취량은 2.0L 입니다.</p>
+        	</div>
+	     </div>
+	</div>
 </div>
 </body>
 </html>
