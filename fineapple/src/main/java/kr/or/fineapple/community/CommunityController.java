@@ -14,5 +14,7 @@ public class CommunityController {
 		return "community/addPost.html";
 	}
 	
+	
+	
 }
 
