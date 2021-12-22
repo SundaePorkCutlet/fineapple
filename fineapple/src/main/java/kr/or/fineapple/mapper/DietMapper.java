@@ -1,6 +1,7 @@
 package kr.or.fineapple.mapper;
 
 
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,4 @@ public interface DietMapper {
        
        int updateBodyInfo(DietServ diet);
    }
-
-
 

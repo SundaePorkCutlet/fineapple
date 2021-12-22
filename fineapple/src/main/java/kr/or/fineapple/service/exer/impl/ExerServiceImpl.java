@@ -1,22 +1,35 @@
 package kr.or.fineapple.service.exer.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.BurnningRecord;
-import kr.or.fineapple.domain.Exer;
-import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
+
 
 @Service("ExerServiceImpl")
 public class ExerServiceImpl implements ExerService {
 
+	
+	@Autowired
+	private ExerMapper exerMapper;
 
+	
 	@Override
 	public void addUserService(ExerService service) throws Exception {
 	
+	}
+	
+	@Override
+	public void getUserService(ExerService service) throws Exception {
+		
+		
 	}
 	
 	@Override
@@ -26,17 +39,10 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
-	public void updateUser(User user) {
-		
-		
-	}
-	
-	@Override
 	public void updateServiceTrgt(ExerService service) {
 		
 		
 	}
-	
 	
 	@Override
 	public void updateBodyInfo(ExerService serivce) {
@@ -45,26 +51,24 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
-	public void updateExerService(BurnningRecord record) throws Exception {
+	public Map<String ,Object> getExerList(Search search) {
 		
+		List<Search> list = exerMapper.getExerList(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("search", search);
+		
+		return map;
 		
 	}
-
+	
 	@Override
-	public void getExerService(BurnningRecord record) throws Exception {
-	
+	public void updateUserService(ExerService serivce) throws Exception {
+		
 		
 	}
 
-	@Override
-	public List<Exer> ExerList(Exer exer) {
-	  
-		
-		return null;
-	}
 
-	
-
-
-	
 }

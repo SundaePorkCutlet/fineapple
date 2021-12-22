@@ -12,34 +12,27 @@ import lombok.ToString;
 @ToString
 public class IntakeRecord {
 
+	
 	String userId;
 	int intakeRecordNo;
-
 	double dailyTrgtIntakeKcal;
 	double dailyTrgtIntakeCarb;
 	double dailyTrgtIntakeProtein;
 	double dailyTrgtIntakeFat;
+	String dietServiceTrgt;
 	double foodKcal;
-	double foodCarb;
+	double foodCarb;	
 	double foodProtein;
 	double foodFat;
-	String dietServiceTrgt;
-
 	double userFoodIntake;
 	double userWtrIntake;
 	double remainKcal;
 	String meal;
-
 	double bodyFat;
 	double trgtBodyFat;
-
-
 	LocalDate date;
 	Food food;
-	
-	
-	
-	
+
 	public IntakeRecord() {
 		// TODO Auto-generated constructor stub
 	}

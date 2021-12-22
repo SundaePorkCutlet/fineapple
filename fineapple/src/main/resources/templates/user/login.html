@@ -24,20 +24,22 @@
 <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">로그인</div>
 </ins>
 <br>
+<form>
 <div align="center">
-<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="Username" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="">
+<input type="text" id = "userId" name = "userId" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="Username" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
 </div>
 <br>
 <div align="center">
-<input type="password" data-min-width="60" data-min-height="30" data-text-content="true" value="0000" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="">
+<input type="password" id = "password"  name = "password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="0000" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
+</div>
+</form>
+<br>
+<div align="center">
+<input type="submit" id = "login" name="login" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "Login">
 </div>
 <br>
 <div align="center">
-<div align="center" data-text-content="true" style="font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" class="">로그인</div>
-</div>
-<br>
-<div align="center">
-<div align="center" data-text-content="true" style="font-size: 17px; color: rgb(64, 64, 64); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(224, 224, 224, 0.71);  width: 300px; height: 40px;" class="">회원가입</div>
+<input type = "button" value ="Join" id="join"  data-text-content="true" style="font-size: 17px; color: rgb(64, 64, 64); text-align: center; line-height: 2.5em; border:none ; padding:0; background-color: rgba(224, 224, 224, 0.71);  width: 300px; height: 40px;">
 </div>
 <div align = "center">
 <br>
@@ -45,10 +47,39 @@
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
+$(function(){
+	$("#userId").focus();
+	
+	$("#login").on("click",function(){
+		var userId = $("#userId").val();
+		var password =$("#password").val();
+		console.log(userId);
+		console.log(password);
+		
+		if(userId == null || userId.length< 1){
+			alert("ID를 입력해주세요.")
+			$("#userId").focus();d
+			return;
+		}
+		
+		if(password == null || password.length< 1){
+			alert("비밀번호를 입력해주세요.")
+			$("#password").focus();
+			return;
+		}
+		$("form").attr("method","POST").attr("action","/user/login/redirect").submit();
+	});	
+});
 
-window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
+$(function(){
+	$("#join").on("click",function(){
+		self.location = "/user/addUser";
+	})
+	
+})
 
 function kakaoLogin(){
+window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 	window.Kakao.Auth.login({
 		scope:'profile_nickname, profile_image,account_email,gender',
 		success : function(authObj){

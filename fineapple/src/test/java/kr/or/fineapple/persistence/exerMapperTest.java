@@ -27,7 +27,7 @@ class exerMapperTest {
 		Exer exer = new Exer();
 				
 		exer.setExerCate("유산소");
-		exer.setExerKcal(130);
+		exer.setExerKcal(130.5);
 		exer.setExerLv(1);
 		exer.setExerName("턱걸이");	
 		exer.setExerNo(1);
@@ -60,7 +60,7 @@ class exerMapperTest {
 		  record.setRecommendExerKcal(200.0);
 		  
 		  
-		
+		  
 		  //service.setExerServiceTrgt("체중증량");
 		
 		  ExerService service = new ExerService();
@@ -69,23 +69,27 @@ class exerMapperTest {
 		  service.setTrgtBodyMuscle(30.2);
 		  service.setUserId("hc@gmail.com");
 		
-		  
 		 // log.info("exerMapper 확인 addUserService " + exerMapper.addUserService(service));
 		  
-		  
-		  
+		  		  
 		  service.setExerServiceTrgt("체중유지");
 		  service.setUserId("hc@gmail.com");
 		  //log.info("exerMapper 확인 updateServiceTrgt " + exerMapper.updateServiceTrgt(service));
 
 		  
 		  //userBodyInfo
-		  service.setBodyMuscle(10.5);
+		  service.setBodyMuscle(10.4);
 		  service.setUserId("hc@gmail.com");
 		  
 		  log.info("exerMapper 확인 updateBodyInfo " + exerMapper.updateBodyInfo(service));
 		  
+		
+		 // Search search = new Search();
+		  
+		  
+		  
+
+		  
+		  
 }	
-	
-	
 }

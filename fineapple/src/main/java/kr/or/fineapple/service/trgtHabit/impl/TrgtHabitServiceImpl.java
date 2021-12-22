@@ -4,20 +4,25 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import kr.or.fineapple.domain.TrgtHabit;
 import kr.or.fineapple.domain.WtrIntake;
 import kr.or.fineapple.mapper.TrgtHabitMapper;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
+@Service
 public class TrgtHabitServiceImpl implements TrgtHabitService {
 	
+	@Autowired
 	private TrgtHabitMapper trgtHabitMapper;
 
 	@Override
 	public void addTrgtHabit(String userId, TrgtHabit trgtHabit) {
 		
 		////trgtHabit에 userId 셋팅
-		trgtHabit.setUserId(userId);
+		//trgtHabit.setUserId(userId);
 		////trgtHabit 추가
 		trgtHabitMapper.addTrgtHabit(trgtHabit);
 	}
@@ -60,9 +65,15 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 	}
 
 	@Override
-	public double updateWtrIntake(double userWtrIntake) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double updateWtrIntake(String userId, double userWtrIntake) {
+		
+		////현재 수분섭취량에 +0.25
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("userWtrIntake", userWtrIntake + 0.25);
+		trgtHabitMapper.updateWtrIntake(map);
+		
+		return getWtrIntake(userId, LocalDate.now());
 	}
 
 }

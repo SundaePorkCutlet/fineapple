@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.DietMapper">
 
+
 		<resultMap id="DietServMap" type="DietServ">
 		<result property="userId" 				column="USER_ID" 		jdbcType="VARCHAR"/>
 		<result property="dietServiceTrgt" 				column="SERVICE_TRGT" 		jdbcType="VARCHAR"/>
@@ -41,8 +42,6 @@
 		<result property="favMealNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
 		<result property="favMealName" 	column="USER_ID" 		jdbcType="VARCHAR"/>
 		<result property="favMealKcal" 				column="MEAL" 		jdbcType="DOUBLE"/>
-		<collection property="food" column="FOOD_NO" javaType="java.util.ArrayList">
-		</collection>
 		</resultMap>
 
 
@@ -89,8 +88,8 @@
 	<select id="getDietService" parameterType="String" resultType="DietServ">
 	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
 	
-	</select>
 
+	</select>
 
 
 </mapper>

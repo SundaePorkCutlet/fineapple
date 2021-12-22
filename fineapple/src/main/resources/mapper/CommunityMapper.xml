@@ -17,6 +17,7 @@
 		<result property="groupNo" column="group_no"/>
 	</resultMap>
 	
+
 	<resultMap type="Cmnt" id="cmntMap">
 	<result property="cmntNo" column=""/>
 	<result property="board.boardNo" column=""/>
@@ -31,6 +32,7 @@
 	ORDER BY post_no
 	</sql>
 	
+
 	<insert id="insertPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual
