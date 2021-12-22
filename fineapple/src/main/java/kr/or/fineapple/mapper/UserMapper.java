@@ -9,5 +9,7 @@ import kr.or.fineapple.domain.User;
 @Repository
 public interface UserMapper{
 		public void addUser(User user) throws Exception;
+		
+		public User getUser(String userId) throws Exception;
 	}
 

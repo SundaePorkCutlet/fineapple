@@ -18,12 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 class dietMapperTest {
 
+
 	@Autowired
 	private DietMapper dietMapper;
 	 
 	@Autowired
 	@Qualifier("dietServiceImpl")
 	private DietService dietService;
+
 	
 	@Test
 	public void contextLoads() throws Exception {
@@ -63,6 +65,7 @@ class dietMapperTest {
 		record.setMeal("¾Æ");
 		record.setUserId("aaa123@naver.com");
 
+
 //        log.info("addDietService : " + dietService.addDietService(dietServ));
 //        log.info("addIntakeRecord : " + dietService.addIntakeRecord(record));
 //        log.info("getDietService : " + dietService.getDietService(userId));
@@ -70,3 +73,4 @@ class dietMapperTest {
 
 	}
 }
+

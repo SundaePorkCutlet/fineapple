@@ -14,6 +14,7 @@ public class DietServiceImpl implements DietService{
 	@Autowired
 	private DietMapper dietMapper;
 	
+
 	@Override
 	public int addDietService(DietServ diet) throws Exception {
 		return	dietMapper.insertDietService(diet);
@@ -26,8 +27,11 @@ public class DietServiceImpl implements DietService{
 
 	@Override
 	public int addIntakeRecord(IntakeRecord record) throws Exception {
+
 		// TODO Auto-generated method stub
 		return dietMapper.insertIntakeRecord(record);
+
+
 	}
 
 	

@@ -1,12 +1,13 @@
 package kr.or.fineapple.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.service.user.UserService;
@@ -25,14 +26,27 @@ public class UserController {
     	return "index/index.html";
     }
 	
-	@RequestMapping(value="login")
+	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
-	//	System.out.println("/user/login:GET");
-	//	ModelAndView mav = new ModelAndView();
-	//	mav.setViewName("redirect:/user/login.html");
 		System.out.println("redirect:/user/login.html:GET");
 		return "user/login.html";
     }
+	
+	@RequestMapping(value="login/redirect",method = RequestMethod.POST)
+	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+		
+		System.out.println("login시도:POST");
+		
+		User userDB = userService.getUser(user.getUserId());
+		if(user.getPassword().equals(userDB.getPassword())) {
+			session.setAttribute("user",userDB);
+		}
+		System.out.println("user : "+userDB);
+		System.out.println("login 성공했나요");
+		
+		return "redirect:../../";
+				}
+	
 	
 	@RequestMapping(value="addUser")
 	public String addUser(){
@@ -40,12 +54,12 @@ public class UserController {
 		return "user/addUser.html";
 	}
 	
-	@RequestMapping(value="addUser/redirect", method = RequestMethod.POST)
+	@RequestMapping(value="addUser/redirect", method= RequestMethod.POST)
 	public String addUserRedirect(@ModelAttribute("user") User user) throws Exception {
 		System.out.println("addUserRedirect");
-		System.out.println("user:" + user.toString());
+		System.out.println("user:"+user.toString());
 		userService.addUser(user);
-		return "forward:/user/login.jsp";
+		return "redirect:/user/login";
 	}
 	
 	

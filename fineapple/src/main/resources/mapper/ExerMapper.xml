@@ -61,17 +61,22 @@
 
 	<insert id="addUserService" parameterType="ExerService">
 	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
-	VALUES (7,
+	VALUES (2,
 			#{userId:VARCHAR},
 			#{dailyTrgtBurnningKcal:FLOAT},
 			#{trgtBodyMuscle:FLOAT}
 			)
 	
 	</insert>
+		
+	<select	id="getUserService"	 parameterType="ExerService">
+			SELECT * FROM USER_SERVICE WHERE USER_ID=#{value}
+	</select>
+	
 	
 	<insert id="addDailyBurnning" parameterType="BurnningRecord">
 	INSERT INTO BURNNING_RECORD (BURNNING_RECORD_NO, USER_SERVICE_NO, EXER_NO, BURNNING_RECORD_DATE, EXER_LV, AN_EXER_TIME, USER_EXER_BURNNING) 
-	VALUES (15,
+	VALUES (5,
 			(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR}),
 			#{exer.exerNo:INTEGER},
 			SYSDATE,
@@ -81,21 +86,6 @@
 			)
 	
 	</insert>
-	
-	
-	<insert id="updateUsers" parameterType="User">
-	INSERT INTO BURNNING_RECORD (BURNNING_RECORD_NO, USER_SERVICE_NO, EXER_NO, BURNNING_RECORD_DATE, EXER_LV, AN_EXER_TIME, USER_EXER_BURNNING) 
-	VALUES (8,
-			(SELECT user_service_no from user_service where user_id = #{userId:VARCHAR}),
-			#{exer.exerNo:INTEGER},
-			SYSDATE,
-			#{exerLv:INTEGER},
-			#{anExerTime:TIMESTAMP},
-			#{userExerBurnning:FLOAT}
-			)
-	
-	</insert>
-	
 	
 	
 	
@@ -114,8 +104,44 @@
    	</update>
 	
 	
-	<update id="updateExerService" parameterType="BurnningRecord">
+		
+	<!-- <select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap" >
+	  	SELECT *
+		FROM (SELECT inner_table.* , ROWNUM AS exer_No
+		FROM(SELECT exer_name, exer_cate, exer_kcal
+		FROM EXER
+		ORDER BY exer_No ) inner_table)
+		WHERE exer_No BETWEEN 1 AND 4
+	 </select> -->
+	 
+	 
+	<select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap">
+	SELECT *
+	FROM (SELECT inner_table.* , ROWNUM AS exer_No
+	FROM(SELECT exer_name, exer_cate, exer_kcal
+	FROM EXER
+	<if test="searchCondition != null">
+	<where>
+	<if test="searchCondition == 0 and searchKeyword !='' ">
+	exer_name like '%'||#{searchKeyword}||'%'
+	</if>
+	<if test="searchCondition == 1 and searchKeyword !='' ">
+	exer_kcal like '%'||#{searchKeyword}||'%'
+	</if>
+	</where>
+	</if>
+	ORDER BY exer_No ) inner_table)
+	WHERE exer_No BETWEEN 1 AND 4
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
+	 
+	 
+	 
+	 
+	 
 	
+	<update id="updateUserService" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD
     SET (5,
        (SELECT user_service_no from user_service where user_id = #{userId:VARCHAR}),
@@ -127,13 +153,6 @@
 	
 	</update>
 	
-	
-	<select	id="getExerService"	 parameterType="BurnningRecord">
-			SELECT *
-			FROM BURNNING_RECORD
-			WHERE user_service_no=
-			(SELECT user_service_no from user_service where user_id ='hc@gmail.com')
-			</select>
 	
 
 </mapper>

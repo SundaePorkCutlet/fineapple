@@ -13,15 +13,15 @@ public class BurnningRecord {
 
 	String userId;
 	int burnningRecordNo;
-	double recommendExerKcal;
-	double trgtWeight;
+	Double recommendExerKcal;
+	Double trgtWeight;
 	LocalTime anExerTime;
 	LocalTime dailyExerTime;
-	double dailyExerKcal;
+	Double dailyExerKcal;
 	/*ist<Exer> exer;*/
 	Exer exer;
 	int exerLv;
-	double userExerBurnning;
+	Double userExerBurnning;
 	
 	public BurnningRecord() {
 		

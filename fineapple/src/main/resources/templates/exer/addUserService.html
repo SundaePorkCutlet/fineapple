@@ -2,35 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
-
-
 </head>
 <body>
 <div th:insert="index/toolbar :: toolbar">
 	</div>
-	
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-		<script>
-		function dataSend() {
-		
-		var name = "핫도그";	
-		$.ajax(
-		{ type: "GET",
-		url: "/diet/rest/apiSearch", 
-		data: {"foodName":name}, 
-		success: function(response){ 
-		console.log(response) 
-		
-		var html='<div><h3>'+response+'<h3><div>'
-		
-		$("#hongjinho").after(html);
-		}
-		}
-		)
-		}
-
-		</script>
-	
 			
 <div class="container show-grid">
 		<div class="row">
@@ -48,18 +23,22 @@
 			<br>
 			<br>
 			<ins>
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식단 서비스 활성화 </div>
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 서비스 활성화 </div>
 			</ins>
 			<br>
 			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 26px; color: rgba(41, 96, 47, 0.55);" class="">정보 입력 </div>
-			
-			<div data-obj-id="V67Vq" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 407.75px; left: 573px; width: 300px; height: 27px;">
+			<div data-text-content="true" style="font-size: 13px; text-align: center; line-height: 1.4em;" class="">운동 관리 기능 및 운동 관리 기능을 사용하시려면<div>정보가 필요합니다. 
+			</div><div>데이터 산출 목적에만 사용되고 그 외 목적에는 사용되지 않습니다.</div></div>	
+					
+			<div data-image-content="true" style="background-image: url(/static/images/shape/line-horizontal.svg);"></div>		
+					
+			<div data-obj-id="V67Vq" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 447.75px; left: 543px; width: 300px; height: 27px;">
 			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 16px;" class="">  *필수입력 사항</div>	</div>
-			<div data-obj-id="E5prC" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 403.993px; left: 565.344px; width: 300px; height: 36px;">
+			<div data-obj-id="E5prC" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 443.993px; left: 535.344px; width: 300px; height: 36px;">
 			<div data-text-content="true" style="font-weight: bold; font-size: 24px; text-decoration: none;" class="">  정보입력</div></div>
-			<br><br><br><br>
+			<br><br><br><br><br><br>
 			<div style="position:absolute; left:663px;">
-			<div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*식단 관리 목적
+			<div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*운동 관리 목적
 			<select style="font-size:15px">
 			<option>체중감량</option>
 			<option>체중유지</option>
@@ -91,56 +70,41 @@
 			
 			<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표체중</span>
 			<div style="position:absolute; left:800px;">
-			<input value="33" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">체지방율</span>
+				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">골격근량</span>
 			<div style="position:absolute; left:800px;">
-			<input value="35" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표체지방율</span>
+				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표골격근량</span>
 			<div style="position:absolute; left:800px;">
-			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리섭취량</span>
+				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리소비량</span>
 			<div style="position:absolute; left:800px;">
-			<input value="1900" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-			<span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 칼로리는 입니다.</span>
+			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 운동 칼로리는() 입니다.</span>
 			</div><br><br>
 			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표탄수화물섭취량</span>
-			<div style="position:absolute; left:800px;">
-			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-			<span style=font-weight:bold;font-size:16px;>g</span>
-			</div><br><br>
-			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표단백질섭취량</span>
-			<div style="position:absolute; left:800px;">
-			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-			<span style=font-weight:bold;font-size:16px;>g</span>
-			</div><br><br>
-			
-				<span style="position:absolute; right:700px; font-weight:bold;font-size:18px; "  class="">목표지방섭취량</span>
-			<div style="position:absolute; left:800px;">
-			<input readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-			<span style=font-weight:bold;font-size:16px;>g</span>
-			</div><br><br><br>
-			<div style="position:absolute; left:800px;">
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" onclick="dataSend()" >수 &nbsp;정</button>
 	
-	
-		
-	
-		<input id="hongjinho">		
-			
+			<div style="position:absolute; left:750px;">
+			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >등 &nbsp;록</button>
+			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >취 &nbsp;소</button>
+			</div>
+			<br><br>
+			<div style="position:absolute; left:790px;">
+			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >초기화</button>
 			</div>
 			</div>
 			</div>
+			</div>
+			
 			
 </body>
 </html>

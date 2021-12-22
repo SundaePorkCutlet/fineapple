@@ -74,7 +74,7 @@
             <div class="me-2">
                 <i class="las la-user member-icon"></i>
             </div>
-            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그인</button>
+            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그아웃</button>
             <button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
        </div>
 
@@ -118,8 +118,8 @@
                            aria-expanded="false">식단관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownfood">
                             <li><a class="dropdown-item" th:href="@{../diet/addDietService?menu=1}">서비스활성화</a></li>
-                            <li><a class="dropdown-item" href="#">식품검색</a></li>
-                            <li><a class="dropdown-item" href="#">일일섭취식단</a></li>
+                            <li><a class="dropdown-item" th:href="@{../diet/getFoodList}">식품검색</a></li>
+                            <li><a class="dropdown-item" th:href="@{../diet/addDailyIntakeMeal}">일일섭취식단</a></li>
 							 <li><a class="dropdown-item" href="#">즐겨찾는식단</a></li>
 							 <li><a class="dropdown-item" href="#">식품추천</a></li>
                         </ul>
@@ -130,8 +130,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownworkout" data-bs-toggle="dropdown"
                            aria-expanded="false">운동관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownworkout">
-                            <li><a class="dropdown-item" th:href="@{../exer/addExerService}">서비스활성화</a></li>
-                            <li><a class="dropdown-item" th:href="@{../exer/listExer}">운동검색</a></li>
+                            <li><a class="dropdown-item" th:href="@{../exer/addUserService}">서비스활성화</a></li>
+                            <li><a class="dropdown-item" th:href="@{../exer/getExerList}">운동검색</a></li>
                             <li><a class="dropdown-item" href="#">일일운동량</a></li>
 							 <li><a class="dropdown-item" href="#">루틴</a></li>
 							 <li><a class="dropdown-item" href="#">운동장소찾기</a></li>
@@ -164,7 +164,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-bs-toggle="dropdown"
                            aria-expanded="false">커뮤니티</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdown09">
-                            <li><a class="dropdown-item" href="#">게시판</a></li>
+                            <li><a class="dropdown-item" th:href="@{../community/getViewTest}">게시판</a></li>
                             <li><a class="dropdown-item" href="#">소그룹</a></li>
                             <li><a class="dropdown-item" href="#">승부</a></li>
 							<li><a class="dropdown-item" href="#">팔로우</a></li>
@@ -182,4 +182,3 @@
 
 </body>
 </html>
-
