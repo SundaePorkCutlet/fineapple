@@ -10,6 +10,7 @@ public class CommunityController {
 	
 	@GetMapping(value = "getViewTest")
 	public String getViewTest() {
+		System.out.println("getViewTest 컨트롤러 거침");
 		return "community/addPost.html";
 	}
 	
