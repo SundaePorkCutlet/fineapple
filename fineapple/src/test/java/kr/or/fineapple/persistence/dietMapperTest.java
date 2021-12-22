@@ -19,13 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 class dietMapperTest {
 
 	 @Autowired
+	 private DietMapper dietMapper;
 
-	 private DietMapper dietMapper; 
-		
-	 @Autowired
+	 
+		@Autowired
+
 		@Qualifier("dietServiceImpl")
 		private DietService dietService;
-
 
 
 	

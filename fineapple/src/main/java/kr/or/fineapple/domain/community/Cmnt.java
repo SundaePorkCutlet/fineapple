@@ -5,17 +5,28 @@ import java.time.LocalDate;
 import kr.or.fineapple.domain.User;
 
 public class Cmnt {
+	
 	private int cmntNo;
+	private Board board;
 	private User user;
 	private String cmntContent;
 	private LocalDate cmntDate;
 	private int cmntLikeCount;
 	private Boolean updateStt;
+	
+	
+	
 	public int getCmntNo() {
 		return cmntNo;
 	}
 	public void setCmntNo(int cmntNo) {
 		this.cmntNo = cmntNo;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	public User getUser() {
 		return user;
@@ -47,11 +58,17 @@ public class Cmnt {
 	public void setUpdateStt(Boolean updateStt) {
 		this.updateStt = updateStt;
 	}
+	
 	@Override
 	public String toString() {
-		return "Cmnt [cmntNo=" + cmntNo + ", user=" + user + ", cmntContent=" + cmntContent + ", cmntDate=" + cmntDate
-				+ ", cmntLikeCount=" + cmntLikeCount + ", updateStt=" + updateStt + "]";
+		return "Cmnt [cmntNo=" + cmntNo + ", board=" + board + ", user=" + user + ", cmntContent=" + cmntContent
+				+ ", cmntDate=" + cmntDate + ", cmntLikeCount=" + cmntLikeCount + ", updateStt=" + updateStt + "]";
 	}
+	
+	
+	
+	
+
 	
 
 }
