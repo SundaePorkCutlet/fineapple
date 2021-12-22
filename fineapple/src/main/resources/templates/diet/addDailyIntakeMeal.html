@@ -1,10 +1,81 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+
+
 </head>
 <body>
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+	<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>
+			<ins>
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">일일 섭취 식단</div>
+			</ins>
+			
+			<br><br><br>
+			<div align="left">
+			<span  data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;총 섭취칼로리 : </span>
+			<span  data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;2000kcal</span>
+			<span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;잔여 칼로리 : </span>
+			<span data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;500kcal</span>
+			<span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;내 목표 섭취 칼로리 : </span>
+			<span data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;2500kcal</span>
+			</div>
+			
+			<br><br><div align="center" data-text-content="true" style="font-size: 21px; font-weight: bold;" class="" spellcheck="false">아침</div>
+			<br>
+			<div align="center" data-text-content="true" style="background-color: rgba(241, 196, 15, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; position:absolute; left:500px; width: 753px; height: 266px; " class="">
+			<br>
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">즐겨찾기등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">직접등록</button>			
+			
+			<br><br>
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">식품명 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class=""></span>
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;섭취량 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class=""></span>
+			
+			
+			
+			</div>
+			
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<div align="center" data-text-content="true" style="font-size: 21px; font-weight: bold;" class="" spellcheck="false">점심</div>
+			<br>
+			<div align="center" data-text-content="true" style="background-color: rgba(224, 224, 224, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; position:absolute; left:500px; width: 753px; height: 266px; " class="">
+			<br>
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">즐겨찾기등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">직접등록</button>			
+			
+			<br><br>
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">식품명 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class=""></span>
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;섭취량 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class=""></span>
+			
+			
+			
+			</div>
+			
+			
+			</div>
+			</div>
+			</div>
+			
+	
 
 </body>
 </html>

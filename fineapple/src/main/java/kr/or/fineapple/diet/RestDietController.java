@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,6 +33,7 @@ public class RestDietController {
 		
 	     Map<String,String> bb = new HashMap();
 		
+	     JSONArray jsonArray = new JSONArray();
 		
 	try {	
 		RestTemplate resttemplate = new RestTemplate();
@@ -53,22 +56,17 @@ public class RestDietController {
        	LinkedHashMap im = (LinkedHashMap)resultMap.getBody().get("I2790");
        	ArrayList is = (ArrayList)im.get("row");
    
-       	
+       
        	
        	for(int i = 0; is.size()>i; i++) {
        	LinkedHashMap aa = (LinkedHashMap)is.get(i);
-       bb.put("foodName", aa.get("DESC_KOR").toString());
-       	System.out.println(aa.get("DESC_KOR").toString());
+        JSONObject jsonObject = new JSONObject();
+
+       	jsonObject.put("foodName", aa.get("DESC_KOR").toString());
+        jsonArray.add(jsonObject);
        	}
-       System.out.println(is.size());
-       
-       for(String key : bb.keySet()) {
-    	   System.out.println(key);
-    	   System.out.println(bb.get(key));
-    	   
-       }
-      
-       System.out.println(bb.get("foodName").toString());
+
+       System.out.println(jsonArray.toString());
 		
 	}catch(Exception e){
 	       map.put("statusCode", "999");
@@ -76,7 +74,7 @@ public class RestDietController {
             System.out.println(e.toString());
 		
 	}
-		return bb.get("foodName").toString();
+		return jsonArray.toString();
 
 }
 }

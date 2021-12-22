@@ -44,6 +44,15 @@ public class DietController {
 }
 
 
+@RequestMapping(value="addDailyIntakeMeal")
+		public String addDailyIntakeMeal() {
+		System.out.println("addDailyIntakeMeal");
+		
+		return "diet/addDailyIntakeMeal.html";
+	
+}
+
+
 		}
 		
 
