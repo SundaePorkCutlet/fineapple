@@ -28,7 +28,6 @@ public class DietServiceImpl implements DietService{
 	@Override
 	public int addIntakeRecord(IntakeRecord record) throws Exception {
 		return dietMapper.insertIntakeRecord(record);
-
 	}
 
 	

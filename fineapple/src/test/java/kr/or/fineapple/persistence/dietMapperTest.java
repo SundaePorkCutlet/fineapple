@@ -18,13 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 class dietMapperTest {
 
-	 @Autowired
-	 private DietMapper dietMapper;
 
-
-		@Autowired
-		@Qualifier("dietServiceImpl")
-		private DietService dietService;
+	@Autowired
+	private DietMapper dietMapper;
+	 
+	@Autowired
+	@Qualifier("dietServiceImpl")
+	private DietService dietService;
 
 	
 	@Test
@@ -64,8 +64,6 @@ class dietMapperTest {
 		record.setUserFoodIntake(313.7);
 		record.setMeal("¾Æ");
 		record.setUserId("aaa123@naver.com");
-	
-
 
 
 //        log.info("addDietService : " + dietService.addDietService(dietServ));
