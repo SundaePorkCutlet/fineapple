@@ -27,7 +27,6 @@ public class Food {
 	String purchaseConnLink;
 	String storeName;
 	int isAPI;
-	
 	public Food() {
 	
 	}

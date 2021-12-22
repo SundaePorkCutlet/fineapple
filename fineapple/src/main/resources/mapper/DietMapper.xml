@@ -88,6 +88,8 @@
 	<select id="getDietService" parameterType="String" resultType="DietServ">
 	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
 	
+
 	</select>
+
 
 </mapper>
