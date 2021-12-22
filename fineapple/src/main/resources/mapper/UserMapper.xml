@@ -28,10 +28,8 @@
 </resultMap>
 
 <insert id="addUser"	parameterType="User">
-INSERT into USERS (USER_ID,DIET_SERVICE_NO,EXER_SERVICE_NO,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,SERVICE_TRGT,TRGT_WEIGHT,TRGT_BODY_FAT,TRGT_BODY_MUSCLE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
+INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,SERVICE_TRGT,TRGT_WEIGHT,TRGT_BODY_FAT,TRGT_BODY_MUSCLE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
 VALUES (#{userId:VARCHAR},
-		#{dietServiceNo:INTEGER},
-		#{exerServiceNo:INTEGER},
 		'user',
 		#{gender:VARCHAR},		
 		0,
@@ -42,17 +40,24 @@ VALUES (#{userId:VARCHAR},
 		#{password:VARCHAR},
 		#{height:INTEGER},
 		#{age:INTEGER},
-		#{regDate:DATE},
-		#{strdWtrIntake:DOUBLE},
-		#{serviceTrgt:VARCHAR},
-		#{trgtWeight:DOUBLE},
-		#{trgtBodyFat:DOUBLE},
-		#{trgtBodyMuscle:DOUBLE},
+		SYSDATE,
+		0,
+		0,
+		0,
+		0,
+		0,
 		#{blcAddDate:DATE},
 		#{blcAddWhy:VARCHAR},
 		#{lastConTime:DATE},
-		#{userSttMsg:VARCHAR})
+		'상태메세지없음')
 </insert>
+
+<select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
+SELECT
+user_id, user_name, password, cellphone, age, reg_date, last_con_time, blc_rgs_stt, diet_service_no, exer_service_no, gender,role,user_img
+from users
+where user_id = #{value}
+</select>
 
 </mapper>
 

@@ -33,13 +33,24 @@
       var userImg = $("#userImg").val();
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
-      //var weight=$("input[name='weight']").val();
       var age =$("#age").val();
-  
+      var userImg = $("#userImg").val();
+      if($("#male").val() == 'male'){
+    	  var gender=$("#male").val();
+      }
+      if($("#female").val() == 'female'){
+    	  var gender=$("#female").val();
+      }
+      if(age == null || userId == null || userName==null || password==null || cellphone==null){
+    	  alert("미기입항목이 있습니다.");
+    	  return;
+      }else alert("회원가입에 성공하셨습니다.")
+  	  console.log(gender);
       console.log("fncAddUser끝");
-
+      console.log(userImg);
+  
       $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
-      alert("")
+     
       
    }
    
@@ -60,61 +71,63 @@
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">이메일</div>
 <div align="center">
-<input id ="userId" name="userId" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="userId" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id ="userId" name="userId" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일형식으로 작성해주세요." style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div>
 <div align ="center" data-text-content="true" style="font-weight:bold;font-size:18px ;color: rgb(41, 96, 47)" class="">인증번호</div>
-<p align = "center"> <input type = "text" id = "agreeNum" name="agreeNum" value ="인증번호를 입력해주세요." class = "agreement"><input type = "button" value = "인증번호 확인 "></p>
+<p align = "center"> <input type = "text" id = "agreeNum" name="agreeNum" placeholder ="인증번호를 입력해주세요." class = "agreement"><input type = "button" value = "인증번호 확인 "></p>
 </div>
 <br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">이름</div>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >이름</div>
 <div align="center">
-<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">휴대폰번호(숫자만 입력)</div>
 <div align="center">
-<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">비밀번호</div>
 <div align="center">
-<input id ="password" name = "password" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id ="password" name = "password" type="password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">프로필사진</div>
-<div align="center"><input id="userImg" name = "userImg" type = "file" ></div>
+<br>
+<p align = "center">
+<input type="file" id="userImg" name = "userImg" ><input type="button" value = "제출"></p>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">몸무게</div>
 <div align="center">
-<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">성별</div>
 <div align = "center">
-<span><input class = "gender" id="male" type = "radio" name = "male" value ="남" checked = "checked" style = "font-size : 20px;">남</span>
-<span><input class = "gender" id="famale" type = "radio" value ="여" name = "female" style = "font-size : 20px;">여</span>
+<span><input class = "gender" id="male" type = "radio" name = "gender" value ="male" checked = "checked" style = "font-size : 20px;">남</span>
+<span><input class = "gender" id="female" type = "radio" name = "gender" value ="female" style = "font-size : 20px;">여</span>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">키</div>
 <div align="center">
-<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);"required>
+<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);"required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">나이</div>
 <div align="center">
-<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align = "center">
 <span style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >약관동의</span>
 <span><input id = "agree" type = "radio" name = "agree" checked = "checked" style = "font-size : 20px;">약관동의</span>
 <span><input id = "disagree"type = "radio" name = "disagree" style = "font-size : 20px;">비동의</span>
-<span><input type = "button" class="agreement-button" value = "약관동의서" ></span>
+<span><input type = "button" class="agreement-button" placeholder = "약관동의서" ></span>
 </div>
 <br>
 <div align = "center">
-<input class = "addUser" type = "submit" value = "회원가입" style = "background-color : rgb(21, 119, 210) ; color : white; border : none;border-radius: 10px; padding: 7px 50px">
+<input class = "addUser" type = "submit" placeholder = "회원가입" style = "background-color : rgb(21, 119, 210) ; color : white; border : none;border-radius: 10px; padding: 7px 50px">
 </div>
 </form>
 </body>
