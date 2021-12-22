@@ -6,17 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-<<<<<<< HEAD
-import kr.or.fineapple.domain.Food;
-import kr.or.fineapple.domain.IntakeRecord;
-import kr.or.fineapple.mapper.DietMapper;
-=======
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.mapper.DietMapper;
 import kr.or.fineapple.service.diet.DietService;
->>>>>>> refs/remotes/origin/master
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -25,14 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 class dietMapperTest {
 
 	 @Autowired
-	 private DietMapper dietMapper;
-<<<<<<< HEAD
-=======
-	 
-		@Autowired
+	 private DietMapper dietMapper; 
+		
+	 @Autowired
 		@Qualifier("dietServiceImpl")
 		private DietService dietService;
->>>>>>> refs/remotes/origin/master
+
 	
 	@Test
 	public void contextLoads() throws Exception {
@@ -72,12 +64,7 @@ class dietMapperTest {
 		record.setMeal("¾Æ");
 		record.setUserId("aaa123@naver.com");
 	
-		
-		
-<<<<<<< HEAD
-		
-        log.info("timeMapper time: " + dietMapper.insertDietService(record));
-=======
+
 
 
 
@@ -86,6 +73,6 @@ class dietMapperTest {
 //        log.info("addIntakeRecord : " + dietService.addIntakeRecord(record));
 //        log.info("getDietService : " + dietService.getDietService(userId));
 		  log.info("updatetrgt : " + dietMapper.updateBodyInfo(dietServ));
->>>>>>> refs/remotes/origin/master
+
 	}
 }
