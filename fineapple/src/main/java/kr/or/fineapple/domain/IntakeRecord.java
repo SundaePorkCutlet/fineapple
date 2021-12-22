@@ -23,17 +23,15 @@ public class IntakeRecord {
 	double foodCarb;
 	double foodProtein;
 	double foodFat;
-	String dietServiceTrgt;
-
 	double userFoodIntake;
 	double userWtrIntake;
 	double remainKcal;
 	String meal;
-
 	double bodyFat;
 	double trgtBodyFat;
 	LocalDate date;
 	Food food;
+	
 	
 	
 	

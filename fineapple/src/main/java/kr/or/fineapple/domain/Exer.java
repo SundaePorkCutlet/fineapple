@@ -16,10 +16,10 @@ public class Exer {
 	int exerLv;
 	String exerCate;
 	String exerName;
-	double exerKcal;
+	Double exerKcal;
 	String exerVideoName;
 	LocalTime exerVideoTime;
-	
+	String dodbogi;
 	
 	public Exer() {
 		
