@@ -18,6 +18,7 @@
 		<result property="groupNo" column="group_no"/>
 		
 	</resultMap>
+	
 	<insert id="insertPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual

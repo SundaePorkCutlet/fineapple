@@ -14,11 +14,8 @@ public class DietServiceImpl implements DietService{
 	@Autowired
 	private DietMapper dietMapper;
 	
+	
 	@Override
-<<<<<<< HEAD
-	public void addDietService(IntakeRecord record) throws Exception {
-			dietMapper.insertDietService(record);
-=======
 	public int addDietService(DietServ diet) throws Exception {
 		return	dietMapper.insertDietService(diet);
 	}
@@ -32,7 +29,7 @@ public class DietServiceImpl implements DietService{
 	public int addIntakeRecord(IntakeRecord record) throws Exception {
 		// TODO Auto-generated method stub
 		return dietMapper.insertIntakeRecord(record);
->>>>>>> refs/remotes/origin/master
+
 	}
 
 	

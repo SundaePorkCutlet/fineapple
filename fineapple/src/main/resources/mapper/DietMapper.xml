@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.DietMapper">
 
-<<<<<<< HEAD
 		<resultMap id="DietServMap" type="DietServ">
 		<result property="userId" 				column="USER_ID" 		jdbcType="VARCHAR"/>
 		<result property="dietServiceTrgt" 				column="SERVICE_TRGT" 		jdbcType="VARCHAR"/>
@@ -91,31 +90,6 @@
 	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
 	
 	</select>
-	
-=======
-		<resultMap id ="IntakeRecordMap" type="IntakeRecord">
-		<result property="food.foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
-		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
-		<result property="meal" 				column="MEAL" 		jdbcType="VARCHAR"/>
-		<result property="userFoodIntake" 	column="USER_FOOD_INTAKE" 		jdbcType="INTEGER"/>
-  		<result property="userWtrIntake" 	column="USER_WTR_INTAKE" 		jdbcType="INTEGER"/>
-		</resultMap>
-		
-
-	<insert id="insertDietService" parameterType="IntakeRecord">
-	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
-	VALUES (seq_product_prod_no.nextval,
-			0,
-			#{foodNo:INTEGER},
-			#{userId:VARCHAR},
-			SYSDATE,
-			#{meal:VARCHAR},
-			#{userFoodIntake:INTEGER},
-			#{userWtrIntake:INTEGER}
-			)
-	
-	</insert>
->>>>>>> refs/heads/KIM
 
 
 </mapper>
