@@ -1,8 +1,11 @@
 package kr.or.fineapple.trgtHabit;
 
+import java.time.Duration;
 import java.time.LocalDate;
-
-import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.TrgtHabit;
-import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Timer;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
 @RestController
@@ -29,17 +32,18 @@ public class RestTrgtHabitController {
 	}
 
 	@RequestMapping(value="json/getTrgtHabit", method=RequestMethod.POST)
-	public ModelAndView getTrgtHabit(@RequestBody TrgtHabit trgtHabit, @RequestBody LocalDate date) {
+	public TrgtHabit getTrgtHabit(@RequestBody TrgtHabit trgtHabit, @RequestBody LocalDate date) {
 	
 		System.out.println("/trgtHabit/json/getTrgtHabit : POST");
-
+		////조회를 위한 service 호출
 		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), date, trgtHabit.getTrgtHabitCateNo());
+		////성공일수 출력 위한 연산 Logic
+		//시작일자와 오늘일자의 차
+		LocalDateTime trgtHabitStartDate = trgtHabit.getTrgtHabitStartDate().atStartOfDay();
+		int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+		returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("trgtHabit", returnTrgtHabit);
-		mav.setViewName("trgtHabit/getTrgtHabit.html");
-		
-		return mav;
+		return returnTrgtHabit;
 	}
 	
 	@RequestMapping(value="json/addTrgtHabit", method=RequestMethod.POST)
@@ -55,6 +59,20 @@ public class RestTrgtHabitController {
 		mav.setViewName("redirect:/trgtHabit/json/getTrgtHabit");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="json/getCurrentTime")
+	public Timer getCurrentTime() {
+		
+		System.out.println("/trgtHabit/json/getCurrentTime");
+		
+		Timer time = new Timer();
+		time.setHour(LocalTime.now().getHour());
+		time.setMin(LocalTime.now().getMinute());
+		time.setSec(LocalTime.now().getSecond());
+		
+		System.out.println(time);
+		return time;
 	}
 	
 }
