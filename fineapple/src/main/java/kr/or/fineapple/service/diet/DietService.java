@@ -3,6 +3,7 @@ package kr.or.fineapple.service.diet;
 import java.util.Map;
 
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.common.Search;
 
@@ -19,4 +20,5 @@ public interface DietService {
 	
 	public Map<String,Object> getFoodList(Search search)throws Exception;
 	
+	public int addFavMeal(FavMeal favMeal)throws Exception;
 }

@@ -12,7 +12,7 @@
 		<result property="dailyTrgtIntakeFat" 				column="DAILY_TRGT_INTAKE_FAT" 		jdbcType="DOUBLE"/>
 		<result property="bodyFat" 				column="BODY_FAT" 		jdbcType="DOUBLE"/>
 		<result property="trgtBodyFat" 				column="TRGT_BODY_FAT" 		jdbcType="DOUBLE"/>
-		
+		<result property="userServiceNo"	column="USER_SERVICE_NO" jdbcType="INTEGER"/>
 		
 		</resultMap>
 		
@@ -38,10 +38,11 @@
   		<result property="isAPI" 	column="IS_API" 		jdbcType="INTEGER"/>
 		</resultMap>
 		
-		<resultMap id ="FavMealMap" type="FavMeal">
-		<result property="favMealNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
-		<result property="favMealName" 	column="USER_ID" 		jdbcType="VARCHAR"/>
-		<result property="favMealKcal" 				column="MEAL" 		jdbcType="DOUBLE"/>
+		<resultMap id ="FavMealMap" type="FavMeal">		
+		<result property="userServiceNo" 				column="DIET_SERVICE_NO" 		jdbcType="INTEGER"/>
+		<result property="favMealNo" 				column="FAV_MEAL_NO" 		jdbcType="INTEGER"/>
+		<result property="favMealName" 	column="FAV_MEAL_NAME" 		jdbcType="VARCHAR"/>
+		<result property="favMealKcal" 				column="FAV_MEAL_KCAL" 		jdbcType="DOUBLE"/>
 		</resultMap>
 
 
@@ -77,7 +78,7 @@
 	<update id="updateServiceTrgt" parameterType="DietServ">
 	UPDATE USERS 
 	SET SERVICE_TRGT=#{serviceTrgt:VARCHAR}
-	WHERE USER_ID=#{userId:VARCHAR
+	WHERE USER_ID=#{userId:VARCHAR}
 	</update>
 
 	<insert id="insertIntakeRecord" parameterType="IntakeRecord">
@@ -124,5 +125,19 @@
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 
+	<insert id="insertFavMeal" parameterType="FavMeal">
+	INSERT INTO FAV_MEAL(fav_Meal_no,
+	diet_service_no, fav_meal_name,fav_meal_kcal) 
+	VALUES(seq_fav_meal_fav_Meal_no.NEXTVAL,
+	(SELECT user_service_no FROM user_service WHERE user_id=#{userId:VARCHAR}),
+	#{favMealName:VARCHAR},
+	#{favMealKcal:DOUBLE} )
+	
+	</insert>
+	
+	
+	
+	
+	
 
 </mapper>

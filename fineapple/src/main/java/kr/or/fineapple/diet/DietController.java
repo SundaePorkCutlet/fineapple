@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Food;
-import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.diet.DietService;
@@ -46,20 +45,30 @@ public class DietController {
 	
 	
 	@GetMapping("addDietService")
-	public String addDietServiceget(HttpServletRequest request,Model model) {
+	public String addDietServiceget(HttpServletRequest request,Model model) throws Exception {
 		
 		System.out.println("get:addDietService");
 		
 		if((User)request.getSession(true).getAttribute("user")!=null) {
 			User user =(User)request.getSession(true).getAttribute("user");
-			String userId = user.getUserId();
-			System.out.println(userId);
+			System.out.println(user);
+		
+			DietServ serv = dietService.getDietService(user.getUserId());
+			
+			if(serv.getUserServiceNo()!=0) {
+			
+			model.addAttribute("user",user);
+			model.addAttribute("dietServ",serv);
+			return "diet/getDietService.html";
+				}else {
+					return "diet/addDietService.html";}
+			
 			}else {
 				return "redirect:../user/login";
 			}
+
 		
 		
-		return "diet/addDietService.html";
 	}
 	
 
@@ -81,7 +90,8 @@ public class DietController {
 		}
 				
 		serv = dietService.getDietService(userId);
-		model.addAttribute(serv);
+		model.addAttribute("dietServ",serv);
+		model.addAttribute("user",user);
 		
 		
 
@@ -94,6 +104,24 @@ public class DietController {
 		
 		
 		return "diet/getDietService.html";
+	}
+	
+	@GetMapping("updateDietService")
+	public String updateDietService(Model model, HttpServletRequest request) throws Exception {
+		System.out.println("get:updateDietService");
+		
+		User user =(User)request.getSession(true).getAttribute("user");
+		System.out.println(user);
+	
+		DietServ serv = dietService.getDietService(user.getUserId());
+		
+		
+		model.addAttribute("user",user);
+		model.addAttribute("dietServ",serv);
+		
+		return "diet/addDietService.html";
+			
+		
 	}
 	
 	
