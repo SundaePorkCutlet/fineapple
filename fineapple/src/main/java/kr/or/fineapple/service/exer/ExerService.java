@@ -20,7 +20,15 @@ public interface ExerService {
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
 	
-	public Exer getExer(String Name)throws Exception;
+	
+	public void addExer(Exer exer)throws Exception;
+	
+	public Exer getExer(int exerNo)throws Exception;
+	
+	public int postUpdateExer(Exer exer)throws Exception;
+	
+	public int deleteExer(int exerNo)throws Exception;
+	
 	
 	public void updateUserService(ExerService serivce)throws Exception;
 	

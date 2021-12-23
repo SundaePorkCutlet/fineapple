@@ -59,6 +59,7 @@ public class ExerServiceImpl implements ExerService {
 		
 		List<Search> list = exerMapper.getExerList(search);
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("list", list);
 		map.put("search", search);
 		
@@ -67,17 +68,37 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
-	public Exer getExer(String exerName) {
+	public Exer getExer(int exerNo) {
 		
-		return exerMapper.getExer(exerName);
+		return exerMapper.getExer(exerNo);
 			
 	}
-	
 	
 	@Override
 	public void updateUserService(ExerService serivce) throws Exception {
 		
 		
 	}
+
+	@Override
+	public int postUpdateExer(Exer exer) {
+		return exerMapper.updateExer(exer);
+		
+	}
+
+	@Override
+	public int deleteExer(int exerNo) {
+		return exerMapper.deleteExer(exerNo);
+			
+	}
+
+	@Override
+	public void addExer(Exer exer) throws Exception {
+	
+		
+	}
+	
+	
+
 
 }

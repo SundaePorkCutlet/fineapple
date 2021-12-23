@@ -20,17 +20,12 @@ public class Exer {
 	String dodbogi;
 	String exerLink;
 	
-	
 
 
 	public Exer() {
 		
 	}
-
-
-	public String setExerVideoTime(int h, int m, int s) {
-		
-		return h+":"+m+":"+s;
-	}
+	
+	
 	
 }
