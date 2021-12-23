@@ -60,19 +60,23 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 @GetMapping("getExer")
 public String getExer(@RequestParam(value = "exerName", required=false) String exerName, Model model) throws Exception{
 	
+	Exer exer = new Exer();
+	exer = exerService.getExer(exerName);
 	System.out.println("getExer");
 	
-	if(exerName == null) {
+	if(exer.getExerVideoName() == null) {
+		exer.setExerVideoName("null");
 		
-		return "redirect:/exer/getExerList.html";
-	}
-
-	Exer exer = exerService.getExer(exerName);
+		
+		model.addAttribute("exer", exer);
+		
+	}else {
 	
 	model.addAttribute("exer", exer);
 	
+	}
+	
 	return "exer/getExer.html";
-
 }
 
 }
