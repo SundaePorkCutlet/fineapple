@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
 </head>
 <body>
-<div th:insert="index/toolbar :: toolbar">
-</div>
+	<div th:insert="index/toolbar :: toolbar">
+	</div>
+	<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element">
+					<div data-text-content="true"
+					style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);">오늘의 추천 음식?
+					</div>
+				</div>
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+				<br>
+				<br>
+				<div style="text-align: right;">
+				<button id= "addPost"></button>
+				</div>	
+				<table class="table table-hover table-striped">			
+					<thead>
+						<tr>
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">사진</th>         
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">제목</th>         
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">내용</th>           
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">작성자</th>    
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">작성날짜</th>   
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">조회수</th>   
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">댓글수</th>   
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">좋아요</th>                      
+						</tr>
+					</thead>
+					<tbody>
+						
+						<tr th:each = "data : ${list}">
+						
+						<td th:text = "사진" ></td>
+						<td th:text = "${data.title}"></td>
+						<td>
+							<a th:href="@{/community/getPost(postNo=${data.postNo})}" th:text = "${data.content}"></a>
+						</td>
+						<td th:text = "${data.user.userId}"></td>
+						<td th:text = "${data.postDate}" ></td>
+						<td th:text = "${data.viewCount}" ></td>
+						<td th:text = "${data.cmntCount}"></td>
+						<td th:text = "${data.postLikeCount}"></td>
+								
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+<script type="text/javascript">
 
-
+$(function(){
+	$("addPost").on("click", function(){
+		
+	})
+})
+</script>
 </body>
 </html>

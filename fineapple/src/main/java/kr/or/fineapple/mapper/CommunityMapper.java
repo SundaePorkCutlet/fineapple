@@ -16,10 +16,13 @@ public interface CommunityMapper {
 	
 	public List<Board> getPostList();
 	
+	public Board getPost(Board board);
+	
 	public void updatePostViewCount(Board board);
 	
 	public void updatePostLike(Map map);
 	
 	public void updateCmntLike(Map map);
+
 
 }

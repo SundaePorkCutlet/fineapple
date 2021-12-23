@@ -27,7 +27,6 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public int addPost(Board board) {
 		// TODO Auto-generated method stub
-		System.out.println("½Ã¹ß»õ³¢");
 		return communityMapper.addPost(board);
 		
 
@@ -62,6 +61,12 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.updateCmntLike(map);
 		
 	}
+
+	@Override
+	public Board getPost(Board board) {
+		return communityMapper.getPost(board);
+	}
+	
 	
 	
 	
