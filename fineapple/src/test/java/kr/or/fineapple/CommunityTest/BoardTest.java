@@ -1,7 +1,5 @@
 package kr.or.fineapple.CommunityTest;
 
-import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;

@@ -21,6 +21,9 @@ public class Exer {
 	LocalTime exerVideoTime;
 	String dodbogi;
 	
+	
+
+
 	public Exer() {
 		
 	}
