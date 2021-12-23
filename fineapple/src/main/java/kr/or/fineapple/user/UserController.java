@@ -2,12 +2,11 @@ package kr.or.fineapple.user;
 
 import java.io.File;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,9 @@ public class UserController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
-	private static final String FILE_PATH = "C:\\Users\\sec\\git\\fineapple\\fineapple\\src\\main\\resources\\templates\\assets\\profile";
+	@Value("${file.upload.directory}")
+	private String filePath ;
+
 	
 	public UserController(){
 		System.out.println("UserController들어옴");
@@ -80,19 +81,23 @@ public class UserController {
 	@RequestMapping(value="addUser/redirect", method= RequestMethod.POST)
 	public String addUserRedirect(@ModelAttribute("user") User user , @RequestParam(value="userImg1", required = false) MultipartFile file) throws Exception {  
 		System.out.println("addUserRedirect");
-		System.out.println(user + "dddddddddddddddddddd");
+		System.out.println("user잘 들어갔나용" + user);
 		
 		
 		if(!file.getOriginalFilename().isEmpty()) {
-			System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzz");
-			
-			file.transferTo(new File(FILE_PATH, file.getOriginalFilename()));
+			System.out.println("if문 입장");
+			file.transferTo(new File(filePath, file.getOriginalFilename()));
 			user.setUserImg(file.getOriginalFilename());
 			
+		}
+		else {
+			System.out.println("기본이미지");
+			user.setUserImg("defaultProfile.jpg"); 
 		}
 
 		userService.addUser(user);
 		System.out.println("user:"+user.toString());
+		System.out.println("회원가입 됐나용");
 		return "redirect:/user/login";
 	}
 	
