@@ -35,6 +35,7 @@ public class User {
 	Double trgtBodyFat;
 	Double trgtBodyMuscle;
 	String serviceTrgt;
+	Double weight;
 	
 	public User() {
 		
