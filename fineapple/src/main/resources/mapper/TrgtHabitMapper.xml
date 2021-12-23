@@ -19,19 +19,19 @@
 			#{userId:VARCHAR},
 			#{trgtHabitCateNo:INTEGER},
 			#{trgtHabitCateName:VARCHAR},
-			#{trgtHabitStartDate:DATE})
+			SYSDATE)
 	</insert>
 	
 	<!-- SELECT : 목표습관관리 조회 -->
 	<select id="getTrgtHabit" resultMap="TrgtHabitMap">
 	SELECT TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE, TRGT_HABIT_INIT_DATE
 	FROM trgt_habit_service
-	WHERE user_id=#{userId}
+	WHERE user_id=#{userId:VARCHAR}
 		AND trgt_habit_init_date IS NULL
-		AND trgt_habit_start_date <![CDATA[<]]> #{viewDate}
-		AND trgt_habit_cate_no = #{trgtHabitCateNo}
+		AND trgt_habit_start_date <![CDATA[<]]> #{viewDate:DATE}
+		AND trgt_habit_cate_no = #{trgtHabitCateNo:INTEGER}
 	</select>
-	
+
 	<!-- SELECT : 목표습관초기화 -->
 	<update id="endTrgtHabit" parameterType="int">
 	UPDATE trgt_habit_service

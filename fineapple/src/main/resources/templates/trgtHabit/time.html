@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="utf-8">
+</head>
+<body th:fragment="time">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script th:inline="javascript">
+$(function(){
+	
+	//타이머 실행 스케줄
+	setTimeout(function run(){
+		
+		time();
+		setTimeout(run, 1000);
+		
+	}, 1000);
+
+});
+function time(){
+	/*<![CDATA[*/
+		$.ajax({
+					url: "/trgtHabit/json/getCurrentTime",
+					type: "GET",
+					}).done(function(time){
+						$("body > div:nth-child(3) > div:nth-child(5) > span").html(time.hour+":"+time.min+":"+time.sec);
+					});
+	/*]]*/
+	};
+</script>
+<span th:text="|${time.hour}:${time.min}:${time.sec}|"></span>
+</body>
+</html>
