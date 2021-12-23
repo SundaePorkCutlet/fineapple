@@ -30,11 +30,9 @@
       console.log(userId);
       var userName=$("#userName").val();
       console.log(userName);
-      var userImg = $("#userImg").val();
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
       var age =$("#age").val();
-      var userImg = $("#userImg").val();
       if($("#male").val() == 'male'){
     	  var gender=$("#male").val();
       }
@@ -45,11 +43,12 @@
       if(age == null || userId == null || userName==null || password==null || cellphone==null){
     	  alert("미기입항목이 있습니다.");
     	  return;
-      }else alert("회원가입에 성공하셨습니다.");
+      }
   	  console.log(gender);
       console.log("fncAddUser끝");
-      console.log(userImg);
+
   
+      alert("회원가입에 성공하셨습니다.");
       $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
      
       
@@ -98,7 +97,7 @@
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">프로필사진</div>
 <br>
 <p align = "center">
-<input type="file" id="userImg" name = "userImg1" ><input type="button" value = "제출"></p>
+<input type="file" id="userImg1" name = "userImg1" ></p>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">몸무게</div>
 <div align="center">
