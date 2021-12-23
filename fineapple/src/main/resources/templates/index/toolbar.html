@@ -4,9 +4,21 @@
     <meta charset="utf-8">
    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <link rel="shortcut icon" href="../assets/img/logo.png" type="image/x-icon">
     <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+
+    
+    
+    
+    
+    
+    
+    
+    
     <title>fineapple</title>
 
     <!-- Bootstrap core CSS -->
@@ -76,7 +88,8 @@
             <div class="me-2">
                 <i class="las la-user member-icon"></i>
             </div>
-            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그아웃</button>
+            <button th:if = "${session.user == null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/login}'|">로그인</button>
+            <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>            
             <button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
        </div>
 

@@ -12,7 +12,7 @@ import kr.or.fineapple.domain.community.Board;
 @Repository
 public interface CommunityMapper {
 	
-	public int insertPost(Board board);
+	public int addPost(Board board);
 	
 	public List<Board> getPostList();
 	

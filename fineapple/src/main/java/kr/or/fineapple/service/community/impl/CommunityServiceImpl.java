@@ -25,10 +25,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public int insertPost(Board board) {
+	public int addPost(Board board) {
 		// TODO Auto-generated method stub
 		System.out.println("½Ã¹ß»õ³¢");
-		return communityMapper.insertPost(board);
+		return communityMapper.addPost(board);
 		
 
 	}

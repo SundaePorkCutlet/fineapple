@@ -44,13 +44,13 @@ public class TrgtHabitMapperTest {
 		 * String userId = "hc@gmail.com"; LocalDate viewDate = LocalDate.now(); int
 		 * trgtHabitCateNo = 1;
 		 * 
-		 * // Map<String, Object> map = new HashMap<>(); map.put("userId", userId); //
-		 * map.put("viewDate", viewDate); map.put("trgtHabitCateNo", trgtHabitCateNo);
+		 * // Map<String, Object> map = new HashMap<>(); map.put("userId", userId);
+		 * //map.put("viewDate", viewDate); map.put("trgtHabitCateNo", trgtHabitCateNo);
 		 * 
 		 * log.info(trgtHabitService.getTrgtHabit(userId, viewDate,
 		 * trgtHabitCateNo).toString());
-		 * 
 		 */
+		 
 		//endTrgtHabit Test
 		
 		/*

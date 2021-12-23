@@ -1,10 +1,16 @@
 package kr.or.fineapple.service.diet.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.DietMapper;
 import kr.or.fineapple.service.diet.DietService;
 
@@ -30,9 +36,21 @@ public class DietServiceImpl implements DietService{
 
 		// TODO Auto-generated method stub
 		return dietMapper.insertIntakeRecord(record);
-
-
 	}
+
+	@Override
+	public Map<String ,Object> getFoodList(Search search) throws Exception {
+		
+		List<Food> list = dietMapper.getFoodList(search);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("search", search);
+		
+		return map;
+	}
+	
+	
 
 	
 }

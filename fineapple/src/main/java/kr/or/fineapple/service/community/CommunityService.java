@@ -7,7 +7,7 @@ import kr.or.fineapple.domain.community.Cmnt;
 
 public interface CommunityService {
 	
-	public int insertPost(Board board);
+	public int addPost(Board board);
 	
 	public List<Board> getPostList();
 	

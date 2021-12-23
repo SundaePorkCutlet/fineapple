@@ -22,7 +22,7 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 	public void addTrgtHabit(String userId, TrgtHabit trgtHabit) {
 		
 		////trgtHabit에 userId 셋팅
-		//trgtHabit.setUserId(userId);
+		trgtHabit.setUserId(userId);
 		////trgtHabit 추가
 		trgtHabitMapper.addTrgtHabit(trgtHabit);
 	}

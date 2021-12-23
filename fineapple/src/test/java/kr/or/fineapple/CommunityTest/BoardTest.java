@@ -1,7 +1,5 @@
 package kr.or.fineapple.CommunityTest;
 
-import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
+import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.service.community.CommunityService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +29,7 @@ public class BoardTest {
 	}
 	
 	//@Test
-	public void InsertPost() {
+	public void addPost() {
 		
 		Board board = new Board();
 		User user = new User();
@@ -40,7 +39,7 @@ public class BoardTest {
 		 * board.setPostDate(LocalDate.now()); board.setCateName(2);
 		 */
 
-		communityService.insertPost(board);
+		communityService.addPost(board);
 		
 	//	int postNo = board.getPostNo();
 		
@@ -68,10 +67,8 @@ public class BoardTest {
 		
 		board.setPostNo(4);
 		
-		for (int i = 0; i < 100; i++) {
-			communityService.updatePostViewCount(board);
-			
-		}
+		communityService.updatePostViewCount(board);
+
 	}
 	
 	@Test
@@ -83,6 +80,17 @@ public class BoardTest {
 		
 		
 	}
+	
+	@Test
+	public void updateCmntLike() {
+		Cmnt cmnt = new Cmnt();
+		
+		//cmnt.setBoard(new Board().setPostNo(3));
+		
+		
+	}
+	
+	
 	
 	
 	

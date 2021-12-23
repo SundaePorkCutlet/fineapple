@@ -29,11 +29,12 @@ public class RestDietController {
 	public String apiSearch(String foodName){
 		System.out.println(foodName);
 		
+				
 		Map<String,Object> map = new HashMap<String,Object>();
 		
-	     Map<String,String> bb = new HashMap();
+	    Map<String,String> bb = new HashMap();
 		
-	     JSONArray jsonArray = new JSONArray();
+	    JSONArray jsonArray = new JSONArray();
 		
 	try {	
 		RestTemplate resttemplate = new RestTemplate();
@@ -51,30 +52,36 @@ public class RestDietController {
 		map.put("header", resultMap.getHeaders());
 		map.put("body", resultMap.getBody()); 
 		
-	    ObjectMapper mapper = new ObjectMapper();
-       
-       	LinkedHashMap im = (LinkedHashMap)resultMap.getBody().get("I2790");
-       	ArrayList is = (ArrayList)im.get("row");
-   
-       
-       	
-       	for(int i = 0; is.size()>i; i++) {
-       	LinkedHashMap aa = (LinkedHashMap)is.get(i);
-        JSONObject jsonObject = new JSONObject();
+	   ObjectMapper mapper = new ObjectMapper();
+	  
+	  	LinkedHashMap im = (LinkedHashMap)resultMap.getBody().get("I2790");
+	  	ArrayList is = (ArrayList)im.get("row");
 
-       	jsonObject.put("foodName", aa.get("DESC_KOR").toString());
-        jsonArray.add(jsonObject);
-       	}
+	  System.out.println(is);
+	  	
+	  	for(int i = 0; is.size()>i; i++) {
+	  	LinkedHashMap aa = (LinkedHashMap)is.get(i);
+	   JSONObject jsonObject = new JSONObject();	   
+	  	jsonObject.put("foodName", aa.get("DESC_KOR").toString());
+	  	jsonObject.put("servingSize",aa.get("SERVING_SIZE").toString());
+	  	jsonObject.put("foodKcal", aa.get("NUTR_CONT1").toString());
+	  	jsonObject.put("foodCarb", aa.get("NUTR_CONT2").toString());
+	  	jsonObject.put("foodProtein", aa.get("NUTR_CONT3").toString());
+	  	jsonObject.put("foodFat", aa.get("NUTR_CONT4").toString());
+	   jsonArray.add(jsonObject);
+	  	}
 
-       System.out.println(jsonArray.toString());
+	  	System.out.println(jsonArray);
+	 
+	  	
 		
 	}catch(Exception e){
-	       map.put("statusCode", "999");
-           map.put("body"  , "excpetion오류");
-            System.out.println(e.toString());
+	      map.put("statusCode", "999");
+	      map.put("body"  , "excpetion오류");
+	       System.out.println(e.toString());
 		
 	}
-		return jsonArray.toString();
-
+	
+	return jsonArray.toString();
 }
 }

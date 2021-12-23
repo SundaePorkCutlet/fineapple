@@ -90,6 +90,27 @@
 	
 
 	</select>
+	
+	<select  id="getFoodList"  parameterType="hashMap"  resultMap="FoodMap">
+	SELECT *
+	FROM (SELECT inner_table.* , ROWNUM AS food_No
+	FROM(SELECT food_name, food_Kcal, food_carb, food_protein, NVL(food_fat,0) ff, serving_size
+	FROM FOOD
+	<if test="searchCondition != null">
+	<where>
+	<if test="searchCondition == 0 and searchKeyword !='' ">
+	food_name like '%'||#{searchKeyword}||'%'
+	</if>
+	<if test="searchCondition == 1 and searchKeyword !='' ">
+	food_kcal like '%'||#{searchKeyword}||'%'
+	</if>
+	</where>
+	</if>
+	ORDER BY food_No ) inner_table)
+	WHERE food_No BETWEEN 1 AND 4
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
 
 
 </mapper>
