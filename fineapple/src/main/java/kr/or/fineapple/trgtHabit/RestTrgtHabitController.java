@@ -4,8 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,33 +30,39 @@ public class RestTrgtHabitController {
 	}
 
 	@RequestMapping(value="json/getTrgtHabit", method=RequestMethod.POST)
-	public TrgtHabit getTrgtHabit(@RequestBody TrgtHabit trgtHabit, @RequestBody LocalDate date) {
+	public TrgtHabit getTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
 	
 		System.out.println("/trgtHabit/json/getTrgtHabit : POST");
 		////조회를 위한 service 호출
-		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), date, trgtHabit.getTrgtHabitCateNo());
-		////성공일수 출력 위한 연산 Logic
-		//시작일자와 오늘일자의 차
-		LocalDateTime trgtHabitStartDate = trgtHabit.getTrgtHabitStartDate().atStartOfDay();
-		int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
-		returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
-		
-		return returnTrgtHabit;
+		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), trgtHabit.getViewDate(), trgtHabit.getTrgtHabitCateNo());
+	
+		//결과가 null일때(목표 습관 진행중인 건수가 없을때)
+		if(returnTrgtHabit != null) {		
+			////성공일수 출력 위한 연산 Logic
+			//시작일자와 오늘일자의 차
+			LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
+			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
+		}
+
+		return returnTrgtHabit;		
 	}
 	
 	@RequestMapping(value="json/addTrgtHabit", method=RequestMethod.POST)
-	public ModelAndView addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
-		
+	public void addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
+		  
 		System.out.println("/trgtHabit/json/addTrgtHabit : POST");
-
+		//서비스 시작을 위한 service 호출	  
 		trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("trgtHabit", trgtHabit);
-		mav.addObject("date", LocalDate.now());
-		mav.setViewName("redirect:/trgtHabit/json/getTrgtHabit");
+	}
+	 
+	@RequestMapping(value="json/endTrgtHabit", method=RequestMethod.POST)
+	public void endTrgtHabit(@RequestBody TrgtHabit trgthabit) {
 		
-		return mav;
+		System.out.println("/trgtHabit/json/endTrgtHabit : POST");
+		////목표 성공 일수 초기화를 위한 서비스 호출
+		trgtHabitService.endTrgtHabit(trgthabit.getTrgtHabitServiceNo());
 	}
 	
 	@RequestMapping(value="json/getCurrentTime")
