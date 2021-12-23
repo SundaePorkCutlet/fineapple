@@ -10,10 +10,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class FavMeal {
-
+	
+	String userId;
+	int userServiceNo;
 	int favMealNo;
 	String favMealName;
-	int favMealKcal;
+	double favMealKcal;
 	List<Food> food;
 	
 	

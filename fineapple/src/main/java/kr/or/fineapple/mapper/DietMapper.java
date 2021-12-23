@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.common.Search;
@@ -24,10 +25,12 @@ public interface DietMapper {
        
        int updateBodyInfo(DietServ diet);
        
-       int updateServiceTtgt(DietServ diet);
+       int updateServiceTrgt(DietServ diet);
        
        List<Food> getFoodList(Search search);
        
        int updateDietService(DietServ diet);
+       
+       int insertFavMeal(FavMeal favMeal);
    }
 

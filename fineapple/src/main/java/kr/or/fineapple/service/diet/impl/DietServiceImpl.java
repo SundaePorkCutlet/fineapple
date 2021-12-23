@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.common.Search;
@@ -23,7 +24,7 @@ public class DietServiceImpl implements DietService{
 
 	@Override
 	public int addDietService(DietServ diet) throws Exception {
-				dietMapper.updateServiceTtgt(diet);
+				dietMapper.updateServiceTrgt(diet);
 				dietMapper.updateBodyInfo(diet);
 		return	dietMapper.insertDietService(diet);
 	}
@@ -60,6 +61,13 @@ public class DietServiceImpl implements DietService{
 		map.put("search", search);
 		
 		return map;
+	}
+
+
+
+	@Override
+	public int addFavMeal(FavMeal favMeal) throws Exception {
+		return dietMapper.insertFavMeal(favMeal);
 	}
 	
 	
