@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.mapper.DietMapper;
@@ -27,7 +28,7 @@ class dietMapperTest {
 	private DietService dietService;
 
 	
-	@Test
+//	@Test
 	public void contextLoads() throws Exception {
 		IntakeRecord record = new IntakeRecord();
 		Food food = new Food() ;
@@ -71,6 +72,37 @@ class dietMapperTest {
 //        log.info("getDietService : " + dietService.getDietService(userId));
 		  log.info("updatetrgt : " + dietMapper.updateBodyInfo(dietServ));
 
+	}
+	
+	@Test
+	public void addfavmeal() throws Exception{
+		FavMeal favMeal = new FavMeal();
+		Food food = new Food();
+		DietServ diet = new DietServ();
+		food.setFoodCarb(1.1);
+		food.setFoodImg(null);
+		food.setFoodIntoStt(1);
+		food.setFoodKcal(313.2);
+		food.setFoodName("È«ÁøÈ£");
+		food.setFoodNo(1);
+		food.setFoodProtein(23.1);
+		food.setFoodSodium(1.1);
+		food.setFoodSugar(33.1);
+		food.setIsAPI(0);
+		food.setPrice(1002320);
+		food.setPurchaseConnLink(null);
+		food.setServingSize(100);
+		food.setStoreName(null);
+		
+		diet = dietService.getDietService("aaa123@naver.com");
+		favMeal.setFavMealKcal(0);
+		favMeal.setUserServiceNo(diet.getUserServiceNo());
+		favMeal.setUserId("aaa123@naver.com");
+		favMeal.setFavMealName("Â«»ÍÁöÁ¸");
+		
+		log.info("++"+dietService.addFavMeal(favMeal));
+		
+		
 	}
 }
 

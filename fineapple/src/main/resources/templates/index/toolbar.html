@@ -88,9 +88,13 @@
             <div class="me-2">
                 <i class="las la-user member-icon"></i>
             </div>
-            <button th:if = "${session.user == null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/login}'|">로그인</button>
-            <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>            
-            <button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
+          <div th:if = "${session.user == null}">  
+            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/login}'|">로그인</button>
+			<button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
+            </div>
+            <div th:if = "${session.user != null}">
+            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>            
+            </div>
        </div>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
@@ -103,12 +107,12 @@
             </li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div class="col-md-3 text-end" >
             <div class="mb-2">
-                <button type="button" class="btn btn-default me-2">문의하기</button>
+                <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>
             </div>
             <div>
-                <button type="button" class="btn btn-default">내정보보기</button>
+                <button th:if = "${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
             </div>
         </div>
     </header>
@@ -147,6 +151,7 @@
 						     <ul class="dropdown-menu" aria-labelledby="dropdownworkout">
                             <li><a class="dropdown-item" th:href="@{../exer/addUserService}">서비스활성화</a></li>
                             <li><a class="dropdown-item" th:href="@{../exer/getExerList}">운동검색</a></li>
+                            <li><a class="dropdown-item" th:href="@{../exer/addExer}">운동등록</a></li>
                             <li><a class="dropdown-item" href="#">일일운동량</a></li>
 							 <li><a class="dropdown-item" href="#">루틴</a></li>
 							 <li><a class="dropdown-item" href="#">운동장소찾기</a></li>
@@ -159,8 +164,7 @@
                            aria-expanded="false">습관관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownsep">
                             <li><a class="dropdown-item" th:href="@{../trgtHabit/getTrgtHabit}">습관 관리</a></li>
-                            <li><a class="dropdown-item" href="#">없애야지</a></li>
-                            <li><a class="dropdown-item" href="#">없애장</a></li>
+
 
                         </ul>
 

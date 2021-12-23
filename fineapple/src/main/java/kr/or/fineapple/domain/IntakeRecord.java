@@ -15,11 +15,6 @@ public class IntakeRecord {
 	
 	String userId;
 	int intakeRecordNo;
-	double dailyTrgtIntakeKcal;
-	double dailyTrgtIntakeCarb;
-	double dailyTrgtIntakeProtein;
-	double dailyTrgtIntakeFat;
-	String dietServiceTrgt;
 	double foodKcal;
 	double foodCarb;	
 	double foodProtein;
@@ -28,8 +23,6 @@ public class IntakeRecord {
 	double userWtrIntake;
 	double remainKcal;
 	String meal;
-	double bodyFat;
-	double trgtBodyFat;
 	LocalDate date;
 	Food food;
 

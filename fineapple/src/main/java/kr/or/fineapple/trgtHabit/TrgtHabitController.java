@@ -32,12 +32,6 @@ public class TrgtHabitController {
 		System.out.println(this.getClass());
 	}
 	
-//	@RequestMapping(value="getTrgtHabit", method=RequestMethod.GET)
-//	public String getTrgtHabit() {
-//		System.out.println("/trgtHabit/getTrgtHabit : GET");
-//		return "trgtHabit/getTrgtHabit.html";
-//	}
-
 	@RequestMapping(value="getTrgtHabit", method=RequestMethod.GET)
 	public ModelAndView getTrgtHabit(HttpSession session) {
 	
@@ -52,25 +46,39 @@ public class TrgtHabitController {
 		TrgtHabit trgtHabit = trgtHabitService.getTrgtHabit(userId, date, trgtCateNo);
 		double userWtrIntake = trgtHabitService.getWtrIntake(userId, date);
 		
-		////성공일수 출력 위한 연산 Logic
-		//시작일자와 오늘일자의 차
-		LocalDateTime trgtHabitStartDate = trgtHabit.getTrgtHabitStartDate().atStartOfDay();
-		int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
-		//결과를 trgtHabit 도메인에 셋팅
-		trgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
-		//time 출력을 위한 timer 도메인 셋팅
-		Timer time = new Timer();
-		time.setHour(LocalTime.now().getHour());
-		time.setMin(LocalTime.now().getMinute());
-		time.setSec(LocalTime.now().getSecond());
-		
-		////ModelAndView에 넣어 리턴
+		////리턴할 ModelAndView, Timer 생성
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("trgtHabit", trgtHabit);
-		mav.addObject("userWtrIntake", userWtrIntake);
-		mav.addObject("time", time);
-		mav.setViewName("trgtHabit/getTrgtHabit.html");
+		Timer time = new Timer();
 		
+		//결과가 null일때(목표 습관 진행중인 건수가 없을때)
+		if(trgtHabit != null) {		
+			////성공일수 출력 위한 연산 Logic
+			//시작일자와 오늘일자의 차
+			LocalDateTime trgtHabitStartDate = trgtHabit.getTrgtHabitStartDate().atStartOfDay();
+			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+			//결과를 trgtHabit 도메인에 셋팅
+			trgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
+			//time 출력을 위한 timer 도메인 셋팅
+			time.setHour(LocalTime.now().getHour());
+			time.setMin(LocalTime.now().getMinute());
+			time.setSec(LocalTime.now().getSecond());
+			mav.addObject("trgtHabit", trgtHabit);
+		} else {
+			//빈 trgtHabit 객체 생성
+			TrgtHabit emptyTrgtHabit = new TrgtHabit();
+			emptyTrgtHabit.setTrgtHabitServiceNo(0);
+			emptyTrgtHabit.setTrgtHabitCateNo(1);
+			emptyTrgtHabit.setTrgtHabitSuccDayCount(0);
+			//timer 도메인 셋팅
+			time.setHour(0);
+			time.setMin(0);
+			time.setMin(0);
+			mav.addObject("trgtHabit", emptyTrgtHabit);
+		}
+		mav.addObject("time", time);
+		mav.addObject("userWtrIntake", userWtrIntake);
+		mav.setViewName("trgtHabit/getTrgtHabit.html");
+
 		return mav;
 	}
 	

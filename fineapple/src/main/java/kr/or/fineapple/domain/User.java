@@ -21,6 +21,7 @@ public class User {
 	int blcRgsStt;
 	int userLeaveStt;
 	Double height;
+	Double weight;
 	Double age;
 	LocalDate regDate;
 	Double strdWtrIntake;

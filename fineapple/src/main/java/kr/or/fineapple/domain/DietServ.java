@@ -10,6 +10,7 @@ import lombok.ToString;
 public class DietServ {
 
 	String UserId;
+	int	userServiceNo;
 	double dailyTrgtIntakeKcal;
 	double dailyTrgtIntakeCarb;
 	double dailyTrgtIntakeProtein;
@@ -17,6 +18,7 @@ public class DietServ {
 	String dietServiceTrgt;
 	double bodyFat;
 	double trgtBodyFat;
+	String serviceTrgt;
 	
 	
 	public DietServ() {

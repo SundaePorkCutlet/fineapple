@@ -25,7 +25,11 @@
 	<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
 	<result	property="trgtBodyMuscle"	column="trgt_body_muscle"	jdbcType="DOUBLE"/>
 	<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
+	<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
 </resultMap>
+
+
+
 
 <insert id="addUser"	parameterType="User">
 INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,SERVICE_TRGT,TRGT_WEIGHT,TRGT_BODY_FAT,TRGT_BODY_MUSCLE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
@@ -52,12 +56,22 @@ VALUES (#{userId:VARCHAR},
 		'상태메세지없음')
 </insert>
 
+<insert id="addUserBodyInfo" parameterType="user">
+	INSERT into USER_BODY_INFO(USER_BODY_INFO_NO,USER_ID,WEIGHT,USER_BODY_INFO_DATE)
+	VALUES(seq_user_body_info_no.nextval,
+		#{userId:VARCHAR},
+		#{weight:INTEGER},
+		SYSDATE)
+</insert>
+
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
 SELECT
-user_id, user_name, password, cellphone, age, reg_date, last_con_time, blc_rgs_stt, diet_service_no, exer_service_no, gender,role,user_img
-from users
-where user_id = #{value}
+a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,b.weight
+from users a, user_body_info b
+where a.user_id = #{value}
+AND a.user_id = b.user_id
 </select>
+
 
 </mapper>
 

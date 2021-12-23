@@ -23,8 +23,9 @@
 
 
 	<resultMap id="exerMap" type="Exer">
+	     <result property="exerNo" 			column="EXER_NO" 			jdbcType="INTEGER"/>
 		<result property="exerCate"	column="EXER_CATE" 		jdbcType="VARCHAR" />
-		<result property="exerLv" 	column="EXER_LV" 		jdbcType="INTEGER" />
+		<result property="exerLv" 	column="EXER_LV" 	javaType="int"	jdbcType="INTEGER" />
 		<result property="exerName" 				column="EXER_NAME" 					jdbcType="VARCHAR" />
 		<result property="exerKcal" 				column="EXER_KCAL" 					jdbcType="FLOAT" />
 		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
@@ -115,12 +116,31 @@
 		WHERE exer_No BETWEEN 1 AND 4
 	 </select> -->
 	 
+<!-- 	 <insert id="addExer"  parameterType="Exer">
+	INSERT INTO EXER
+	EXER_NAME  = #{exerName:VARCHAR},
+      	 EXER_CATE =  #{exerCate:INTEGER},
+         EXER_VIDEO_NAME = #{exerVideoName:VARCHAR},
+         EXER_VIDEO_TIME = #{exerVideoTime:VARCHAR},
+         EXER_LV = #{exerLv:INTEGER},
+         EXER_KCAL = #{exerKcal:FLOAT},
+         EXER_LINK =  #{exerLink:VARCHAR}
+	 (EXER_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
+	VALUES (2,
+			#{userId:VARCHAR},
+			#{dailyTrgtBurnningKcal:FLOAT},
+			#{trgtBodyMuscle:FLOAT}
+			)
+	
+	</insert> -->
+	
+	 
 	 
 	<select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap">
 	SELECT *
-	FROM (SELECT inner_table.* , ROWNUM AS exer_No
-	FROM (SELECT exer_name, exer_cate, exer_kcal
-	FROM EXER
+	FROM (SELECT inner_table.* , ROWNUM AS row_seq
+	FROM (SELECT e.exer_no, e.exer_name, e.exer_cate, e.exer_kcal
+	FROM EXER e
 	<if test="searchCondition != null">
 	<where>
 	<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -131,32 +151,49 @@
 	</if>
 	</where>
 	</if>
-	ORDER BY exer_No ) inner_table)
-	WHERE exer_No BETWEEN 1 AND 10
+	ORDER BY exer_No ) inner_table
+	WHERE ROWNUM &lt;= 10)
+	WHERE row_seq BETWEEN 1 AND 10
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	 
 	 
-	<select	id="getExer"	parameterType="String"  resultMap="exerMap">
-			SELECT EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK
-			FROM EXER 
-			WHERE EXER_NAME= #{value}
+	<select	id="getExer"	parameterType="Integer"  resultMap="exerMap">
+			SELECT EXER_NO, EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK, EXER_CATE
+			FROM   EXER 
+			WHERE  EXER_NO= #{exerNo:INTEGER}
 	</select>
 	 
 	 
 	 
 	 <update id="updateExer" parameterType="Exer">
-   UPDATE EXER
-   SET EXER_NAME  = #{exerName:VARCHAR},
-       EXER_VIDEO_NAME = #{exerVideoName:VARCHAR},
-       EXER_VIDEO_TIME = #{exerVideoTime:VARCHAR},
-       EXER_LV = #{exerLv:INTEGER},
-       EXER_KCAL = #{exerKcal:INTEGER},
-       EXER_LINK =  #{exerLv:VARCHAR}
-   WHERE EXER_NAME =  #{exerName:VARCHAR}
+	 <!-- <selectKey order="AFTER" 
+	 keyProperty="exerName,exerCate,exerVideoName,exerVideoTime,exerLv,exerKcal,exerLink" 
+	 keyColumn="EXER_NAME,EXER_CATE,EXER_VIDEO_NAME,EXER_VIDEO_TIME,EXER_LV,EXER_KCAL,EXER_LINK"
+	 resultType="hashmap">
+	 SELECT * FROM
+	 EXER 
+	 WHERE exer_no = #{exerNo}
+	 </selectKey> -->
+	 
+     UPDATE EXER
+     SET EXER_NAME  = #{exerName:VARCHAR},
+      	 EXER_CATE =  #{exerCate:INTEGER},
+         EXER_VIDEO_NAME = #{exerVideoName:VARCHAR},
+         EXER_VIDEO_TIME = #{exerVideoTime:VARCHAR},
+         EXER_LV = #{exerLv:INTEGER},
+         EXER_KCAL = #{exerKcal:FLOAT},
+         EXER_LINK =  #{exerLink:VARCHAR}
+     WHERE EXER_NAME = #{exerName:VARCHAR}
    	</update>
    	
+   	
+   	<delete id="deleteExer" parameterType="Exer">  
+   	DELETE 
+   	FROM EXER
+   	WHERE EXER_NO = #{exerNo:INTEGER}
+   	</delete> 
 	
 
 	<update id="updateUserService" parameterType="BurnningRecord">
