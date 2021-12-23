@@ -33,7 +33,7 @@
 	</sql>
 	
 
-	<insert id="insertPost" parameterType="board">
+	<insert id="addPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual
 		</selectKey>
@@ -138,5 +138,29 @@
 	#{cmntDate}
 	)
 	</insert>
+	
+	<update id="updatePost" parameterType="board">
+	<selectKey  order="AFTER"></selectKey>
+	UPDATE BOARD
+	<set>
+	SET TITLE = #{title}
+	CONTENT = #{content}
+	</set>
+	<trim prefix="WHERE" prefixOverrides="WHERE | OR">
+	post_no = #{postNo}
+	</trim>
+	</update>
+	
+	<update id="updateCmnt" parameterType="Cmnt">
+	UPDATE COMMENTS 
+	<set>
+	CMNT_CONTENT = #{cmntContent}
+	</set>
+	<where>
+	cmnt_no = #{cmntNo}
+	</where>
+	</update>
+	
+	
 	
 </mapper>
