@@ -13,6 +13,8 @@ public interface DietService {
 	
 	public int addDietService(DietServ diet)throws Exception;
 	
+	public int updateDietService(DietServ diet)throws Exception;
+		
 	public DietServ getDietService(String userId)throws Exception;
 	
 	public Map<String,Object> getFoodList(Search search)throws Exception;

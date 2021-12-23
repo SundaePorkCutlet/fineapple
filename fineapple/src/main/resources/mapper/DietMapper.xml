@@ -58,6 +58,22 @@
 	
 	</insert>
 	
+	<update id="updateDietService" parameterType="DietServ">
+	UPDATE USER_SERVICE SET 
+	DAILY_TRGT_INTAKE_KCAL=#{dailyTrgtIntakeKcal:DOUBLE},
+	DAILY_TRGT_INTAKE_CARB=#{dailyTrgtIntakeCarb:DOUBLE},
+	DAILY_TRGT_INTAKE_PROTEIN=#{dailyTrgtIntakeProtein:DOUBLE},
+	DAILY_TRGT_INTAKE_FAT=#{dailyTrgtIntakeFat:DOUBLE},
+	TRGT_BODY_FAT=#{trgtBodyFat:DOUBLE}
+	WHERE USER_ID=#{userId:VARCHAR}
+	</update>
+	
+	<select id="getDietService" parameterType="String" resultType="DietServ">
+	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
+	</select>
+	
+	
+	
 	<update id="updateServiceTrgt" parameterType="DietServ">
 	UPDATE USERS 
 	SET SERVICE_TRGT=#{serviceTrgt:VARCHAR}
@@ -85,11 +101,7 @@
   	 WHERE USER_ID = #{userId:VARCHAR}
       </update>
 
-	<select id="getDietService" parameterType="String" resultType="DietServ">
-	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
 	
-
-	</select>
 	
 	<select  id="getFoodList"  parameterType="hashMap"  resultMap="FoodMap">
 	SELECT *

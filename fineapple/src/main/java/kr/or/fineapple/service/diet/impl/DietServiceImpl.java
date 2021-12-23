@@ -23,8 +23,20 @@ public class DietServiceImpl implements DietService{
 
 	@Override
 	public int addDietService(DietServ diet) throws Exception {
+				dietMapper.updateServiceTtgt(diet);
+				dietMapper.updateBodyInfo(diet);
 		return	dietMapper.insertDietService(diet);
 	}
+
+	
+
+	@Override
+	public int updateDietService(DietServ diet) throws Exception {
+
+		return dietMapper.updateDietService(diet);
+	}
+
+
 
 	@Override
 	public DietServ getDietService(String userId) throws Exception {

@@ -6,6 +6,27 @@
 <body>
 <div th:insert="index/toolbar :: toolbar"></div>
 			
+<script type="text/javascript">
+function fncGetUserList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+
+   	//document.detailForm.submit();
+	$("form").attr("method" , "POST").attr("action" , "/diet/addDietService").submit();
+}
+
+$(function() {
+
+	 
+	 $("#add").on("click" , function() {
+		 fncGetUserList(1);
+		
+});
+});
+
+</script>				
+			
+		<form>	
+			
 <div class="container show-grid">
 		<div class="row">
 			<div class="col-md-2">
@@ -33,8 +54,8 @@
 			<div data-text-content="true" style="font-weight: bold; font-size: 24px; text-decoration: none;" class="">  정보입력</div></div>
 			<br><br><br><br>
 			<div style="position:absolute; left:663px;">
-			<div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*식단 관리 목적
-			<select style="font-size:15px">
+			<div data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*식단 관리 목적
+			<select  name="serviceTrgt" style="font-size:15px">
 			<option>체중감량</option>
 			<option>체중유지</option>
 			<option>체중증량</option>			
@@ -43,74 +64,74 @@
 			</div><br><br>
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; " class="">체중</span>
 			<div style="position:absolute; left:850px;">
-			<input  name="weight" value="85" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1"  name="weight" value="85" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">키</span>
 			<div style="position:absolute; left:850px;">
-			<input  name="height" value="185" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" name="height" value="185" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>cm</span>
 			</div><br><br>
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">나이</span>
 			<div style="position:absolute; left:850px;">
-			<input name="age" value="24" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" name="age" value="24" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>세</span>
 			</div><br><br>
 			
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">성별</span>
 			<div style="position:absolute; left:850px;">
-			<input checked readonly style="font-weight:bold; font-size:16px;" type="radio" name="chk_info" value="0">남성&nbsp;&nbsp;&nbsp;&nbsp; 
-			<input readonly style="font-weight:bold; font-size:16px;" type="radio" name="chk_info" value="1">여성 
+			<input checked readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="0">남성&nbsp;&nbsp;&nbsp;&nbsp; 
+			<input readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="1">여성 
 			</div><br><br>
 			
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">목표체중</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="trgtWeight" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			
 			<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">체지방율</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="bodyFat" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">목표체지방율</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="trgtBodyFat" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>%</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리섭취량</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1"  value="0.0" name="dailyTrgtIntakeKcal" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 칼로리는 입니다.</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">목표탄수화물섭취량</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="dailyTrgtIntakeCarb" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">목표단백질섭취량</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="dailyTrgtIntakeProtein" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br>
 			
 				<span style="position:absolute; right:950px; font-weight:bold;font-size:18px; "  class="">목표지방섭취량</span>
 			<div style="position:absolute; left:850px;">
-			<input style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1"  value="0.0" name="ailyTrgtIntakeFat" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>g</span>
 			</div><br><br><br>
 			<div style="position:absolute; left:750px;">
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >등 &nbsp;록</button>
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >취 &nbsp;소</button>
+			<button id="add" type="button" class="btn btn-primary" >등 &nbsp;록</button>
+			<button id="cancel" type="button" class="btn btn-primary" >취 &nbsp;소</button>
 			</div>
 			<br><br>
 			<div style="position:absolute; left:790px;">
-			<button type="button" class="btn btn-primary" data-prodNo="${product.prodNo }" >초기화</button>
+			<button id="reset" type="button" class="btn btn-primary" >초기화</button>
 			</div>
 			
 			
@@ -119,6 +140,6 @@
 			</div>
 			</div>
 			</div>
-			
+			</form>
 </body>
 </html>

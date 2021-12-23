@@ -24,6 +24,10 @@ public interface DietMapper {
        
        int updateBodyInfo(DietServ diet);
        
+       int updateServiceTtgt(DietServ diet);
+       
        List<Food> getFoodList(Search search);
+       
+       int updateDietService(DietServ diet);
    }
 
