@@ -1,7 +1,10 @@
 package kr.or.fineapple.service.diet;
 
-import kr.or.fineapple.domain.IntakeRecord;
+import java.util.Map;
+
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.common.Search;
 
 
 public interface DietService {
@@ -11,4 +14,7 @@ public interface DietService {
 	public int addDietService(DietServ diet)throws Exception;
 	
 	public DietServ getDietService(String userId)throws Exception;
+	
+	public Map<String,Object> getFoodList(Search search)throws Exception;
+	
 }

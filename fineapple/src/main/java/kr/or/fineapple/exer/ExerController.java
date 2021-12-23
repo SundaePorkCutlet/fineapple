@@ -44,9 +44,10 @@ public String addUserService() {
 public String getExerList( @ModelAttribute("search") Search search, Model model) throws Exception {
 	
 	  System.out.println("getExerList");
-	  
+ 
+
 	  Map<String, Object> map = exerService.getExerList(search);
-	  
+	  System.out.println("2"+map);
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 			  

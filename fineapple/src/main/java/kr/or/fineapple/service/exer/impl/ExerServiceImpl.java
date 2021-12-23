@@ -55,10 +55,10 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public Map<String ,Object> getExerList(Search search) {
 		
+		System.out.println("getExerListService");
+		
 		List<Search> list = exerMapper.getExerList(search);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		map.put("list", list);
 		map.put("search", search);
 		
