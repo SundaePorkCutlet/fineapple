@@ -19,11 +19,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(User user) throws Exception {
 		userMapper.addUser(user);
+		userMapper.addUserBodyInfo(user);
 		
 	}
 
 	@Override
 	public User getUser(String userId) throws Exception {
+		
 		return userMapper.getUser(userId);
 	}
 	

@@ -4,6 +4,42 @@
 <meta charset="utf-8">
 </head>
 <body>
+<style>
+table{
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  padding:10px;
+ 
+  margin : 20px 10px;
+}
+table th{
+  width: 150px;
+  padding:5px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #38610B;
+  font-size : 0.85em;
+  border-top: 1px solid #ccc;
+  border-left: 6px solid rgba(51, 132, 86, 0.62);
+  text-align: left;
+ 
+}
+
+table td{
+  width: 250px;
+   font-size : 0.8em;
+  border-top:1px solid #ccc;
+  vertical-align: top;
+
+}
+
+div.relative{
+ position: relative;
+  left: 30px;
+}
+
+</style>
 <div th:insert="index/toolbar :: toolbar">
 </div>
 <div class="container show-grid">
@@ -26,13 +62,51 @@
 	<img src = "../assets/profile/defaultProfile.jpg" width:"100" height="200">
 	
 </div>
-<p align ="center">프로필사진</p>
+<p align ="center"><b>프로필사진</b></p>
+<p align="center"><b>상태메세지</b></p>
 <br>
-<div align ="center">
-<p>
-<b>이름 :</b>
-<h type ="text"  id="userName" name ="userName">${th:text session.user.userName}</h5>
-</p>
+<div align="center" class="relative">
+<table >
+	<tr>
+		<th scope="row"><b>닉네임</b></th>
+		<td th:text="${session.user.userName}"></td>
+		<th scope="row"><b>최근 로그인 내역</b></th>
+		<td th:text="${session.user.regDate}"></td>	
+	</tr>
+	<tr>
+		<th scope="row"><b>이메일</b></th>
+		<td th:text="${session.user.userId}"></td>
+		<th scope="row"><b>블랙리스트여부</b></th>
+		<td th:if="${session.user.blcRgsStt} == 0">일반회원</td>
+		<td th:unless="${session.user.blcRgsStt} == 0">블랙리스트</td>
+	</tr>
+	<tr>
+		<th scope="row"><b>비밀번호</b></th>
+		<td>hidden</td>
+		<th scope="row"><b>활성서비스내역</b></th>
+		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
+		<td th:if ="${session.user.exerServiceNo} != null">운동서비스</td>
+		<td th:if ="${session.user.exerServiceNo} == null AND ${session.user.dietServiceNo} == null">활성화된 서비스가 없습니다.</td>
+		
+	</tr>
+	<tr>
+		<th scope="row"><b>전화번호</b></th>
+		<td th:text="${session.user.cellphone}"></td>
+		<th scope="row"><b>키</b></th>
+		<td th:text="${session.user.height}"></td>
+	</tr>
+	<tr>
+		<th scope="row"><b>가입날짜</b></th>
+		<td th:text="${session.user.regDate}"></td>
+		<th scope="row"><b>몸무게</b></th>
+		<td th:text="${session.user.weight}"></td>
+	</tr>
+	<tr>
+		<th><b>성별</b></th>
+		<td th:text="${session.user.gender}"></td>
+	</tr>
+	
+</table>
 </div>
 
 

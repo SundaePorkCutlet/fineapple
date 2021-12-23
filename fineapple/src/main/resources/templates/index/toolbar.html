@@ -112,7 +112,7 @@
                 <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>
             </div>
             <div>
-                <button th:if = "${session.user != null}" type="button" class="btn btn-default">내정보보기</button>
+                <button th:if = "${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
             </div>
         </div>
     </header>
