@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+
+</head>
+<body>
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+	<table class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">선택</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>           
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                       
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                       
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                       
+          </tr>
+        </thead>
+        
+	
+       <tbody>
+	<tr th:each="data, i : ${list}">
+		<td></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodFat}" style="cursor:pointer; text-align: left;"></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
+
+	</table>
+	
+
+	
+
+</body>
+</html>

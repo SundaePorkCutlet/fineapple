@@ -1,40 +1,119 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+
 </head>
 <body>
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-			
-		<script>	
-		function dataSend() {
-		
-		var name = "�ֵ���";	
-		var array = [];
-		$.ajax(
-		{ type: "GET",
-		url: "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/20/DESC_KOR="+name, 
-		data: {}, 
-		success: function(response){ 
-		console.log(response) 
-		console.log(response.I2790.row[1])
-	
- for(var i = 0; i < response.I2790.row.length; i++){
-		array.push(response.I2790.row[i]);
- }	
-for(var j = 0; j <array.lenght; j++){
-	
-		
-	
-}
-		
-		
-		
-		}		
-		} )} </script>
-			
 
+
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+
+	
+	
+<script type="text/javascript">
+function fncGetUserList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+
+   	//document.detailForm.submit();
+	$("form").attr("method" , "GET").attr("action" , "/diet/getFoodList").submit();
+}
+
+$(function() {
+
+	 
+	 $("button.btn.btn-primary").on("click" , function() {
+		 fncGetUserList(1);
+		
+});
+});
+
+</script>	
+	
+			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>
+			
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >식품 리스트</div>
+			<br><br>
+
+<!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
+
+				<div align="right">
+			    <form class="form-inline" name="detailForm">
+			    			
+					<select class="form-control" name="searchCondition" style="width: 100px;">
+					<option value="0" th:selected= "${search.searchCondition}=='0'">식품명</option>
+					<option value="1" th:selected= "${search.searchCondition}=='1'">제조사</option>
+					</select>
+				
+									  
+			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
+			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
+			
+<!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
+ -->			<button data-text-content="true" class="btn btn-primary">검색</button>
+			<br>
+			
+			<a href="#">식품명</a>
+			<a href="#">제조사</a>
+			</form>
+			</div>
+			
+			
+		
+			
+ 		<table class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">선택</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>           
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                       
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                       
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                       
+          </tr>
+        </thead>
+        
+	
+       <tbody>
+	<tr th:each="data, i : ${list}">
+		<td></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodFat}" style="cursor:pointer; text-align: left;"></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
+
+	</table>
+	
+
+			</div>
+			</div>
+			</div>		
 
 </body>
 </html>

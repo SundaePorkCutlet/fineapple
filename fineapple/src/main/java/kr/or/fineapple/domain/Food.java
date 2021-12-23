@@ -16,6 +16,7 @@ public class Food {
 	double foodKcal;
 	double foodCarb;
 	double foodProtein;
+	double foodFat;
 	double foodSaturatedFattyAcid;
 	double foodUnsaturatedFattyAcid;
 	double foodCholesterol;
@@ -26,6 +27,7 @@ public class Food {
 	String foodImg;
 	String purchaseConnLink;
 	String storeName;
+	String makerName;
 	int isAPI;
 	public Food() {
 	

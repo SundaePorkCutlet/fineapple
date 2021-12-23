@@ -5,8 +5,8 @@ public class Search {
 	
 	///Field
 		private int currentPage;
-		private int searchCondition;
-		private String searchKeyword;
+		public int searchCondition = 0;
+		public String searchKeyword = "";
 		private int pageSize;
 		//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
 		//==> UserMapper.xml 의 

@@ -46,9 +46,9 @@ public String getExerList(Model model) throws Exception {
 	  search.setPageSize(1);
 	  search.setSearchCondition(0);
 	  search.setSearchKeyword("±â");
-	  
+	  System.out.println("1");
 	  Map<String, Object> map = exerService.getExerList(search);
-	  
+	  System.out.println("2"+map);
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 			  
