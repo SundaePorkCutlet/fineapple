@@ -29,9 +29,12 @@ public class Food {
 	String storeName;
 	String makerName;
 	int isAPI;
+
 	public Food() {
 	
 	}
+
+	
 
 
 }

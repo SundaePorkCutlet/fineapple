@@ -20,6 +20,9 @@ public class Exer {
 	String dodbogi;
 	String exerLink;
 	
+	
+
+
 	public Exer() {
 		
 	}

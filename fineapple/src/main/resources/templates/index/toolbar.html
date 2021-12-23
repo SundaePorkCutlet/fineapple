@@ -88,7 +88,8 @@
             <div class="me-2">
                 <i class="las la-user member-icon"></i>
             </div>
-            <button type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{../user/login}'|">로그아웃</button>
+            <button th:if = "${session.user == null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/login}'|">로그인</button>
+            <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2"  th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>            
             <button type="button" class="btn btn-default" th:onClick="|location.href='@{../user/addUser}'|">회원가입</button>
        </div>
 
