@@ -44,9 +44,11 @@
 	<div>
 	<div style="font-size: 40px; text-align: left;" th:text="${board.title}"> </div>
 	</div>
-	<div th:text="${board.user.userId}"></div>
-	<div th:text="${board.postDate}"></div>
 	
+	<div>
+	<span th:text="${board.user.userId}"></span>
+	<span th:text="${board.postDate}"></span>
+	</div>
 	
 	<div style="background-color: rgb(198, 198, 198); width: 10000px; height: 10px; text-align: center;"></div>
 	
