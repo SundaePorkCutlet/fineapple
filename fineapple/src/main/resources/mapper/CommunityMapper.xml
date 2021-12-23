@@ -115,7 +115,7 @@
 	</update>
 	
 	
-	
+	<!-- 
 	<update id="updateCmntLike" parameterType="map" parameterMap="">
 	
 	UPDATE
@@ -160,7 +160,7 @@
 	</insert>
 	
 	
-	
+	 -->
 	
 	
 	

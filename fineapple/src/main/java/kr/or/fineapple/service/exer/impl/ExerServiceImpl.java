@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.BurnningRecord;
+import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
@@ -24,6 +25,7 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public void addUserService(ExerService service) throws Exception {
 	
+		
 	}
 	
 	@Override
@@ -65,10 +67,17 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
+	public Exer getExer(String exerName) {
+		
+		return exerMapper.getExer(exerName);
+			
+	}
+	
+	
+	@Override
 	public void updateUserService(ExerService serivce) throws Exception {
 		
 		
 	}
-
 
 }

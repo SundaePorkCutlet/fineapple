@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.BurnningRecord;
+import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerService;
 import kr.or.fineapple.domain.common.Search;
 
@@ -27,8 +28,12 @@ public interface ExerMapper {
        
        List<Search> getExerList(Search search);
        
+       Exer getExer(String exerName);
+       
+       
+       
+       
        int updateExerService(BurnningRecord record);
        
-    
 
    }

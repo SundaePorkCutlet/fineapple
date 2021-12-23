@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
 
 
@@ -21,10 +25,10 @@ public class ExerController {
 	@Qualifier("ExerServiceImpl")
 	private ExerService exerService;
 
-	
 	public ExerController() {
 	}
 
+	
 @RequestMapping(value="addUserService")
 public String addUserService() {
 	
@@ -32,20 +36,14 @@ public String addUserService() {
 
 	return "exer/addUserService.html";
 	
+	
 }
 
 
-@GetMapping("getExerList")
-public String getExerList(Model model) throws Exception {
+@RequestMapping("getExerList")
+public String getExerList( @ModelAttribute("search") Search search, Model model) throws Exception {
 	
 	  System.out.println("getExerList");
-
-	  Search search = new Search();
-	  
-	  search.setCurrentPage(1);
-	  search.setPageSize(1);
-	  search.setSearchCondition(0);
-	  search.setSearchKeyword("±â");
 	  
 	  Map<String, Object> map = exerService.getExerList(search);
 	  
@@ -56,5 +54,25 @@ public String getExerList(Model model) throws Exception {
 	return "exer/getExerList.html";	
 	
 }
+
+
+
+@GetMapping("getExer")
+public String getExer(@RequestParam(value = "exerName", required=false) String exerName, Model model) throws Exception{
 	
+	System.out.println("getExer");
+	
+	if(exerName == null) {
+		
+		return "redirect:/exer/getExerList.html";
+	}
+
+	Exer exer = exerService.getExer(exerName);
+	
+	model.addAttribute("exer", exer);
+	
+	return "exer/getExer.html";
+
+}
+
 }

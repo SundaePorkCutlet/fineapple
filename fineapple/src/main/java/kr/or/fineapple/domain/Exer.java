@@ -1,7 +1,5 @@
 package kr.or.fineapple.domain;
 
-import java.time.LocalTime;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,8 +16,9 @@ public class Exer {
 	String exerName;
 	Double exerKcal;
 	String exerVideoName;
-	LocalTime exerVideoTime;
+	String exerVideoTime;
 	String dodbogi;
+	String exerLink;
 	
 	public Exer() {
 		

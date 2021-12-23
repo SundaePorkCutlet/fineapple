@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.community.Board;
-import kr.or.fineapple.domain.community.Cmnt;
 
 @Mapper
 @Repository

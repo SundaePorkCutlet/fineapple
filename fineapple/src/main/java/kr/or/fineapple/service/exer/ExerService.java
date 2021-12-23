@@ -3,6 +3,7 @@ package kr.or.fineapple.service.exer;
 import java.util.Map;
 
 import kr.or.fineapple.domain.BurnningRecord;
+import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.common.Search;
 
 public interface ExerService {
@@ -18,6 +19,8 @@ public interface ExerService {
 	public void updateBodyInfo(ExerService serivce)throws Exception;
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
+	
+	public Exer getExer(String Name)throws Exception;
 	
 	public void updateUserService(ExerService serivce)throws Exception;
 	

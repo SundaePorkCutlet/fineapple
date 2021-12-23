@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
 </head>
 <body>
 
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	
+	$( "button.btn.btn-primary").on("click" , function() {
+		
+ 		history.go(-1);
+ 		
+	});	
+	
+});
+
+</script>
+
+			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>		
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 상세정보</div>
+			<br><br><br>
+			
+			<div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${exer.exerName}></div>
+			
+			
+			<br><br><br>
+			<div style="text-align:right;">
+			
+			<!--Manager로 로그인 시에만 출력  -->
+			<a th:href="@{../exer/updateExer}">수정하기</a>
+			<a href="">삭제하기</a>
+			</div>
+			
+			
+			<br><br>
+			<div data-text-content="true" style="font-size:16px;" class="">  </div>
+   		    <video th:src="@{/assets/video/} + ${exer.exerVideoName}" type="video/mp4" controls style="width: 1000px; height: 450px; text-align:right;"> 영상 재생 불가</video>
+   		  	<span th:if="${exer.exerVideoName} == null" th:text=${exer.exerLink}>
+   		  	<iframe width="560" height="315" src="https://www.youtube.com/watch?v=O3GU4hMK75w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			
+   		  	</span>
+			<br><br>
+   		  	
+   		  	<div align="center">	  	
+   		  	<img src="../assets/img/clock.png" style="width: 200px; width: 50px;"> &nbsp;
+			<span data-text-content="true" style="font-size:30px;"  class="" th:text=${exer.exerVideoTime} >			
+			</span>
+			
+		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<img src="../assets/img/level.png" style="width: 200px; width: 50px;"> &nbsp;
+			<span data-text-content="true" style="font-size:30px;" class="" th:text=${exer.exerLv}>			
+			</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<img src="../assets/img/runningPerson.png" style="width: 200px; width: 50px;">&nbsp;
+			<span data-text-content="true" style="font-size:30px;" class="" th:text=${exer.exerKcal}>	
+			</span>  (10분당 kcal 입니다)
+			
+   		  	</div>
+   		  	
+			
+			<br><br><br><br>
+			<div class="form-group">
+	  		<div class="col-md-12 text-center ">
+	  			<button type="button" class="btn btn-primary">이전</button>
+	  		</div>
+		</div>
+		<br/>
+		
+ 	</div>
+			<br><br>
+			</div>
+			</div>
 </body>
 </html>

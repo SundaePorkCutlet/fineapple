@@ -28,7 +28,8 @@
 		<result property="exerName" 				column="EXER_NAME" 					jdbcType="VARCHAR" />
 		<result property="exerKcal" 				column="EXER_KCAL" 					jdbcType="FLOAT" />
 		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
-		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="TIMESTAMP" />	
+		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="VARCHAR" />	
+		<result property="exerLink" 				column="EXER_LINK" 					jdbcType="VARCHAR" />		
 	</resultMap>
 
 
@@ -118,29 +119,46 @@
 	<select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap">
 	SELECT *
 	FROM (SELECT inner_table.* , ROWNUM AS exer_No
-	FROM(SELECT exer_name, exer_cate, exer_kcal
+	FROM (SELECT exer_name, exer_cate, exer_kcal
 	FROM EXER
 	<if test="searchCondition != null">
 	<where>
 	<if test="searchCondition == 0 and searchKeyword !='' ">
-	exer_name like '%'||#{searchKeyword}||'%'
+	exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
 	</if>
 	<if test="searchCondition == 1 and searchKeyword !='' ">
-	exer_kcal like '%'||#{searchKeyword}||'%'
+	exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
 	</if>
 	</where>
 	</if>
 	ORDER BY exer_No ) inner_table)
-	WHERE exer_No BETWEEN 1 AND 4
+	WHERE exer_No BETWEEN 1 AND 10
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	 
 	 
+	<select	id="getExer"	parameterType="String"  resultMap="exerMap">
+			SELECT EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK
+			FROM EXER 
+			WHERE EXER_NAME= #{value}
+	</select>
 	 
 	 
 	 
+	 <update id="updateExer" parameterType="Exer">
+   UPDATE EXER
+   SET EXER_NAME  = #{exerName:VARCHAR},
+       EXER_VIDEO_NAME = #{exerVideoName:VARCHAR},
+       EXER_VIDEO_TIME = #{exerVideoTime:VARCHAR},
+       EXER_LV = #{exerLv:INTEGER},
+       EXER_KCAL = #{exerKcal:INTEGER},
+       EXER_LINK =  #{exerLv:VARCHAR}
+   WHERE EXER_NAME =  #{exerName:VARCHAR}
+   	</update>
+   	
 	
+
 	<update id="updateUserService" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD
     SET (5,
