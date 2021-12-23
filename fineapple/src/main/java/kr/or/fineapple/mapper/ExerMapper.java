@@ -28,10 +28,13 @@ public interface ExerMapper {
        
        List<Search> getExerList(Search search);
        
-       Exer getExer(String exerName);
+       int addExxer(Exer exer);
        
+       Exer getExer(int exerNo);
        
+       int updateExer(Exer exer);
        
+       int deleteExer(int exerNo);
        
        int updateExerService(BurnningRecord record);
        

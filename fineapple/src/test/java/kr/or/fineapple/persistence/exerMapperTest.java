@@ -32,7 +32,7 @@ class exerMapperTest {
 		exer.setExerName("≈Œ∞…¿Ã");	
 		exer.setExerNo(1);
 		exer.setExerVideoName("≈Œ∞…¿Ã øµªÛ");
-		exer.setExerVideoTime(00,10,00);
+		//exer.setExerVideoTime("1∫–");
 		
 		
 		  BurnningRecord record = new BurnningRecord();
