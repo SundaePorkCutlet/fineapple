@@ -16,5 +16,7 @@ public interface CommunityService {
 	public void updatePostLike(Board board, int flag);
 	
 	public void updateCmntLike(Cmnt cmnt, int flag);
+	
+	public Board getPost(Board board);
 
 }

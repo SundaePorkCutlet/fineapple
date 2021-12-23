@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <meta charset="utf-8">
 <head th:replace="index/toolbar :: head">
 </head>
@@ -42,12 +42,11 @@
 	<div style="background-color: rgb(198, 198, 198); width: 10000px; height: 10px; text-align: center;"></div>
 	
 	<div>
-	<div style="font-size: 20px; text-align: left;">라면 먹는다 꼬우면 너도 먹든가^^</div>
+	<div style="font-size: 40px; text-align: left;" th:text="${board.title}"> </div>
 	</div>
+	<div th:text="${board.user.userId}"></div>
+	<div th:text="${board.postDate}"></div>
 	
-	<div>
-	<div style="font-weight:bold;font-size:18px; text-align: left;">2021-11-18</div>
-	</div>
 	
 	<div style="background-color: rgb(198, 198, 198); width: 10000px; height: 10px; text-align: center;"></div>
 	
@@ -56,9 +55,7 @@
 	</div>
 	
 	<div>
-	<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p>우리 인생을 풍부하게 하는 것이다 보라 청춘을 !
-	 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 
-	우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은</p></div>
+	<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p th:text="${board.content}"></p></div>
 	</div>
 	
 	

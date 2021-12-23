@@ -28,7 +28,7 @@
 	<result property="updateStt" column=""/>
 	</resultMap>
 	
-	<sql id="orderBy">
+	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
 	
@@ -37,6 +37,7 @@
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
 		SELECT seq_board_post_no.CURRVAL FROM dual
 		</selectKey>
+		
 		INSERT INTO BOARD (
 		POST_NO,
 		USER_ID,
@@ -64,12 +65,45 @@
 		)
 	</insert>
 	
+	
+	
+	
 	<select id="getPostList" resultMap="boardMap">
+	
+	SELECT
+	b.post_no,
+	b.user_id,
+	b.update_stt,
+	b.title,
+	b.content,
+	b.post_date,
+	b.post_like_count,
+	b.view_count,
+	c.cmnt_count
+	FROM
+	board b,
+	(
+	SELECT COUNT(*)
+	cmnt_count,
+	c.post_no
+	FROM board b, comments c
+	WHERE b.post_no = c.post_no
+	GROUP BY c.post_no
+	) c
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	b.post_no = c.post_no(+)
+	</trim>
+	<include refid="orderByPostNo"/>
+	</select>
+	
+	<select id="getPost" parameterType="board" resultMap="boardMap">
 	SELECT
 	*
 	FROM
-	board	
-	<include refid="orderBy"></include>
+	board
+	<where>
+	post_no = #{postNo}
+	</where>
 	</select>
 	
 	<update id="updatePostViewCount" parameterType="board">
@@ -97,15 +131,13 @@
 	</if>
 	</trim>
 	<where> 
-	post_no = #{board.postNo}
+	post_no = #{postNo}
 	</where>
 	</update>
-	
 
-	
-	
+
+
 	<update id="updateCmntLike" parameterType="map">
-
 	UPDATE
 	INTO
 	cmnt
@@ -156,15 +188,7 @@
 	</update>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<update id="updateCmnt" parameterType="Cmnt">
 	UPDATE COMMENTS 
 	<set>

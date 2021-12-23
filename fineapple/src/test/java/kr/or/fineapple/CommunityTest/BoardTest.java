@@ -47,7 +47,7 @@ public class BoardTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void getPostList() {
 		
 		List<Board> list = communityService.getPostList();
@@ -58,10 +58,10 @@ public class BoardTest {
 		
 	}
 	
-	@Test
+	
+	
+	//@Test
 	public void updatePostviewCount() {
-		
-		
 		
 		Board board = new Board();
 		
@@ -71,23 +71,20 @@ public class BoardTest {
 
 	}
 	
-	@Test
+	//@Test
 	public void updatePostLike() {
+		
 		Board board = new Board();
+		
 		board.setPostNo(4);
-		
-		
-		
 		
 	}
 	
-	@Test
+	//@Test
 	public void updateCmntLike() {
+		
 		Cmnt cmnt = new Cmnt();
-		
-		//cmnt.setBoard(new Board().setPostNo(3));
-		
-		
+
 	}
 	
 	
