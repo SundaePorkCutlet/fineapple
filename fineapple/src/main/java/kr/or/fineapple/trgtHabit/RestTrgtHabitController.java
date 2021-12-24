@@ -44,7 +44,6 @@ public class RestTrgtHabitController {
 			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
 			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
 		}
-
 		return returnTrgtHabit;		
 	}
 	
@@ -78,5 +77,4 @@ public class RestTrgtHabitController {
 		System.out.println(time);
 		return time;
 	}
-	
 }
