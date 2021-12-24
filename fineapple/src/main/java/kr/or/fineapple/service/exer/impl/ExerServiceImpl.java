@@ -34,11 +34,6 @@ public class ExerServiceImpl implements ExerService {
 		
 	}
 	
-	@Override
-	public void addDailyBurnning(BurnningRecord record) {
-
-		
-	}
 	
 	@Override
 	public void updateServiceTrgt(ExerService service) {
@@ -94,10 +89,16 @@ public class ExerServiceImpl implements ExerService {
 
 	@Override
 	public void addExer(Exer exer) throws Exception {
-	
+
+		exerMapper.addExer(exer);
 		
 	}
 	
+	@Override
+	public void addDailyBurnning(BurnningRecord record) {
+		
+		
+	}
 	
 
 

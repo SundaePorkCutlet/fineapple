@@ -10,6 +10,7 @@
 	<div style="color: rgb(255, 255, 204);">
 		<div style="font-weight:bold;font-size:24px" >댓글 쓰기</div>
 		<div style="text-align : center;">
+		<input type="hidden" name="postNo" th:value="${board.postNo}">
 		<input name = "content" style="height:50px; width:300px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
 		<button id="cmntButton" type="button" class="btn btn-primary">등록</button>
 		</div>
@@ -20,8 +21,8 @@
 $(function(){
 	$("#cmntButton").on("click", function(){
 		$("#addcmnt").attr("method", "POST").attr("action", "/community/addPost").submit();
-	})
-})
+	});
+});
 </script>
 </body>
 </html>

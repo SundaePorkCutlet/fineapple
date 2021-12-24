@@ -28,7 +28,6 @@ public class UserController {
 	
 	@Value("${file.upload.directory}")
 	private String filePath ;
-
 	
 	public UserController(){
 		System.out.println("UserControllerµé¾î¿È");

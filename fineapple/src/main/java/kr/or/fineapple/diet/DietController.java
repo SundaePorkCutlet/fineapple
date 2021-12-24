@@ -54,22 +54,26 @@ public class DietController {
 			System.out.println(user);
 		
 			DietServ serv = dietService.getDietService(user.getUserId());
+			System.out.println(serv);
+			if(serv!=null) {
+					if(serv.getUserServiceNo()!=0) {
 			
-			if(serv.getUserServiceNo()!=0) {
-			
-			model.addAttribute("user",user);
-			model.addAttribute("dietServ",serv);
-			return "diet/getDietService.html";
-				}else {
-					return "diet/addDietService.html";}
-			
+						model.addAttribute("user",user);
+						model.addAttribute("dietServ",serv);
+						return "diet/getDietService.html";
+						}else {
+							return "diet/addDietService.html";}
 			}else {
-				return "redirect:../user/login";
-			}
-
-		
+				return "diet/addDietService.html";}
+			
+		}else {
+			
+			return "../user/login";}
 		
 	}
+		
+		
+	
 	
 
 	@PostMapping("addDietService")
@@ -131,8 +135,6 @@ public class DietController {
 
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		Map<String, String> bb = new HashMap();
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -237,8 +239,6 @@ public class DietController {
 		System.out.println("getPurchaseFoodList");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		Map<String, String> bb = new HashMap();
 
 		JSONArray jsonArray = new JSONArray();
 

@@ -116,23 +116,19 @@
 		WHERE exer_No BETWEEN 1 AND 4
 	 </select> -->
 	 
-<!-- 	 <insert id="addExer"  parameterType="Exer">
-	INSERT INTO EXER
-	EXER_NAME  = #{exerName:VARCHAR},
-      	 EXER_CATE =  #{exerCate:INTEGER},
-         EXER_VIDEO_NAME = #{exerVideoName:VARCHAR},
-         EXER_VIDEO_TIME = #{exerVideoTime:VARCHAR},
-         EXER_LV = #{exerLv:INTEGER},
-         EXER_KCAL = #{exerKcal:FLOAT},
-         EXER_LINK =  #{exerLink:VARCHAR}
-	 (EXER_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
-	VALUES (2,
-			#{userId:VARCHAR},
-			#{dailyTrgtBurnningKcal:FLOAT},
-			#{trgtBodyMuscle:FLOAT}
-			)
-	
-	</insert> -->
+	 
+ 	<insert id="addExer"  parameterType="Exer">
+	INSERT
+	INTO EXER (EXER_NO, EXER_CATE, EXER_LV, EXER_NAME, EXER_KCAL, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LINK)
+	VALUES(10,
+    #{exerCate:INTEGER},
+    #{exerLv:INTEGER},
+	#{exerName:VARCHAR},
+    #{exerKcal:FLOAT},
+    #{exerVideoName:VARCHAR},
+    #{exerVideoTime:VARCHAR},
+    #{exerLink:VARCHAR})
+	</insert> 
 	
 	 
 	 

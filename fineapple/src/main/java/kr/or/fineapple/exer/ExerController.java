@@ -100,14 +100,15 @@ public String getUpdateExer(@ModelAttribute("exer") Exer exer, Model model) thro
 	
 	model.addAttribute("exer", exer);
 	
-	System.out.println("GetUpdateExer");
+	System.out.println("getUpdateExer");
 	
 	
 	return "exer/updateExer.html";
 	
 }
 
-private static final String FILE_SERVER_PATH = "C:\\Users\\82105\\git\\fineapple\\fineapple\\src\\main\\resources\\templates\\assets\\video";
+
+private static String FILE_SERVER_PATH = "C:\\Users\\82105\\git\\fineapple\\fineapple\\src\\main\\resources\\templates\\assets\\video";
 
 @PostMapping("postUpdateExer")
 public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @RequestParam("exerFile") MultipartFile exerFile ) throws Exception {
@@ -118,7 +119,7 @@ public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @R
 		
 		model.addAttribute("msg", "File uploaded successfully");
 		
-		System.out.println("운동영상 업로드 성공~");
+		System.out.println("운동영상 수정업로드 성공~");
 		
 	}else {
 		
@@ -128,7 +129,7 @@ public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @R
 	
 	exer.setExerVideoName(exerFile.getOriginalFilename());
 	
-	System.out.println("PostUpdateExer");
+	System.out.println("postUpdateExer");
 	
 	exerService.postUpdateExer(exer);
 	
@@ -166,5 +167,77 @@ public String deleteExer(@ModelAttribute("exer") Exer exer , Model model) throws
 	
 	return "exer/getExerList";
 }
+
+
+@PostMapping("postAddExer")
+public String postAddExer(@ModelAttribute("exer") Exer exer , Model model, @RequestParam("exerFile") MultipartFile exerFile ) throws Exception {
+
+	
+	if(!exerFile.getOriginalFilename().isEmpty()) {
+		
+		exerFile.transferTo(new File(FILE_SERVER_PATH, exerFile.getOriginalFilename()));
+		
+		model.addAttribute("msg", "File uploaded successfully");
+		
+		System.out.println("운동영상 등록업로드 성공~");
+		
+	}else {
+		
+		model.addAttribute("msg", "Please select a valid mediaFile..");
+		
+	}
+	
+	exer.setExerVideoName(exerFile.getOriginalFilename());
+	
+	exerService.addExer(exer);
+	
+	System.out.println("addExer");
+	
+	Search search = new Search();
+	
+	search.setCurrentPage(1);
+	search.setPageSize(1);
+	search.setSearchCondition(0);
+	search.setSearchKeyword("");
+	
+	  Map<String, Object> map = exerService.getExerList(search);
+	  
+	  
+	    model.addAttribute("list", map.get("list"));
+		model.addAttribute("search", search);
+	
+		
+	
+	model.addAttribute("exer", exer);
+	
+	//리스트가 바로 안뜨는 이유는 컨디션, 키워드 페이지가 유지되지 않기 때문에 다시 설정 해줘서 가져옴!!!
+	return "exer/getExerList";
+}
+
+
+@GetMapping("getAddExer")
+public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws Exception {
+	
+	
+	System.out.println("getAddExer");
+	
+	
+	return "exer/addExer.html";	
+	
+}
+
+
+@RequestMapping(value="addDailyBurnning")
+public String addDailyBurnning() {
+
+System.out.println("addDailyBurnning");
+
+return "exer/addDailyBurnning.html";
+
+
+}
+
+
+
 
 }
