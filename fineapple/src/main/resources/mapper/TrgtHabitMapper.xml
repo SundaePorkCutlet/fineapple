@@ -26,10 +26,19 @@
 	<select id="getTrgtHabit" resultMap="TrgtHabitMap">
 	SELECT TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE, TRGT_HABIT_INIT_DATE
 	FROM trgt_habit_service
-	WHERE user_id=#{userId:VARCHAR}
+	WHERE user_id = #{userId:VARCHAR}
 		AND trgt_habit_init_date IS NULL
-		AND trgt_habit_start_date <![CDATA[<]]> #{viewDate:DATE}
+		AND TRUNC(trgt_habit_start_date) <![CDATA[<=]]> #{viewDate:DATE}
 		AND trgt_habit_cate_no = #{trgtHabitCateNo:INTEGER}
+	</select>
+	
+	<!-- SELECT : 사용자정의 목표습관명 조회 -->
+	<select id="getUserHabitName" resultType="String">
+	SELECT trgt_habit_cate_name
+	FROM trgt_habit_service
+	WHERE user_id = #{userId:VARCHAR}
+		AND trgt_habit_cate_no = 4
+		AND trgt_habit_init_date IS NULL
 	</select>
 
 	<!-- SELECT : 목표습관초기화 -->

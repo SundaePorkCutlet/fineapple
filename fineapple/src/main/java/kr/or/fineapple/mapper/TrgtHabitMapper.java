@@ -17,6 +17,9 @@ public interface TrgtHabitMapper {
 	////목표 습관 관리 진행 확인
 	TrgtHabit getTrgtHabit(Map map);
 	
+	////사용자정의 목표습관명 조회
+	String getUserHabitName(String userId);
+	
 	////목표 초기화
 	void endTrgtHabit(int trgtHabitServiceNo);
 	

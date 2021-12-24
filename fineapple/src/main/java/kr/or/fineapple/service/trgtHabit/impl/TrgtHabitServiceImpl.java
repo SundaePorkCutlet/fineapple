@@ -38,6 +38,11 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 		
 		return trgtHabitMapper.getTrgtHabit(map);
 	}
+	
+	@Override
+	public String getUserHabitName(String userId) {
+		return trgtHabitMapper.getUserHabitName(userId);
+	}
 
 	@Override
 	public void endTrgtHabit(int trgtHabitServiceNo) {
