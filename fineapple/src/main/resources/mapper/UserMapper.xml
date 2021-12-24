@@ -31,29 +31,25 @@
 
 
 
-<insert id="addUser"	parameterType="User">
-INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,SERVICE_TRGT,TRGT_WEIGHT,TRGT_BODY_FAT,TRGT_BODY_MUSCLE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
+<insert id="addUser"   parameterType="User">
+INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)   
 VALUES (#{userId:VARCHAR},
-		'user',
-		#{gender:VARCHAR},		
-		0,
-		0,
-		#{userImg:VARCHAR},
-		#{cellphone:VARCHAR},
-		#{userName:VARCHAR},
-		#{password:VARCHAR},
-		#{height:INTEGER},
-		#{age:INTEGER},
-		SYSDATE,
-		0,
-		0,
-		0,
-		0,
-		0,
-		#{blcAddDate:DATE},
-		#{blcAddWhy:VARCHAR},
-		#{lastConTime:DATE},
-		'상태메세지없음')
+      'user',
+      #{gender:VARCHAR},      
+      0,
+      0,
+      #{userImg:VARCHAR},
+      #{cellphone:VARCHAR},
+      #{userName:VARCHAR},
+      #{password:VARCHAR},
+      #{height:INTEGER},
+      #{age:INTEGER},
+      SYSDATE,
+      2,
+      #{blcAddDate:DATE},
+      #{blcAddWhy:VARCHAR},
+      #{lastConTime:DATE},
+      '상태메세지없음')
 </insert>
 
 <insert id="addUserBodyInfo" parameterType="user">
