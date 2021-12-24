@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 
 </head>
@@ -9,6 +10,8 @@
 <div th:insert="index/toolbar :: toolbar">
 	</div>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 <script type="text/javascript">
 
 function fncUpdateProduct(){
@@ -64,6 +67,12 @@ function fncUpdateProduct(){
 	
 }
 
+function  fncgetExerList(){
+	
+	$("form").attr("method" , "POST").attr("action" , "/exer/postUpdateExer").attr('enctype','multipart/form-data').submit();
+	
+}
+
 $(function() {
 	
 	 $( "#button1"  ).on("click" , function() {
@@ -71,11 +80,77 @@ $(function() {
 		//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
 		fncUpdateProduct();
 	});
+	 
+	 $( "#exerName"  ).on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
+			fncUpdateProduct();
+		});
 });
 
+$(function() {
+	
+	
+	console.log("hihi");
+	
+	$("#timePicker").timepicker({		
+		 timeFormat: 'hh:mm:ss',
+		    interval: 10,
+		    defaultTime:'00:00:00',
+		    startTime: '00:00:00',
+		    dynamic: false,
+		    dropdown: true,
+		    scrollbar: true
+
+	 });
+	
+	
+});
+/* function inputTimeColon(time) {
+
+    // 먼저 기존에 들어가 있을 수 있는 콜론(:)기호를 제거한다.
+    var replaceTime = time.value.replace(/\:/g, "");
+
+    // 글자수가 4 ~ 5개 사이일때만 동작하게 고정한다.
+    if(replaceTime.length >= 4 && replaceTime.length < 7) {
+
+        // 시간을 추출
+        var hours = replaceTime.substring(0, 2);
+
+        // 분을 추출
+        var minute = replaceTime.substring(2, 4);
+        
+		var second = replaceTime.substring(4, 6);
+		
+        // 시간은 24:00를 넘길 수 없게 세팅
+        if(hours + minute > 2400) {
+            alert("시간은 24시를 넘길 수 없습니다.");
+            time.value = "24:00";
+            return false;
+        }
+
+        // 분은 60분을 넘길 수 없게 세팅
+        if(minute > 60) {
+            alert("분은 60분을 넘길 수 없습니다.");
+            time.value = hours + ":00";
+            return false;
+        }
+        
+        if(second > 60) {
+            alert("초는 60분을 넘길 수 없습니다.");
+            time.value = ㅡㅑㅜㅛ + ":00";
+            return false;
+        }
+        
+        
+
+        // 콜론을 넣어 시간을 완성하고 반환한다.
+        time.value = hours + ":" + minute + ":" + second;
+    }
+} */
 
 </script>
-		 <form class="form-inline" name="detailForm">
+	<form class="form-inline" name="detailForm">
 	
 	<div class="container show-grid">
 		<div class="row">
@@ -105,8 +180,13 @@ $(function() {
 			<span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;내 목표 섭취 칼로리 : </span>
 			<span data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;2500kcal</span>
 			</div>
+			<br>
+	<!-- ${session.user.userName} -->
+<!-- 	 ${burnningRecord.recommendExerKcal} -->
+	
 	
 			<br>
+				<p th:text="| 님의 당일 초과 칼로리는  kcal입니다.|" align="right"></p>
 			<div align="center" data-text-content="true" style="background-color: rgba(241, 196, 15, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; position:absolute; left:500px; width: 753px; height: 266px; " class="">
 			<br>
 			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp;			
@@ -114,20 +194,21 @@ $(function() {
 			<button style="width:200px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">운동 추천 리스트</button>			
 			
 			<br><br>
-			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">운동명 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="">
-			<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a>
-			</span>
-			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 소요시간 :  <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="">
-			<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a>
-			</span>
-			
-			
-			</div>
-			
-			
-			
-			</div>
 			<div class="form-group">
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" id="exerName">운동명 :  
+			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="form-inline">
+			</span>
+			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 소요시간 :  
+			<input type="text" value="" id="timePicker" name="anExerTime" placeholder="운동한 시간을 선택하세요">		
+		<!-- 	onKeyup="inputTimeColon(this);" maxlength="5" style="text-align:center;width:40px;" -->
+			<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a>
+			</span>
+			</div>
+			
+			</div>
+				
+			</div>
+			<div class="form-group" align="center">
 	  		<div class="col-md-12 text-center ">
 	  			<button type="button" id="button1" class="btn btn-primary">수정하기</button>
 	  		</div>

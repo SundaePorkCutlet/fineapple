@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerService;
+import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.mapper.ExerMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,29 +66,38 @@ class exerMapperTest {
 		
 		  ExerService service = new ExerService();
 		
-		  service.setDailyTrgtBurnningKcal(100.2);
-		  service.setTrgtBodyMuscle(30.2);
-		  service.setUserId("hc@gmail.com");
+			/*
+			 * service.setDailyTrgtBurnningKcal(100.2); service.setTrgtBodyMuscle(30.2);
+			 * service.setUserId("hc@gmail.com");
+			 * 
+			 * // log.info("exerMapper 확인 addUserService " +
+			 * exerMapper.addUserService(service));
+			 * 
+			 * 
+			 * service.setExerServiceTrgt("체중유지"); service.setUserId("hc@gmail.com");
+			 * //log.info("exerMapper 확인 updateServiceTrgt " +
+			 * exerMapper.updateServiceTrgt(service));
+			 * 
+			 * 
+			 * //userBodyInfo service.setBodyMuscle(10.4);
+			 * service.setUserId("hc@gmail.com");
+			 */
+		  
+		  //log.info("exerMapper 확인 updateBodyInfo " + exerMapper.updateBodyInfo(service));
+		  
 		
-		 // log.info("exerMapper 확인 addUserService " + exerMapper.addUserService(service));
+		 // SeaWrch search = new Search();
 		  
-		  		  
-		  service.setExerServiceTrgt("체중유지");
-		  service.setUserId("hc@gmail.com");
-		  //log.info("exerMapper 확인 updateServiceTrgt " + exerMapper.updateServiceTrgt(service));
-
+		  Routine routine = new Routine();
 		  
-		  //userBodyInfo
-		  service.setBodyMuscle(10.4);
-		  service.setUserId("hc@gmail.com");
-		  
-		  log.info("exerMapper 확인 updateBodyInfo " + exerMapper.updateBodyInfo(service));
-		  
-		
-		 // Search search = new Search();
+		  routine.setRoutineNo(9);
+		  routine.setExer(exer);
+		  routine.setExerNo(1);
+		  routine.setAnExerTime(LocalTime.of(3, 30, 0));
 		  
 		  
 		  
+		  log.info("exWerMapper 확인 updateRoutine " + exerMapper.addRoutineInfo(routine));
 
 		  
 		  

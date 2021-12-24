@@ -23,6 +23,7 @@ public class BurnningRecord {
 	int exerLv;
 	Double userExerBurnning;
 	
+	
 	public BurnningRecord() {
 		
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
@@ -99,6 +100,62 @@ public class ExerServiceImpl implements ExerService {
 		
 		
 	}
+
+	
+	@Override
+	public int addRoutine(Routine routine) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Routine getRoutine(int routineNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateRoutine(Routine routine) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteRoutine(int routineNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addRoutineInfo(Routine routine) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Routine getRoutineInfo(int routineInfoNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteRoutineInfo(int routineInfoNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Map<String, Object> recommandExerList(Search search) {
+
+		System.out.println("recommandExerListtService");
+		
+		
+		
+		
+		return null;
+	}
+	
+	
 	
 
 

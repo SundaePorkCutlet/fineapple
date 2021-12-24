@@ -34,11 +34,13 @@
 	</resultMap>
 
 
+
 	<resultMap id="routineInfoMap" type="Routine">
+		<result property="routineInfoNo" 			column="ROUTINE_INFO_NO" 			jdbcType="INTEGER"/>
 		<result property="routine.routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
 		<result property="exer.exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
 		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="TIMESTAMP" />
-		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 					jdbcType="INTEGER" />
+		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 	jdbcType="INTEGER" />
 		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="TIMESTAMP" />
 		<result property="restTime" 				column="REST_TIME" 					jdbcType="TIMESTAMP" />
 		<collection property="routine" column="ROUTINE_NO" javaType="java.util.ArrayList">
@@ -54,7 +56,8 @@
       </resultMap>
        -->
       
-	<resultMap id="routineMap" type="Routine">
+	<resultMap id="routineMap" type="Routine">	
+		<result property="routineNo" 	column="ROUTINE_NO" 		jdbcType="INTEGER" />
 		<result property="routineName" 	column="ROUTINE_NAME" 		jdbcType="VARCHAR" />
 		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="TIMESTAMP" />
 		<result property="routineKcal" 				column="ROUTINE_KCAL" 					jdbcType="FLOAT" />
@@ -88,7 +91,6 @@
 			)
 	
 	</insert>
-	
 	
 	
    <update id="updateServiceTrgt" parameterType="ExerService">
@@ -191,6 +193,114 @@
    	WHERE EXER_NO = #{exerNo:INTEGER}
    	</delete> 
 	
+	
+
+
+
+
+
+
+	<insert id="addRoutine" parameterType="Routine">
+	INSERT INTO ROUTINE(routine_no, user_service_no, routine_name, routine_time , routine_kcal)
+	VALUES(seq_routine_routine_no.NEXTVAL,
+		(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR} ),
+        #{routineName:VARCHAR},
+	    #{routineTime:TIMESTAMP},
+	    #{routineKcal:FLOAT} )	
+	</insert>
+
+
+	 <update id="updateRoutine"  parameterType="Routine">
+     UPDATE ROUTINE
+     SET ROUTINE_NAME  = #{routineName:VARCHAR},
+         ROUTINE_TIME = #{routineTime:VARCHAR},
+         ROUTINE_KCAL = #{routineKcal:FLOAT}
+     WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	</update>
+   	
+   	
+
+	<select	id="getRoutine"	parameterType="Integer"  resultMap="routineMap">
+			SELECT routine_no, user_service_no, routine_name, routine_time , routine_kcal
+			FROM   ROUTINE
+			WHERE  ROUTINE_NO= #{routineNo:INTEGER}
+	</select>
+	 
+	 
+ 
+	<delete id="deleteRoutine" parameterType="Routine">  
+   	DELETE 
+   	FROM ROUTINE
+   	WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	</delete> 
+
+
+
+	<select  id="getRoutineList"  parameterType="hashMap"  resultMap="routineMap">
+	SELECT *
+	FROM (SELECT inner_table.* , ROWNUM AS row_seq
+	FROM (SELECT R.routine_no, R.routine_name, R.routine_time
+	FROM ROUTINE R
+	ORDER BY routine_No ) inner_table
+	<!-- WHERE ROWNUM &lt;= 10) -->
+	WHERE row_seq BETWEEN 1 AND 10
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
+
+
+	<insert id="addRoutineInfo" parameterType="Routine">
+	INSERT INTO ROUTINE_INFO(routine_info_no, routine_no,  exer_no, an_exer_time)
+	VALUES(seq_routine_info_no.NEXTVAL,
+          #{routineNo:INTEGER},
+          #{exer.exerNo:INTEGER},
+	      #{anExerTime:TIMESTAMP})	
+	</insert>
+
+
+	<select	id="getRoutineInfo"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT routine_info_no, routine_no,  exer_no, an_exer_time
+			FROM   ROUTINE_INFO
+			WHERE  ROUTINE_INFO_NO= #{routineInfoNo:INTEGER}
+	</select>
+	 
+
+
+	<delete id="deleteRoutineInfo" parameterType="Routine">  
+ 	DELETE 
+   	FROM ROUTINE_INFO
+   	WHERE ROUTINE_INFO_NO = #{routineInfoNo:INTEGER}
+   	</delete> 
+
+
+	<select  id="recommandExerList"  parameterType="hashMap"  resultMap="exerMap">
+	SELECT *
+	FROM (SELECT inner_table.* , ROWNUM AS row_seq
+	FROM (SELECT e.exer_no, e.exer_name, e.exer_cate, e.exer_kcal
+	FROM EXER e
+	<if test="searchCondition != null">
+	<where>
+	<if test="searchCondition == 0 and searchKeyword !='' ">
+	exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
+	</if>
+	<if test="searchCondition == 1 and searchKeyword !='' ">
+	exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
+	</if>
+	</where>
+	</if>
+	ORDER BY exer_No ) inner_table
+	WHERE ROWNUM &lt;= 10)
+	WHERE row_seq BETWEEN 1 AND 10
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
+	 
+	 
+	 
+	 
+
+	
+
 
 	<update id="updateUserService" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD

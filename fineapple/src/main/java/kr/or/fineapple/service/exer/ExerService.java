@@ -4,6 +4,7 @@ import java.util.Map;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.common.Search;
 
 public interface ExerService {
@@ -28,6 +29,28 @@ public interface ExerService {
 	public int deleteExer(int exerNo)throws Exception;
 	
 	public void addDailyBurnning(BurnningRecord record)throws Exception;
+	
+	
+	
+	public int addRoutine(Routine routine);
+	
+	public Routine getRoutine(int routineNo);
+	
+	public int updateRoutine(Routine routine);
+	
+	public int deleteRoutine(int routineNo);
+	
+	//public Map<String ,Object> getRoutineList(Search search)throws Exception;
+	
+	
+	public int addRoutineInfo(Routine routine);
+	
+	public Routine getRoutineInfo(int routineInfoNo);
+	
+	public int deleteRoutineInfo(int routineInfoNo);
+	
+	//추천운동리스트
+	public Map<String,Object> recommandExerList(Search search);
 	
 	
 	public void updateUserService(ExerService serivce)throws Exception;

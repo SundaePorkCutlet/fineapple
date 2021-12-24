@@ -14,12 +14,16 @@ public class Routine {
 
 	
 	int routineNo;
+	int exerNo;
 	String routineName;
 	int totalExerSetCount; 
+	Double routineKcal;
+	LocalTime routineTime;
 	LocalTime aSetTime;
 	LocalTime restTime;
-	List<Exer> exer;
-	
+	Exer exer;
+	String userId;
+	LocalTime anExerTime;
 	
 	public Routine() {
 		
