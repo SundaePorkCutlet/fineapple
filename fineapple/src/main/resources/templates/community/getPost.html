@@ -33,7 +33,7 @@
 
 <div>
 	<div style="font-weight:bold;font-size:32px; text-align : center;">자유게시판</div>
-	
+	<input type="hidden" name="postNo" th:value="${board.postNo}">
 	<div style="text-align: left;">
 	<button id="updateButton" type="button">수정하기</button>
 	<button id="deleteButton" type="button">삭제하기</button>
@@ -47,6 +47,7 @@
 	
 	<div>
 	<span th:text="${board.user.userId}"></span>
+	
 	<span th:text="${board.postDate}"></span>
 	</div>
 	
@@ -64,6 +65,7 @@
 </div>
 
 <div th:insert="community/addcmnt :: addCmnt"></div>
+
 
 
 
