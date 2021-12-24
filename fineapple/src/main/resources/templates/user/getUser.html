@@ -39,6 +39,21 @@ div.relative{
   left: 30px;
 }
 
+div.box{
+	width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+    display:block;
+    margin:auto;
+}
+
+div.profile{
+ width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 </style>
 <div th:insert="index/toolbar :: toolbar">
 </div>
@@ -58,12 +73,12 @@ div.relative{
 <br>
 <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">내정보보기</div>
 <br>
-<div align ="center">
-	<img src = "../assets/profile/defaultProfile.jpg" width:"100" height="200">
-	
+<div class="box" >
+	<img th:src="@{../assets/profile/}+${session.user.userImg}" height="200" class="profile">
 </div>
 <p align ="center"><b>프로필사진</b></p>
 <p align="center"><b>상태메세지</b></p>
+<p th:text="${session.user.userSttMsg}" align ="center"></p>
 <br>
 <div align="center" class="relative">
 <table >
@@ -82,7 +97,7 @@ div.relative{
 	</tr>
 	<tr>
 		<th scope="row"><b>비밀번호</b></th>
-		<td>hidden</td>
+		<td>●●●●●●●</td>
 		<th scope="row"><b>활성서비스내역</b></th>
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
 		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
@@ -103,7 +118,10 @@ div.relative{
 	</tr>
 	<tr>
 		<th><b>성별</b></th>
-		<td th:text="${session.user.gender}"></td>
+		<td th:if="${session.user.gender} == male">남</td>
+		<td th:unless="${session.user.gender} == male">여</td>
+		<th><b>나이</b></th>
+		<td th:text="${session.user.age}"></td>
 	</tr>
 	
 </table>

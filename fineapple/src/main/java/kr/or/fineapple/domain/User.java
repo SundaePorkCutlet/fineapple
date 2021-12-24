@@ -22,7 +22,7 @@ public class User {
 	int userLeaveStt;
 	Double height;
 	Double weight;
-	Double age;
+	int age;
 	LocalDate regDate;
 	Double strdWtrIntake;
 	String userSttMsg;

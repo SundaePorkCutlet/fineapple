@@ -61,7 +61,7 @@ VALUES (#{userId:VARCHAR},
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
 SELECT
-a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,b.weight
+a.user_stt_msg, a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,a.height,b.weight
 from users a, user_body_info b
 where a.user_id = #{value}
 AND a.user_id = b.user_id
