@@ -84,9 +84,9 @@ div.relative{
 		<th scope="row"><b>비밀번호</b></th>
 		<td>hidden</td>
 		<th scope="row"><b>활성서비스내역</b></th>
-		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
-		<td th:if ="${session.user.exerServiceNo} != null">운동서비스</td>
-		<td th:if ="${session.user.exerServiceNo} == null AND ${session.user.dietServiceNo} == null">활성화된 서비스가 없습니다.</td>
+		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
+		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
+		<td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
 		
 	</tr>
 	<tr>
