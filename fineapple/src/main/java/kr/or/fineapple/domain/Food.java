@@ -10,6 +10,7 @@ import lombok.ToString;
 public class Food {
 
 	int foodNo;
+	String foodCd;
 	int foodIntoStt;
 	String foodName;
 	double servingSize;
@@ -29,6 +30,7 @@ public class Food {
 	String storeName;
 	String makerName;
 	int isAPI;
+	String Category;
 
 	public Food() {
 	

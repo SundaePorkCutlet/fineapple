@@ -3,11 +3,14 @@ package kr.or.fineapple.diet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -64,6 +67,7 @@ public class DietController {
 						}else {
 							return "diet/addDietService.html";}
 			}else {
+				model.addAttribute("user",user);
 				return "diet/addDietService.html";}
 			
 		}else {
@@ -123,7 +127,7 @@ public class DietController {
 		model.addAttribute("user",user);
 		model.addAttribute("dietServ",serv);
 		
-		return "diet/addDietService.html";
+		return "diet/updateDietService.html";
 			
 		
 	}
@@ -132,8 +136,40 @@ public class DietController {
 
 	@GetMapping("getFoodList")
 	public String getFoodList(Model model, @ModelAttribute("search") Search search) throws Exception {
+			
+		Search search1 = new Search();
+		search1.setCurrentPage(1);
+		search1.setPageSize(30);
+		search1.setSearchCondition(0);
+		search1.setSearchKeyword(search.searchKeyword);
 
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		Map<String, Object> map3 = new HashMap<String, Object>();
+		Map<String, Object> map4 = new HashMap<String, Object>();
+		
+		map2 = dietService.getFoodList(search1);
+		map3.put("list", dietService.getFoodAPIlist(search));
+		map4.putAll(map2);
+		map4.putAll(map3);
+		model.addAttribute("list", map4.get("list"));
+		model.addAttribute("search", search);
 
+		return "diet/getFoodList.html";
+	}
+
+	@PostMapping("getFood")
+	public String getFood(@ModelAttribute("food")Food fod, Model model) {
+		System.out.println("getFood");
+		
+		if("U".equals(fod.getFoodCd().substring(0,0))){
+			
+			
+			
+			return "diet/getFood.html";
+		
+		
+		}else {
+		fod.setFoodNo(234);
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		JSONArray jsonArray = new JSONArray();
@@ -146,13 +182,9 @@ public class DietController {
 			HttpEntity<?> entity = new HttpEntity<>(header);
 
 			String baseUrl = "";
-			if (search.searchCondition == 0) {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/DESC_KOR="
-						+ search.searchKeyword;
-			} else {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/MAKER_NAME="
-						+ search.searchKeyword;
-			}
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/NUM="
+						+"D"+fod.getFoodNo();
+			
 
 			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
 					Map.class);
@@ -193,6 +225,28 @@ public class DietController {
 				if (fat == null || fat == "") {
 					fat = "0.0";
 				}
+				String sugar = aa.get("NUTR_CONT5").toString();
+				if (sugar == null || sugar == "") {
+					sugar = "0.0";
+				}
+				String sodium = aa.get("NUTR_CONT6").toString();
+				if (sodium == null || sodium == "") {
+					sodium = "0.0";
+				}
+				String cholesterol = aa.get("NUTR_CONT7").toString();
+				if (cholesterol == null || cholesterol == "") {
+					cholesterol = "0.0";
+				}
+				String saturatedFattyAcid = aa.get("NUTR_CONT8").toString();
+				if (saturatedFattyAcid == null || saturatedFattyAcid == "") {
+					saturatedFattyAcid = "0.0";
+				}
+				String transFat = aa.get("NUTR_CONT8").toString();
+				if (transFat == null || transFat == "") {
+					transFat = "0.0";
+				}
+				
+				
 
 				food.setFoodName(name);
 				food.setMakerName(makerName);
@@ -201,8 +255,14 @@ public class DietController {
 				food.setFoodCarb(Double.parseDouble(carb));
 				food.setFoodProtein(Double.parseDouble(protein));
 				food.setFoodFat(Double.parseDouble(fat));
+				food.setFoodSugar(Double.parseDouble(sugar));
+				food.setFoodSodium(Double.parseDouble(sodium));
+				food.setFoodCholesterol(Double.parseDouble(cholesterol));
+				food.setFoodSaturatedFattyAcid(Double.parseDouble(saturatedFattyAcid));
+				food.setFoodTransFat(Double.parseDouble(transFat));
 
 				jsonArray.add(food);
+				
 			}
 
 		} catch (Exception e) {
@@ -211,75 +271,59 @@ public class DietController {
 			System.out.println(e.toString());
 
 		}
-
-		Search search1 = new Search();
-		search1.setCurrentPage(1);
-		search1.setPageSize(30);
-		search1.setSearchCondition(0);
-		search1.setSearchKeyword(search.searchKeyword);
-
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		Map<String, Object> map3 = new HashMap<String, Object>();
-		Map<String, Object> map4 = new HashMap<String, Object>();
-
-		map2 = dietService.getFoodList(search1);
-		map3.put("list", jsonArray);
-		map4.putAll(map2);
-		map4.putAll(map3);
-		model.addAttribute("list", map4.get("list"));
-		model.addAttribute("search", search);
-
-		return "diet/getFoodList.html";
+		
+		return "diet/getFood.html";}
 	}
-
+	
+	
 	
 	
 	@GetMapping("getPurchaseFoodList")
-	public String PostFoodList(@ModelAttribute("search") Search search, Model model) throws Exception {
+	public String PurchasaeFoodList(Model model,@ModelAttribute("search") Search search) throws Exception {
 		System.out.println("getPurchaseFoodList");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		JSONArray jsonArray = new JSONArray();
-
-		try {
-			RestTemplate resttemplate = new RestTemplate();
-
-			HttpHeaders header = new HttpHeaders();
-
-			HttpEntity<?> entity = new HttpEntity<>(header);
-
-			String baseUrl = "https://openapi.naver.com/v1/search/shop.json?query=";
-
-			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
-					Map.class);
-
-			map.put("statusCode", resultMap.getStatusCodeValue());
-			map.put("header", resultMap.getHeaders());
-			map.put("body", resultMap.getBody());
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("I2790");
-			ArrayList is = (ArrayList) im.get("row");
-
-		} catch (Exception e) {
-			map.put("statusCode", "999");
-			map.put("body", "excpetion오류");
-			System.out.println(e.toString());
-
+		search.setCurrentPage(1);
+		search.setPageSize(30);
+		search.setSearchCondition(0);
+		if(search.searchKeyword=="") {
+			search.setSearchKeyword("닭갈비");
 		}
+
+		List list = new ArrayList();
+		String result = dietService.shoppingAPI(search.searchKeyword);
+		  JSONParser parser = new JSONParser();
+          JSONObject obj = (JSONObject)parser.parse(result);
+          System.out.println(obj);
+          JSONParser parser2 = new JSONParser();
+          Object obj2 = parser2.parse(obj.get("items").toString());
+          JSONArray array2 = (JSONArray)obj2;
+          for(int i=0; i<array2.size(); i++) {
+          System.out.println(((JSONObject)array2.get(i)).get("image"));
+          Food food = new Food();
+         if(((JSONObject)array2.get(i)).get("category1").toString().equals("식품")) {
+          food.setFoodImg(((JSONObject)array2.get(i)).get("image").toString());
+         food.setPrice(Integer.parseInt(((JSONObject)array2.get(i)).get("lprice").toString()));
+         food.setFoodName(((JSONObject)array2.get(i)).get("title").toString());
+         food.setPurchaseConnLink(((JSONObject)array2.get(i)).get("link").toString());
+         
+          list.add(food);
+          }
+          }
+          
+          model.addAttribute("list",list);
+		
+		
+		
 
 		return "diet/getPurchaseFoodList.html";
 
-	}
+	
+}
 
-	@RequestMapping(value = "addDailyIntakeMeal")
-	public String addDailyIntakeMeal() {
-		System.out.println("addDailyIntakeMeal");
+		
 
-		return "diet/addDailyIntakeMeal.html";
-
-	}
 
 }
+
+
+

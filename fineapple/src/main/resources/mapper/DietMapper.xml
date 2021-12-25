@@ -124,6 +124,15 @@
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
+	
+	<select id="getFood" parameterType="INTEGER">
+	SELECT * FROM FOOD
+	WHERE food_no =#{foodNo:INTEGER}
+	
+	
+	</select>
+	
+	
 
 	<insert id="insertFavMeal" parameterType="FavMeal">
 	INSERT INTO FAV_MEAL(fav_Meal_no,
@@ -134,6 +143,30 @@
 	#{favMealKcal:DOUBLE} )
 	
 	</insert>
+	
+	<update id="updateFavMealName" parameterType="FavMeal">
+	UPDATE FAV_MEAL SET
+	fav_meal_name = #{favMealName:VARCHAR}
+	WHERE FAV_MEAL_NO=#{favMealNo:INTEGER}
+	</update>
+	
+	<delete id="deleteFavMeal" parameterType="Integer">
+	Delete FROM FAV_MEAL
+	WHERE FAV_MEAL_NO = #{VALUE}
+	
+	</delete>
+	
+	<select id="getFavMealList" parameterType="Integer" resultMap="FavMealMap">
+	select * from FAV_MEAL
+	WHERE diet_service_no=#{value}
+	
+	
+	</select>
+	
+	
+	
+	
+	
 	
 	
 	
