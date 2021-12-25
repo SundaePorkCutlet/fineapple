@@ -41,23 +41,7 @@
 		    	<input type="text" style="visibility:hidden"/>
 		    <div class="col-4 themed-grid-col"></div>
 		</div>
-		<div class="row mb-6" th:replace="trgthabit/getATrgtHabitInfo.html :: trgtHabitInfo">
-			<div class="row mb-3">
-			    <div class="col-md-2 themed-grid-col"></div>
-			    <div class="col-md-8 themed-grid-col">총 <span th:text="${trgtHabit.trgtHabitSuccDayCount}"></span>일차</div>
-			    <div class="col-md-2 themed-grid-col"></div>
-			</div>
-			<div class="row mb-3">
-			    <div class="col-md-2 themed-grid-col"></div>
-			    <div class="col-md-8 themed-grid-col"><span></span></div>
-			    <div class="col-md-2 themed-grid-col"></div>
-			</div>
-			<div class="row mb-4">
-			    <div class="col-4 themed-grid-col"></div>
-			    <div class="col-2 themed-grid-col"><a class="btn btn-primary" th:onclick="javascript:fncAddTrgtHabit()" th:value="${trgtHabit.trgtHabitCateNo}" role="button">시작</a></div>
-			    <div class="col-2 themed-grid-col"><a class="btn btn-default" th:onclick="javascript:fncEndTrgtHabit()" th:value="${trgtHabit.trgtHabitServiceNo}" role="button">초기화</a></div>
-			    <div class="col-4 themed-grid-col"></div>		    
-			</div>
+		<div class="row mb-6" th:replace="trgtHabit/getATrgtHabitInfo.html :: trgtHabitInfo">
 		</div>
 </div>
 
@@ -65,16 +49,8 @@
 <div class="container">
 	<h3 class="mt-4">오늘의 물 마시기 기록</h3>
 	<p th:text="|${session.user.userName}님의 일일 권장 수분 섭취량은 ${session.user.strdWtrIntake}L입니다.|"></p>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col">그림 삽입</div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col" th:text="|오늘 총 ${userWtrIntake}L를 마셨어요!|"></div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
+	<div class="row mb-6" th:replace="trgtHabit/getWtrIntake.html :: getWtrIntake">
+	</div>
 </div>
 
 </body>

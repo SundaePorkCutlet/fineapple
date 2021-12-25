@@ -78,4 +78,14 @@ public class RestTrgtHabitController {
 		////목표 성공 일수 초기화를 위한 서비스 호출
 		trgtHabitService.endTrgtHabit(trgthabit.getTrgtHabitServiceNo());
 	}
+	
+	@RequestMapping(value="json/updateWtrIntake", method=RequestMethod.POST)
+	public double updateWtrIntake(@RequestBody TrgtHabit trgtHabit) {
+		//REST 이용위해 TrgtHabit 도메인에 userWtrIntake 필드 추가하여 사용중(일반 컨트롤러 이용한다면 필요X)
+		System.out.println("/trgt/json/updateWtrIntake");
+		////사용자로부터 입력받은 수분섭취량 기록후 기록된값 조회하여 리턴
+		double returnUserWtrIntake = trgtHabitService.updateWtrIntake(trgtHabit.getUserId(), trgtHabit.getUserWtrIntake());
+		
+		return returnUserWtrIntake;
+	}
 }

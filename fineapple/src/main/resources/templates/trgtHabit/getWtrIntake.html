@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="utf-8">
+</head>
+<body th:fragment="getWtrIntake">
+	<style>
+		img {
+	
+			width: auto;
+			height: auto;
+			max-width: 64px;
+			max-height: 64px;
+			border: 0px;
+			background-color: transparent;
+		}
+		
+		button.img_bttn {
+			width: auto;
+			height: auto;
+			max-width: 64px;
+			max-height: 64px;
+			border: 0px;
+			background-color: transparent;
+		}
+	</style>
+	<div class="row mb-3">
+		<div class="col-md-2 themed-grid-col"></div>
+		<div class="col-md-8 themed-grid-col">
+			<button type="button" class="img_bttn" th:onclick="javascript:fncUpdateWtrIntake(this.value)" th:value="${userWtrIntake}"><img class="empty_bttl" th:src="@{../assets/icon/water-bottle-empty.png}" style="visibility: visible"><img class="full_bttl" th:src="@{../assets/icon/water-bottle-full.png}" style="visibility: hidden">
+			</button>
+		</div>
+		<div class="col-md-2 themed-grid-col"></div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-2 themed-grid-col"></div>
+		<div class="col-md-8 themed-grid-col" th:text="|오늘 총 ${userWtrIntake}L를 마셨어요!|"></div>
+		<div class="col-md-2 themed-grid-col"></div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script th:inline="javascript">
+
+function fncUpdateWtrIntake(userInput){
+	
+	console.log(userInput);
+	var userWtrIntake = parseFloat(userInput)+0.25;
+	console.log(userWtrIntake);
+	
+	//0.25L 수분 섭취 입력
+	/*<![CDATA[*/
+	
+	/*]]*/	
+	$.ajax({
+		url: "/trgtHabit/json/updateWtrIntake",
+		type: "POST",
+		data: JSON.stringify({userId : [[${session.user.userId}]],
+							userWtrIntake :  userWtrIntake}
+							),
+		contentType: "application/json"
+	}).done(function(userWtrIntake){
+		
+		$(".img_bttn").val(userWtrIntake);	
+		$("body > div:nth-child(4) > div:nth-child(5) > div.col-md-8.themed-grid-col").text("오늘 총 "+userWtrIntake+"L를 마셨어요!");
+		$(".empty_bttl").remove();
+		$(".full_bttl").attr("style", "visibility:visible");
+		
+	}
+	
+)};
+
+</script>
+</body>
+</html>
