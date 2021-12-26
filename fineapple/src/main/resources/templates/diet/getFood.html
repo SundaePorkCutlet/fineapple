@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+</head>
+<body>
+
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	
+	$( "button.btn.btn-primary").on("click" , function() {
+		
+ 		history.go(-1);
+ 		
+	});	
+	
+});
+
+</script>
+
+			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>		
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 상세정보</div>
+			<br><br><br>
+			
+			<div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${food.foodName}></div>
+			칼로리 : <span th:text="${food.foodKcal}"></span>
+			탄수화물 : <span th:text="${food.foodCarb}"></span>
+			단백질 : <span th:text="${food.foodProtein}"></span>
+			지방 : <span th:text="${food.foodFat}"></span>
+			
+			<br><br><br>
+			
+	
+   		  	
+			
+			<br><br><br><br>
+			<div class="form-group">
+	  		<div class="col-md-12 text-center ">
+	  			<button type="button" class="btn btn-primary">이전</button>
+	  		</div>
+		</div>
+		<br/>
+		
+ 	</div>
+			<br><br>
+			</div>
+			</div>
+</body>
+</html>

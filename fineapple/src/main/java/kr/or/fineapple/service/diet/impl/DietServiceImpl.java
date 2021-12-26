@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -220,7 +218,7 @@ public class DietServiceImpl implements DietService{
 				LinkedHashMap aa = (LinkedHashMap) is.get(i);
 				
 				Food food = new Food();
-
+				String foodCd = aa.get("FOOD_CD").toString();
 				String makerName = aa.get("MAKER_NAME").toString();
 				String name = aa.get("DESC_KOR").toString();
 				String serv = aa.get("SERVING_SIZE").toString();
@@ -265,7 +263,7 @@ public class DietServiceImpl implements DietService{
 				}
 				
 				
-
+				food.setFoodCd(foodCd);
 				food.setFoodName(name);
 				food.setMakerName(makerName);
 				food.setServingSize(Double.parseDouble(serv));
@@ -293,6 +291,115 @@ public class DietServiceImpl implements DietService{
 		
 		 return jsonArray;
 	}
+	
+	@Override
+	public Food getFood(String FoodCd) throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		Food food = new Food();
+		JSONArray jsonArray = new JSONArray();
+
+		try {
+			RestTemplate resttemplate = new RestTemplate();
+
+			HttpHeaders header = new HttpHeaders();
+
+			HttpEntity<?> entity = new HttpEntity<>(header);
+
+			String baseUrl = "";
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/FOOD_CD="+FoodCd;
+
+			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
+					Map.class);
+
+			map.put("statusCode", resultMap.getStatusCodeValue());
+			map.put("header", resultMap.getHeaders());
+			map.put("body", resultMap.getBody());
+
+
+			LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("I2790");
+			ArrayList is = (ArrayList) im.get("row");
+
+				LinkedHashMap aa = (LinkedHashMap) is.get(0);
+				
+				String foodCd = aa.get("FOOD_CD").toString();
+				String makerName = aa.get("MAKER_NAME").toString();
+				String name = aa.get("DESC_KOR").toString();
+				String serv = aa.get("SERVING_SIZE").toString();
+				if (serv == null || serv == "") {
+					serv = "0.0";
+				}
+				String kcal = aa.get("NUTR_CONT1").toString();
+				if (kcal == null || kcal == "") {
+					kcal = "0.0";
+				}
+				String carb = aa.get("NUTR_CONT2").toString();
+				if (carb == null || carb == "") {
+					carb = "0.0";
+				}
+				String protein = aa.get("NUTR_CONT3").toString();
+				if (protein == null || protein == "") {
+					protein = "0.0";
+				}
+				String fat = aa.get("NUTR_CONT4").toString();
+				if (fat == null || fat == "") {
+					fat = "0.0";
+				}
+				String sugar = aa.get("NUTR_CONT5").toString();
+				if (sugar == null || sugar == "") {
+					sugar = "0.0";
+				}
+				String sodium = aa.get("NUTR_CONT6").toString();
+				if (sodium == null || sodium == "") {
+					sodium = "0.0";
+				}
+				String cholesterol = aa.get("NUTR_CONT7").toString();
+				if (cholesterol == null || cholesterol == "") {
+					cholesterol = "0.0";
+				}
+				String saturatedFattyAcid = aa.get("NUTR_CONT8").toString();
+				if (saturatedFattyAcid == null || saturatedFattyAcid == "") {
+					saturatedFattyAcid = "0.0";
+				}
+				String transFat = aa.get("NUTR_CONT8").toString();
+				if (transFat == null || transFat == "") {
+					transFat = "0.0";
+				}
+				
+				
+				food.setFoodCd(foodCd);
+				food.setFoodName(name);
+				food.setMakerName(makerName);
+				food.setServingSize(Double.parseDouble(serv));
+				food.setFoodKcal(Double.parseDouble(kcal));
+				food.setFoodCarb(Double.parseDouble(carb));
+				food.setFoodProtein(Double.parseDouble(protein));
+				food.setFoodFat(Double.parseDouble(fat));
+				food.setFoodSugar(Double.parseDouble(sugar));
+				food.setFoodSodium(Double.parseDouble(sodium));
+				food.setFoodCholesterol(Double.parseDouble(cholesterol));
+				food.setFoodSaturatedFattyAcid(Double.parseDouble(saturatedFattyAcid));
+				food.setFoodTransFat(Double.parseDouble(transFat));
+
+				
+
+		} catch (Exception e) {
+			map.put("statusCode", "999");
+			map.put("body", "excpetion¿À·ù");
+			System.out.println(e.toString());
+
+		}
+		
+		return food;
+		
+	
+		
+		
+		
+		
+	}
+	
 	
 	
 	

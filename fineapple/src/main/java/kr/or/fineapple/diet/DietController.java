@@ -2,7 +2,6 @@ package kr.or.fineapple.diet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +12,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Food;
@@ -158,122 +151,14 @@ public class DietController {
 	}
 
 	@PostMapping("getFood")
-	public String getFood(@ModelAttribute("food")Food fod, Model model) {
-		System.out.println("getFood");
+	public String getFood(@RequestParam("foodCd")String foodCd, Model model) throws Exception {
 		
-		if("U".equals(fod.getFoodCd().substring(0,0))){
-			
-			
-			
-			return "diet/getFood.html";
-		
-		
-		}else {
-		fod.setFoodNo(234);
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		JSONArray jsonArray = new JSONArray();
-
-		try {
-			RestTemplate resttemplate = new RestTemplate();
-
-			HttpHeaders header = new HttpHeaders();
-
-			HttpEntity<?> entity = new HttpEntity<>(header);
-
-			String baseUrl = "";
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/NUM="
-						+"D"+fod.getFoodNo();
-			
-
-			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
-					Map.class);
-
-			map.put("statusCode", resultMap.getStatusCodeValue());
-			map.put("header", resultMap.getHeaders());
-			map.put("body", resultMap.getBody());
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("I2790");
-			ArrayList is = (ArrayList) im.get("row");
-
-			for (int i = 0; is.size() > i; i++) {
-				LinkedHashMap aa = (LinkedHashMap) is.get(i);
-				
-				Food food = new Food();
-
-				String makerName = aa.get("MAKER_NAME").toString();
-				String name = aa.get("DESC_KOR").toString();
-				String serv = aa.get("SERVING_SIZE").toString();
-				if (serv == null || serv == "") {
-					serv = "0.0";
-				}
-				String kcal = aa.get("NUTR_CONT1").toString();
-				if (kcal == null || kcal == "") {
-					kcal = "0.0";
-				}
-				String carb = aa.get("NUTR_CONT2").toString();
-				if (carb == null || carb == "") {
-					carb = "0.0";
-				}
-				String protein = aa.get("NUTR_CONT3").toString();
-				if (protein == null || protein == "") {
-					protein = "0.0";
-				}
-				String fat = aa.get("NUTR_CONT4").toString();
-				if (fat == null || fat == "") {
-					fat = "0.0";
-				}
-				String sugar = aa.get("NUTR_CONT5").toString();
-				if (sugar == null || sugar == "") {
-					sugar = "0.0";
-				}
-				String sodium = aa.get("NUTR_CONT6").toString();
-				if (sodium == null || sodium == "") {
-					sodium = "0.0";
-				}
-				String cholesterol = aa.get("NUTR_CONT7").toString();
-				if (cholesterol == null || cholesterol == "") {
-					cholesterol = "0.0";
-				}
-				String saturatedFattyAcid = aa.get("NUTR_CONT8").toString();
-				if (saturatedFattyAcid == null || saturatedFattyAcid == "") {
-					saturatedFattyAcid = "0.0";
-				}
-				String transFat = aa.get("NUTR_CONT8").toString();
-				if (transFat == null || transFat == "") {
-					transFat = "0.0";
-				}
-				
-				
-
-				food.setFoodName(name);
-				food.setMakerName(makerName);
-				food.setServingSize(Double.parseDouble(serv));
-				food.setFoodKcal(Double.parseDouble(kcal));
-				food.setFoodCarb(Double.parseDouble(carb));
-				food.setFoodProtein(Double.parseDouble(protein));
-				food.setFoodFat(Double.parseDouble(fat));
-				food.setFoodSugar(Double.parseDouble(sugar));
-				food.setFoodSodium(Double.parseDouble(sodium));
-				food.setFoodCholesterol(Double.parseDouble(cholesterol));
-				food.setFoodSaturatedFattyAcid(Double.parseDouble(saturatedFattyAcid));
-				food.setFoodTransFat(Double.parseDouble(transFat));
-
-				jsonArray.add(food);
-				
-			}
-
-		} catch (Exception e) {
-			map.put("statusCode", "999");
-			map.put("body", "excpetion¿À·ù");
-			System.out.println(e.toString());
-
+		Food food = new Food();
+		food = dietService.getFood(foodCd);
+		System.out.println(foodCd);
+		model.addAttribute("food",food);
+		return "diet/getFood.html";
 		}
-		
-		return "diet/getFood.html";}
-	}
 	
 	
 	
@@ -286,7 +171,7 @@ public class DietController {
 		search.setPageSize(30);
 		search.setSearchCondition(0);
 		if(search.searchKeyword=="") {
-			search.setSearchKeyword("´ß°¥ºñ");
+			search.setSearchKeyword("»ø·¯µå");
 		}
 
 		List list = new ArrayList();
