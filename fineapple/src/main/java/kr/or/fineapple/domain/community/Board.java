@@ -27,4 +27,8 @@ public class Board {
 	private List<Img> img;
 	
 	
+	public Board() {
+		System.out.println("Board 도메인 객체 생성");
+	}
+	
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.fineapple.mapper.CommunityMapper">
 
-	<resultMap type="Board" id="boardMap">
+	<resultMap type="board" id="boardMap">
 		<result property="postNo" column="post_no"/>
 		<result property="user.userId" column="user_id" />
 		<result property="title" column="title" />
@@ -18,14 +18,29 @@
 	</resultMap>
 	
 
-	<resultMap type="Cmnt" id="cmntMap">
-	<result property="cmntNo" column=""/>
-	<result property="board.boardNo" column=""/>
-	<result property="user.userId" column=""/>
-	<result property="cmntContent" column=""/>
-	<result property="cmntDate" column=""/>
-	<result property="cmntLikeCount" column=""/>
-	<result property="updateStt" column=""/>
+	<resultMap type="cmnt" id="cmntMap">
+	<result property="cmntNo" column="cmnt_no"/>
+	<result property="board.postNo" column="post_no"/>
+	<result property="user.userId" column="cmnt_user_id"/>
+	<result property="cmntContent" column="cmnt_content"/>
+	<result property="cmntDate" column="cmnt_date"/>
+	<result property="cmntLikeCount" column="cmnt_like_count"/>
+	<result property="updateStt" column="update_stt"/>
+	</resultMap>
+	
+	<resultMap type="group" id="groupMap">
+	<result property="groupNo" column="group_no"/>
+	<result property="groupName" column="group_name"/>
+	<result property="groupIntro" column="group_intro"/>
+	<result property="birthDate" column="group_birth"/>
+	</resultMap>
+	
+	<resultMap type="groupUser" id="groupUserMap">
+	<result property="groupUserNo" column="group_user_no"/>
+	<result property="group.groupNo" column="group_no"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="userStt" column="group_stt"/>
+	<result property="userCaptainStt" column="captain_stt"/>
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -64,12 +79,31 @@
 		#{postDate}
 		)
 	</insert>
+
+	<insert id="addCmnt" parameterType="cmnt">
+	INSERT INTO COMMENTS 
+	(
+	CMNT_NO, 
+	POST_NO,
+	CMNT_USER_ID, 
+	UPDATE_STT, 
+	CMNT_CONTENT, 
+	CMNT_DATE
+	) 
+	VALUES
+	(
+	seq_comments_cmnt_no,
+	#{board.postNo},
+	#{user.userId},
+	#{updateStt},
+	#{cmntContenct},
+	#{cmntDate}
+	)
+	</insert>
 	
-	
-	
-	
+	<!-- //////////////////////////////////////////////////////// -->
+
 	<select id="getPostList" resultMap="boardMap">
-	
 	SELECT
 	b.post_no,
 	b.user_id,
@@ -98,7 +132,16 @@
 	
 	<select id="getPost" parameterType="board" resultMap="boardMap">
 	SELECT
-	*
+	post_no,
+	user_id,
+	group_no,
+	post_cate,
+	update_stt,
+	title,
+	content,
+	post_date,
+	post_like_count,
+	view_count
 	FROM
 	board
 	<where>
@@ -106,9 +149,19 @@
 	</where>
 	</select>
 	
+	<select id="getCmntList" parameterType="board" resultMap="cmnt">
+	SELECT
+	*
+	FROM
+	comments
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	post_no = #{postNo}
+	</trim>
+	</select>
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
 	<update id="updatePostViewCount" parameterType="board">
-	<selectKey keyProperty="postNo">
-	</selectKey>
 	UPDATE BOARD 
 	<set>
 	VIEW_COUNT = NVL(VIEW_COUNT,0) + 1
@@ -117,6 +170,8 @@
 	post_no = #{postNo}
 	</trim>
 	</update>
+	
+	<!-- //////////////////////////////////////////////////////// -->
 	
 	<update id="updatePostLike" parameterType="map">
 	UPDATE
@@ -135,12 +190,10 @@
 	</where>
 	</update>
 
-
-
 	<update id="updateCmntLike" parameterType="map">
 	UPDATE
 	INTO
-	cmnt
+	comments
 	<trim prefix="SET" suffixOverrides=",">
 	<if test="flag == 0">
 	POST_LIKE_COUNT = POST_LIKE_COUNT + 1
@@ -154,26 +207,8 @@
 	</where>
 	</update>
 	
-	<insert id="addCmnt" parameterType="cmnt">
-	INSERT INTO COMMENTS 
-	(
-	CMNT_NO, 
-	POST_NO,
-	CMNT_USER_ID, 
-	UPDATE_STT, 
-	CMNT_CONTENT, 
-	CMNT_DATE
-	) 
-	VALUES
-	(
-	seq_comments_cmnt_no,
-	#{board.postNo},
-	#{user.userId},
-	#{updateStt},
-	#{cmntContenct},
-	#{cmntDate}
-	)
-	</insert>
+	<!-- //////////////////////////////////////////////////////// -->
+	
 	
 	<update id="updatePost" parameterType="board">
 	<selectKey  order="AFTER"></selectKey>
@@ -187,8 +222,6 @@
 	</trim>
 	</update>
 	
-	
-
 	<update id="updateCmnt" parameterType="Cmnt">
 	UPDATE COMMENTS 
 	<set>
@@ -198,6 +231,77 @@
 	cmnt_no = #{cmntNo}
 	</where>
 	</update>
+	
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	<insert id="addGroup">
+	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
+	SELECT seq_groups_groups_no.NEXTVAL.CURRVAL FROM dual
+	</selectKey>
+	INSERT
+	INTO
+	groups
+	(GROUP_NO, 
+	GROUP_NAME,
+	GROUP_INTRO, 
+	GROUP_BIRTH) 
+	VALUES 
+	(
+	seq_groups_groups_no.NEXTVAL,
+	#{groupName},
+	#{groupIntro},
+	SYSDATE
+	)
+	</insert>
+	
+	<insert id="addGroupUser" parameterType="user">
+	INSERT
+	INTO
+	group_user
+	(
+	group_user_no,
+	group_no,
+	user_id,
+	captain_stt,
+	group_stt
+	)
+	</insert>
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	<select id="getGroupList" resultMap="groupMap">
+	SELECT
+	*
+	FROM
+	groups
+	</select>
+	
+	<select id="getGroup" parameterType="group" resultMap="groupMap">
+	SELECT
+	*
+	FROM
+	<where>
+	group_no = #{groupNo}
+	</where>
+	</select>
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	<select id="getGroupUserList" parameterType="groupUser" resultMap="groupUserMap">
+	SELECT
+	*
+	FROM
+	group_user
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	group_no = #{group.groupNo}
+	</trim>
+	</select>
+	
+	
+	
+	
+	
 	
 	
 	

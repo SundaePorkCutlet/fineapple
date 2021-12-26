@@ -66,6 +66,23 @@
 
 <div th:insert="community/addcmnt :: addCmnt"></div>
 
+<script th:inline="javascript">
+
+function checkLikeGood(){
+	
+	$.ajax({
+		url : "/community/json/checkLikeGood",
+		type : "POST",
+		data : JSON.stringify(data),
+		contentType: "application/json"
+		})
+}
+	
+
+
+
+</script>
+
 
 
 
