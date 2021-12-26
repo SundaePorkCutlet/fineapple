@@ -11,7 +11,7 @@
 	</div>
 	<div class="row mb-3">
 	    <div class="col-md-2 themed-grid-col"></div>
-	    <div class="col-md-8 themed-grid-col" th:replace="trgtHabit/time.html :: time"><span></span></div>
+	    <div class="col-md-8 themed-grid-col" th:replace="trgtHabit/time.html :: time"></div>
 	    <div class="col-md-2 themed-grid-col"></div>
 	</div>
 	<div class="row mb-4">
@@ -25,6 +25,9 @@
 <script th:inline="javascript">
 
 function fncGetTrgtHabit(trgtHabitCateNo){
+	
+	//사용자정의 항목 이름 입력창 다시 숨기기
+	$("body > div:nth-child(3) > div:nth-child(4) > input[type=text]").attr("style", "display:none");
 	
 	//조회 실행
 	/*<![CDATA[*/
@@ -42,8 +45,6 @@ function fncGetTrgtHabit(trgtHabitCateNo){
 	}).done(function(trgtHabit){
 		console.log(trgtHabit);
 		if(typeof trgtHabit == "undefined" || trgtHabit == null || trgtHabit == ""){
-			$("body > div:nth-child(3) > div:nth-child(4) > div.col-md-8.themed-grid-col > span").html(null);
-			$("body > div:nth-child(3) > div:nth-child(5) > div.col-md-8.themed-grid-col > span").text("00:00:00");
 			fncTimerOnOff();
 		} else {
 			console.log(trgtHabit.trgtHabitCateNo);
@@ -62,7 +63,7 @@ function fncAddUserHabitName(){
 	if(trgtHabitServiceNo != 0){
 		alert("이미 목표 진행 중입니다!");
 	}else{
-		$("body > div:nth-child(3) > div:nth-child(4) > input[type=text]").attr("style", "visibility:visible");
+		$("body > div:nth-child(3) > div:nth-child(4) > input[type=text]").attr("style", "display:inline-block");
 	}
 }
 
@@ -121,24 +122,14 @@ function fncEndTrgtHabit(){
 		data: JSON.stringify(data),
 		contentType: "application/json"
 	}).done(function(){
-		$("body > div:nth-child(3) > div:nth-child(4) > div.col-md-8.themed-grid-col > span").html(0);
+		$("body > div:nth-child(3) > div:nth-child(5) > div.col-md-8.themed-grid-col > span").html(0);	//성공일수 0일로 초기화
 		$("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(2) > a").val(trgtHabitCateNo);
-		$("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(3) > a").val(0);
+		$("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(3) > a").val(0);	//trgtHabitServiceNo 0번으로 초기화
 		$("body > div:nth-child(3) > div.row.mb-6 > div:nth-child(5)").text("사용자정의");
+		fncTimerOnOff();
 	}
 )};
 
-
-function fncTimerOnOff(){
-	
-	var trgtHabitServiceNo = $("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(3) > a").val();
-	
-	if(trgtHabitServiceNo == 0){
-		$("body > div:nth-child(3) > div:nth-child(6) > span").text("00:00:00");
-	}else{
-		$("body > div:nth-child(3) > div:nth-child(6) > span").text(time());
-	}
-}
 
 </script>
 </body>
