@@ -41,7 +41,7 @@
 		AND trgt_habit_init_date IS NULL
 	</select>
 
-	<!-- SELECT : 목표습관초기화 -->
+	<!-- UPDATE : 목표습관초기화 -->
 	<update id="endTrgtHabit" parameterType="int">
 	UPDATE trgt_habit_service
 		<set>

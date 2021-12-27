@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.TrgtHabit;
-import kr.or.fineapple.domain.WtrIntake;
 import kr.or.fineapple.mapper.TrgtHabitMapper;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
@@ -46,7 +45,6 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 
 	@Override
 	public void endTrgtHabit(int trgtHabitServiceNo) {
-		
 		////습관 목표 일수 초기화
 		trgtHabitMapper.endTrgtHabit(trgtHabitServiceNo);
 	}

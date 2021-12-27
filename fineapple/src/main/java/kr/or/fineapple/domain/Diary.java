@@ -10,8 +10,8 @@ public class Diary {
 	
 	////기간
 	//월 기간 산정
-	LocalDate startingDate;
-	LocalDate endingDate;
+	LocalDate startDate;
+	LocalDate endDate;
 	
 	////다이어리 제공 정보(일별) : 뱃지, 대표사용자이벤트, 총 섭취소모 칼로리
 	//일별 정보 디스플레이를 위한 일자

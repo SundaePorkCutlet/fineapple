@@ -32,7 +32,7 @@
 
 
 <insert id="addUser"	parameterType="User">
-INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
+INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,AGE,REG_DATE,STRD_WTR_INTAKE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
 VALUES (#{userId:VARCHAR},
 		'user',
 		#{gender:VARCHAR},		
@@ -42,7 +42,6 @@ VALUES (#{userId:VARCHAR},
 		#{cellphone:VARCHAR},
 		#{userName:VARCHAR},
 		#{password:VARCHAR},
-		#{height:INTEGER},
 		#{age:INTEGER},
 		SYSDATE,
 		#{strdWtrIntake:DOUBLE},
@@ -54,11 +53,12 @@ VALUES (#{userId:VARCHAR},
 
 
 <insert id="addUserBodyInfo" parameterType="user">
-	INSERT into USER_BODY_INFO(USER_BODY_INFO_NO,USER_ID,WEIGHT,USER_BODY_INFO_DATE)
+	INSERT into USER_BODY_INFO(USER_BODY_INFO_NO,USER_ID,WEIGHT,USER_BODY_INFO_DATE,HEIGHT)
 	VALUES(seq_user_body_info_no.nextval,
 		#{userId:VARCHAR},
 		#{weight:INTEGER},
-		SYSDATE)
+		SYSDATE,
+		#{height:INTEGER})
 </insert>
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.fineapple.mapper.DiaryMapper">
+
+	<resultMap id="UserBodyInfoMap" type="UserBodyInfo">	
+		<result property="userBodyInfoNo" column="USER_BODY_INFO_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="date" column="USER_BODY_INFO_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="weight" column="WEIGHT" jdbcType="DOUBLE"/>
+		<result property="bodyFat" column="BODY_FAT" jdbcType="DOUBLE"/>
+		<result property="bodyMuscle" column="BODY_MUSCLE" jdbcType="DOUBLE"/>
+		<result property="height" column="HEIGHT" jdbcType="DOUBLE"/>
+	</resultMap>
+	
+	<resultMap id="UserEventMap" type="UserEvent">
+		<result property="userEventNo" column="USER_EVENT_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="eventDate" column="USER_EVENT_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="keyEventStt" column="KEY_EVENT_STT" jdbcType="INTEGER"/>
+		<result property="eventTitle" column="EVENT_TITLE" jdbcType="VARCHAR"/>
+		<result property="eventCntnt" column="EVENT_CNTNT" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
+	<insert id="addUserBodyInfo">
+	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
+	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
+			TRUNC(SYSDATE),
+			(SELECT user_id
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            (SELECT weight
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            (SELECT body_fat
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            (SELECT body_muscle
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            (SELECT height
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)))
+	</insert>
+	
+	<!-- UPDATE : 신체변화정보 사용자 기록 -->
+	<update id="updateUserBodyInfo" parameterType="UserBodyInfo">
+	UPDATE user_body_info
+		<trim prefix="SET" suffixOverrides=",">
+			weight = #{weight:DOUBLE},
+			body_fat = #{bodyFat:DOUBLE},
+			body_muscle = #{bodyMuscle:DOUBLE},
+			height = #{height:DOUBLE},
+		</trim>
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(user_body_info_date) = TRUNC(#{date})
+	</update>
+	
+	<!-- SELECT LIST : 신체변화정보 리스트로 모두 조회 -->
+	<select id="getUserBodyInfoList" resultMap="UserBodyInfoMap">
+	SELECT user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height
+	FROM user_body_info
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(user_body_info_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+
+	<!-- INSERT : 사용자이벤트 등록 -->
+	<insert id="addUserEvent" parameterType="UserEvent">
+	INSERT INTO user_event (user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt)
+	VALUES (SEQ_USER_EVENT_USER_EVENT_NO.nextval,
+        #{userId:VARCHAR},
+        #{keyEventStt:INTEGER},
+        TRUNC(#{eventDate}),
+        #{eventTitle:VARCHAR},
+        #{eventCntnt:VARCHAR})
+	</insert>
+	
+	<!-- SELECT : 해당일자에 등록된 사용자이벤트 갯수 조회 -->
+	<select id="getUserEventCount" resultType="int">
+	SELECT COUNT(user_event_no)
+	FROM user_event
+	WHERE user_id = #{userId:VARCHAR}
+		AND	TRUNC(user_event_date) = TRUNC(#{eventDate})
+	</select>
+	
+	<!-- SELECT ONE : 사용자이벤트 조회 -->
+	<select id="getUserEvent" resultType="UserEvent">
+	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
+	FROM user_event
+	WHERE user_event_no = #{userEventNo:INTEGER}
+	</select>
+	
+	<!-- SELECT LIST : 사용자이벤트 목록으로 모두 조회 -->
+	<select id="getUserEventList" resultMap="UserEventMap">
+	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
+	FROM user_event
+	WHERE user_id = #{userId:VARCHAR}
+		AND	TRUNC(user_event_date) = TRUNC(#{eventDate})
+	</select>
+	
+	<!-- UPDATE : 사용자 이벤트 수정 -->
+	<update id="updateUserEvent" parameterType="UserEvent">
+	UPDATE user_event
+		<set>
+			event_title = #{eventTitle:VARCHAR},
+			event_cntnt = #{eventCntnt:VARCHAR}
+		</set>
+	WHERE user_event_no = #{userEventNo:INTEGER}
+	</update>
+	
+	<!-- UPDATE : 대표 사용자 이벤트 등록 전 대표 이벤트 설정여부 모두 해제-->
+	<update id="updatePreKeyUserEventStt" parameterType="int">
+	UPDATE user_event
+		<set>
+			key_event_stt = 1
+		</set>
+	WHERE (TRUNC(user_event_date), user_id) = (SELECT TRUNC(user_event_date), user_id
+									FROM user_event
+									WHERE user_event_no = #{userEventNo:INTEGER})
+	</update>
+	
+	<!-- UPDATE : 대표 사용자 이벤트 등록-->
+	<update id="updateKeyUserEventStt" parameterType="int">
+	UPDATE user_event
+		<set>
+			key_event_stt = 0
+		</set>
+	WHERE user_event_no = #{userEventNo:INTEGER}
+	</update>
+	
+	<!-- DELETE : 사용자 이벤트 삭제 -->
+	<delete id="deleteUserEvent" parameterType="int">
+	DELETE user_event
+	WHERE user_event_no = #{userEventNo:INTEGER}
+	</delete>
+	
+</mapper>
