@@ -149,7 +149,7 @@
 	</where>
 	</select>
 	
-	<select id="getCmntList" parameterType="board" resultMap="cmnt">
+	<select id="getCmntList" parameterType="board" resultMap="cmntMap">
 	SELECT
 	*
 	FROM
@@ -235,7 +235,7 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<insert id="addGroup">
+	<insert id="addGroup"  parameterType="group">
 	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
 	SELECT seq_groups_groups_no.NEXTVAL.CURRVAL FROM dual
 	</selectKey>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +66,7 @@ public class DietController {
 			
 		}else {
 			
-			return "../user/login";}
+			return "/user/login";}
 		
 	}
 		
@@ -160,12 +161,12 @@ public class DietController {
 		return "diet/getFood.html";
 		}
 	
-	
+
 	
 	
 	@GetMapping("getPurchaseFoodList")
 	public String PurchasaeFoodList(Model model,@ModelAttribute("search") Search search) throws Exception {
-		System.out.println("getPurchaseFoodList");
+		System.out.println("post:getPurchaseFoodList");
 
 		search.setCurrentPage(1);
 		search.setPageSize(30);
@@ -190,13 +191,15 @@ public class DietController {
          food.setPrice(Integer.parseInt(((JSONObject)array2.get(i)).get("lprice").toString()));
          food.setFoodName(((JSONObject)array2.get(i)).get("title").toString());
          food.setPurchaseConnLink(((JSONObject)array2.get(i)).get("link").toString());
+         food.setMakerName(((JSONObject)array2.get(i)).get("brand").toString());
+         food.setStoreName(((JSONObject)array2.get(i)).get("maker").toString());
          
           list.add(food);
           }
           }
           
           model.addAttribute("list",list);
-		
+          model.addAttribute("search",search);
 		
 		
 
