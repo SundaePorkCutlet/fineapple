@@ -150,7 +150,7 @@ public class DietController {
 		return "diet/getFoodList.html";
 	}
 
-	@PostMapping("getFood")
+	@GetMapping("getFood")
 	public String getFood(@RequestParam("foodCd")String foodCd, Model model) throws Exception {
 		
 		Food food = new Food();

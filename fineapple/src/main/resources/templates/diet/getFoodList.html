@@ -98,7 +98,7 @@ $(function() {
 		<td></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodName}" data-foodCd="${data.foodCd}"  class="foodName" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}" th:attr="data-foodCd=${data.foodCd}"  class="foodName" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
