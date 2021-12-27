@@ -5,43 +5,51 @@
 
 	<resultMap type="board" id="boardMap">
 		<result property="postNo" column="post_no"/>
-		<result property="user.userId" column="user_id" />
-		<result property="title" column="title" />
-		<result property="content" column="content" />
-		<result property="postDate" column="post_date" />
-		<result property="viewCount" column="view_count" />
-		<result property="cmntCount" column="cmnt_count" />
-		<result property="postLikeCount" column="post_like_count" />
+		<result property="user.userId" column="user_id"/>
+		<result property="group.groupNo" column="group_no"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="postDate" column="post_date"/>
+		<result property="viewCount" column="view_count"/>
+		<result property="cmntCount" column="cmnt_count"/>
+		<result property="postLikeCount" column="post_like_count"/>
 		<result property="updateStt" column="update_stt"/>
 		<result property="cateName" column="post_cate"/>
-		<result property="groupNo" column="group_no"/>
 	</resultMap>
 	
 
 	<resultMap type="cmnt" id="cmntMap">
-	<result property="cmntNo" column="cmnt_no"/>
-	<result property="board.postNo" column="post_no"/>
-	<result property="user.userId" column="cmnt_user_id"/>
-	<result property="cmntContent" column="cmnt_content"/>
-	<result property="cmntDate" column="cmnt_date"/>
-	<result property="cmntLikeCount" column="cmnt_like_count"/>
-	<result property="updateStt" column="update_stt"/>
+		<result property="cmntNo" column="cmnt_no"/>
+		<result property="user.userId" column="cmnt_user_id"/>
+		<result property="board.postNo" column="post_no"/>
+		<result property="cmntContent" column="cmnt_content"/>
+		<result property="cmntDate" column="cmnt_date"/>
+		<result property="cmntLikeCount" column="cmnt_like_count"/>
+		<result property="updateStt" column="update_stt"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupMap">
-	<result property="groupNo" column="group_no"/>
-	<result property="groupName" column="group_name"/>
-	<result property="groupIntro" column="group_intro"/>
-	<result property="birthDate" column="group_birth"/>
+		<result property="groupNo" column="group_no"/>
+		<result property="groupName" column="group_name"/>
+		<result property="groupIntro" column="group_intro"/>
+		<result property="userCount" column="user_count"/>
+		<result property="birthDate" column="group_birth"/>
 	</resultMap>
 	
 	<resultMap type="groupUser" id="groupUserMap">
-	<result property="groupUserNo" column="group_user_no"/>
-	<result property="group.groupNo" column="group_no"/>
-	<result property="user.userId" column="user_id"/>
-	<result property="userStt" column="group_stt"/>
-	<result property="userCaptainStt" column="captain_stt"/>
+		<result property="groupUserNo" column="group_user_no"/>
+		<result property="group.groupNo" column="group_no"/>
+		<result property="user.userId" column="user_id"/>
+		<result property="groupStt" column="group_stt"/>
+		<result property="captainStt" column="captain_stt"/>
 	</resultMap>
+	
+	<!-- <resultMap type="" id="">
+		<result property="followNo" column=""/>
+		<result property="toUser.userId" column="to_user_id"/>
+		<result property="fromUser.userId" column="from_user_id"/>
+		<result property="followStt" column="follow_stt"/>	
+	</resultMap> -->
 	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
@@ -149,7 +157,7 @@
 	</where>
 	</select>
 	
-	<select id="getCmntList" parameterType="board" resultMap="cmnt">
+	<select id="getCmntList" parameterType="board" resultMap="cmntMap">
 	SELECT
 	*
 	FROM
@@ -334,14 +342,27 @@
 	groups g,
 	group_user gu
 	<trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
-	gu.user_id = #{user.userId},
-	gu.group_no = g.group_no
+	gu.user_id = #{user.userId}
+	AND gu.group_no = g.group_no
 	</trim>
 	</select>
 	
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
+	<!-- <select id="" parameterType="user" resultMap="">
+	SELECT
+	g.group_no,
+	g.group_name,
+	g.group_intro
+	FROM
+	groups g,
+	group_user gu
+	FROM
+	<where>
+	gu.user_id = #{}
+	</where>
+	</select> -->
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
