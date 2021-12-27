@@ -7,8 +7,75 @@
 
 </head>
 <body>
+
+
 <div th:insert="index/toolbar :: toolbar">
 	</div>
+
+
+
+<script type="text/javascript">
+function fncGetUserList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+
+   	//document.detailForm.submit();
+	$("form").attr("method" , "POST").attr("action" , "/diet/getFood").submit();
+}
+
+$(function() {
+
+	 
+	 $("#food").on("click" , function() {
+		 fncGetUserList(1);
+		
+});
+});
+
+</script>	
+	<form>
+			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br>
+			
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >식품 구매 검색</div>
+			<br><br>
+
+<!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
+
+				<div align="right">
+			    <form class="form-inline" name="detailForm">
+			    			
+					<select class="form-control" name="searchCondition" style="width: 100px;">
+					<option value="0" th:selected= "${search.searchCondition}=='0'">식품명</option>
+					<option value="1" th:selected= "${search.searchCondition}=='1'">제조사</option>
+					</select>
+				
+									  
+			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
+			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
+			
+<!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
+ -->			<button data-text-content="true" class="btn btn-primary">검색</button>
+			<br>
+			
+			<a href="#">식품명</a>
+			<a href="#">제조사</a>
+			</form>
+			</div>
+			
 	<table class="table table-hover table-striped" >			
   		<thead>
           <tr>
@@ -28,12 +95,10 @@
 	<tr th:each="data, i : ${list}">
 		<td></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodName}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodFat}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.price}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.purchaseConnLink}"   style="cursor:pointer; text-align: left;"></td>
+		<td><img th:src="${data.foodImg}"   style="cursor:pointer; text-align: left; width:50px; height:50px;"></td>
 	</tr>
 </tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		

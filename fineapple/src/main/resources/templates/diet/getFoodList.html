@@ -19,20 +19,19 @@ function fncGetUserList(currentPage) {
 	//document.getElementById("currentPage").value = currentPage;
 
    	//document.detailForm.submit();
-	$("form").attr("method" , "GET").attr("action" , "/diet/getFoodList").submit();
+	$("form").attr("method" , "POST").attr("action" , "/diet/getFood").submit();
 }
 
 $(function() {
 
 	 
-	 $("button.btn.btn-primary").on("click" , function() {
-		 fncGetUserList(1);
-		
+	 $(".foodName").on("click" , function() {
+			self.location="/diet/getFood?foodCd="+$(this).attr("data-foodCd");		
 });
 });
 
 </script>	
-	
+	<form>
 			
 <div class="container show-grid">
 		<div class="row">
@@ -99,7 +98,7 @@ $(function() {
 		<td></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodName}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}" th:attr="data-foodCd=${data.foodCd}"  class="foodName" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
@@ -114,6 +113,6 @@ $(function() {
 			</div>
 			</div>
 			</div>		
-
+</form>
 </body>
 </html>
