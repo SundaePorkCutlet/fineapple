@@ -242,10 +242,12 @@
 	INSERT
 	INTO
 	groups
-	(GROUP_NO, 
+	(
+	GROUP_NO, 
 	GROUP_NAME,
 	GROUP_INTRO, 
-	GROUP_BIRTH) 
+	GROUP_BIRTH
+	) 
 	VALUES 
 	(
 	seq_groups_groups_no.NEXTVAL,
@@ -255,7 +257,7 @@
 	)
 	</insert>
 	
-	<insert id="addGroupUser" parameterType="user">
+	<insert id="addGroupUser" parameterType="groupUser">
 	INSERT
 	INTO
 	group_user
@@ -266,7 +268,27 @@
 	captain_stt,
 	group_stt
 	)
+	VALUES
+	(
+	seq_group_user_no.NEXTVAL,
+	#{groupNo},
+	#{user.userId},
+	#{captainStt},
+	#{groupStt}
+	)
 	</insert>
+	
+	<delete id="deleteGroupUser" parameterType="groupUser">
+	DELETE
+	FROM
+	group_user
+	<where>
+	user_id = #{user.userId}
+	</where>
+	</delete>
+	
+	
+	
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
@@ -288,21 +310,51 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<select id="getGroupUserList" parameterType="groupUser" resultMap="groupUserMap">
+	<select id="getGroupUserList" parameterType="group" resultMap="groupUserMap">
 	SELECT
 	*
 	FROM
 	group_user
 	<trim prefix="WHERE" prefixOverrides="AND | OR">
-	group_no = #{group.groupNo}
+	group_no = #{groupNo}
 	</trim>
 	</select>
 	
 	
 	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	<select id="getMyGroupList" parameterType="groupUser" resultMap="groupMap">
+	SELECT
+	g.group_no,
+	g.group_name,
+	g.group_intro,
+	g.group_birth
+	FROM
+	groups g,
+	group_user gu
+	<trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+	gu.user_id = #{user.userId},
+	gu.group_no = g.group_no
+	</trim>
+	</select>
+	
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	
+	<!-- //////////////////////////////////////////////////////// -->
 	
 	
 	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	
+	<!-- //////////////////////////////////////////////////////// -->
 	
 	
 </mapper>

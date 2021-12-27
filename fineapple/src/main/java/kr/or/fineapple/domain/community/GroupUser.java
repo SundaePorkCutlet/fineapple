@@ -13,7 +13,7 @@ public class GroupUser {
 	private Group group;
 	private int groupUserNo;
 	private User user;
-	private int userStt;
+	private int groupStt;
 	private int userCaptainStt;
 
 }
