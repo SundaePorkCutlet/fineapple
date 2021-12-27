@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="index/toolbar :: toolbar"></div>
+<div id="map" style="width:500px;height:400px;" align="right"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f06ca8d510968c283e5370ce403e280d">
+</script>
+
+ <script>
+ 
+
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(37.56653, 126.98026), // 지도의 중심좌표
+	        level: 3, // 지도의 확대 레벨
+	        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+	    }; 
+
+	// 지도를 생성한다 
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	// 지도에 확대 축소 컨트롤을 생성한다
+	var zoomControl = new kakao.maps.ZoomControl();
+
+	// 지도의 우측에 확대 축소 컨트롤을 추가한다
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+	// 지도에 마커를 생성하고 표시한다
+	var marker = new kakao.maps.Marker({
+	    position: new kakao.maps.LatLng(37.56653, 126.98026), // 마커의 좌표
+	    map: map // 마커를 표시할 지도 객체
+	});
+
+	// 마커에 클릭 이벤트를 등록한다 (우클릭 : rightclick)
+	kakao.maps.event.addListener(marker, 'click', function() {
+	    alert('마커를 클릭했습니다!');
+	});
+
+</script>
+    
+			<button type="button" class="btn btn-lg btn-primary" id="getMyPositionBtn" onclick="getCurrentPosBtn" style="width: 300px; height: 100px; ">내 위치 가져오기</button>
+			
+
+</body>
+</html>

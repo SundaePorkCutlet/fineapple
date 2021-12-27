@@ -154,6 +154,12 @@ public class ExerServiceImpl implements ExerService {
 		
 		return null;
 	}
+
+	@Override
+	public int searchExerPlace() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	

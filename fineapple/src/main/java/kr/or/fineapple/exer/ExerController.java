@@ -238,6 +238,18 @@ return "exer/addDailyBurnning.html";
 }
 
 
+@RequestMapping(value="searchExerPlace")
+public String searchExerPlace() {
+	
+	
+	System.out.println("searchExerPlace");
+
+	
+	return "exer/searchExerPlace.html";
+	
+	
+}
+
 
 
 

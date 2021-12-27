@@ -53,6 +53,11 @@ public interface ExerService {
 	public Map<String,Object> recommandExerList(Search search);
 	
 	
+	//운동장소 찾기
+	
+	public int searchExerPlace();
+	
+	
 	public void updateUserService(ExerService serivce)throws Exception;
 	
 	
