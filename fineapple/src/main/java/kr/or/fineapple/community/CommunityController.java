@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.community.Board;
+import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.service.community.CommunityService;
 import oracle.net.aso.c;
 
@@ -26,7 +28,7 @@ public class CommunityController {
 	private CommunityService communityService;
 	
 	@GetMapping(value = "getPost")
-	public String getViewTest(@ModelAttribute Board board, Model model) {
+	public String getViewTest(@ModelAttribute("board") Board board, Model model) {
 		
 		System.out.println(board.getPostNo() + "dddddddddddddddddddddddddd");
 		
@@ -35,11 +37,11 @@ public class CommunityController {
 		System.out.println(board + "getPost Service °ÅÄ£ ÈÄ");
 		
 		model.addAttribute("board", board);
-		
+		 
 		return "community/getPost.html";
 	}
 	
-	@RequestMapping(value = "getViewTest", method = RequestMethod.GET)
+	@RequestMapping(value = "getBoard", method = RequestMethod.GET)
 	public String getPostList(Model model) {
 		
 		
@@ -57,6 +59,20 @@ public class CommunityController {
 		System.out.println(board);
 		communityService.addPost(board);
 		return null;
+	}
+	
+	@GetMapping(value = "addGroupView")
+	public String addGroupView() {
+		return "community/addGroupView.html";
+	}
+	
+	@PostMapping(value = "addGroup")
+	public ModelAndView addGroup(@ModelAttribute("group") Group group) {
+		
+		
+		group.setGroupIntro("ASdsadsa");
+		return null;
+		
 	}
 	
 	

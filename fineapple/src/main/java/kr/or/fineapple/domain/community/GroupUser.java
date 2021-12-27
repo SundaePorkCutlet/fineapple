@@ -10,9 +10,10 @@ import lombok.ToString;
 @ToString
 public class GroupUser {
 	
+	private Group group;
 	private int groupUserNo;
 	private User user;
-	private int userStt;
-	private Boolean userCaptainStt;
+	private int groupStt;
+	private int userCaptainStt;
 
 }
