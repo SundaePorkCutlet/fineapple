@@ -15,7 +15,7 @@
 	<result property="userLeaveStt" column="user_leave_stt"	jdbcType="INTEGER"/>
 	<result property="lastConTime"	column="last_con_time"	jdbcType="DATE"/>
 	<result property="regDate"	column="reg_date"	jdbcType="DATE"/>
-	<result property="strdWtrIntake"	column="str_wtr_intake"	jdbcType="DOUBLE"/>
+	<result property="strdWtrIntake"	column="strd_wtr_intake"	jdbcType="DOUBLE"/>
 	<result	property="userSttMsg"	column="user_stt_msg"	jdbcType="VARCHAR"/>
 	<result property="blcAddDate"	column="blc_add_date"	jdbcType="DATE"/>
 	<result property="blcAddWhy"	column="blc_add_why"	jdbcType="VARCHAR"/>
@@ -30,25 +30,26 @@
 
 
 
-<insert id="addUser"   parameterType="User">
-INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)   
+
+<insert id="addUser"	parameterType="User">
+INSERT into USERS (USER_ID,ROLE,GENDER,BLC_RGS_STT,USER_LEAVE_STT,USER_IMG,CELLPHONE,USER_NAME,PASSWORD,HEIGHT,AGE,REG_DATE,STRD_WTR_INTAKE,BLC_ADD_DATE,BLC_ADD_WHY,LAST_CON_TIME,USER_STT_MSG)	
 VALUES (#{userId:VARCHAR},
-      'user',
-      #{gender:VARCHAR},      
-      0,
-      0,
-      #{userImg:VARCHAR},
-      #{cellphone:VARCHAR},
-      #{userName:VARCHAR},
-      #{password:VARCHAR},
-      #{height:INTEGER},
-      #{age:INTEGER},
-      SYSDATE,
-      2,
-      #{blcAddDate:DATE},
-      #{blcAddWhy:VARCHAR},
-      #{lastConTime:DATE},
-      '상태메세지없음')
+		'user',
+		#{gender:VARCHAR},		
+		0,
+		0,
+		#{userImg:VARCHAR},
+		#{cellphone:VARCHAR},
+		#{userName:VARCHAR},
+		#{password:VARCHAR},
+		#{height:INTEGER},
+		#{age:INTEGER},
+		SYSDATE,
+		#{strdWtrIntake:DOUBLE},
+		#{blcAddDate:DATE},
+		#{blcAddWhy:VARCHAR},
+		#{lastConTime:DATE},
+		'상태메세지없음')
 </insert>
 
 
@@ -62,7 +63,7 @@ VALUES (#{userId:VARCHAR},
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
 SELECT
-a.user_stt_msg, a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,a.height,b.weight
+a.user_stt_msg, a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,b.height,b.weight,a.strd_wtr_intake
 from users a, user_body_info b
 where a.user_id = #{value}
 AND a.user_id = b.user_id

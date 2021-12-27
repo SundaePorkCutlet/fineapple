@@ -38,6 +38,11 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 		
 		return trgtHabitMapper.getTrgtHabit(map);
 	}
+	
+	@Override
+	public String getUserHabitName(String userId) {
+		return trgtHabitMapper.getUserHabitName(userId);
+	}
 
 	@Override
 	public void endTrgtHabit(int trgtHabitServiceNo) {
@@ -67,10 +72,10 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 	@Override
 	public double updateWtrIntake(String userId, double userWtrIntake) {
 		
-		////현재 수분섭취량에 +0.25
+		////사용자가 입력한 수분섭취량 업데이트
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);
-		map.put("userWtrIntake", userWtrIntake + 0.25);
+		map.put("userWtrIntake", userWtrIntake);
 		trgtHabitMapper.updateWtrIntake(map);
 		
 		return getWtrIntake(userId, LocalDate.now());

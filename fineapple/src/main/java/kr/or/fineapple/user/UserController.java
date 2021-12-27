@@ -95,6 +95,7 @@ public class UserController {
 			user.setUserImg("defaultProfile.jpg"); 
 		}
 
+		user.setStrdWtrIntake(user.getWeight()*0.03);	//적정수분섭취량 계산식(몸무게*0.03L) 적용
 		userService.addUser(user);
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");

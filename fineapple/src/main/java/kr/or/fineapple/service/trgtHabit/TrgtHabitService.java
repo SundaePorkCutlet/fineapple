@@ -10,6 +10,8 @@ public interface TrgtHabitService {
 	public void addTrgtHabit(String userId, TrgtHabit trgtHabit);
 
 	public TrgtHabit getTrgtHabit(String userId, LocalDate date, int trgtCateNo);
+	
+	public String getUserHabitName(String userId);
 
 	public void endTrgtHabit(int trgtHabitServiceNo);
 

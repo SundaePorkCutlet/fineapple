@@ -5,29 +5,52 @@
 </head>
 <body th:fragment="time">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script th:inline="javascript">
-$(function(){
+
+function time(){
+	var today = new Date();   
+
+	var hours = ('0' + today.getHours()).slice(-2); 
+	var minutes = ('0' + today.getMinutes()).slice(-2);
+	var seconds = ('0' + today.getSeconds()).slice(-2); 
+
+	var timeString = hours + ':' + minutes  + ':' + seconds;
+	return timeString;
+}
+
+
+function fncTimerOnOff(){
 	
-	//타이머 실행 스케줄
-	setTimeout(function run(){
-		
-		time();
-		setTimeout(run, 1000);
-		
-	}, 1000);
+	var trgtHabitServiceNo = $("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(3) > a").val();
+	
+	if(trgtHabitServiceNo == 0){
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_go").attr("style", "display:none");
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_stop").attr("style", "display:block");
+	}else{
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_go").attr("style", "display:block");
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_stop").attr("style", "display:none");
+	}
+}
+
+$(function() {
+	
+	var trgtHabitServiceNo = $("body > div:nth-child(3) > div.row.mb-4 > div:nth-child(3) > a").val();
+	if(trgtHabitServiceNo == 0){
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_go").attr("style", "display:none");
+	} else {
+		$("body > div:nth-child(3) > div:nth-child(6) > span.time_stop").attr("style", "display:none");
+	}
+
+	$("body > div:nth-child(3) > div:nth-child(6) > span.time_go").text(time());
+    
+	setInterval(function() {
+        $("body > div:nth-child(3) > div:nth-child(6) > span.time_go").text(time());
+    }, 1000);
 
 });
-function time(){
-	/*<![CDATA[*/
-		$.ajax({
-					url: "/trgtHabit/json/getCurrentTime",
-					type: "GET",
-					}).done(function(time){
-						$("body > div:nth-child(3) > div:nth-child(5) > span").html(time.hour+":"+time.min+":"+time.sec);
-					});
-	/*]]*/
-	};
+
 </script>
-<span th:text="|${time.hour}:${time.min}:${time.sec}|"></span>
+<span class="time_go"></span><span class="time_stop">00:00:00</span>
 </body>
 </html>

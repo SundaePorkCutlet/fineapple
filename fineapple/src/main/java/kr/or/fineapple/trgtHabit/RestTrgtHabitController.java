@@ -3,7 +3,6 @@ package kr.or.fineapple.trgtHabit;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.TrgtHabit;
-import kr.or.fineapple.domain.common.Timer;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
 @RestController
@@ -36,25 +33,42 @@ public class RestTrgtHabitController {
 		////조회를 위한 service 호출
 		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), trgtHabit.getViewDate(), trgtHabit.getTrgtHabitCateNo());
 	
-		//결과가 null일때(목표 습관 진행중인 건수가 없을때)
+		//결과가 null이 아닐때
 		if(returnTrgtHabit != null) {		
 			////성공일수 출력 위한 연산 Logic
 			//시작일자와 오늘일자의 차
 			LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
 			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
-			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount);
-		}
+			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
+			
+			return returnTrgtHabit;		
+			
+		} else {
+			
+			TrgtHabit emptyTrgtHabit = new TrgtHabit();
+			emptyTrgtHabit.setTrgtHabitCateNo(trgtHabit.getTrgtHabitCateNo());
 
-		return returnTrgtHabit;		
+			return emptyTrgtHabit;
+		}
 	}
 	
 	@RequestMapping(value="json/addTrgtHabit", method=RequestMethod.POST)
-	public void addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
+	public TrgtHabit addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
 		  
 		System.out.println("/trgtHabit/json/addTrgtHabit : POST");
 		//서비스 시작을 위한 service 호출	  
 		trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
-		
+		//시작된 목표 관리 정보 조회를 위한 service 호출
+		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), LocalDate.now(), trgtHabit.getTrgtHabitCateNo());
+
+		////성공일수 출력 위한 연산 Logic
+		//시작일자와 오늘일자의 차
+		LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
+		int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+		returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
+		System.out.println(returnTrgtHabit);
+	
+		return returnTrgtHabit;		
 	}
 	 
 	@RequestMapping(value="json/endTrgtHabit", method=RequestMethod.POST)
@@ -65,18 +79,13 @@ public class RestTrgtHabitController {
 		trgtHabitService.endTrgtHabit(trgthabit.getTrgtHabitServiceNo());
 	}
 	
-	@RequestMapping(value="json/getCurrentTime")
-	public Timer getCurrentTime() {
+	@RequestMapping(value="json/updateWtrIntake", method=RequestMethod.POST)
+	public double updateWtrIntake(@RequestBody TrgtHabit trgtHabit) {
+		//REST 이용위해 TrgtHabit 도메인에 userWtrIntake 필드 추가하여 사용중(일반 컨트롤러 이용한다면 필요X)
+		System.out.println("/trgt/json/updateWtrIntake");
+		////사용자로부터 입력받은 수분섭취량 기록후 기록된값 조회하여 리턴
+		double returnUserWtrIntake = trgtHabitService.updateWtrIntake(trgtHabit.getUserId(), trgtHabit.getUserWtrIntake());
 		
-		System.out.println("/trgtHabit/json/getCurrentTime");
-		
-		Timer time = new Timer();
-		time.setHour(LocalTime.now().getHour());
-		time.setMin(LocalTime.now().getMinute());
-		time.setSec(LocalTime.now().getSecond());
-		
-		System.out.println(time);
-		return time;
+		return returnUserWtrIntake;
 	}
-	
 }
