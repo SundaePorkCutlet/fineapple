@@ -24,17 +24,17 @@ public interface DietService {
 	
 	public Map<String,Object> getFoodList(Search search)throws Exception;
 	
+	public JSONArray getFoodAPIlist(Search search)throws Exception;
+	
 	public int addFavMeal(FavMeal favMeal)throws Exception;
 	
 	public int updateFavMealName(FavMeal favMeal)throws Exception;
 	
 	public int deleteFavMeal(int favMealNo)throws Exception;
 	
-	public Map<String,Object> getFavMealList(int dietServiceNo)throws Exception;
-	
 	public String shoppingAPI(String searchKeyword)throws Exception;
 	
-	public JSONArray getFoodAPIlist(Search search)throws Exception;
+	public Map<String,Object> getFavMealList(int dietServiceNo)throws Exception;
 	
 	public Food getFood(String foodCd)throws Exception;
 	
@@ -45,5 +45,7 @@ public interface DietService {
 	public int delteFavMealItem(int favMealInfoNo)throws Exception;
 	
 	public int updateFavMealItem(FavMeal favMeal)throws Exception;
+	
+	public IntakeRecord getIntakeRecordList(int dietServiceNo)throws Exception;
 
 }

@@ -95,15 +95,24 @@
 	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE) 
 	VALUES (seq_intake_record_no.NEXTVAL,
 			(SELECT user_service_no from USER_SERVICE WHERE USER_ID = #{userId:VARCHAR}),
-			#{food.foodNo:INTEGER},
+			#{food.foodNo:VARCHAR},
 			#{userId:VARCHAR},
 			SYSDATE,
 			#{meal:VARCHAR},
 			#{userFoodIntake:DOUBLE}
 
 			)
-	
 	</insert>
+	
+	
+	<select id="getIntakeRecordList" parameterType="Integer" resultMap="IntakeRecordMap">
+	SELECT * FROM INTAKE_RECORD 
+	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	
+	
+	
+	</select>
 	
 	
 	   <update id="updateBodyInfo" parameterType="DietServ">

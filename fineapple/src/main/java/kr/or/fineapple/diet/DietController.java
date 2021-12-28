@@ -146,15 +146,15 @@ public class DietController {
 		List list2 = new ArrayList();
 		
 		list.add(dietService.getFoodAPIlist(search));
-		
 		map2 = dietService.getFoodList(search1);
+		list.add(map2.get("list"));
 		
 		
 		
 		map3.put("list", dietService.getFoodAPIlist(search));
 		map4.putAll(map2);
 		map4.putAll(map3);
-		model.addAttribute("list", map3.get("list"));
+		model.addAttribute("list", list);
 		model.addAttribute("search", search);
 
 		return "diet/getFoodList.html";

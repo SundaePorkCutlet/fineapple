@@ -427,6 +427,13 @@ public class DietServiceImpl implements DietService{
 	public int updateFavMealItem(FavMeal favMeal) throws Exception {
 		return dietMapper.updateFavMealItem(favMeal);
 	}
+
+
+
+	@Override
+	public IntakeRecord getIntakeRecordList(int dietServiceNo) throws Exception {
+		return dietMapper.getIntakeRecordList(dietServiceNo);
+	}
 	
 	
 	

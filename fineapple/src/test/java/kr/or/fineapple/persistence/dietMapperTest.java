@@ -42,19 +42,20 @@ class dietMapperTest {
 
 	
 //	@Test
-	public void contextLoads() throws Exception {
+	public void addIntakeRecord() throws Exception {
 		IntakeRecord record = new IntakeRecord();
 		Food food = new Food() ;
 		DietServ dietServ = new DietServ();
 		
-		String userId = "zzz@gmail.com";
+		String userId = "aaa123@naver.com";
 		
 		food.setFoodCarb(1.1);
 		food.setFoodImg(null);
 		food.setFoodIntoStt(1);
 		food.setFoodKcal(313.2);
+		food.setFoodNo(50000);
 		food.setFoodName("ȫ��ȣ");
-		food.setFoodNo(1);
+		food.setFoodCd("D9393");
 		food.setFoodProtein(23.1);
 		food.setFoodSodium(1.1);
 		food.setFoodSugar(33.1);
@@ -81,9 +82,9 @@ class dietMapperTest {
 
 
 //        log.info("addDietService : " + dietService.addDietService(dietServ));
-//        log.info("addIntakeRecord : " + dietService.addIntakeRecord(record));
+        log.info("addIntakeRecord : " + dietService.addIntakeRecord(record));
 //        log.info("getDietService : " + dietService.getDietService(userId));
-		  log.info("updatetrgt : " + dietMapper.updateBodyInfo(dietServ));
+//		  log.info("updatetrgt : " + dietMapper.updateBodyInfo(dietServ));
 
 	}
 	
@@ -282,6 +283,20 @@ class dietMapperTest {
 		log.info("++"+dietService.updateFavMealItem(fav));
 	}
 	
+	@Test
+	public void getIntakeRecord() throws Exception {
+		
+	IntakeRecord record = new IntakeRecord();
+	
+	
+	record.setIntakeRecordNo(23);
+	
+	log.info("++"+dietService.getIntakeRecordList(23));
+		
+		
+		
+		
+	}
 	
 	
 	
