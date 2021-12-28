@@ -22,6 +22,19 @@
 		<result property="eventCntnt" column="EVENT_CNTNT" jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	<resultMap id="BadgeMap" type="Badge">
+		<result property="badgeNo" column="BADGE_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="badgeDate" column="BADGE_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="dietBadgeCount" column="DIET_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="exerBadgeCount" column="EXER_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="wtrBadgeCount" column="WTR_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="bttlBadgeCount" column="BTTL_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="dailyIntakeKcal" column="DAILY_BURNNING_KCAL" jdbcType="DOUBLE"/>
+		<result property="dailyBurnningKcal" column="DAILY_INTAKE_KCAL" jdbcType="DOUBLE"/>
+		<result property="userWtrIntake" column="USER_WTR_INTAKE" jdbcType="DOUBLE"/>
+	</resultMap>
+	
 	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
 	<insert id="addUserBodyInfo">
 	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
@@ -44,27 +57,6 @@
             WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)))
 	</insert>
 	
-	<!-- UPDATE : 신체변화정보 사용자 기록 -->
-	<update id="updateUserBodyInfo" parameterType="UserBodyInfo">
-	UPDATE user_body_info
-		<trim prefix="SET" suffixOverrides=",">
-			weight = #{weight:DOUBLE},
-			body_fat = #{bodyFat:DOUBLE},
-			body_muscle = #{bodyMuscle:DOUBLE},
-			height = #{height:DOUBLE},
-		</trim>
-	WHERE user_id = #{userId:VARCHAR}
-		AND TRUNC(user_body_info_date) = TRUNC(#{date})
-	</update>
-	
-	<!-- SELECT LIST : 신체변화정보 리스트로 모두 조회 -->
-	<select id="getUserBodyInfoList" resultMap="UserBodyInfoMap">
-	SELECT user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height
-	FROM user_body_info
-	WHERE user_id = #{userId:VARCHAR}
-		AND TRUNC(user_body_info_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
-	</select>
-
 	<!-- INSERT : 사용자이벤트 등록 -->
 	<insert id="addUserEvent" parameterType="UserEvent">
 	INSERT INTO user_event (user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt)
@@ -96,7 +88,7 @@
 	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
 	FROM user_event
 	WHERE user_id = #{userId:VARCHAR}
-		AND	TRUNC(user_event_date) = TRUNC(#{eventDate})
+		AND	TRUNC(user_event_date) = TRUNC(#{date})
 	</select>
 	
 	<!-- UPDATE : 사용자 이벤트 수정 -->
@@ -134,5 +126,51 @@
 	DELETE user_event
 	WHERE user_event_no = #{userEventNo:INTEGER}
 	</delete>
+	
+	<!-- SELECT LIST : 신체변화정보 리스트로 모두 조회 -->
+	<select id="getUserBodyInfoList" resultMap="UserBodyInfoMap">
+	SELECT user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height
+	FROM user_body_info
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(user_body_info_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+	
+	<!-- UPDATE : 신체변화정보 사용자 기록 -->
+	<update id="updateUserBodyInfo" parameterType="UserBodyInfo">
+	UPDATE user_body_info
+		<trim prefix="SET" suffixOverrides=",">
+			weight = #{weight:DOUBLE},
+			body_fat = #{bodyFat:DOUBLE},
+			body_muscle = #{bodyMuscle:DOUBLE},
+			height = #{height:DOUBLE},
+		</trim>
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(user_body_info_date) = TRUNC(#{date})
+	</update>
+	
+	<!-- SELECT LIST : 다이어리 화면 출력을 위한 기간 내 뱃지 리스트 조회 -->
+	<select id="getBadgeList" parameterType="ViewDuration" resultMap="BadgeMap">
+	SELECT user_id, badge_no, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, daily_burnning_kcal, daily_intake_kcal
+	FROM badge
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(badge_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+	
+	<!-- SELECT ONE : 기간내 뱃지 갯수의 합 조회 -->
+	<select id="getBadgeTotalCount" parameterType="ViewDuration" resultMap="BadgeMap">
+	SELECT SUM(diet_badge_count) as "DIET_BADGE_COUNT", SUM(exer_badge_count) as "EXER_BADGE_COUNT", SUM(wtr_badge_count) as "WTR_BADGE_COUNT", SUM(bttl_badge_count) as "BTTL_BADGE_COUNT"
+	FROM badge
+	WHERE user_id = #{userId:VARCHAR}
+		AND TRUNC(badge_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+	
+	<!-- SELECT LIST : 다이어리 화면 출력을 위한 기간 내 대표 이벤트 제목 리스트 조회 -->
+	<select id="getKeyEventTitleList" parameterType="ViewDuration" resultMap="UserEventMap">
+	SELECT user_id, user_event_date, event_title
+	FROM user_event
+	WHERE user_id = #{userId:VARCHAR}
+		AND key_event_stt = 0
+		AND TRUNC(badge_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
 	
 </mapper>

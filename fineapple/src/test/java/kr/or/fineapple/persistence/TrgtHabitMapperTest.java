@@ -1,31 +1,28 @@
 package kr.or.fineapple.persistence;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import kr.or.fineapple.domain.TrgtHabit;
-import kr.or.fineapple.mapper.TrgtHabitMapper;
+import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+//@Slf4j
 @SpringBootTest
 public class TrgtHabitMapperTest {
 	
-	//@Autowired
-	private TrgtHabitMapper trgtHabitMapper;
+//	@Autowired
+//	private TrgtHabitMapper trgtHabitMapper;
 	
-	//@Autowired
-	//@Qualifier("trgtHabitServiceImpl")
+	@Autowired
+	@Qualifier("trgtHabitServiceImpl")
 	private TrgtHabitService trgtHabitService;
 	
-	//@Test
+	@Test
 	public void contextLoads() {
 		
 		//addTrgtHabit Test
@@ -84,6 +81,20 @@ public class TrgtHabitMapperTest {
 		 * double userWtrIntake = 0.0; trgtHabitService.updateWtrIntake(userId,
 		 * userWtrIntake);
 		 */
-		 
+		
+		//getTrgtHabitList Test (startDate != null and endDate != null 경우)
+//		ViewDuration viewDuration = new ViewDuration();
+//		viewDuration.setUserId("hc@gmail.com");
+//		viewDuration.setStartDate(LocalDate.of(2021, 11, 1));
+//		viewDuration.setEndDate(LocalDate.of(2021, 12, 31));
+//		List list = trgtHabitService.getTrgtHabitList(viewDuration);
+//		System.out.println(list);
+		//getTrgtHabitList Test (date != null 경우)
+//		ViewDuration viewDuration = new ViewDuration();
+//		viewDuration.setUserId("hc@gmail.com");
+//		viewDuration.setDate(LocalDate.now());
+//		List list = trgtHabitService.getTrgtHabitList(viewDuration);
+//		System.out.println(list);
+		
 	}
 }
