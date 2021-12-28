@@ -28,6 +28,8 @@ public interface CommunityMapper {
 	
 	public void updateCmntLike(Map map);
 	
+	public void addGroup(Group group);
+	
 	public List<Group> getGroupInterGroup(GroupUser groupUser);
 	
 	public List<User> getGroupInterUser(GroupUser groupUser);

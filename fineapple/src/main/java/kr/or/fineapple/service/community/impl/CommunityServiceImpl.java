@@ -84,6 +84,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public void addReport(Report report) {
 		communityMapper.addReport(report);
 	}
+
+	@Override
+	public void addGroup(Group group) {
+		communityMapper.addGroup(group);
+		
+	}
 	
 	
 	

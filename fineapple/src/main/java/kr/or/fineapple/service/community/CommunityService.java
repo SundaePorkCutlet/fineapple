@@ -28,4 +28,6 @@ public interface CommunityService {
 	public List<User> getGroupInterUser(GroupUser groupUser);
 	
 	public void addReport(Report report);
+	
+	public void addGroup(Group group);
 }

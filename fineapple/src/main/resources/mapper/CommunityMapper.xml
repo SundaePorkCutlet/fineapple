@@ -54,7 +54,7 @@
 	
 	
 	
-	<resultMap id = "userSelectMap"	type = "User">
+	<resultMap id = "userSelectMap"	type = "user">
 		<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
 		<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
 		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
@@ -178,7 +178,6 @@
 	title,
 	content,
 	post_date,
-	post_like_count,
 	view_count
 	FROM
 	board
@@ -274,9 +273,9 @@
 	<!-- //////////////////////////////////////////////////////// -->
 	
 	<insert id="addGroup">
-	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
+	<!-- <selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
 	SELECT seq_groups_groups_no.NEXTVAL.CURRVAL FROM dual
-	</selectKey>
+	</selectKey> -->
 	INSERT
 	INTO
 	groups
