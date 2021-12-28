@@ -273,7 +273,7 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<insert id="addGroup">
+	<insert id="addGroup"  parameterType="group">
 	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
 	SELECT seq_groups_groups_no.NEXTVAL.CURRVAL FROM dual
 	</selectKey>

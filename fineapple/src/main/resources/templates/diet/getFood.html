@@ -41,15 +41,23 @@ $(function() {
 			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 상세정보</div>
 			<br><br><br>
 			
-			<div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${food.foodName}></div>
-			칼로리 : <span th:text="${food.foodKcal}"></span>
-			탄수화물 : <span th:text="${food.foodCarb}"></span>
-			단백질 : <span th:text="${food.foodProtein}"></span>
-			지방 : <span th:text="${food.foodFat}"></span>
+			<div data-text-content="true" style="font-weight:bold;font-size:40px;" class="" align="center" th:text=${food.foodName}></div>
+			<br><br>
+			<div style="font-weight:bold;font-size:30px;" align="center">1회제공량 : <span th:text="${food.servingSize}+g"></span></div>
 			
-			<br><br><br>
+			<div style="font-size:20px; position:absolute; left:600px; top:560px;">칼로리 : <span th:text="|${food.foodKcal}(kcal)(1회제공량당)|"></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;탄수화물 : <span th:text="|${food.foodCarb} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px; position:absolute; left:600px; top:600px;">단백질 : <span th:text="|${food.foodProtein} (g)(1회제공량당)|"></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지방 : <span th:text="|${food.foodFat} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px; position:absolute; left:600px; top:640px;">콜레스테롤 : <span th:text="|${food.foodCholesterol} (mg)(1회제공량당)|"></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포화지방산 : <span th:text="|${food.foodSaturatedFattyAcid} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px; position:absolute; left:600px; top:680px;">당류 : <span th:text="|${food.foodSugar} (g)(1회제공량당)|"></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;나트륨 : <span th:text="|${food.foodSodium} (mg)(1회제공량당)|"></span></div>
+			<br><br><br><br><br><br>
 			
-	
+			<div style="position:absolute; top:500px;"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
+			<div style="position:absolute; top:540px;"><button type="button" class="btn btn-danger" th:onClick="|location.href='@{../user/addUser}'|">즐겨찾기에 추가</button></div>
+			<div style="position:absolute; top:580px;"><button type="button" class="btn btn-warning" th:onclick="|location.href='@{../diet/getPurchaseFoodList?searchKeyword={searchKeyword}(searchKeyword=${food.foodName})}'|">유사상품 검색하기</button></div>
    		  	
 			
 			<br><br><br><br>

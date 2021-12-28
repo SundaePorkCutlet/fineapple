@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +66,9 @@ public class DietController {
 			
 		}else {
 			
+
 			return "user/login"; }
+
 		
 	}
 		
@@ -139,12 +142,19 @@ public class DietController {
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		Map<String, Object> map4 = new HashMap<String, Object>();
+		List list = new ArrayList();
+		List list2 = new ArrayList();
+		
+		list.add(dietService.getFoodAPIlist(search));
 		
 		map2 = dietService.getFoodList(search1);
+		
+		
+		
 		map3.put("list", dietService.getFoodAPIlist(search));
 		map4.putAll(map2);
 		map4.putAll(map3);
-		model.addAttribute("list", map4.get("list"));
+		model.addAttribute("list", map3.get("list"));
 		model.addAttribute("search", search);
 
 		return "diet/getFoodList.html";
@@ -160,12 +170,12 @@ public class DietController {
 		return "diet/getFood.html";
 		}
 	
-	
+
 	
 	
 	@GetMapping("getPurchaseFoodList")
 	public String PurchasaeFoodList(Model model,@ModelAttribute("search") Search search) throws Exception {
-		System.out.println("getPurchaseFoodList");
+		System.out.println("post:getPurchaseFoodList");
 
 		search.setCurrentPage(1);
 		search.setPageSize(30);
@@ -190,13 +200,15 @@ public class DietController {
          food.setPrice(Integer.parseInt(((JSONObject)array2.get(i)).get("lprice").toString()));
          food.setFoodName(((JSONObject)array2.get(i)).get("title").toString());
          food.setPurchaseConnLink(((JSONObject)array2.get(i)).get("link").toString());
+         food.setMakerName(((JSONObject)array2.get(i)).get("brand").toString());
+         food.setStoreName(((JSONObject)array2.get(i)).get("maker").toString());
          
           list.add(food);
           }
           }
           
           model.addAttribute("list",list);
-		
+          model.addAttribute("search",search);
 		
 		
 
@@ -204,7 +216,18 @@ public class DietController {
 
 	
 }
-
+	@GetMapping("getFavMealList")
+	public String getFavMealList(Model model,HttpServletRequest request)	throws Exception {
+			System.out.println("getFavMealList");
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			
+			User user =(User)request.getSession(true).getAttribute("user");
+			DietServ serv = dietService.getDietService(user.getUserId());
+			map = dietService.getFavMealList(serv.getUserServiceNo());
+			model.addAttribute("list",map.get("list"));
+		return "diet/getFavMealList.html";
+	}
 		
 
 

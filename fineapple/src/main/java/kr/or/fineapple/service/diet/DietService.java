@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.diet;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -37,5 +38,12 @@ public interface DietService {
 	
 	public Food getFood(String foodCd)throws Exception;
 	
+	public int addFavMealItem(FavMeal favMeal)throws Exception;
+	
+	public List getFavMealItemList(int favMealNo)throws Exception;	
+	
+	public int delteFavMealItem(int favMealInfoNo)throws Exception;
+	
+	public int updateFavMealItem(FavMeal favMeal)throws Exception;
 
 }

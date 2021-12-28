@@ -12,7 +12,11 @@
 	
 
     
-    
+    <script>
+ function listcart(){
+				popWin = window.open("../diet/getFavMealList","popWin","left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+			}
+ </script>
     
     
     
@@ -107,6 +111,7 @@
             </li>
         </ul>
 
+                <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listcart()|">&#127869;</a>
         <div class="col-md-3 text-end" >
             <div class="mb-2">
                 <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>
@@ -139,7 +144,7 @@
                             <li><a class="dropdown-item" th:href="@{../diet/addDietService?menu=1}">서비스활성화</a></li>
                             <li><a class="dropdown-item" th:href="@{../diet/getFoodList}">식품검색</a></li>
                             <li><a class="dropdown-item" th:href="@{../diet/addDailyIntakeMeal}">일일섭취식단</a></li>
-							 <li><a class="dropdown-item" href="#">즐겨찾는식단</a></li>
+							 <li><a class="dropdown-item" href="#">식품레시피</a></li>
 							 <li><a class="dropdown-item" href="#">식품추천</a></li>
                         </ul>
 
@@ -199,6 +204,7 @@
     
 </div>
 </div>
+
 
 </body>
 </html>

@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
  
 
 </head>
@@ -58,10 +57,6 @@ $(function() {
 				<div align="right">
 			    <form class="form-inline" name="detailForm">
 			    			
-					<select class="form-control" name="searchCondition" style="width: 100px;">
-					<option value="0" th:selected= "${search.searchCondition}=='0'">식품명</option>
-					<option value="1" th:selected= "${search.searchCondition}=='1'">제조사</option>
-					</select>
 				
 									  
 			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
@@ -71,41 +66,69 @@ $(function() {
  -->			<button data-text-content="true" class="btn btn-primary">검색</button>
 			<br>
 			
-			<a href="#">식품명</a>
-			<a href="#">제조사</a>
+			<a href="#">가격순</a>
+			<a href="#">이름순</a>
 			</form>
 			</div>
 			
-	<table class="table table-hover table-striped" >			
-  		<thead>
-          <tr>
-            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">선택</th>         
-            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>         
-            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>         
-            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>         
-            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>           
-            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                       
-            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                       
-            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                       
-          </tr>
-        </thead>
+<div class="container pt-1">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 p-3" th:each="data, i : ${list}">
+                            <div class="thumbnail">
+                                <div style="height:30%; width:100%">
+                                    <img th:src="${data.foodImg}" width="100%" height="100%" alt="…">
+                                </div>
+                                <div class="caption">
+                                    <h4 th:utext="${data.foodName}"></h4>
+                                    <p th:text="|최저가 : ${data.price}|"></p>
+                                    <p th:text="|판매처 : ${data.storeName}|"></p>
+                                    <p th:text="|브랜드 : ${data.makerName}|"></p>
+                                    <a th:href="${data.purchaseConnLink}">
+                                        <button type="button" class="btn btn-primary">구매처 이동</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			
+			
+			
+			
+<!-- 	<table class="table table-hover table-striped" >			 -->
+<!--   		<thead> -->
+<!--           <tr> -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">선택</th>          -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>          -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>          -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>          -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>            -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                        -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                        -->
+<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                        -->
+<!--           </tr> -->
+<!--         </thead> -->
         
 	
-       <tbody>
-	<tr th:each="data, i : ${list}">
-		<td></td>
-		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.price}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.purchaseConnLink}"   style="cursor:pointer; text-align: left;"></td>
-		<td><img th:src="${data.foodImg}"   style="cursor:pointer; text-align: left; width:50px; height:50px;"></td>
-	</tr>
-</tbody>
-	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
+<!--        <tbody> -->
+<!-- 	<tr th:each="data, i : ${list}"> -->
+<!-- 		<td></td> -->
+<!-- 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td> -->
+<!-- 		<td th:text="${data.foodName}"   style="cursor:pointer; text-align: left;"></td> -->
+<!-- 		<td th:text="${data.price}"   style="cursor:pointer; text-align: left;"></td> -->
+<!-- 		<td th:text="${data.purchaseConnLink}"   style="cursor:pointer; text-align: left;"></td> -->
+<!-- 		<td><img th:src="${data.foodImg}"   style="cursor:pointer; text-align: left; width:50px; height:50px;"></td> -->
+<!-- 	</tr> -->
+<!-- </tbody> -->
+<!-- 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->
 
-	</table>
+<!-- 	</table> -->
 	
 
+	</div>
+	</div>
+	</div>
+	</form>
 	
 
 </body>
