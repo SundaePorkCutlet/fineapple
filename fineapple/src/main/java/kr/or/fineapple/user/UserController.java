@@ -113,6 +113,54 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="updateUser", method=RequestMethod.GET)
+	public String updateUser(@RequestParam("userId") String userId, Model model) throws Exception{
+		
+		System.out.println("updateUser:GET 들어왔나용");
+		
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
+		
+	
+		return "/user/updateUser.html";
+		
+	}
+	
+	@RequestMapping(value="updateUser/result",method = RequestMethod.POST)
+	public String updateUser(@ModelAttribute("user") User user, HttpSession session,@RequestParam(value="userImg1",required=false) MultipartFile file) throws Exception{
+		
+		System.out.println("updateUser:POST 들어왔나요");
+		
+		System.out.println(user);
+		
+		if(file != null && !file.getOriginalFilename().isEmpty()) {
+			System.out.println("if문 입장");
+			file.transferTo(new File(filePath, file.getOriginalFilename()));
+			user.setUserImg(file.getOriginalFilename());
+			
+		}
+		User userDB = userService.getUser(user.getUserId());
+		System.out.println(userDB);
+		String sessionId =  ((User)session.getAttribute("user")).getUserId();
+		
+		userService.updateUser(user);
+		userDB = userService.getUser(user.getUserId());
+		if(sessionId.equals(userDB.getUserId())) {
+			session.setAttribute("user",userDB);
+		}
+		System.out.println("끝났나요");
+		
+		return "redirect:/user/getUser?userId="+user.getUserId();
+		
+	}
+	
+	@RequestMapping(value ="updateUserLeave", method=RequestMethod.POST)
+	public void updateUserLeave(@RequestParam("userId") String userId, Model model) throws Exception{
+		System.out.println("updateUserLeave :POST 들어왔나여");
+		
+		
+	}
 
 	
 	
