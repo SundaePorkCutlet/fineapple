@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
+import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +89,65 @@ public class BoardTest {
 		Cmnt cmnt = new Cmnt();
 
 	}
+	
+	//@Test
+	public void groupInterUser() {
+		GroupUser groupUser = new GroupUser();
+		User user = new User();
+		user.setUserId("aaa123@naver.com");
+		groupUser.setUser(user);
+		groupUser.setGroupStt(2);
+		List<User> list = communityService.getGroupInterUser(groupUser);
+		for (User user2 : list) {
+			System.out.println(user2.getUserId());
+			
+		}
+	}
+	
+	//@Test
+	public void groupInterGroup() {
+		GroupUser groupUser = new GroupUser();
+		User user = new User();
+		user.setUserId("bbb123@gmil.com");
+		groupUser.setUser(user);
+		groupUser.setGroupStt(2);
+		List<Group> list = communityService.getGroupInterGroup(groupUser);
+		for (Group group : list) {
+			System.out.println(group);
+		}
+	}
+	
+	
+	
+	@Test
+	public void addReport() {
+		Report report = new Report();
+		
+		User user = new User();
+		User reportedUser = new User();
+		user.setUserId("aaa123@naver.com");
+		reportedUser.setUserId("bbb123@gmil.com");
+		report.setReportCate("회원신고");
+		report.setUser(user);
+		report.setReportedUser(reportedUser);
+		//1 게시글 2 댓글 3 회원
+		Board reportedBoard = new Board();
+		reportedBoard.setPostNo(1);
+		report.setReportTrgt(reportedBoard);
+		report.setReportCntnt("이 게시글이 매우 이상해요!");
+		
+		communityService.addReport(report);
+
+		
+				
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -6,7 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
+import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Report;
 
 @Mapper
 @Repository
@@ -23,6 +27,11 @@ public interface CommunityMapper {
 	public void updatePostLike(Map map);
 	
 	public void updateCmntLike(Map map);
-
+	
+	public List<Group> getGroupInterGroup(GroupUser groupUser);
+	
+	public List<User> getGroupInterUser(GroupUser groupUser);
+	
+	public void addReport(Report report);
 
 }

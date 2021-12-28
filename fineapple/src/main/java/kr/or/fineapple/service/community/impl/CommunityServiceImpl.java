@@ -7,8 +7,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
+import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
 
@@ -66,6 +70,23 @@ public class CommunityServiceImpl implements CommunityService {
 	public Board getPost(Board board) {
 		return communityMapper.getPost(board);
 	}
+
+	@Override
+	public List<User> getGroupInterUser(GroupUser groupUser) {
+		return communityMapper.getGroupInterUser(groupUser);
+	}
+	
+	
+	public List<Group> getGroupInterGroup(GroupUser groupUser){
+		return communityMapper.getGroupInterGroup(groupUser);
+	}
+	
+	public void addReport(Report report) {
+		communityMapper.addReport(report);
+	}
+	
+	
+	
 	
 	
 	
