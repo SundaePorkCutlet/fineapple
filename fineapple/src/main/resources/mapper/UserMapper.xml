@@ -75,6 +75,7 @@
     #{lastConTime:DATE},
     '상태메세지없음'
     )
+
 </insert>
 
 
@@ -97,12 +98,12 @@
 	#{weight:INTEGER},
 	SYSDATE
 	)
+
 </insert>
 
 
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
-
 	SELECT
 	a.user_stt_msg, 
 	a.user_id, 
@@ -126,7 +127,31 @@
 	AND a.user_id = b.user_id
 	</where> 
 
+
 </select>
+
+<update id="updateUser" parameterType="user">
+	UPDATE users
+	<set>
+	user_id=#{userId:VARCHAR},
+	user_name = #{userName:VARCHAR},
+	cellphone = #{cellphone:VARCHAR},
+	user_img=#{userImg:VARCHAR},
+	user_stt_msg=#{userSttMsg:VARCHAR}
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
+
+<update id="leaveUser" parameterType="user">
+	UPDATE users
+	<set>
+	user_id = #{userId:VARCHAR},
+	user_leave_stt = 1
+	</set>
+	WHERE user_id=#{userid:VARCHAR}
+</update>
+
+
 
 
 </mapper>

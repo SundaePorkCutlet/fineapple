@@ -1,8 +1,5 @@
 package kr.or.fineapple.service.user.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +25,27 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.getUser(userId);
 	}
+
+	@Override
+	public void updateUser(User user) throws Exception {
+	 userMapper.updateUser(user);
+		
+	}
+
+	@Override
+	public void updateUserLeave(User user) throws Exception {
+		userMapper.updateUserLeave(user);
+	}
 	
+	
+
+	/*
+	 * @Override public boolean checkDuplication(String userId) throws Exception {
+	 * boolean result=true; User user = userMapper.getUser(userId); if(user != null)
+	 * { return false; }
+	 * 
+	 * return result; }
+	 */
 	
 	
 	

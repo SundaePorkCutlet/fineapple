@@ -13,5 +13,9 @@ public interface UserMapper{
 		public void addUserBodyInfo(User user) throws Exception;
 		
 		public User getUser(String userId) throws Exception;
+		
+		public void updateUser(User user) throws Exception;
+		
+		public void updateUserLeave(User user) throws Exception;
 	}
 

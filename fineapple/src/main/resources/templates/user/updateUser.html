@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 </head>
 <body>
+
+
 <style>
 table{
   border-collapse: collapse;
@@ -55,6 +57,17 @@ div.profile{
 }
 
 </style>
+
+<script>
+	$(function (){
+		
+		$("#updateUser").on("click",function(){
+			$("form").attr("method","POST").attr("action","/user/updateUser/result").submit();		
+		})
+		
+	})
+</script>
+<form method="POST" enctype="multipart/form-data" >
 <div th:insert="index/toolbar :: toolbar">
 </div>
 <div class="container show-grid">
@@ -69,44 +82,55 @@ div.profile{
 
 				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
 			</div>
-			<div class="col-md-10">
+
+<div class="col-md-10">
 <br>
 <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">내정보보기</div>
 <br>
+<p align="center">신체정보는 다이어리에서 수정가능합니다.</p>
+<br>
+
 <div class="box" >
 	<img th:src="@{../assets/profile/}+${session.user.userImg}" height="200" class="profile">
-	</div>
+</div>
 <p align ="center"><b>프로필사진</b></p>
+<p align="center"><input type="file" id="userImg1" name="userImg1"></p>
 <p align="center"><b>상태메세지</b></p>
-<p th:text="${session.user.userSttMsg}" align ="center"></p>
+<p align="center">
+<input type="text" th:value="${session.user.userSttMsg}" id="userSttMsg" name="userSttMsg">
+
+</p>
 <br>
 <div align="center" class="relative">
 <table >
 	<tr>
 		<th scope="row"><b>닉네임</b></th>
-		<td th:text="${session.user.userName}"></td>
+		<td>
+			<input type="text" th:value="${session.user.userName}" id="userName" name="userName">
+		</td>
 		<th scope="row"><b>최근 로그인 내역</b></th>
 		<td th:text="${session.user.regDate}"></td>	
 	</tr>
 	<tr>
 		<th scope="row"><b>이메일</b></th>
-		<td th:text="${session.user.userId}"></td>
+	    <td><input type="text" th:value=${session.user.userId} id="userId" name="userId" readonly></td>
 		<th scope="row"><b>블랙리스트여부</b></th>
 		<td th:if="${session.user.blcRgsStt} == 0">일반회원</td>
 		<td th:unless="${session.user.blcRgsStt} == 0">블랙리스트</td>
+		
 	</tr>
 	<tr>
 		<th scope="row"><b>비밀번호</b></th>
 		<td>●●●●●●●</td>
 		<th scope="row"><b>활성서비스내역</b></th>
-		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
-      <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>
-      <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
+		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
+		<td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
+		
 	</tr>
 	<tr>
 		<th scope="row"><b>전화번호</b></th>
-		<td th:text="${session.user.cellphone}"></td>
+		<td><input type="text" th:value="${session.user.cellphone}" id="cellphone" name="cellphone"></td>
 		<th scope="row"><b>키</b></th>
 		<td th:text="${session.user.height}"></td>
 	</tr>
@@ -128,12 +152,14 @@ div.profile{
 </div>
 <br>
 <div align="center">
-	<input type = "button" value ="수 정" id="updateUser"  th:onClick = "|location.href='@{/user/updateUser(userId=${session.user.userId})}'|"data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;">
+	<input class="updateUser" type= "submit" value ="확 인" id="updateUser" name="updateUser" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;">
 </div>
 <br>
 </div>
+
 </div>
 </div>
+</form>
 </body>
 
 </html>
