@@ -5,42 +5,80 @@
 
 	<resultMap type="board" id="boardMap">
 		<result property="postNo" column="post_no"/>
-		<result property="user.userId" column="user_id" />
-		<result property="title" column="title" />
-		<result property="content" column="content" />
-		<result property="postDate" column="post_date" />
-		<result property="viewCount" column="view_count" />
-		<result property="cmntCount" column="cmnt_count" />
-		<result property="postLikeCount" column="post_like_count" />
+		<result property="user.userId" column="user_id"/>
+		<result property="group.groupNo" column="group_no" jdbcType="INTEGER"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="postDate" column="post_date"/>
+		<result property="viewCount" column="view_count"/>
+		<result property="cmntCount" column="cmnt_count"/>
+		<result property="postLikeCount" column="post_like_count"/>
 		<result property="updateStt" column="update_stt"/>
 		<result property="cateName" column="post_cate"/>
-		<result property="groupNo" column="group_no"/>
 	</resultMap>
 	
 
 	<resultMap type="cmnt" id="cmntMap">
-	<result property="cmntNo" column="cmnt_no"/>
-	<result property="board.postNo" column="post_no"/>
-	<result property="user.userId" column="cmnt_user_id"/>
-	<result property="cmntContent" column="cmnt_content"/>
-	<result property="cmntDate" column="cmnt_date"/>
-	<result property="cmntLikeCount" column="cmnt_like_count"/>
-	<result property="updateStt" column="update_stt"/>
+		<result property="cmntNo" column="cmnt_no"/>
+		<result property="user.userId" column="cmnt_user_id"/>
+		<result property="board.postNo" column="post_no"/>
+		<result property="cmntContent" column="cmnt_content"/>
+		<result property="cmntDate" column="cmnt_date"/>
+		<result property="cmntLikeCount" column="cmnt_like_count"/>
+		<result property="updateStt" column="update_stt"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupMap">
-	<result property="groupNo" column="group_no"/>
-	<result property="groupName" column="group_name"/>
-	<result property="groupIntro" column="group_intro"/>
-	<result property="birthDate" column="group_birth"/>
+		<result property="groupNo" column="group_no"/>
+		<result property="groupName" column="group_name"/>
+		<result property="groupIntro" column="group_intro"/>
+		<result property="userCount" column="user_count"/>
+		<result property="groupBirth" column="group_birth"/>
 	</resultMap>
 	
 	<resultMap type="groupUser" id="groupUserMap">
-	<result property="groupUserNo" column="group_user_no"/>
-	<result property="group.groupNo" column="group_no"/>
-	<result property="user.userId" column="user_id"/>
-	<result property="userStt" column="group_stt"/>
-	<result property="userCaptainStt" column="captain_stt"/>
+		<result property="groupUserNo" column="group_user_no"/>
+		<result property="group.groupNo" column="group_no"/>
+		<result property="user.userId" column="user_id"/>
+		<result property="groupStt" column="group_stt"/>
+		<result property="captainStt" column="captain_stt"/>
+	</resultMap>
+	
+	<resultMap type="follow" id="followMap">
+		<result property="followNo" column=""/>
+		<result property="toUser.userId" column="to_user_id"/>
+		<result property="fromUser.userId" column="from_user_id"/>
+		<result property="followStt" column="follow_stt"/>	
+	</resultMap>
+	
+	
+	
+	
+	<resultMap id = "userSelectMap"	type = "User">
+		<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
+		<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result	property="userImg"	column="user_img"	jdbcType="VARCHAR"/>
+		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
+		<result property="gender"	column="gender"	jdbcType="VARCHAR"/>
+		<result property="cellphone"	column="cellphone"	jdbcType="VARCHAR"/>
+		<result property="age"	column="age"	jdbcType="INTEGER"/>
+		<result property="height"	column="height"	jdbcType="INTEGER"/>
+		<result property="blcRgsStt" column="blc_rgs_stt" jdbcType="INTEGER"/>
+		<result property="userLeaveStt" column="user_leave_stt"	jdbcType="INTEGER"/>
+		<result property="lastConTime"	column="last_con_time"	jdbcType="DATE"/>
+		<result property="regDate"	column="reg_date"	jdbcType="DATE"/>
+		<result property="strdWtrIntake"	column="str_wtr_intake"	jdbcType="DOUBLE"/>
+		<result	property="userSttMsg"	column="user_stt_msg"	jdbcType="VARCHAR"/>
+		<result property="blcAddDate"	column="blc_add_date"	jdbcType="DATE"/>
+		<result property="blcAddWhy"	column="blc_add_why"	jdbcType="VARCHAR"/>
+		<result property="dietServiceNo"	column="diet_service_no"	jdbcType="INTEGER"/>
+		<result property="exerServiceNo"	column="exer_service_no"	jdbcType="INTEGER"/>
+		<result property="trgtWeight"		column="trgt_weight"		jdbcType="DOUBLE"/>
+		<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
+		<result	property="trgtBodyMuscle"	column="trgt_body_muscle"	jdbcType="DOUBLE"/>
+		<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
+		<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -63,20 +101,21 @@
 		CONTENT,
 		POST_DATE
 		)
-		VALUES (
+		VALUES 
+		(
 		seq_board_post_no.NEXTVAL,
 		#{user.userId},
-		<if test="groupNo == 0">
+		<if test="group.groupNo == 0">
 		null,
-		</if>
-		<if test="groupNo != 0">
-		#{groupNo},
+		</if>	
+		<if test="group.groupNo != 0">
+		#{group.groupNo},
 		</if>
 		#{cateName},
 		#{updateStt},
 		#{title},
 		#{content},
-		#{postDate}
+		SYSDATE
 		)
 	</insert>
 
@@ -111,7 +150,6 @@
 	b.title,
 	b.content,
 	b.post_date,
-	b.post_like_count,
 	b.view_count,
 	c.cmnt_count
 	FROM
@@ -334,24 +372,97 @@
 	groups g,
 	group_user gu
 	<trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
-	gu.user_id = #{user.userId},
-	gu.group_no = g.group_no
+	gu.user_id = #{user.userId}
+	AND gu.group_no = g.group_no
 	</trim>
 	</select>
 	
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
+	<select id="getGroupInterGroup" parameterType="groupUser" resultMap="groupMap">
+		SELECT
+		g.group_no,
+		g.group_name,
+		g.group_intro,
+		g.group_birth
+		FROM
+		groups g,
+		group_user gu
+		<where>
+		gu.user_id = #{user.userId}
+		AND gu.group_stt = #{groupStt}
+		AND gu.group_no = g.group_no
+		</where>
+	</select>
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
+	<select id="getGroupInterUser" parameterType="groupUser" resultMap="userSelectMap">
+		SELECT
+		u.user_id,
+		u.user_name
+		FROM
+		groups g,
+		group_user gu,
+		group_user guu,
+		users u
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+		gu.user_id = #{user.userId}
+		AND gu.group_no = guu.group_no
+		AND guu.group_stt = #{groupStt}
+		AND guu.user_id = u.user_id
+		</trim>
+	</select>
 	
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	
+	<insert id="addReport" parameterType="report">
+	INSERT
+	INTO
+	report_and_like 	
+	(
+	report_no,
+	user_id,
+	reported_user_id,
+	post_no,
+	cmnt_no,
+	REPORT_LIKE_CATE,
+	report_why,
+	report_stt,
+	report_date 
+	)
+	VALUES
+	(
+	seq_report_and_like_no.NEXTVAL,
+	#{user.userId},
+	#{reportedUser.userId},
+	<if test='reportCate.equals("게시글신고")'>
+	#{reportTrgt.postNo},
+	null,
+	</if>
+	<if test='reportCate == "댓글신고"'>
+	null,
+	#{reportTrgt.cmntNo},
+	</if>
+	<if test='reportCate.equals("회원신고")'>
+	null,
+	null,
+	</if>
+	<!-- #{reportTrgt.postNo}, -->
+	#{reportCate},
+	#{reportCntnt},
+	#{reportStt},
+	SYSDATE
+	)
+	</insert>
 	
 	<!-- //////////////////////////////////////////////////////// -->
+	
+	<update id="addUserBlc">
+	
+	</update>
 	
 	
 	<!-- //////////////////////////////////////////////////////// -->

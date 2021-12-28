@@ -15,6 +15,7 @@ import lombok.ToString;
 public class Board {
 	private int postNo;
 	private User user;
+	private Group group;
 	private String title;
 	private String content;
 	private LocalDate postDate;
@@ -23,8 +24,7 @@ public class Board {
 	private int postLikeCount;
 	private int updateStt;
 	private int cateName;
-	private int groupNo;
-	private List<Img> img;
+	//private List<Img> img;
 	
 	
 	public Board() {

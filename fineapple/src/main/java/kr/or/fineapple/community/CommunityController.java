@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.service.community.CommunityService;
-import oracle.net.aso.c;
 
 @Controller
 @RequestMapping("/community/*")
@@ -53,12 +52,22 @@ public class CommunityController {
 		
 	}
 	
+	@GetMapping(value = "addPostView")
+	public String addPostView() {
+		return "community/addPost.html";
+	}
+	
 
 	@PostMapping(value = "addPost")
 	public String addPost(@ModelAttribute Board board) {
 		System.out.println(board);
+		User user = new User();
+		
+		user.setUserId("bbb123@gmil.com");
+		Group group = new Group();
+		board.setGroup(group);
 		communityService.addPost(board);
-		return null;
+		return "community/Borad.html";
 	}
 	
 	@GetMapping(value = "addGroupView")

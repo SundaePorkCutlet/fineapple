@@ -14,6 +14,6 @@ public class Group {
 	private String groupName;
 	private String groupIntro;
 	private int userCount;
-	private LocalDate birthDate;	
+	private LocalDate groupBirth;	
 
 }

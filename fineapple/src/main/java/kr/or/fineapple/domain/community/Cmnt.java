@@ -7,12 +7,12 @@ import kr.or.fineapple.domain.User;
 public class Cmnt {
 	
 	private int cmntNo;
-	private Board board;
 	private User user;
+	private Board board;	
 	private String cmntContent;
 	private LocalDate cmntDate;
-	private int cmntLikeCount;
-	private Boolean updateStt;
+	private int cmntLikeCount;	
+	private int updateStt;
 	
 	
 	
@@ -52,10 +52,10 @@ public class Cmnt {
 	public void setCmntLikeCount(int cmntLikeCount) {
 		this.cmntLikeCount = cmntLikeCount;
 	}
-	public Boolean getUpdateStt() {
+	public int getUpdateStt() {
 		return updateStt;
 	}
-	public void setUpdateStt(Boolean updateStt) {
+	public void setUpdateStt(int updateStt) {
 		this.updateStt = updateStt;
 	}
 	
