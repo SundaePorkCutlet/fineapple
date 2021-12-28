@@ -53,6 +53,7 @@
   		<result property="food.foodKcal" 	column="FOOD_KCAL" 		jdbcType="DOUBLE"/>
   		<result property="food.foodCarb" 	column="FOOD_CARB" 		jdbcType="DOUBLE"/>
   		<result property="food.foodProtein" 	column="FOOD_PROTEIN" 		jdbcType="DOUBLE"/>
+  		<result property="totalKcal"		column="TOTAL_KCAL"		jdbcType="DOUBLE"/>
 		</resultMap>
 
 
@@ -175,8 +176,10 @@
 	</delete>
 	
 	<select id="getFavMealList" parameterType="Integer" resultMap="FavMealMap">
-	select * from FAV_MEAL
-	WHERE diet_service_no=#{value}
+	select a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal,sum(b.food_kcal) total_kcal from FAV_MEAL a left join fav_meal_info b 
+on a.fav_meal_no=b.fav_meal_no
+WHERE diet_service_no=#{value}
+group by a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal
 	</select>
 	
 	<insert id="insertFavMealItem" parameterType="FavMeal">
@@ -197,8 +200,6 @@
 	<select id="getFavMealItemList" parameterType="Integer" resultMap="FavMealMap">
 	SELECT * FROM FAV_MEAL_INFO
 	WHERE FAV_MEAL_NO = #{VALUE}
-	
-	
 	</select>
 	
 	<delete id="deleteFavMealItem" parameterType="Integer">

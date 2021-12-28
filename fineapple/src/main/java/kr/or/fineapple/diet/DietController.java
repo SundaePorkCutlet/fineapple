@@ -146,15 +146,15 @@ public class DietController {
 		List list2 = new ArrayList();
 		
 		list.add(dietService.getFoodAPIlist(search));
+		
 		map2 = dietService.getFoodList(search1);
-		list.add(map2.get("list"));
 		
 		
 		
 		map3.put("list", dietService.getFoodAPIlist(search));
 		map4.putAll(map2);
 		map4.putAll(map3);
-		model.addAttribute("list", list);
+		model.addAttribute("list", map3.get("list"));
 		model.addAttribute("search", search);
 
 		return "diet/getFoodList.html";
@@ -170,6 +170,12 @@ public class DietController {
 		return "diet/getFood.html";
 		}
 	
+	@GetMapping("getFood1")
+	public String getFood() throws Exception {
+		
+		
+		return "diet/getFood.html";
+		}
 
 	
 	
@@ -225,11 +231,22 @@ public class DietController {
 			User user =(User)request.getSession(true).getAttribute("user");
 			DietServ serv = dietService.getDietService(user.getUserId());
 			map = dietService.getFavMealList(serv.getUserServiceNo());
+			System.out.println(map);
 			model.addAttribute("list",map.get("list"));
 		return "diet/getFavMealList.html";
 	}
 		
-
+@GetMapping("getAddDaily")
+public String getAddDaily(Model model,@RequestParam("chekarray")String[] foodCd)throws Exception{
+	
+	System.out.println(foodCd);
+	
+	
+	
+	return "diet/getAddDailyIntakeMeal.html";
+}
+	
+	
 
 }
 

@@ -298,6 +298,14 @@ class dietMapperTest {
 		
 	}
 	
+	public void deleteIntakeRecord() throws Exception{
+		
+		int IntakeRecordNo = 2;
+		
+		
+		
+	}
+	
 	
 	
 	}

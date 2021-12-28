@@ -7,7 +7,7 @@
 
 </head>
 <body>
-
+<th:block th:fragment="setLogin">
 
 
 	
@@ -49,6 +49,7 @@ $(function() {
 		<td></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.favMealName}" th:attr="data-favMealNo=${data.favMealNo}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
 		<td></td>
 	</tr>
 </tbody>
@@ -62,5 +63,10 @@ $(function() {
 			<div style="position:absolute; top:0px;	left:460px; "><button type="button" class="btn btn-primary">즐겨찾기삭제</button></div>
 
 
+		
+
+
+	</th:block>
+		
 </body>
 </html>
