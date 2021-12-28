@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.service.community.CommunityService;
 
 @Controller
@@ -66,8 +68,25 @@ public class CommunityController {
 		user.setUserId("bbb123@gmil.com");
 		Group group = new Group();
 		board.setGroup(group);
+		board.setUser(user);		
 		communityService.addPost(board);
-		return "community/Borad.html";
+		
+		return "redirect:/community/getBoard";
+	}
+	
+	@RequestMapping(value = "getMyGroupList", method = RequestMethod.GET)
+	public ModelAndView getMyGroupList() {
+		
+		GroupUser groupUser = new GroupUser();
+		User user = new User();
+		user.setUserId("bbb123@gmil.com");
+		groupUser.setUser(user);
+		groupUser.setGroupStt(2);
+		List<Group> list =   communityService.getGroupInterGroup(groupUser);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("community/getMyGroupList.html");
+		modelAndView.addObject("list", list);
+		return modelAndView;
 	}
 	
 	@GetMapping(value = "addGroupView")
@@ -75,14 +94,24 @@ public class CommunityController {
 		return "community/addGroupView.html";
 	}
 	
+	@GetMapping(value = "addReportView")
+	public String addReportView() {
+		return null;
+	}
+	
+	
+	
+	
+	
 	@PostMapping(value = "addGroup")
-	public ModelAndView addGroup(@ModelAttribute("group") Group group) {
+	public String addGroup(@ModelAttribute("group") Group group) {
+		communityService.addGroup(group);
 		
-		
-		group.setGroupIntro("ASdsadsa");
 		return null;
 		
 	}
+	
+	
 	
 	
 	
