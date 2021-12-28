@@ -23,7 +23,7 @@ public interface TrgtHabitMapper {
 	////목표 초기화
 	void endTrgtHabit(int trgtHabitServiceNo);
 	
-	////수분 섭취량 기록 시작
+	////수분 섭취량 기록 시작(조회 이전 기록 없을시 serviceImpl의 get메소드 내에서 실행함)
 	void addWtrIntake(String userId);
 
 	////수분 섭취량 조회

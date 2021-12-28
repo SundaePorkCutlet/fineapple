@@ -33,6 +33,7 @@
 
 
 
+
 <insert id="addUser"   parameterType="User">
 	INSERT 
 	into 
@@ -74,12 +75,10 @@
     #{lastConTime:DATE},
     '상태메세지없음'
     )
-
 </insert>
 
 
 <insert id="addUserBodyInfo" parameterType="user">
-
 	INSERT 
 	into 
 	USER_BODY_INFO
@@ -98,7 +97,6 @@
 	#{weight:INTEGER},
 	SYSDATE
 	)
-
 </insert>
 
 
