@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../assets/img/logo.png" type="image/x-icon">
     <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
 	
 
     
@@ -167,6 +168,7 @@ div.mainProfile{
 
 
                     </li>
+                    	
                        <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownworkout" data-bs-toggle="dropdown"
                            aria-expanded="false">운동관리</a>
@@ -177,11 +179,12 @@ div.mainProfile{
                             <li><a class="dropdown-item" th:href="@{../exer/addDailyBurnning}">일일운동량</a></li>
 							 <li><a class="dropdown-item" href="#">루틴</a></li>
 							 <li><a class="dropdown-item"  th:href="@{../exer/searchExerPlace}">운동장소찾기</a></li>
-							 <li><a class="dropdown-item"  th:href="@{../exer/timer}">타이머</a></li>
-							                          <!--  th:href="@{../exer/timer}" -->
+							
+							 <li><a class="dropdown-item"  id = "btn-modal">타이머</a>	 </li>
                         </ul>
 
                     </li>
+                    <!--  th:href="@{../exer/timer}" -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownsep" data-bs-toggle="dropdown"
                            aria-expanded="false">습관관리</a>
@@ -207,10 +210,11 @@ div.mainProfile{
                            aria-expanded="false">커뮤니티</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdown09">
                             <li><a class="dropdown-item" th:href="@{../community/getBoard}">게시판</a></li>
-                            <li><a class="dropdown-item" th:href="@{../community/addGroupView}">소그룹</a></li>
+                            <li><a class="dropdown-item" th:href="@{../community/getMyGroupList}">소그룹</a></li>
                             <li><a class="dropdown-item" href="#">승부</a></li>
 							<li><a class="dropdown-item" href="#">팔로우</a></li>
                             <li><a class="dropdown-item" href="#">검색</a></li>
+                            
                         </ul>
 					</li>
                 </ul>
@@ -218,7 +222,8 @@ div.mainProfile{
         </div>
     </nav>
 
-    
+
+
 </div>
 </div>
 
