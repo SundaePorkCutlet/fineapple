@@ -140,12 +140,19 @@ public class DietController {
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		Map<String, Object> map4 = new HashMap<String, Object>();
+		List list = new ArrayList();
+		List list2 = new ArrayList();
+		
+		list.add(dietService.getFoodAPIlist(search));
 		
 		map2 = dietService.getFoodList(search1);
+		
+		
+		
 		map3.put("list", dietService.getFoodAPIlist(search));
 		map4.putAll(map2);
 		map4.putAll(map3);
-		model.addAttribute("list", map4.get("list"));
+		model.addAttribute("list", map3.get("list"));
 		model.addAttribute("search", search);
 
 		return "diet/getFoodList.html";
@@ -207,7 +214,18 @@ public class DietController {
 
 	
 }
-
+	@GetMapping("getFavMealList")
+	public String getFavMealList(Model model,HttpServletRequest request)	throws Exception {
+			System.out.println("getFavMealList");
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			
+			User user =(User)request.getSession(true).getAttribute("user");
+			DietServ serv = dietService.getDietService(user.getUserId());
+			map = dietService.getFavMealList(serv.getUserServiceNo());
+			model.addAttribute("list",map.get("list"));
+		return "diet/getFavMealList.html";
+	}
 		
 
 

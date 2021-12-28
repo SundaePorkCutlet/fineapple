@@ -14,9 +14,11 @@ public class FavMeal {
 	String userId;
 	int userServiceNo;
 	int favMealNo;
+	int favMealInfoNo;
 	String favMealName;
 	double favMealKcal;
-	List<Food> food;
+	Food food;
+	double Intake;
 	
 	
 	public FavMeal() {

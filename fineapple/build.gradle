@@ -40,3 +40,9 @@ dependencies {
 test {
    useJUnitPlatform()
 }
+
+compileJava.options.encoding = 'EUC-KR'
+
+tasks.withType(JavaCompile){
+   options.encoding = 'EUC-KR'
+}

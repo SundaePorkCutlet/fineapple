@@ -38,5 +38,13 @@ public interface DietMapper {
        int deleteFavMeal(int favMealNo);
        
        List<FavMeal> getFavMealList(int dierServiceNo);
-       }
+       
+       int insertFavMealItem(FavMeal favMeal);
+       
+       List<FavMeal> getFavMealItemList(int favMealNo);
+       
+       int deleteFavMealItem(int favMealinfoNo);
+       
+       int updateFavMealItem(FavMeal favMeal);
+}
 

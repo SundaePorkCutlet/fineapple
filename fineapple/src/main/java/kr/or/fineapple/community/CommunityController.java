@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.service.community.CommunityService;
-import oracle.net.aso.c;
 
 @Controller
 @RequestMapping("/community/*")

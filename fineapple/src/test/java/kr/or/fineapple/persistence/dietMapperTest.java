@@ -7,10 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -95,26 +92,14 @@ class dietMapperTest {
 		FavMeal favMeal = new FavMeal();
 		Food food = new Food();
 		DietServ diet = new DietServ();
-		food.setFoodCarb(1.1);
-		food.setFoodImg(null);
-		food.setFoodIntoStt(1);
-		food.setFoodKcal(313.2);
-		food.setFoodName("È«ï¿½ï¿½È£");
-		food.setFoodNo(1);
-		food.setFoodProtein(23.1);
-		food.setFoodSodium(1.1);
-		food.setFoodSugar(33.1);
-		food.setIsAPI(0);
-		food.setPrice(1002320);
-		food.setPurchaseConnLink(null);
-		food.setServingSize(100);
+
 		food.setStoreName(null);
 		
 		diet = dietService.getDietService("aaa123@naver.com");
 		favMeal.setFavMealKcal(0);
 		favMeal.setUserServiceNo(diet.getUserServiceNo());
 		favMeal.setUserId("aaa123@naver.com");
-		favMeal.setFavMealName("Â«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+		favMeal.setFavMealName("¶ËÁøÈ£");
 		
 		log.info("++"+dietService.addFavMeal(favMeal));
 		
@@ -157,7 +142,7 @@ class dietMapperTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public void naverApi() throws Exception{
 		
 		Search search = new Search();
@@ -235,6 +220,71 @@ class dietMapperTest {
 
 	    }
 		
+	
+	
+//	@Test
+	public void addfavMealItem() throws Exception {
+		FavMeal fav = new  FavMeal();
+		
+		Food food = new Food();
+		food.setFoodCarb(1.1);
+		food.setFoodImg(null);
+		food.setFoodIntoStt(1);
+		food.setFoodKcal(313.2);
+		food.setFoodName("È«Áø");
+		food.setFoodNo(1);
+		food.setFoodProtein(23.1);
+		food.setFoodSodium(1.1);
+		food.setFoodSugar(33.1);
+		food.setIsAPI(0);
+		food.setPrice(1002320);
+		food.setPurchaseConnLink(null);
+		food.setServingSize(100);
+		food.setStoreName(null);
+		food.setFoodCd("U02024");
+		
+		fav.setFood(food);
+		fav.setFavMealNo(22);
+		fav.setIntake(200);
+		
+		log.info("++"+dietService.addFavMealItem(fav));		
+	}
+	
+	
+//	@Test
+	public void getfavMealItemList() throws Exception {
+	
+	int favMealNo = 21;
+	
+	log.info("++"+dietService.getFavMealItemList(favMealNo));
+	
+		
+	}
+	
+//	@Test
+	public void deletefavMealItem() throws Exception {
+		
+	int favMealInfoNo = 2;
+	
+	log.info("++"+dietService.delteFavMealItem(favMealInfoNo));
+	
+	
+	
+	}
+//	@Test
+	public void updateFavMealItme() throws Exception {
+		
+		FavMeal fav = new FavMeal ();
+		
+		fav.setFavMealInfoNo(1);
+		fav.setIntake(2221);
+		
+		log.info("++"+dietService.updateFavMealItem(fav));
+	}
+	
+	
+	
+	
 	}
 	
 	
