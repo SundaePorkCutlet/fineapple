@@ -1,8 +1,9 @@
 package kr.or.fineapple.exer;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.ExerServ;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
 
@@ -32,15 +35,84 @@ public class ExerController {
 	}
 
 	
-@RequestMapping(value="addUserService")
-public String addUserService() {
+@GetMapping(value="addUserService")
+public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
-    System.out.println("addUserService");
+    System.out.println("get: addUserService");
 
-	return "exer/addUserService.html";
+
+	if((User)request.getSession(true).getAttribute("user")!=null) {
+		
+		User user =(User)request.getSession(true).getAttribute("user");
+		
+		System.out.println(user);
 	
+		ExerServ serv = exerService.getUserService(user.getUserId());
+		
+		System.out.println(serv);
+		
+		if(serv!=null) {
+				if(serv.getUserServiceNo()!=0) {
+		
+					model.addAttribute("user",user);
+					model.addAttribute("exerServ",serv);
+					return "exer/getUserService.html";
+					}else {
+						return "exer/addUserService.html";}
+		}else {
+			model.addAttribute("user",user);
+			return "exer/addUserService.html";}
+		
+	}else {
+		
+		return "user/login"; }
 	
 }
+    
+@PostMapping("addUserService")
+public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
+							HttpServletRequest request,
+							Model model) throws Exception{
+	System.out.println("post:addUserService");
+	System.out.println(serv);
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	String userId = user.getUserId();
+	serv.setUserId(userId);
+	
+	if(user.getExerServiceNo()==0) {
+	exerService.addUserService(serv);
+	}else {
+		exerService.updateUserService(serv);
+	}
+			
+	serv = exerService.getUserService(userId);
+	model.addAttribute("exerServ",serv);
+	model.addAttribute("user",user);
+	
+	
+
+	return "exer/getUserService.html";
+}
+
+@GetMapping("updateUserService")
+public String updateUserService(Model model, HttpServletRequest request) throws Exception {
+	System.out.println("get:updateUserService");
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	System.out.println(user);
+
+	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+	
+	model.addAttribute("user",user);
+	model.addAttribute("exerServ",serv);
+	
+	return "exer/updateUserService.html";
+		
+	
+}
+	
 
 
 @RequestMapping("getExerList")
@@ -250,7 +322,15 @@ public String searchExerPlace() {
 	
 }
 
-
-
+@RequestMapping(value="timer")
+public String timer() {
+	
+	System.out.println("timer");
+	
+	
+	return "exer/timer.html";
+	
+	
+}
 
 }

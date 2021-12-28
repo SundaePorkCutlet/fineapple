@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.ExerMapper">
 
-	<resultMap id="UserServiceMap" type="ExerService">
+	<resultMap id="UserServiceMap" type="ExerServ">
 		<result property="dailyTrgtBurnningKcal" 			column="DAILY_TRGT_BURNNING_KCAL" 	jdbcType="FLOAT"/>
 		<result property="trgtBodyMuscle"	column="TRGT_BODY_MUSCLE" 		jdbcType="FLOAT" />	
 		<result property="exerServiceTrgt" 	column="SERVICE_TRGT" 		jdbcType="VARCHAR" />
@@ -64,24 +64,34 @@
 	</resultMap>
 
 
-	<insert id="addUserService" parameterType="ExerService">
-	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
-	VALUES (2,
+	<insert id="addUserService" parameterType="ExerServ">
+	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE, BODY_MUSCLE) 
+	VALUES (seq_user_service_no.NEXTVAL,
 			#{userId:VARCHAR},
 			#{dailyTrgtBurnningKcal:FLOAT},
-			#{trgtBodyMuscle:FLOAT}
+			#{trgtBodyMuscle:FLOAT},
+			#{bodyMuscle:FLOAT},
 			)
 	
 	</insert>
+	
+	<update id="updateUserService" parameterType="ExerServ">
+	UPDATE USER_SERVICE SET 
+	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:FLOAT},
+	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:FLOAT},
+	BODY_MUSCLE=#{bodyMuscle:FLOAT}
+	WHERE USER_ID=#{userId:VARCHAR}
+	</update>
+	
 		
-	<select	id="getUserService"	 parameterType="ExerService">
+	<select	id="getUserService"	 parameterType="String" resultType="ExerServ">
 			SELECT * FROM USER_SERVICE WHERE USER_ID=#{value}
 	</select>
 	
 	
 	<insert id="addDailyBurnning" parameterType="BurnningRecord">
 	INSERT INTO BURNNING_RECORD (BURNNING_RECORD_NO, USER_SERVICE_NO, EXER_NO, BURNNING_RECORD_DATE, EXER_LV, AN_EXER_TIME, USER_EXER_BURNNING) 
-	VALUES (5,
+	VALUES (seq_burnning_record_no.NEXTVAL,
 			(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR}),
 			#{exer.exerNo:INTEGER},
 			SYSDATE,
@@ -93,7 +103,7 @@
 	</insert>
 	
 	
-   <update id="updateServiceTrgt" parameterType="ExerService">
+   <update id="updateServiceTrgt" parameterType="ExerServ">
    UPDATE USERS 
    SET SERVICE_TRGT = #{exerServiceTrgt:VARCHAR}
    WHERE USER_ID = #{userId:VARCHAR}
@@ -101,7 +111,7 @@
 	
 	
 	
-	<update id="updateBodyInfo" parameterType="ExerService">
+	<update id="updateBodyInfo" parameterType="ExerServ">
    UPDATE USER_BODY_INFO
    SET BODY_MUSCLE = #{bodyMuscle:FLOAT}
    WHERE USER_ID = #{userId:VARCHAR}
@@ -299,20 +309,6 @@
 	 
 	 
 
-	
-
-
-	<update id="updateUserService" parameterType="BurnningRecord">
-	UPDATE BURNNING_RECORD
-    SET (5,
-       (SELECT user_service_no from user_service where user_id = #{userId:VARCHAR}),
-   			exer_no= #{exer.exerNo:INTEGER},
-			BURNNING_RECORD_DATE= SYSDATE,
-			exer_lv= #{exerLv:INTEGER},
-			an_exer_time = #{anExerTime:INTEGER},
-			user_burnning_record = #{userExerBurnning:FLOAT)
-	
-	</update>
 	
 	
 

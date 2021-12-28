@@ -4,19 +4,18 @@ import java.util.Map;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.common.Search;
 
 public interface ExerService {
 	
-	public void addUserService(ExerService service)throws Exception;
+	public int addUserService(ExerServ service)throws Exception;
 	
-	public void getUserService(ExerService service)throws Exception;
+	public ExerServ getUserService(String userId)throws Exception;
 	
+	public int updateUserService(ExerServ serivce)throws Exception;
 	
-	public void updateServiceTrgt(ExerService service)throws Exception;
-    
-	public void updateBodyInfo(ExerService serivce)throws Exception;
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
 		
@@ -28,7 +27,7 @@ public interface ExerService {
 	
 	public int deleteExer(int exerNo)throws Exception;
 	
-	public void addDailyBurnning(BurnningRecord record)throws Exception;
+	public int addDailyBurnning(BurnningRecord record)throws Exception;
 	
 	
 	
@@ -58,7 +57,7 @@ public interface ExerService {
 	public int searchExerPlace();
 	
 	
-	public void updateUserService(ExerService serivce)throws Exception;
+	
 	
 	
 }

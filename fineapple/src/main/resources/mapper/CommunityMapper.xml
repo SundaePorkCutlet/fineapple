@@ -149,7 +149,7 @@
 	</where>
 	</select>
 	
-	<select id="getCmntList" parameterType="board" resultMap="cmnt">
+	<select id="getCmntList" parameterType="board" resultMap="cmntMap">
 	SELECT
 	*
 	FROM

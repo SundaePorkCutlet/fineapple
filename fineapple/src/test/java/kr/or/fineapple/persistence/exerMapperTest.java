@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
-import kr.or.fineapple.domain.ExerService;
+import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.mapper.ExerMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,7 @@ class exerMapperTest {
 		  
 		  //service.setExerServiceTrgt("체중증량");
 		
-		  ExerService service = new ExerService();
+		  ExerServ service = new ExerServ();
 		
 			/*
 			 * service.setDailyTrgtBurnningKcal(100.2); service.setTrgtBodyMuscle(30.2);

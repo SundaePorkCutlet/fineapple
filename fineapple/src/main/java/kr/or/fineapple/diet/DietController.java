@@ -65,7 +65,7 @@ public class DietController {
 			
 		}else {
 			
-			return "../user/login";}
+			return "user/login"; }
 		
 	}
 		

@@ -82,15 +82,14 @@
 	</update>
 
 	<insert id="insertIntakeRecord" parameterType="IntakeRecord">
-	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
+	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE) 
 	VALUES (seq_intake_record_no.NEXTVAL,
 			(SELECT user_service_no from USER_SERVICE WHERE USER_ID = #{userId:VARCHAR}),
 			#{food.foodNo:INTEGER},
 			#{userId:VARCHAR},
 			SYSDATE,
 			#{meal:VARCHAR},
-			#{userFoodIntake:DOUBLE},
-			#{userWtrIntake:DOUBLE}
+			#{userFoodIntake:DOUBLE}
 			)
 	
 	</insert>

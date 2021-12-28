@@ -7,16 +7,16 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ExerService {
+public class ExerServ {
 
 	double dailyTrgtBurnningKcal;
 	double trgtBodyMuscle;
 	double bodyMuscle;
 	String exerServiceTrgt;
 	String userId;
+	int	userServiceNo;
 	
-	
-	public ExerService() {
+	public ExerServ() {
 		
 	}
 	

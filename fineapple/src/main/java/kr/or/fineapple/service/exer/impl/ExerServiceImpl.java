@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
+
 
 
 @Service("ExerServiceImpl")
@@ -24,29 +26,33 @@ public class ExerServiceImpl implements ExerService {
 
 	
 	@Override
-	public void addUserService(ExerService service) throws Exception {
+	public int addUserService(ExerServ service) throws Exception {
 	
+			exerMapper.updateServiceTrgt(service);
+			exerMapper.updateBodyInfo(service);
+			
+			return exerMapper.addUserService(service);
+			
+	}
+	
+	@Override
+	public ExerServ getUserService(String userId) throws Exception {
+		
+		
+		return exerMapper.getUserService(userId);
+		
 		
 	}
 	
 	@Override
-	public void getUserService(ExerService service) throws Exception {
+	public int updateUserService(ExerServ serivce) throws Exception {
+		
+		return exerMapper.updateUserService(serivce);
 		
 		
 	}
 	
-	
-	@Override
-	public void updateServiceTrgt(ExerService service) {
-		
-		
-	}
-	
-	@Override
-	public void updateBodyInfo(ExerService serivce) {
-		
-		
-	}
+
 	
 	@Override
 	public Map<String ,Object> getExerList(Search search) {
@@ -70,11 +76,7 @@ public class ExerServiceImpl implements ExerService {
 			
 	}
 	
-	@Override
-	public void updateUserService(ExerService serivce) throws Exception {
-		
-		
-	}
+
 
 	@Override
 	public int postUpdateExer(Exer exer) {
@@ -96,7 +98,8 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
-	public void addDailyBurnning(BurnningRecord record) {
+	public int addDailyBurnning(BurnningRecord record) {
+		return 0;
 		
 		
 	}
@@ -160,7 +163,8 @@ public class ExerServiceImpl implements ExerService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+
 	
 	
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
-import kr.or.fineapple.domain.ExerService;
+import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.common.Search;
 
@@ -17,15 +17,17 @@ import kr.or.fineapple.domain.common.Search;
 public interface ExerMapper {
 
 		   
-	   int addUserService(ExerService service);
+	   int addUserService(ExerServ service);
 	   
-	   int getUserService(ExerService service);
+	   ExerServ getUserService(String userId);
+	   
+	   int updateUserService(ExerServ service);
 	   
        int addDailyBurnning(BurnningRecord record);
        
-       int updateServiceTrgt(ExerService service);
+       int updateServiceTrgt(ExerServ service);
        
-       int updateBodyInfo(ExerService service);
+       int updateBodyInfo(ExerServ service);
        
        
        //¿îµ¿CRUD
@@ -64,7 +66,7 @@ public interface ExerMapper {
        List<Search>recommandExerList(Search search);
        
        
-       int updateExerService(BurnningRecord record);
+  
        
 
    }
