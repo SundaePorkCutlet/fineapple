@@ -1,10 +1,21 @@
-	<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
 </head>
 <body>
-
+<div th:fragment="getCmnt">
+<table class="table table-hover table-striped">
+	<tbody>
+		<tr th:each = "data : ${list}">
+		<td th:text = "${data.cmntNo}" style="visibility: hidden;"></td>
+		<td th:text = "${data.board.postNo}" style="visibility: hidden;"></td>
+		<td th:text = "${data.cmntContent}" ></td>
+		<td th:text = "${data.cmntDate}" ></td>
+		<td th:text = "${data.cmntLikeCount}"></td>	
+		</tr>
+	</tbody>
+</table>
+</div>					
 </body>
 </html>
