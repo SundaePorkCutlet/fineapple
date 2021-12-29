@@ -37,15 +37,15 @@
 
 	<resultMap id="routineInfoMap" type="Routine">
 		<result property="routineInfoNo" 			column="ROUTINE_INFO_NO" 			jdbcType="INTEGER"/>
-		<result property="routine.routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
-		<result property="exer.exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
-		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="TIMESTAMP" />
+		<result property="routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
+		<result property="exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
+		<result property="exerName" 				column="a" 					jdbcType="VARCHAR" />
+		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="VARCHAR" />
+		<result property="anExerKcal" 	column="AN_EXER_KCAL" 		jdbcType="FLOAT" />
 		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 	jdbcType="INTEGER" />
-		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="TIMESTAMP" />
-		<result property="restTime" 				column="REST_TIME" 					jdbcType="TIMESTAMP" />
-		<collection property="routine" column="ROUTINE_NO" javaType="java.util.ArrayList">
-      </collection>
-	</resultMap> 
+		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="VARCHAR" />
+		<result property="restTime" 				column="REST_TIME" 					jdbcType="VARCHAR" />
+		</resultMap> 
 	
      <!--  <resultMap id ="FavMealMap" type="FavMeal">
       <result property="favMealNo"             column="FOOD_NO"       jdbcType="INTEGER"/>
@@ -59,7 +59,7 @@
 	<resultMap id="routineMap" type="Routine">	
 		<result property="routineNo" 	column="ROUTINE_NO" 		jdbcType="INTEGER" />
 		<result property="routineName" 	column="ROUTINE_NAME" 		jdbcType="VARCHAR" />
-		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="TIMESTAMP" />
+		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="VARCHAR" />
 		<result property="routineKcal" 				column="ROUTINE_KCAL" 					jdbcType="FLOAT" />
 	</resultMap>
 
@@ -204,18 +204,12 @@
    	</delete> 
 	
 	
-
-
-
-
-
-
 	<insert id="addRoutine" parameterType="Routine">
 	INSERT INTO ROUTINE(routine_no, user_service_no, routine_name, routine_time , routine_kcal)
 	VALUES(seq_routine_routine_no.NEXTVAL,
 		(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR} ),
         #{routineName:VARCHAR},
-	    #{routineTime:TIMESTAMP},
+	    #{routineTime:VARCHAR},
 	    #{routineKcal:FLOAT} )	
 	</insert>
 
@@ -233,15 +227,15 @@
 	<select	id="getRoutine"	parameterType="Integer"  resultMap="routineMap">
 			SELECT routine_no, user_service_no, routine_name, routine_time , routine_kcal
 			FROM   ROUTINE
-			WHERE  ROUTINE_NO= #{routineNo:INTEGER}
+			WHERE  ROUTINE_NO= #{VALUE}
 	</select>
 	 
 	 
  
-	<delete id="deleteRoutine" parameterType="Routine">  
+	<delete id="deleteRoutine" parameterType="Integer">  
    	DELETE 
    	FROM ROUTINE
-   	WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	WHERE ROUTINE_NO = #{VALUE}
    	</delete> 
 
 
@@ -251,7 +245,7 @@
 	FROM (SELECT inner_table.* , ROWNUM AS row_seq
 	FROM (SELECT R.routine_no, R.routine_name, R.routine_time
 	FROM ROUTINE R
-	ORDER BY routine_No ) inner_table
+	ORDER BY routine_no ) inner_table)
 	<!-- WHERE ROWNUM &lt;= 10) -->
 	WHERE row_seq BETWEEN 1 AND 10
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
@@ -259,27 +253,31 @@
 	</select>
 
 
+
 	<insert id="addRoutineInfo" parameterType="Routine">
-	INSERT INTO ROUTINE_INFO(routine_info_no, routine_no,  exer_no, an_exer_time)
+	INSERT INTO ROUTINE_INFO(routine_info_no, routine_no, exer_no, an_exer_time, an_exer_kcal )
 	VALUES(seq_routine_info_no.NEXTVAL,
           #{routineNo:INTEGER},
           #{exer.exerNo:INTEGER},
-	      #{anExerTime:TIMESTAMP})	
+	      #{anExerTime:VARCHAR},	
+	      #{anExerKcal:VARCHAR})	
 	</insert>
 
+   
 
-	<select	id="getRoutineInfo"	parameterType="Integer"  resultMap="routineInfoMap">
-			SELECT routine_info_no, routine_no,  exer_no, an_exer_time
-			FROM   ROUTINE_INFO
-			WHERE  ROUTINE_INFO_NO= #{routineInfoNo:INTEGER}
+	<select	id="getRoutineInfoList"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT *
+			FROM( SELECT ri.*, e.exer_name a
+			FROM   ROUTINE_INFO ri LEFT JOIN exer e ON ri.exer_no = e.exer_no)
+			WHERE  ROUTINE_NO= #{VALUE}
 	</select>
 	 
 
 
-	<delete id="deleteRoutineInfo" parameterType="Routine">  
+	<delete id="deleteRoutineInfo" parameterType="Integer">  
  	DELETE 
    	FROM ROUTINE_INFO
-   	WHERE ROUTINE_INFO_NO = #{routineInfoNo:INTEGER}
+   	WHERE ROUTINE_INFO_NO = #{VALUE}
    	</delete> 
 
 

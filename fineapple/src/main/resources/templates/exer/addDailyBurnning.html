@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 
-function fncUpdateProduct(){
+/* function fncUpdateProduct(){
 	//Form 유효성 검증
  	//var name = document.detailForm.prodName.value;
 	//var detail = document.detailForm.prodDetail.value;
@@ -62,7 +62,7 @@ function fncUpdateProduct(){
 	} 
 	 */
 	
-	$("form").attr("method" , "POST").attr("action" , "/exer/postUpdateExer").attr('enctype','multipart/form-data').submit();
+/* 	$("form").attr("method" , "POST").attr("action" , "/exer/postUpdateExer").attr('enctype','multipart/form-data').submit();
 	
 	
 }
@@ -87,8 +87,8 @@ $(function() {
 			fncUpdateProduct();
 		});
 });
-
-$(function() {
+ */
+/* $(function() {
 	
 	
 	console.log("hihi");
@@ -105,7 +105,7 @@ $(function() {
 	 });
 	
 	
-});
+}); */
 /* function inputTimeColon(time) {
 
     // 먼저 기존에 들어가 있을 수 있는 콜론(:)기호를 제거한다.
@@ -168,7 +168,7 @@ $(function() {
 			<br>
 			<br>
 			<ins>
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">일일 운동량 등록</div>
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">일일 운동량 조회</div>
 			</ins>
 			
 			<br><br><br>
@@ -195,24 +195,24 @@ $(function() {
 			
 			<br><br>
 			<div class="form-group">
-			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" id="exerName">운동명 :  
-			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="form-inline">
+			<span  data-text-content="true"  style="color:black; font-size: 16px; font-weight: bold;" id="exerName">운동명 :  
+			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value=""  readonly style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="form-inline">
 			</span>
 			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 소요시간 :  
-			<input type="text" value="" id="timePicker" name="anExerTime" placeholder="운동한 시간을 선택하세요">		
+			<input type="text" value="" readonly id="timePicker" name="anExerTime" placeholder="운동한 시간을 선택하세요">		
 		<!-- 	onKeyup="inputTimeColon(this);" maxlength="5" style="text-align:center;width:40px;" -->
-			<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a>
+		<!-- 	<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a> -->
 			</span>
 			</div>
 			
 			</div>
 				
-			</div>
 			<div class="form-group" align="center">
-	  		<div class="col-md-12 text-center ">
-	  			<button type="button" id="button1" class="btn btn-primary">수정하기</button>
+	  		<div class="col-md-12 text-center " style="position:absolute; top:800px; left:500px; width: 753px; height: 266px;">
+	  			<button type="button" id="button1" class="btn btn-primary" >수정하기</button>
 	  		</div>
 		</div>
+			</div>
 			</div>
 			</div>
 			</form>

@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.exer;
 
+import java.util.List;
 import java.util.Map;
 
 import kr.or.fineapple.domain.BurnningRecord;
@@ -31,30 +32,34 @@ public interface ExerService {
 	
 	
 	
-	public int addRoutine(Routine routine);
+	public int addRoutine(Routine routine)throws Exception;
 	
-	public Routine getRoutine(int routineNo);
+	public Routine getRoutine(int routineNo)throws Exception;
 	
-	public int updateRoutine(Routine routine);
+	public int updateRoutine(Routine routine)throws Exception;
 	
-	public int deleteRoutine(int routineNo);
+	public int deleteRoutine(int routineNo)throws Exception;
 	
-	//public Map<String ,Object> getRoutineList(Search search)throws Exception;
+	public Map<String ,Object> getRoutineList(int exerServiceNo)throws Exception;
 	
 	
-	public int addRoutineInfo(Routine routine);
+	public int addRoutineInfo(Routine routine)throws Exception;
 	
-	public Routine getRoutineInfo(int routineInfoNo);
+	public Map<String ,Object> getRoutineInfoList(int routineNo)throws Exception;
 	
-	public int deleteRoutineInfo(int routineInfoNo);
+	public int deleteRoutineInfo(int routineInfoNo)throws Exception;
+	
+	public int updateRoutineInfo(Routine routine)throws Exception;
+	
+	
 	
 	//추천운동리스트
-	public Map<String,Object> recommandExerList(Search search);
+	public Map<String,Object> recommandExerList(Search search)throws Exception;
 	
 	
 	//운동장소 찾기
 	
-	public int searchExerPlace();
+	public int searchExerPlace()throws Exception;
 	
 	
 	

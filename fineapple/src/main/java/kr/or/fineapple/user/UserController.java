@@ -50,6 +50,9 @@ public class UserController {
 		
 		System.out.println("login½Ãµµ:POST");
 		User userDB = userService.getUser(user.getUserId());
+		
+		System.out.println("1111111111111111111111111111111111111111111111"+userDB);
+		
 		if(user.getPassword().equals(userDB.getPassword())) {
 			session.setAttribute("user",userDB);
 		}

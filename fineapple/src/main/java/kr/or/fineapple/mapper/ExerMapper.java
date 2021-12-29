@@ -16,18 +16,25 @@ import kr.or.fineapple.domain.common.Search;
 @Repository
 public interface ExerMapper {
 
-		   
+	   //운동서비스 활성화 CRUD
 	   int addUserService(ExerServ service);
 	   
 	   ExerServ getUserService(String userId);
 	   
 	   int updateUserService(ExerServ service);
 	   
-       int addDailyBurnning(BurnningRecord record);
        
        int updateServiceTrgt(ExerServ service);
        
        int updateBodyInfo(ExerServ service);
+
+       
+       
+       
+       //일일 운동량 CRUD
+       int addDailyBurnning(BurnningRecord record);
+       
+       
        
        
        //운동CRUD
@@ -52,7 +59,8 @@ public interface ExerMapper {
        
        int deleteRoutine(int routineNo);
        
-       //List<> getRoutineList();
+       List<Routine> getRoutineList(int exerServiceNo);
+       
        
        
        //루틴에 등록할 운동 
@@ -61,6 +69,12 @@ public interface ExerMapper {
        Routine getRoutineInfo(int routineInfoNo);
        
        int deleteRoutineInfo(int routineInfoNo);
+       
+       int updateRoutineInfo(Routine routine);
+       
+       List<Routine> getRoutineInfoList(int routineNo);
+       
+       
        
        //추천운동리스트
        List<Search>recommandExerList(Search search);

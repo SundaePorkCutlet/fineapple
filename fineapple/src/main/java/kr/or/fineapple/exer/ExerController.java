@@ -1,6 +1,7 @@
 package kr.or.fineapple.exer;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
+import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
@@ -34,7 +36,7 @@ public class ExerController {
 	public ExerController() {
 	}
 
-	
+
 @GetMapping(value="addUserService")
 public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
@@ -322,15 +324,99 @@ public String searchExerPlace() {
 	
 }
 
-@RequestMapping(value="timer")
-public String timer() {
+@RequestMapping(value="exerIndex")
+public String timer(Model model,HttpServletRequest request) {
 	
 	System.out.println("timer");
 	
 	
-	return "exer/timer.html";
+	User user =(User)request.getSession(true).getAttribute("user");
+ 
+	
+	model.addAttribute("user", user);
+	
+	return "exer/exerIndex.html";
 	
 	
 }
+
+@GetMapping("getRoutineList")
+public String getRoutineList(Model model,HttpServletRequest request) throws Exception {
+	
+	
+	System.out.println("getRoutineList");
+	
+
+	User user =(User)request.getSession(true).getAttribute("user");
+
+	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	
+	map = exerService.getRoutineList(serv.getUserServiceNo());
+	
+	model.addAttribute("list", map.get("list"));
+	
+	return "exer/getRoutineList.html";
+
+}
+
+
+
+@GetMapping("getRoutine")
+public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Model model) throws Exception {
+
+	routine = exerService.getRoutine(routine.getRoutineNo());
+	
+	
+	System.out.println("getRoutine");
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	
+	map = exerService.getRoutineInfoList(routine.getRoutineNo());
+	
+	
+	
+	model.addAttribute("list", map.get("list"));
+	model.addAttribute("routine", routine);
+	
+	return "exer/getRoutine.html";
+	
+
+}
+
+
+
+@RequestMapping("addRoutineInfo")
+public String addRoutineInfo() {
+	
+	
+	System.out.println("addRoutineInfo");
+	
+	
+	
+	return "exer/getExerList.html";
+	
+	
+	
+}
+
+
+
+
+@GetMapping("addRoutine")
+public String addRoutine() {
+
+	
+	
+	System.out.println("addRoutine");
+	
+
+	return "exer/getExerList.html";
+	
+}
+
 
 }

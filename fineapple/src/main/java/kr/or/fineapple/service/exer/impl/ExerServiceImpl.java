@@ -77,7 +77,6 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 
-
 	@Override
 	public int postUpdateExer(Exer exer) {
 		return exerMapper.updateExer(exer);
@@ -99,7 +98,9 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int addDailyBurnning(BurnningRecord record) {
-		return 0;
+		
+		
+		return exerMapper.addDailyBurnning(record);
 		
 		
 	}
@@ -107,53 +108,77 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int addRoutine(Routine routine) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return exerMapper.addRoutine(routine);
 	}
 
 	@Override
 	public Routine getRoutine(int routineNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return exerMapper.getRoutine(routineNo);
 	}
 
 	@Override
 	public int updateRoutine(Routine routine) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return exerMapper.updateRoutine(routine);
 	}
 
 	@Override
 	public int deleteRoutine(int routineNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return exerMapper.deleteRoutine(routineNo);
 	}
 
+	@Override
+	public Map<String, Object> getRoutineList(int exerServiceNo) throws Exception {
+		
+		List<Routine> list = exerMapper.getRoutineList(exerServiceNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	
 	@Override
 	public int addRoutineInfo(Routine routine) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return exerMapper.addRoutineInfo(routine);
 	}
 
-	@Override
-	public Routine getRoutineInfo(int routineInfoNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public int deleteRoutineInfo(int routineInfoNo) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return exerMapper.deleteRoutineInfo(routineInfoNo);
 	}
+	
+	@Override
+	public int updateRoutineInfo(Routine routine) {
+		
+		return exerMapper.updateRoutineInfo(routine);
+	}
+	
+	@Override
+	public Map<String, Object> getRoutineInfoList(int routineNo) {
+		
+		List<Routine> list = exerMapper.getRoutineInfoList(routineNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		
+		return map;
+	}
+	
 
 	@Override
 	public Map<String, Object> recommandExerList(Search search) {
 
 		System.out.println("recommandExerListtService");
-		
-		
-		
+	
 		
 		return null;
 	}
@@ -163,6 +188,7 @@ public class ExerServiceImpl implements ExerService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 	

@@ -12,10 +12,18 @@
 	
 
     
-    <script>
+   <script>
  function listcart(){
 				popWin = window.open("../diet/getFavMealList","popWin","left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 			}
+ 
+ function listroutine(){
+		popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		
+		
+ }
+
+ 
  </script>
     
     
@@ -128,6 +136,8 @@ div.mainProfile{
         </ul>
 
                 <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listcart()|">&#127869;</a>
+                <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listroutine()|">&#128095;</a>
+                
         <div class="col-md-3 text-end" >
             <div class="mb-2">
                 <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>
@@ -171,13 +181,12 @@ div.mainProfile{
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownworkout" data-bs-toggle="dropdown"
                            aria-expanded="false">운동관리</a>
 						     <ul class="dropdown-menu" aria-labelledby="dropdownworkout">
-                            <li><a class="dropdown-item" th:href="@{../exer/addUserService}">서비스활성화</a></li>
-                            <li><a class="dropdown-item" th:href="@{../exer/getExerList}">운동검색</a></li>
-                            <li><a class="dropdown-item" th:href="@{../exer/getAddExer}">운동등록</a></li>
-                            <li><a class="dropdown-item" th:href="@{../exer/addDailyBurnning}">일일운동량</a></li>
-							 <li><a class="dropdown-item" href="#">루틴</a></li>
+                            <li><a class="dropdown-item"   th:href="@{../exer/addUserService}">서비스활성화</a></li>
+                            <li><a class="dropdown-item"   th:href="@{../exer/getExerList}">운동검색</a></li>
+                            <li><a class="dropdown-item"   th:href="@{../exer/getAddExer}">운동등록</a></li>
+                            <li><a class="dropdown-item"   th:href="@{../exer/addDailyBurnning}">일일운동량</a></li>
 							 <li><a class="dropdown-item"  th:href="@{../exer/searchExerPlace}">운동장소찾기</a></li>
-							 <li><a class="dropdown-item"  th:href="@{../exer/timer}">타이머</a></li>
+							 <li><a class="dropdown-item"   th:href="@{../exer/exerIndex}">타이머</a></li>
 							                          <!--  th:href="@{../exer/timer}" -->
                         </ul>
 

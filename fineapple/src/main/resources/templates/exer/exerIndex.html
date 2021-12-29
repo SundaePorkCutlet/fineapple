@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>         
+    <link rel="stylesheet" href="styles.css" />
+    <title>운동 타이머</title>
+  </head>
+  <body>
+    <header class="header">
+      <h4>현재 시간</h4>
+      <div class="header__currentTime" id="js-currentTime">
+        <div class="header__currentTimeText" id="js-clock">00:00:00</div>
+      </div>
+      
+      
+      <form class="header__greetingForm" id="js-greetingForm">
+        <input type="hidden"/>
+      </form>
+      
+      <h4 class="header__greetingName" id="js-greetingName"  th:text="${user.userName}" ></h4>
+      
+      
+      <div class="header__text">
+        <span class="header__title">총 운동 시간</span>
+      </div>
+      <div class="header__stopWatch">
+        <time class="header__stopWatchText" id="jsMainStopWatch">00:00:00</time>
+      </div>
+      <div class="header__btns">
+        <button class="header__btn" id="jsStartBtn">시작</button>
+        <button class="header__btn" id="jsStopBtn">중지</button>
+        <button class="header__btn" id="jsClearBtn">초기화</button>
+        <button class="header__btn" id="back-btn">HOME</button>
+      </div>
+    </header>
+    <main class="main">
+      <div class="main__workoutTitle">
+        <div class="main__addWorkoutTitle">
+          <button class="main__addWorkoutBtn" id="jsAddWorkoutBtn">+</button>
+        </div>
+        <label for="input" class="main__addWorkoutTitleText">운동</label>
+        <input
+          type="text"
+          class="main__workoutTitleInput"
+          id="jsWorkoutTitle"
+        />
+      </div>
+      <ul class="main__workoutChecker" id="jsWorkoutUl">
+        <li class="main__workoutCheckerList">
+          <div class="main__addSet">
+            <button class="main__addSetBtn" id="jsAddSetBtn">+</button>
+          </div>
+          <!-- <div class="main__kg">
+            <input type="text" class="main__wrightBox" id="jsKgWright" />
+            <span class="main__kgText">KG</span>
+          </div> -->
+          <div class="main__times">
+            <input type="text" class="main__wrightBox" id="jsTimeWright" />
+            <span class="main__timesText">운동할 시간</span>
+          </div>
+          <div class="main__set">
+            <input type="text" class="main__wrightBox" id="jsSetWright" />
+            <span class="main__setText">세트 수</span>
+          </div>
+          <div class="main__stopwatch" id="jsStopWatch">00:00:00</div>
+          <div class="main__completeBtnWrapper">
+            <button class="main__completeBtn" id="jsCompleteBtn">
+              운동 완료
+            </button>
+          </div>
+        </li>
+      </ul>
+    </main>
+    
+   
+    <script>
+    const currentTimeContainer = document.querySelector('#js-currentTime');
+    const jsClock = currentTimeContainer.querySelector('#js-clock');
+
+    function getTime() {
+      const date = new Date();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+
+      jsClock.innerText = `${hours < 10 ? `0${hours}` : hours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      }:${seconds < 10 ? `0${seconds}` : seconds}`;
+    }
+
+    if (currentTimeContainer) {
+      getTime();
+      setInterval(getTime, 1000);
+    }
+    
+    
+    
+    
+    const jsForm = document.querySelector('#js-greetingForm');
+    const input = jsForm.querySelector('input');
+    const jsGreetingName = document.querySelector('#js-greetingName');
+
+    const USER_LS = 'currentUser';
+    const SHOWING_CN = 'showing';
+
+    function saveName(text) {
+      localStorage.setItem(USER_LS, text);
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      const currentValue = input.value;
+      paintGreeting(currentValue);
+      saveName(currentValue);
+    }
+
+    function askForName() {
+      jsForm.classList.add(SHOWING_CN);
+      jsForm.addEventListener('submit', handleSubmit);
+    }
+
+    function paintGreeting(text) {
+      jsForm.classList.remove(SHOWING_CN);
+      jsGreetingName.classList.add(SHOWING_CN);
+      jsGreetingName.innerText = `Let's work out ${text}!!`;
+    }
+
+    function loadName() {
+      const currentUser = localStorage.getItem(USER_LS);
+      if (currentUser === null) {
+        askForName();
+      } else {
+        paintGreeting(currentUser);
+      }
+    }
+
+    if (jsForm) {
+      loadName();
+    }
+    
+    const jsMainStopWatch = document.getElementById('jsMainStopWatch');
+    const jsStart = document.getElementById('jsStartBtn');
+    const jsStop = document.getElementById('jsStopBtn');
+    const jsClear = document.getElementById('jsClearBtn');
+
+    const jsMain = document.querySelector('.main');
+    const jsAddWorkoutBtn = document.querySelector('#jsAddWorkoutBtn');
+
+    const jsWorkoutUl = document.getElementById('jsWorkoutUl');
+    const jsAddSetBtn = document.getElementById('jsAddSetBtn');
+    const jsStopWatch = document.getElementById('jsStopWatch');
+    const jsCompleteBtn = document.getElementById('jsCompleteBtn');
+
+    let seconds = 0,
+      minutes = 0,
+      hours = 0,
+      t;
+
+    let newWorkoutId = 0;
+    let newSetId = 0;
+
+    function add() {
+      seconds++;
+      if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+          minutes = 0;
+          hours++;
+        }
+      }
+
+      jsMainStopWatch.textContent =
+        (hours ? (hours > 9 ? hours : '0' + hours) : '00') +
+        ':' +
+        (minutes ? (minutes > 9 ? minutes : '0' + minutes) : '00') +
+        ':' +
+        (seconds > 9 ? seconds : '0' + seconds);
+
+      timer();
+    }
+
+    function timer() {
+      t = setTimeout(add, 1000);
+    }
+
+    function inputCurrentWatch() {
+      jsStopWatch.textContent = jsMainStopWatch.textContent;
+      jsCompleteBtn.removeEventListener('click', inputCurrentWatch);
+    }
+
+    // timer();
+
+    jsStart.addEventListener('click', () => {
+      timer();
+    });
+
+    jsStop.addEventListener('click', () => {
+      clearTimeout(t);
+    });
+
+    jsClear.addEventListener('click', () => {
+      jsMainStopWatch.textContent = '00:00:00';
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+    });
+
+    // Add Workout
+    jsAddWorkoutBtn.addEventListener('click', e => {
+      const divTitle = document.createElement('div');
+      divTitle.classList.add('main__workoutTitle');
+      divTitle.style = 'margin-top:20px';
+
+      const divAddWorkoutTitle = document.createElement('div');
+      divAddWorkoutTitle.classList.add('main__addWorkoutTitle');
+
+      const btnAddWokroutTitle = document.createElement('button');
+      btnAddWokroutTitle.classList.add('main__addWorkoutBtn');
+      btnAddWokroutTitle.id = `jsAddWorkoutBtn${newWorkoutId}`;
+      btnAddWokroutTitle.textContent = '-';
+      btnAddWokroutTitle.addEventListener('click', () => {
+        divTitle.parentNode.removeChild(divTitle);
+        newUl.parentNode.removeChild(newUl);
+      });
+      divAddWorkoutTitle.appendChild(btnAddWokroutTitle);
+      divTitle.appendChild(divAddWorkoutTitle);
+
+      const labelWorkoutTitle = document.createElement('label');
+      labelWorkoutTitle.classList.add('main__addWorkoutTitleText');
+      labelWorkoutTitle.textContent = '운동종목';
+      divTitle.appendChild(labelWorkoutTitle);
+
+      const inputWorkoutTitle = document.createElement('input');
+      inputWorkoutTitle.classList.add('main__workoutTitleInput');
+      divTitle.appendChild(inputWorkoutTitle);
+
+      jsMain.appendChild(divTitle);
+
+      const newUl = document.createElement('ul');
+      newUl.classList.add('main__workoutChecker');
+
+      const li = document.createElement('li');
+      li.classList.add('main__workoutCheckerList');
+
+      const divBtn = document.createElement('div');
+      divBtn.classList.add('main__delSet');
+      const minusBtn = document.createElement('button');
+      minusBtn.classList.add('main__delSetBtn');
+      minusBtn.id = 'jsDelSetBtn';
+      minusBtn.textContent = '+';
+      divBtn.addEventListener('click', () => {
+        const li = document.createElement('li');
+        li.classList.add('main__workoutCheckerList');
+
+        const divBtn = document.createElement('div');
+        divBtn.classList.add('main__delSet');
+        const minusBtn = document.createElement('button');
+        minusBtn.classList.add('main__delSetBtn');
+        minusBtn.id = 'jsDelSetBtn';
+        minusBtn.textContent = '-';
+        divBtn.addEventListener('click', () => {
+          li.parentNode.removeChild(li);
+        });
+        divBtn.appendChild(minusBtn);
+
+
+        const divTimes = document.createElement('div');
+        divTimes.classList.add('main__times');
+        const inputTimes = document.createElement('input');
+        inputTimes.classList.add('main__wrightBox');
+        const spanTimes = document.createElement('span');
+        spanTimes.classList.add('main__timesText');
+        spanTimes.textContent = '운동할 시간';
+        divTimes.appendChild(inputTimes);
+        divTimes.appendChild(spanTimes);
+
+        const divSet = document.createElement('div');
+        divSet.classList.add('main__set');
+        const inputSet = document.createElement('input');
+        inputSet.classList.add('main__wrightBox');
+        const spanSet = document.createElement('span');
+        spanSet.classList.add('main__setText');
+        spanSet.textContent = '세트 수';
+        divSet.appendChild(inputSet);
+        divSet.appendChild(spanSet);
+
+        const divStopWatch = document.createElement('div');
+        divStopWatch.classList.add('main__stopwatch');
+        divStopWatch.textContent = '00:00:00';
+
+        const divComBtn = document.createElement('div');
+        divComBtn.classList.add('main__completeBtnWrapper');
+        const completBtn = document.createElement('button');
+        completBtn.classList = 'main__completeBtn';
+        completBtn.id = `jsCompleteBtn${newSetId}`;
+        newSetId++;
+        completBtn.textContent = '운동 완료';
+        function inputCurrentWatchOthers() {
+          divStopWatch.textContent = jsMainStopWatch.textContent;
+          completBtn.removeEventListener('click', inputCurrentWatchOthers);
+        }
+        completBtn.addEventListener('click', inputCurrentWatchOthers);
+        divComBtn.appendChild(completBtn);
+
+        li.appendChild(divBtn);
+        li.appendChild(divTimes);
+        li.appendChild(divSet);
+        li.appendChild(divStopWatch);
+        li.appendChild(divComBtn);
+        newUl.appendChild(li);
+        jsMain.appendChild(newUl);
+      });
+      divBtn.appendChild(minusBtn);
+
+     
+
+      const divTimes = document.createElement('div');
+      divTimes.classList.add('main__times');
+      const inputTimes = document.createElement('input');
+      inputTimes.classList.add('main__wrightBox');
+      const spanTimes = document.createElement('span');
+      spanTimes.classList.add('main__timesText');
+      spanTimes.textContent = '운동할 시간';
+      divTimes.appendChild(inputTimes);
+      divTimes.appendChild(spanTimes);
+
+      const divSet = document.createElement('div');
+      divSet.classList.add('main__set');
+      const inputSet = document.createElement('input');
+      inputSet.classList.add('main__wrightBox');
+      const spanSet = document.createElement('span');
+      spanSet.classList.add('main__setText');
+      spanSet.textContent = '세트 수';
+      divSet.appendChild(inputSet);
+      divSet.appendChild(spanSet);
+
+      const divStopWatch = document.createElement('div');
+      divStopWatch.classList.add('main__stopwatch');
+      divStopWatch.textContent = '00:00:00';
+
+      const divComBtn = document.createElement('div');
+      divComBtn.classList.add('main__completeBtnWrapper');
+      const completBtn = document.createElement('button');
+      completBtn.classList = 'main__completeBtn';
+      completBtn.id = `jsCompleteBtn${newSetId}`;
+      newSetId++;
+      completBtn.textContent = '운동 완료';
+      function inputCurrentWatchOthers() {
+        divStopWatch.textContent = jsMainStopWatch.textContent;
+        completBtn.removeEventListener('click', inputCurrentWatchOthers);
+      }
+      completBtn.addEventListener('click', inputCurrentWatchOthers);
+      divComBtn.appendChild(completBtn);
+
+      li.appendChild(divBtn);
+      li.appendChild(divTimes);
+      li.appendChild(divSet);
+      li.appendChild(divStopWatch);
+      li.appendChild(divComBtn);
+      newUl.appendChild(li);
+      jsMain.appendChild(newUl);
+    });
+
+    jsCompleteBtn.addEventListener('click', inputCurrentWatch);
+
+    // Add Set
+    jsAddSetBtn.addEventListener('click', () => {
+      const li = document.createElement('li');
+      li.classList.add('main__workoutCheckerList');
+
+      const divBtn = document.createElement('div');
+      divBtn.classList.add('main__delSet');
+      const minusBtn = document.createElement('button');
+      minusBtn.classList.add('main__delSetBtn');
+      minusBtn.id = 'jsDelSetBtn';
+      minusBtn.textContent = '-';
+      divBtn.addEventListener('click', () => {
+        li.parentNode.removeChild(li);
+      });
+      divBtn.appendChild(minusBtn);
+
+
+      const divTimes = document.createElement('div');
+      divTimes.classList.add('main__times');
+      const inputTimes = document.createElement('input');
+      inputTimes.classList.add('main__wrightBox');
+      const spanTimes = document.createElement('span');
+      spanTimes.classList.add('main__timesText');
+      spanTimes.textContent = '운동할 시간';
+      divTimes.appendChild(inputTimes);
+      divTimes.appendChild(spanTimes);
+
+      const divSet = document.createElement('div');
+      divSet.classList.add('main__set');
+      const inputSet = document.createElement('input');
+      inputSet.classList.add('main__wrightBox');
+      const spanSet = document.createElement('span');
+      spanSet.classList.add('main__setText');
+      spanSet.textContent = '세트 수';
+      divSet.appendChild(inputSet);
+      divSet.appendChild(spanSet);
+
+      const divStopWatch = document.createElement('div');
+      divStopWatch.classList.add('main__stopwatch');
+      divStopWatch.textContent = '00:00:00';
+
+      const divComBtn = document.createElement('div');
+      divComBtn.classList.add('main__completeBtnWrapper');
+      const completBtn = document.createElement('button');
+      completBtn.classList = 'main__completeBtn';
+      completBtn.id = `jsCompleteBtn${newSetId}`;
+      newSetId++;
+      completBtn.textContent = '운동 완료';
+      function inputCurrentWatchOthers() {
+        divStopWatch.textContent = jsMainStopWatch.textContent;
+        completBtn.removeEventListener('click', inputCurrentWatchOthers);
+      }
+      completBtn.addEventListener('click', inputCurrentWatchOthers);
+      divComBtn.appendChild(completBtn);
+
+      li.appendChild(divBtn);
+      li.appendChild(divTimes);
+      li.appendChild(divSet);
+      li.appendChild(divStopWatch);
+      li.appendChild(divComBtn);
+      jsWorkoutUl.appendChild(li);
+    });
+    $(function() {
+		
+		$( "#back-btn").on("click" , function() {
+			
+	 		history.go(-1);
+	 		
+		});	
+		
+		
+	});
+    </script>
+    
+ 
+  </body>
+</html>

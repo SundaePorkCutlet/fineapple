@@ -41,7 +41,7 @@ class exerMapperTest {
 		  //addDailyBurnning
 		  record.setExerLv(3); 
 		  record.setUserExerBurnning(170.7);	  
-		  record.setAnExerTime(LocalTime.of(00,55,00)); 
+		  record.setAnExerTime("2:30:00"); 
 		  record.setUserId("hc@gmail.com");
 		  record.setExer(exer);
 		  
@@ -57,7 +57,7 @@ class exerMapperTest {
 		  
 		  //로직에서 필요함
 		  record.setDailyExerKcal(150.5); 
-		  record.setDailyExerTime(00,30,00);
+		  record.setDailyExerTime("1:00:00");
 		  record.setRecommendExerKcal(200.0);
 		  
 		  
@@ -93,7 +93,7 @@ class exerMapperTest {
 		  routine.setRoutineNo(9);
 		  routine.setExer(exer);
 		  routine.setExerNo(1);
-		  routine.setAnExerTime(LocalTime.of(3, 30, 0));
+		  routine.setRoutineTime("2시간 30분");
 		  
 		  
 		  

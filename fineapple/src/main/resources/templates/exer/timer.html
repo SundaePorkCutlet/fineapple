@@ -43,9 +43,7 @@
         top: 13rem;
       }
     </style>
-  </head>
-  
-  
+  </head> 
   <body>
 <!--   <div th:insert="index/toolbar :: toolbar">
 	</div>
@@ -54,6 +52,7 @@
                         aria-labelledby="timer" aria-hidden="true">
   <div class="modal-dialog">
  -->
+
     <main role="main">
       <!-- 설정한 카운트다운 시간 표시 -->
       <input type="text" class="form-control time-picker vw-100" value="00:01:00">
@@ -94,6 +93,7 @@
         </button>
       </div>
     </main>
+ 
    
    <!--  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript"> -->
@@ -109,17 +109,19 @@
       const resumeBtn = document.querySelector('#resume-btn');
       const ongoingStatus = document.querySelector('#ongoing-status');
       const completedStatus = document.querySelector('#completed-status');
-
+	  
+      
       // 시간 설정 다이얼로그 생성
       new Picker(timePicker, {
         format: 'HH:mm:ss', // 시:분:초
         text: {
-          title: '시간을 설정하세요',
+          title: '운동 시간을 설정하세요',
           confirm: '확인',
           cancel: '취소'
         },
       });
 
+      
       // 타이머 생성
       const timer = new easytimer.Timer();
 
@@ -177,6 +179,7 @@
         btnGroup1.style.display = 'none';
         btnGroup2.style.display = 'block';
       });
+      
       // 취소 버튼
       cancelBtn.addEventListener('click', () => {
         // '일시 정지 > 취소 > 시작'인 경우

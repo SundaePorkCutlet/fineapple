@@ -165,10 +165,14 @@
 	WHERE FAV_MEAL_NO = #{VALUE}
 	</delete>
 	
+	
 	<select id="getFavMealList" parameterType="Integer" resultMap="FavMealMap">
-	select * from FAV_MEAL
+    select a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal,sum(b.food_kcal) total_kcal 
+    from FAV_MEAL a left join fav_meal_info b on a.fav_meal_no=b.fav_meal_no
 	WHERE diet_service_no=#{value}
-	</select>
+	group by a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal
+   </select>
+	
 	
 	<insert id="insertFavMealItem" parameterType="FavMeal">
 	INSERT INTO FAV_MEAL_INFO(FAV_MEAL_INFO_NO,FAV_MEAL_NO,FOOD_CD,FOOD_NAME,FOOD_PROTEIN,FOOD_FAT,SERVING_SIZE,FOOD_KCAL,FOOD_CARB)

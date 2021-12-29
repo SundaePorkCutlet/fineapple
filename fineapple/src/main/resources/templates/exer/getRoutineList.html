@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+
 </head>
+<th:block th:fragment="setLogin">
 <body>
 
+
+	
+<script type="text/javascript">
+function fncGetUserList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+
+   	//document.detailForm.submit();
+	$("form").attr("method" , "GET").attr("action" , "/exer/getExer").submit();
+}
+
+
+$(function() {
+	
+	 
+	 $(".routineName").on("click" , function() {
+		 
+	
+		 
+		   $(opener.location).attr("href","/exer/getRoutine?routineNo="+$(this).attr("data-routineNo"));
+		   
+			/* open.parent.location.href="/exer/getRoutine?routineNo="+$(this).attr("data-routineNo");			
+			 */window.close();
+});
+});
+
+
+</script>	
+	
+ 		<table style="width:400px; position:absolute; top:38px; left:100px; " class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">선택</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">번호</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">루틴명</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);" align="center">루틴시간</th>         
+          </tr>
+        </thead>
+        
+       <tbody>
+	<tr th:each="data, i : ${list}">
+		<td></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.routineName}" class="routineName" th:attr="data-routineNo=${data.routineNo}" style="cursor:pointer; text-align: left;"></td>
+		
+		<td th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
+		
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+
+	</table>
+	
+		<div style="position:absolute; top:0px;left:20px"><button type="button" class="btn btn-success">일일운동량 등록</button></div>
+			<div style="position:absolute; top:0px; left:197px; "><button type="button" class="btn btn-warning">루틴명수정</button></div>
+			<div style="position:absolute; top:0px; left:336px;"><button type="button" class="btn btn-danger" th:onClick="|location.href='@{../exer/addRoutine}'|">루틴생성</button></div>
+			<div style="position:absolute; top:0px;	left:460px; "><button type="button" class="btn btn-primary">루틴삭제</button></div>
+
+
+	
+		
 </body>
+	</th:block>
 </html>
