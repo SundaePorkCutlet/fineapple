@@ -15,5 +15,10 @@ public class Group {
 	private String groupIntro;
 	private int userCount;
 	private LocalDate groupBirth;	
+	
+	public Group() {
+		System.out.println(getClass().getName()+  "»ý¼ºÇÔ");
+	}
 
 }
+

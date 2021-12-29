@@ -28,7 +28,7 @@ public class Board {
 	
 	
 	public Board() {
-		System.out.println("Board 档皋牢 按眉 积己");
+		System.out.println(getClass().getName()+  "积己窃");
 	}
 	
 }

@@ -1,6 +1,7 @@
 package kr.or.fineapple.community;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
@@ -31,20 +31,15 @@ public class CommunityController {
 	@GetMapping(value = "getPost")
 	public String getViewTest(@ModelAttribute("board") Board board, Model model) {
 		
-		System.out.println(board.getPostNo() + "dddddddddddddddddddddddddd");
+		Map map =  communityService.getPost(board);
 		
-		board =  communityService.getPost(board);
-		
-		System.out.println(board + "getPost Service °ÅÄ£ ÈÄ");
-		
-		model.addAttribute("board", board);
+		model.addAttribute("map", map);
 		 
 		return "community/getPost.html";
 	}
 	
 	@RequestMapping(value = "getBoard", method = RequestMethod.GET)
 	public String getPostList(Model model) {
-		
 		
 		List<Board> list = communityService.getPostList();
 		
@@ -62,13 +57,17 @@ public class CommunityController {
 
 	@PostMapping(value = "addPost")
 	public String addPost(@ModelAttribute Board board) {
-		System.out.println(board);
+		
 		User user = new User();
 		
-		user.setUserId("bbb123@gmil.com");
-		Group group = new Group();
-		board.setGroup(group);
-		board.setUser(user);		
+			user.setUserId("bbb123@gmil.com");
+			
+			Group group = new Group();
+			
+			board.setGroup(group);
+			
+			board.setUser(user);	
+		
 		communityService.addPost(board);
 		
 		return "redirect:/community/getBoard";
@@ -77,11 +76,12 @@ public class CommunityController {
 	@RequestMapping(value = "getMyGroupList", method = RequestMethod.GET)
 	public ModelAndView getMyGroupList() {
 		
-		GroupUser groupUser = new GroupUser();
-		User user = new User();
-		user.setUserId("bbb123@gmil.com");
-		groupUser.setUser(user);
-		groupUser.setGroupStt(2);
+			GroupUser groupUser = new GroupUser();
+			User user = new User();
+			user.setUserId("bbb123@gmil.com");
+			groupUser.setUser(user);
+			groupUser.setGroupStt(2);
+			
 		List<Group> list =   communityService.getGroupInterGroup(groupUser);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("community/getMyGroupList.html");

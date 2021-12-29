@@ -7,12 +7,14 @@
 <div th:fragment="getCmnt">
 <table class="table table-hover table-striped">
 	<tbody>
-		<tr th:each = "data : ${list}">
-		<td th:text = "${data.cmntNo}" style="visibility: hidden;"></td>
-		<td th:text = "${data.board.postNo}" style="visibility: hidden;"></td>
+		<tr th:each = "data : ${map.list}">
+		<td th:text = "${data.cmntNo}" style="display: none;"></td>
+		<td th:text = "${data.board.postNo}" style="display: none;"></td>
+		<td th:text = "${data.user.userId}" ></td>
 		<td th:text = "${data.cmntContent}" ></td>
 		<td th:text = "${data.cmntDate}" ></td>
-		<td th:text = "${data.cmntLikeCount}"></td>	
+		<td th:text = "${data.cmntLikeCount}"></td>
+		<td> 신고하기</td>
 		</tr>
 	</tbody>
 </table>

@@ -14,6 +14,9 @@ public class Cmnt {
 	private int cmntLikeCount;	
 	private int updateStt;
 	
+	public Cmnt() {
+		System.out.println(getClass().getName()+  "»ý¼ºÇÔ");
+	}
 	
 	
 	public int getCmntNo() {
