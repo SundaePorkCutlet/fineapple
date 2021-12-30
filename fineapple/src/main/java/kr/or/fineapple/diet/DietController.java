@@ -131,7 +131,7 @@ public class DietController {
 	
 
 	@GetMapping("getFoodList")
-	public String getFoodList(Model model, @ModelAttribute("search") Search search) throws Exception {
+	public String getFoodList(Model model, @ModelAttribute("search") Search search,HttpServletRequest request) throws Exception {
 			
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
@@ -148,7 +148,7 @@ public class DietController {
 		list.add(dietService.getFoodAPIlist(search));
 		
 		map2 = dietService.getFoodList(search1);
-		
+		map3.put("list",dietService.getFoodAPIlist(search));
 		
 		
 		map3.put("list", dietService.getFoodAPIlist(search));
@@ -156,6 +156,20 @@ public class DietController {
 		map4.putAll(map3);
 		model.addAttribute("list", map3.get("list"));
 		model.addAttribute("search", search);
+		
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		
+//		User user =(User)request.getSession(true).getAttribute("user");
+//		DietServ serv = dietService.getDietService(user.getUserId());
+//		map = dietService.getFavMealList(serv.getUserServiceNo());
+//		System.out.println(map);
+//		model.addAttribute("list1",map.get("list"));
+//		
+		
+		
+		
+		
+		
 
 		return "diet/getFoodList.html";
 	}
@@ -170,6 +184,12 @@ public class DietController {
 		return "diet/getFood.html";
 		}
 	
+	@GetMapping("getFood1")
+	public String getFood() throws Exception {
+		
+		
+		return "diet/getFood.html";
+		}
 
 	
 	
@@ -225,11 +245,42 @@ public class DietController {
 			User user =(User)request.getSession(true).getAttribute("user");
 			DietServ serv = dietService.getDietService(user.getUserId());
 			map = dietService.getFavMealList(serv.getUserServiceNo());
+			System.out.println(map);
 			model.addAttribute("list",map.get("list"));
 		return "diet/getFavMealList.html";
 	}
 		
+@GetMapping("getAddDaily")
+public String getAddDaily(Model model,@RequestParam("chekarray")String[] foodCd)throws Exception{
+	
+	System.out.println(foodCd);
+	
+	
+	
+	return "diet/getAddDailyIntakeMeal.html";
+}
+	
 
+@GetMapping("modal")
+public String modal(Model model,HttpServletRequest request) throws Exception {
+	
+	String hong = "byung";
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	DietServ serv = dietService.getDietService(user.getUserId());
+	map = dietService.getFavMealList(serv.getUserServiceNo());
+	System.out.println(map);
+	model.addAttribute("list",map.get("list"));
+	
+	return "diet/getFavMealList :: hong";
+	
+	
+}
+
+
+
+	
 
 }
 

@@ -19,6 +19,7 @@ public class FavMeal {
 	double favMealKcal;
 	Food food;
 	double Intake;
+	double totalKcal;
 	
 	
 	public FavMeal() {

@@ -427,6 +427,41 @@ public class DietServiceImpl implements DietService{
 	public int updateFavMealItem(FavMeal favMeal) throws Exception {
 		return dietMapper.updateFavMealItem(favMeal);
 	}
+
+
+
+	@Override
+	public IntakeRecord getIntakeRecordList(int dietServiceNo) throws Exception {
+		return dietMapper.getIntakeRecordList(dietServiceNo);
+	}
+
+
+
+	@Override
+	public int addFood(Food food) throws Exception {
+		return dietMapper.addFood(food);
+	}
+
+
+
+	@Override
+	public int updateFood(Food food) throws Exception {
+		return dietMapper.updateFood(food);
+	}
+
+
+
+	@Override
+	public int deleteFood(String foodCd) throws Exception {
+		return dietMapper.deleteFood(foodCd);
+	}
+
+
+
+	@Override
+	public int updateIntakeRecord(IntakeRecord record) throws Exception {
+		return dietMapper.updateIntakeRecord(record);
+	}
 	
 	
 	
