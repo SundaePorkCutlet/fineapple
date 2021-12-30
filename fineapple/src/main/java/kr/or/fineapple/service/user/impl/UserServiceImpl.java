@@ -1,5 +1,7 @@
 package kr.or.fineapple.service.user.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +38,29 @@ public class UserServiceImpl implements UserService {
 	public void updateUserLeave(User user) throws Exception {
 		userMapper.updateUserLeave(user);
 	}
+
+	@Override
+	public void restoreUser(User user) throws Exception {
+		userMapper.restoreUser(user);
+		
+	}
+
+	@Override
+	public String checkDuplication(User user) throws Exception {
+		
+		return userMapper.checkDuplication(user);
+	}
+
+	@Override
+	public List<Object> getUserList(User user) throws Exception {
+		List<Object> list = userMapper.getUserList(user);
+
+		return list;
+	}
 	
 	
+	
+
 
 	/*
 	 * @Override public boolean checkDuplication(String userId) throws Exception {

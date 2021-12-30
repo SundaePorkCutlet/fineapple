@@ -35,6 +35,7 @@ dependencies {
    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
    implementation 'pl,allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
+
 }
 
 test {

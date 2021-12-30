@@ -22,7 +22,7 @@
 		$("#checkDuplication").on("click",function(){
 			var userId = $("#userId").val()
 			console.log(userId);
-			a.ajax(
+			$.ajax(
 					{
 						url:"/user/json/checkDuplication"+userId,
 						method:"GET",
@@ -53,6 +53,10 @@
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
       var age =$("#age").val();
+      var height = $("heignt").val();
+      var weight = $("#weight").val();
+      var trgtWeight=$("trgtWeight").val();
+      var userId = $("#userId").val();
       if($("#male").val() == 'male'){
     	  var gender=$("#male").val();
       }
@@ -60,18 +64,63 @@
     	  var gender=$("#female").val();
       }
       
-      if(age == null || userId == null || userName==null || password==null || cellphone==null){
-    	  alert("미기입항목이 있습니다.");
+      if(userName == ""){
+    	  alert("닉네임을 입력하지 않으셨습니다.");
     	  return;
+      }else if(userId == "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1 )){
+    	  alert("이메일을 형식이 아닙니다.");
+    	  return;
+      }else if(password == ""){
+    	  alert("비밀번호를 입력하지 않으셨습니다.");
+    	  return;
+      }else if(cellphone == ""){
+    	  alert("전화번호를 입력하지 않으셨습니다.");
+    	  return;
+      }else if(age == ""){
+    	  alert("나이를 입력하지 않으셨습니다.");
+    	  return;
+      }else if(weight == ""){
+    	  alert("몸무게를 입력하지 않으셨습니다.");
+    	  return;
+      }else if(height == ""){
+    	  alert("키를 입력하지 않으셨습니다.");
+    	  return;
+      }else if(trgtWeight == ""){
+    	  alert("목표제중을 입력하지 않으셨습니다.");
+    	  return;
+      }else{
+    	  alert("회원가입에 성공하셨습니다.");
+          $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
       }
   	  console.log(gender);
       console.log("fncAddUser끝");
 
-  
-      alert("회원가입에 성공하셨습니다.");
-      $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
-     
-      
+      }
+   
+   function sendMail(){
+	   $("#sendMail").on("click",function(){
+		   var userId = $("#userId").val()
+		   
+		   if(userId == ""){
+			   alert("메일주소가 입력되지 않았습니다.");
+			   
+		   }else{
+			  $.ajax({
+				  type : "POST",
+				  url : "/sendMail",
+				  data : {
+					  userId : userId
+				  },
+				  dataType : 'json'
+			  });
+			  alert("인증번호가 전송되었습니다.");
+			  isCertification = true;
+			   
+		   }
+		   
+		   
+	   })
+	   
    }
    
 </script>
@@ -89,30 +138,30 @@
 </ins>
 <form method="POST" enctype="multipart/form-data" >
 <br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">이메일</div>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="" >이메일</div>
 <br>
-<p align ="center"><input id ="userId" name="userId" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일형식으로 작성해주세요." style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
-<input type="button" id="agreeSend" name ="agreeSend" value="인증번호 받기"/></p>
+<p align ="center"><input id ="userId" name="userId" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일형식으로 작성해주세요." style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input type="button" id="sendMail" name ="sendMail" value="인증번호 받기"/></p>
 
 <br>
 <div>
 <div align ="center" data-text-content="true" style="font-weight:bold;font-size:18px ;color: rgb(41, 96, 47)" class="">인증번호</div>
-<p align = "center"> <input type = "text" id = "agreeNum" name="agreeNum" placeholder ="인증번호를 입력해주세요." class = "agreement"><input type = "button" value = "인증번호 확인 "></p>
+<p align = "center"> <input type = "text" id = "returnMail" name="returnMail" placeholder ="인증번호를 입력해주세요." class = "returnMail"><input type = "button" value = "인증번호 확인 "></p>
 </div>
 <br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >이름</div>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >이름(닉네임)</div>
 <div align="center">
-<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">휴대폰번호(숫자만 입력)</div>
 <div align="center">
-<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">비밀번호</div>
 <div align="center">
-<input id ="password" name = "password" type="password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id ="password" name = "password" type="password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">프로필사진</div>
 <br>
@@ -121,7 +170,7 @@
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">몸무게</div>
 <div align="center">
-<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">성별</div>
@@ -132,12 +181,17 @@
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">키</div>
 <div align="center">
-<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);"required>
+<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);"required>
 </div>
 <br>
 <div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">나이</div>
 <div align="center">
-<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
+<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
+</div>
+<br>
+<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">목표체중</div>
+<div align="center">
+<input id="trgtWeight" name="trgtWeight" placeholder="목표체중">
 </div>
 <br>
 <div align = "center">
@@ -150,5 +204,6 @@
 <div align = "center">
 <input class = "addUser" type = "submit" placeholder = "회원가입" style = "background-color : rgb(21, 119, 210) ; color : white; border : none;border-radius: 10px; padding: 7px 50px">
 </div>
+<br>
 </form>
 </body>

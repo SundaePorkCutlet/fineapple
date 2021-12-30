@@ -1,5 +1,7 @@
 package kr.or.fineapple.service.user;
 
+import java.util.List;
+
 import kr.or.fineapple.domain.User;
 
 public interface UserService {
@@ -11,8 +13,13 @@ public interface UserService {
 	
 	public void updateUserLeave(User user) throws Exception;
 	
-	/*
-	 * public boolean checkDuplication (String userId) throws Exception;
-	 */	
-  
+
+	public void restoreUser(User user) throws Exception;
+	
+	public  String checkDuplication(User user) throws Exception;
+	
+	public 	List<Object> getUserList(User user) throws Exception;
+	
+	//public String sendMail(String sendMail) throws Exception;
+
 }
