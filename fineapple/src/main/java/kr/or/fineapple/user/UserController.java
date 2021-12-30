@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class UserController {
 	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
 		System.out.println("redirect:/user/login.html:GET");
-		return "user/login.html";
+		return "user/login :: hong";
     }
 	
 	@RequestMapping(value="login/redirect",method = RequestMethod.POST)
@@ -81,8 +82,9 @@ public class UserController {
 	
 	
 	@RequestMapping(value="addUser")
-	public String addUser(){
+	public String addUser(@RequestBody(required=false) User user, HttpSession session){
 		System.out.println("UserController:addUser()");
+		session.setAttribute("user", user);
 		return "user/addUser.html";
 	}
 	
@@ -149,6 +151,9 @@ public class UserController {
 			file.transferTo(new File(filePath, file.getOriginalFilename()));
 			user.setUserImg(file.getOriginalFilename());
 			
+		}else {
+			System.out.println("기본이미지");
+			user.setUserImg("defaultProfile.jpg"); 
 		}
 		User userDB = userService.getUser(user.getUserId());
 		System.out.println(userDB);
@@ -207,7 +212,7 @@ public class UserController {
 		if (user.getPassword().equals(userDB.getPassword())) {
 			if(user.getUserId().equals(userDB.getUserId())) {
 				userService.restoreUser(user);
-				return "redirect:/user/login";
+				return "redirect:/";
 			}
 		}
 		return "redirect:/";
@@ -219,6 +224,8 @@ public class UserController {
 		
 		return "/user/findUserId.html";
 	}
+	
+
 	
 
 	
