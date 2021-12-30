@@ -66,7 +66,7 @@ public class DietServiceImpl implements DietService{
 	}
 
 	@Override
-	public Map<String ,Object> getFoodList(Search search) throws Exception {
+	public List getFoodList(Search search) throws Exception {
 		
 		List<Food> list = dietMapper.getFoodList(search);
 		
@@ -74,7 +74,7 @@ public class DietServiceImpl implements DietService{
 		map.put("list", list);
 		map.put("search", search);
 		
-		return map;
+		return list;
 	}
 
 

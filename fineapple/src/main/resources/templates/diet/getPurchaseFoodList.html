@@ -73,9 +73,9 @@ $(function() {
 			
 <div class="container pt-1">
                     <div class="row">
-                        <div class="col-sm-6 col-md-3 p-3" th:each="data, i : ${list}">
-                            <div class="thumbnail">
-                                <div style="height:30%; width:40%">
+                        <div class="col-sm-6 col-md-4 p-1" th:each="data, i : ${list}">
+                            <div class="thumbnail" sytle=">
+                                <div >
                                     <img th:src="${data.foodImg}" width="100%" height="100%" alt="…">
                                 </div>
                                 <div class="caption">
@@ -91,39 +91,7 @@ $(function() {
                         </div>
                     </div>
                 </div>
-			
-			
-			
-			
-<!-- 	<table class="table table-hover table-striped" >			 -->
-<!--   		<thead> -->
-<!--           <tr> -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">선택</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>            -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                        -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                        -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                        -->
-<!--           </tr> -->
-<!--         </thead> -->
-        
-	
-<!--        <tbody> -->
-<!-- 	<tr th:each="data, i : ${list}"> -->
-<!-- 		<td></td> -->
-<!-- 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td> -->
-<!-- 		<td th:text="${data.foodName}"   style="cursor:pointer; text-align: left;"></td> -->
-<!-- 		<td th:text="${data.price}"   style="cursor:pointer; text-align: left;"></td> -->
-<!-- 		<td th:text="${data.purchaseConnLink}"   style="cursor:pointer; text-align: left;"></td> -->
-<!-- 		<td><img th:src="${data.foodImg}"   style="cursor:pointer; text-align: left; width:50px; height:50px;"></td> -->
-<!-- 	</tr> -->
-<!-- </tbody> -->
-<!-- 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->
 
-<!-- 	</table> -->
-	
 
 	</div>
 	</div>
