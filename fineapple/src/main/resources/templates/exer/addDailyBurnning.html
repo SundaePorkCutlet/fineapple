@@ -148,6 +148,19 @@ $(function() {
         time.value = hours + ":" + minute + ":" + second;
     }
 } */
+function fncGetUserList(currentPage) {
+	
+	$("form").attr("method" , "GET").attr("action" , "/exer/recommandExerList").submit();
+  	
+}
+$(function() {
+	 
+	 $( "#recommandList" ).on("click" , function() {
+		//Debug..
+		//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+		fncGetUserList(1);
+	});
+});
 
 </script>
 	<form class="form-inline" name="detailForm">
@@ -187,11 +200,11 @@ $(function() {
 	
 			<br>
 				<p th:text="| 님의 당일 초과 칼로리는  kcal입니다.|" align="right"></p>
-			<div align="center" data-text-content="true" style="background-color: rgba(241, 196, 15, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; position:absolute; left:500px; width: 753px; height: 266px; " class="">
+			<div align="center" data-text-content="true" style="background-color: rgba(241, 196, 15, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; position:absolute; left:300px; width: 753px; height: 266px; " class="">
 			<br>
 			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp;			
 			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
-			<button style="width:200px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">운동 추천 리스트</button>			
+			<button style="width:200px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" id="recommandList" class="btn btn-info">운동 추천 리스트</button>			
 			
 			<br><br>
 			<div class="form-group">
@@ -199,7 +212,7 @@ $(function() {
 			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value=""  readonly style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="form-inline">
 			</span>
 			<span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 소요시간 :  
-			<input type="text" value="" readonly id="timePicker" name="anExerTime" placeholder="운동한 시간을 선택하세요">		
+			<input type="text" value="" readonly id="anExerTime" placeholder="운동한 시간을 선택하세요">		
 		<!-- 	onKeyup="inputTimeColon(this);" maxlength="5" style="text-align:center;width:40px;" -->
 		<!-- 	<a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a> -->
 			</span>

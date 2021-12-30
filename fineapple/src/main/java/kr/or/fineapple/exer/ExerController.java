@@ -2,6 +2,7 @@ package kr.or.fineapple.exer;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -420,6 +421,91 @@ public String addRoutine() {
 	return "exer/getExerList.html";
 	
 }
+
+
+
+@GetMapping("recommandExerList")
+public String recommandExerList(Model model, HttpServletRequest request) throws Exception {
+	
+	System.out.println("recommandExerList");
+	
+	User user =(User)request.getSession().getAttribute("user");
+
+	
+	System.out.println(user.getUserId());
+	Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
+	System.out.println(sumIntakeKcal);
+	
+	user = exerService.needDaliyIntakeKcal(user.getUserId());
+	System.out.println(user);
+	
+	
+	Double  dailyIntakeKcal	= 0.0;
+	Double 	totaldailyIntakeKcal = 0.0;
+	
+	if(user.getGender().equals("male")) {
+		
+	
+	  dailyIntakeKcal	= 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+		
+		
+	} else {
+		
+	 dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+		
+		
+	}
+	System.out.println(dailyIntakeKcal);
+	
+	if(user.getServiceTrgt().equals("1")) {
+		
+		totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+		
+	} if (user.getServiceTrgt().equals("2")){
+		
+		totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+		
+	} else {
+		
+		totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+		
+	}
+	
+	
+	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) * (-1);
+	
+	
+	
+	System.out.println("초과 칼로리 입니다   " + overKcal);
+	
+	
+	if(overKcal <= 0) {
+		
+		
+	
+	List list = exerService.recommandExerList(Math.abs(overKcal));
+	
+	
+	
+	model.addAttribute("overKcal", overKcal);
+	model.addAttribute("list", list);
+	
+	
+	return "exer/recommandExerList.html";
+	
+	
+	} else {
+		
+		
+		return "user/login";
+		
+		
+	}
+
+	
+
+}
+
 
 
 }

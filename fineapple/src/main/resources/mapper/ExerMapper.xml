@@ -31,6 +31,7 @@
 		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
 		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="VARCHAR" />	
 		<result property="exerLink" 				column="EXER_LINK" 					jdbcType="VARCHAR" />		
+		<result property="recommTime" 		column="recommTime"	javaType="double" 					jdbcType="FLOAT" />		
 	</resultMap>
 
 
@@ -281,11 +282,11 @@
    	</delete> 
 
 
-	<select  id="recommandExerList"  parameterType="hashMap"  resultMap="exerMap">
-	SELECT *
+	<select  id="recommandExerList"  parameterType="int"  resultMap="exerMap">
+	SELECT exer_no, exer_name, exer_cate, exer_kcal, ROUND(#{value:INTEGER}/exer_kcal)*10 as "recommTime"
 	FROM (SELECT inner_table.* , ROWNUM AS row_seq
-	FROM (SELECT e.exer_no, e.exer_name, e.exer_cate, e.exer_kcal
-	FROM EXER e
+	FROM (SELECT exer.exer_no, exer.exer_name, exer.exer_cate, exer.exer_kcal
+	FROM EXER
 	<if test="searchCondition != null">
 	<where>
 	<if test="searchCondition == 0 and searchKeyword !='' ">
@@ -296,17 +297,41 @@
 	</if>
 	</where>
 	</if>
-	ORDER BY exer_No ) inner_table
-	WHERE ROWNUM &lt;= 10)
+	ORDER BY exer_No ) inner_table)
 	WHERE row_seq BETWEEN 1 AND 10
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	 
-	 
-	 
-	 
+	
+	
+<select id="sumIntakeKcal" resultType="double">
+<!-- 해당일자 섭취 칼로리 총합 -->
+ SELECT SUM(user_food_intake)
+FROM intake_record
+WHERE user_id = #{userId:VARCHAR}
+AND TRUNC(intake_record_date) = TRUNC(SYSDATE)
+</select> 
 
+
+
+<select id="needDaliyIntakeKcal"  resultType="user"> 
+<!-- 하루칼로리 필요량 공식 산정에 필요한 값 구하기 -->
+SELECT user_body_info.weight as "weight", user_body_info.height as "height", users.age as "age", users.service_trgt as "service_trgt", users.gender as "gender"
+FROM user_body_info JOIN users ON user_body_info.user_id = users.user_id
+WHERE users.user_id = #{userId:VARCHAR}
+AND TRUNC(user_body_info_date) = TRUNC(SYSDATE)
+</select>
+
+
+<!-- 
+<select id="" > 
+추천운동 리스트 선정
+SELECT exer_no, exer_name, exer_cate, exer_kcal, ROUND(초과칼로리/exer_kcal)*10
+FROM exer
+ORDER BY 5 DESC
+</select> 
+ -->
 	
 	
 
