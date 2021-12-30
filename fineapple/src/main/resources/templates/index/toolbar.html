@@ -133,8 +133,8 @@ div.mainProfile{
                 <button th:if = "${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>
             </div>
             <div>
-                <button th:if = "${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">회원탈퇴</button>
-                <button th:if = "${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
+                <button th:if = "${session.user != null} AND ${session.user.userLeaveStt == 0}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/updateUserLeave(userId=${session.user.userId})}'|">회원탈퇴</button>
+                <button th:if = "${session.user != null} AND ${session.user.userLeaveStt == 0}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
             </div>
         </div>
     </header>

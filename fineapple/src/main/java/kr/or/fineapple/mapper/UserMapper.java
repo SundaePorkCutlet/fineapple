@@ -1,5 +1,7 @@
 package kr.or.fineapple.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +19,11 @@ public interface UserMapper{
 		public void updateUser(User user) throws Exception;
 		
 		public void updateUserLeave(User user) throws Exception;
+		
+		public void restoreUser(User user) throws Exception;
+		
+		public String checkDuplication(User user) throws Exception;
+		
+		public List<Object> getUserList(User user) throws Exception;
 	}
 

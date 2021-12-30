@@ -23,16 +23,9 @@
 	<result property="exerServiceNo"	column="exer_service_no"	jdbcType="INTEGER"/>
 	<result property="trgtWeight"		column="trgt_weight"		jdbcType="DOUBLE"/>
 	<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
-	<result	property="trgtBodyMuscle"	column="trgt_body_muscle"	jdbcType="DOUBLE"/>
 	<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
 	<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
 </resultMap>
-
-
-
-
-
-
 
 <insert id="addUser"   parameterType="User">
 	INSERT 
@@ -54,7 +47,8 @@
 	BLC_ADD_DATE,
 	BLC_ADD_WHY,
 	LAST_CON_TIME,
-	USER_STT_MSG
+	USER_STT_MSG,
+	TRGT_WEIGHT
 	)   
 	VALUES 
 	(
@@ -73,7 +67,8 @@
     #{blcAddDate:DATE},
     #{blcAddWhy:VARCHAR},
     #{lastConTime:DATE},
-    '상태메세지없음'
+    '상태메세지없음',
+    #{trgtWeight : VARCHAR}
     )
 
 </insert>
@@ -104,29 +99,34 @@
 
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
-	SELECT
-	a.user_stt_msg, 
-	a.user_id, 
-	a.user_name, 
-	a.password, 
-	a.cellphone, 
-	a.age, 
-	a.reg_date, 
-	a.last_con_time, 
-	a.blc_rgs_stt, 
-	a.diet_service_no, 
-	a.exer_service_no,
-	a.gender,a.role,
-	a.user_img,
-	b.weight
-	from 
-	users a, 
-	user_body_info b
-	<where>
-	a.user_id = #{value}
-	AND a.user_id = b.user_id
-	</where> 
-
+   SELECT *
+   FROM
+   (SELECT
+   a.user_stt_msg, 
+   a.user_id, 
+   a.user_name, 
+   a.password, 
+   a.cellphone, 
+   a.age, 
+   a.reg_date, 
+   a.last_con_time, 
+   a.blc_rgs_stt, 
+   a.diet_service_no, 
+   a.exer_service_no,
+   a.gender,a.role,
+   a.user_img,
+   b.weight,
+   a.trgt_weight,
+   a.user_leave_stt
+   from 
+   users a, 
+   user_body_info b
+   <where>
+   a.user_id = #{value}
+   AND a.user_id = b.user_id
+   </where> 
+   ORDER BY b.user_body_info_date DESC)
+   WHERE ROWNUM = 1
 
 </select>
 
@@ -142,15 +142,36 @@
 	WHERE user_id=#{userId:VARCHAR}
 </update>
 
-<update id="leaveUser" parameterType="user">
+<update id="updateUserLeave" parameterType="user">
 	UPDATE users
 	<set>
 	user_id = #{userId:VARCHAR},
 	user_leave_stt = 1
 	</set>
-	WHERE user_id=#{userid:VARCHAR}
+	WHERE user_id=#{userId:VARCHAR}
 </update>
 
+
+<update id = "restoreUser" parameterType="user">
+	UPDATE users
+	<set>
+	user_id = #{userId:VARCHAR},
+	user_leave_stt = 0
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
+
+<select id="checkDuplication" parameterType="user" resultType="String">
+	SELECT user_id
+	FROM users
+	WHERE user_id LIKE '%'||#{userId:VARCHAR}||'%'
+</select>
+ 
+<select id ="getUserList" parameterType="user" resultMap="userSelectMap">
+	SELECT user_name, cellphone, user_id
+	FROM users
+	WHERE user_name=#{userName:VARCHAR} AND cellphone=#{cellphone:VARCHAR}
+</select>
 
 
 
