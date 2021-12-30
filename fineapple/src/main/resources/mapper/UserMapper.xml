@@ -104,7 +104,9 @@
 
 
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
-	SELECT
+	SELECT *
+	FROM
+	(SELECT
 	a.user_stt_msg, 
 	a.user_id, 
 	a.user_name, 
@@ -126,7 +128,8 @@
 	a.user_id = #{value}
 	AND a.user_id = b.user_id
 	</where> 
-
+	ORDER BY b.user_body_info_date DESC)
+	WHERE ROWNUM = 1
 
 </select>
 

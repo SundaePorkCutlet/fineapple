@@ -1,11 +1,13 @@
 package kr.or.fineapple.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.TrgtHabit;
+import kr.or.fineapple.domain.common.ViewDuration;
 
 @Mapper
 @Repository
@@ -13,6 +15,12 @@ public interface TrgtHabitMapper {
 
 	////목표 습관 관리 시작
 	void addTrgtHabit(TrgtHabit trgtHabit);
+	
+	////다이어리 화면 출력을 위한 습관서비스 정보 조회
+	List<Object> getTrgtHabitList(ViewDuration viewDuration);
+	
+	////해당 습관 이미 진행중인지 여부 조회
+	int getUsingTrgtHabit(Map map);
 	
 	////목표 습관 관리 진행 확인
 	TrgtHabit getTrgtHabit(Map map);

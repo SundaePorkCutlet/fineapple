@@ -1,6 +1,8 @@
 package kr.or.fineapple.persistence;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -8,17 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import kr.or.fineapple.domain.UserBodyInfo;
+import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
 
-//@SpringBootTest
+@SpringBootTest
 public class DiaryMapperTest {
 	
-	//@Autowired
-	//@Qualifier("diaryServiceImpl")
+	@Autowired
+	@Qualifier("diaryServiceImpl")
 	private DiaryService diaryService;
 	
-	//@Test
+	@Test
 	public void contextLoads() {
 
 //		String userId = "hc@gmail.com";
@@ -78,6 +80,20 @@ public class DiaryMapperTest {
 //		userBodyInfo.setHeight(174);
 //		diaryService.updateUserBodyInfo(userBodyInfo);
 		
+		//getBadgeList Test
+//		ViewDuration viewDuration = new ViewDuration();
+//		viewDuration.setUserId("hc@gmail.com");
+//		viewDuration.setStartDate(LocalDate.of(2021, 11, 1));
+//		viewDuration.setEndDate(LocalDate.of(2021, 12, 31));
+//		Map map = diaryService.getBadgeList(viewDuration);
+//		System.out.println(map);
+		
+//		ViewDuration viewDuration = new ViewDuration();
+//		viewDuration.setDate(LocalDate.now());
+//		LocalDate startDate = viewDuration.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+//		LocalDate endDate = viewDuration.getDate().with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+//		System.out.println(startDate.toString());
+//		System.out.println(endDate.toString());
 	}
 
 }

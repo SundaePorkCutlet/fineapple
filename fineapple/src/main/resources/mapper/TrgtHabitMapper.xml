@@ -22,6 +22,32 @@
 			SYSDATE)
 	</insert>
 	
+	<!-- SELECT LIST : 다이어리 화면 출력을 위한 습관서비스 정보 조회 -->
+	<select id="getTrgtHabitList" parameterType="ViewDuration" resultMap="TrgtHabitMap">
+	SELECT TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE, TRGT_HABIT_INIT_DATE
+	FROM trgt_habit_service
+		<where>
+			user_id = #{userId:VARCHAR}
+			<if test="startDate != null and endDate != null">
+			AND ((TRUNC(trgt_habit_init_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+				OR trgt_habit_init_date IS NULL))
+			</if>
+			<if test="date != null">
+			AND TRUNC(trgt_habit_start_date) <![CDATA[<=]]> #{date:DATE}
+			AND trgt_habit_init_date IS NULL
+			</if>
+		</where>
+	</select>
+	
+	<!-- SELECT ONE : 이미 진행중인지 여부 조회 -->
+	<select id="getUsingTrgtHabit" resultType="int">
+	SELECT COUNT(trgt_habit_service_no)
+	FROM trgt_habit_service
+	WHERE user_id = #{userId:VARCHAR}
+		AND trgt_habit_cate_no = #{trgtHabitCateNo:INTEGER}
+		AND trgt_habit_init_date IS NULL
+	</select>
+
 	<!-- SELECT : 목표습관관리 조회 -->
 	<select id="getTrgtHabit" resultMap="TrgtHabitMap">
 	SELECT TRGT_HABIT_SERVICE_NO, USER_ID, TRGT_HABIT_CATE_NO, TRGT_HABIT_CATE_NAME, TRGT_HABIT_START_DATE, TRGT_HABIT_INIT_DATE

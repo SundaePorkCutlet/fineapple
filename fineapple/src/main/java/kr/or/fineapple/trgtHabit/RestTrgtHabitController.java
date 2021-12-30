@@ -56,19 +56,26 @@ public class RestTrgtHabitController {
 	public TrgtHabit addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
 		  
 		System.out.println("/trgtHabit/json/addTrgtHabit : POST");
+		
+		//서비스 시작 전 현재 진행 중인지 여부 확인(0개 리턴경우 시작 가능/1 리턴경우 이미 진행중으로 시작불가)
+		int usingStt = trgtHabitService.getUsingTrgtHabit(trgtHabit.getUserId(), trgtHabit.getTrgtHabitCateNo());
+		
 		//서비스 시작을 위한 service 호출	  
-		trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
-		//시작된 목표 관리 정보 조회를 위한 service 호출
-		TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), LocalDate.now(), trgtHabit.getTrgtHabitCateNo());
-
-		////성공일수 출력 위한 연산 Logic
-		//시작일자와 오늘일자의 차
-		LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
-		int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
-		returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
-		System.out.println(returnTrgtHabit);
+		if(usingStt == 0) {
+			trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
+			//시작된 목표 관리 정보 조회를 위한 service 호출
+			TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), LocalDate.now(), trgtHabit.getTrgtHabitCateNo());
 	
-		return returnTrgtHabit;		
+			////성공일수 출력 위한 연산 Logic
+			//시작일자와 오늘일자의 차
+			LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
+			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
+			System.out.println(returnTrgtHabit);
+		
+			return returnTrgtHabit;
+		}
+		return null;
 	}
 	 
 	@RequestMapping(value="json/endTrgtHabit", method=RequestMethod.POST)

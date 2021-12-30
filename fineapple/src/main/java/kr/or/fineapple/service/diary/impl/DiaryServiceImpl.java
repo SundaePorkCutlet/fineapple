@@ -1,6 +1,5 @@
 package kr.or.fineapple.service.diary.impl;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.fineapple.domain.Diary;
+import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
+import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.service.diary.DiaryService;
 
@@ -19,11 +19,6 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Autowired
 	private DiaryMapper diaryMapper;
-
-	@Override
-	public Diary getDiary(String userId, LocalDate startDate, LocalDate endDate) {
-		return null;
-	}
 
 	@Override
 	public void addUserEvent(UserEvent userEvent) {
@@ -43,18 +38,12 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	@Override
-	public Map<String, Object> getUserEventList(String userId, LocalDate eventDate) {
+	public List<Object> getUserEventList(ViewDuration viewDuration) {
 		////사용자이벤트 모두 조회를 위한 parameter
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("userId", userId);
-		paramMap.put("eventDate", eventDate);
-		List<UserEvent> list = diaryMapper.getUserEventList(paramMap);
-		
-		////조회 결과를 map으로 return
-		Map<String, Object> map = new HashMap<>();
-		map.put("list", list);
-		
-		return map;
+		//viewDuration 내 userId, date
+		List<Object> list = diaryMapper.getUserEventList(viewDuration);
+	
+		return list;
 	}
 
 	@Override
@@ -78,19 +67,12 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	@Override
-	public Map<String, Object> getUserBodyInfoList(String userId, LocalDate startDate, LocalDate endDate) {
+	public List<Object> getUserBodyInfoList(ViewDuration viewDuration) {
 		////사용자 신체 변화 정보 조회를 위한 parameter
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("userId", userId);
-		paramMap.put("startDate", startDate);
-		paramMap.put("endDate", endDate);
-		List<UserBodyInfo> list = diaryMapper.getUserBodyInfoList(paramMap);
+		//viewDuration 내 userId, startDate, endDate
+		List<Object> list = diaryMapper.getUserBodyInfoList(viewDuration);
 		
-		////조회 결과를 map으로 return
-		Map<String, Object> map = new HashMap<>();
-		map.put("list", list);
-		
-		return map;
+		return list;
 	}
 
 	@Override
@@ -98,4 +80,28 @@ public class DiaryServiceImpl implements DiaryService {
 		diaryMapper.updateUserBodyInfo(userBodyInfo);
 	}
 
+	@Override
+	public List<Object> getBadgeList(ViewDuration viewDuration) {
+		////기간 내 뱃지 모두 조회를 위한 parameter
+		//viewDuration 내 userId, startDate, endDate
+		List<Object> list = diaryMapper.getBadgeList(viewDuration);
+		
+		return list;
+	}
+
+	@Override
+	public Badge getBadgeTotalCount(ViewDuration viewDuration) {
+		////기간 내 획득한 뱃지 갯수 총합 조회를 위한 parameter
+		//viewDuration 내 userId, startDate, endDate
+		return diaryMapper.getBadgeTotalCount(viewDuration);
+	}
+
+	@Override
+	public List<Object> getKeyEventTitleList(ViewDuration viewDuration) {
+		////기간 내 대표이벤트 제목 모두 조회를 위한 parameter
+		//viewDuration 내 userId, startDate, endDate
+		List<Object> list = diaryMapper.getKeyEventTitleList(viewDuration);
+
+		return list;
+	}
 }
