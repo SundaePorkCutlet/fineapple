@@ -1,6 +1,7 @@
 package kr.or.fineapple.community;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.service.community.CommunityService;
 
 @Controller
@@ -29,20 +31,15 @@ public class CommunityController {
 	@GetMapping(value = "getPost")
 	public String getViewTest(@ModelAttribute("board") Board board, Model model) {
 		
-		System.out.println(board.getPostNo() + "dddddddddddddddddddddddddd");
+		Map map =  communityService.getPost(board);
 		
-		board =  communityService.getPost(board);
-		
-		System.out.println(board + "getPost Service °ÅÄ£ ÈÄ");
-		
-		model.addAttribute("board", board);
+		model.addAttribute("map", map);
 		 
 		return "community/getPost.html";
 	}
 	
 	@RequestMapping(value = "getBoard", method = RequestMethod.GET)
 	public String getPostList(Model model) {
-		
 		
 		List<Board> list = communityService.getPostList();
 		
@@ -60,14 +57,36 @@ public class CommunityController {
 
 	@PostMapping(value = "addPost")
 	public String addPost(@ModelAttribute Board board) {
-		System.out.println(board);
+		
 		User user = new User();
 		
-		user.setUserId("bbb123@gmil.com");
-		Group group = new Group();
-		board.setGroup(group);
+			user.setUserId("bbb123@gmil.com");
+			
+			Group group = new Group();
+			
+			board.setGroup(group);
+			
+			board.setUser(user);	
+		
 		communityService.addPost(board);
-		return "community/Borad.html";
+		
+		return "redirect:/community/getBoard";
+	}
+	
+	@RequestMapping(value = "getMyGroupList", method = RequestMethod.GET)
+	public ModelAndView getMyGroupList() {
+		
+			GroupUser groupUser = new GroupUser();
+			User user = new User();
+			user.setUserId("bbb123@gmil.com");
+			groupUser.setUser(user);
+			groupUser.setGroupStt(2);
+			
+		List<Group> list =   communityService.getGroupInterGroup(groupUser);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("community/getMyGroupList.html");
+		modelAndView.addObject("list", list);
+		return modelAndView;
 	}
 	
 	@GetMapping(value = "addGroupView")
@@ -75,14 +94,24 @@ public class CommunityController {
 		return "community/addGroupView.html";
 	}
 	
+	@GetMapping(value = "addReportView")
+	public String addReportView() {
+		return null;
+	}
+	
+	
+	
+	
+	
 	@PostMapping(value = "addGroup")
-	public ModelAndView addGroup(@ModelAttribute("group") Group group) {
+	public String addGroup(@ModelAttribute("group") Group group) {
+		communityService.addGroup(group);
 		
-		
-		group.setGroupIntro("ASdsadsa");
 		return null;
 		
 	}
+	
+	
 	
 	
 	

@@ -30,6 +30,7 @@
 		
 		
 }
+
     </script>
 
 
@@ -228,7 +229,75 @@
 
 <!--                    <a th:if="${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listcart()|">&#127869;</a> -->
                 <!-- <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listroutine()|">&#128095;</a> -->
-
+        <!--            <div class="col-md-3 text-end">-->
+        <!--                <div class="mb-2">-->
+        <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>-->
+        <!--                </div>-->
+        <!--                <div>-->
+        <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">회원탈퇴</button>-->
+        <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </header>-->
+    </div>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container text-center">
+                <div id="navbar" class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">식품구매</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">식단관리<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" th:href="@{../diet/addDietService?menu=1}">서비스활성화</a></li>
+                                <li><a class="dropdown-item" th:href="@{../diet/getFoodList}">식품검색</a></li>
+                                <li><a class="dropdown-item" th:href="@{../diet/addDailyIntakeMeal}">일일섭취식단</a></li>
+                                <li><a class="dropdown-item" href="#">식품레시피</a></li>
+                                <li><a class="dropdown-item" href="#">식품추천</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">운동관리<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" th:href="@{../exer/addUserService}">서비스활성화</a></li>
+                                <li><a class="dropdown-item" th:href="@{../exer/getExerList}">운동검색</a></li>
+                                <li><a class="dropdown-item" th:href="@{../exer/getAddExer}">운동등록</a></li>
+                                <li><a class="dropdown-item" th:href="@{../exer/addDailyBurnning}">일일운동량</a></li>
+                                <li><a class="dropdown-item" href="#">루틴</a></li>
+                                <li><a class="dropdown-item" th:href="@{../exer/searchExerPlace}">운동장소찾기</a></li>
+                                <li><a class="dropdown-item" th:href="@{../exer/timer}">타이머</a></li>
+                                <!--  th:href="@{../exer/timer}" -->
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">습관관리<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" th:href="@{../trgtHabit/getTrgtHabit}">습관 관리</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">다이어리<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" th:href="@{../diary/getDiary}">다이어리 조회</a></li>
+                                <li><a class="dropdown-item" th:href="@{../diary/getUserBodyInfo}">신체 변화 추이 조회</a></li>
+                                <li><a class="dropdown-item" href="#">주간 레포트</a></li>
+                                <li><a class="dropdown-item" href="#">월간 레포트</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">커뮤니티<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" th:href="@{../community/getBoard}">게시판</a></li>
+                                <li><a class="dropdown-item" th:href="@{../community/addGroupView}">소그룹</a></li>
+                                <li><a class="dropdown-item" href="#">승부</a></li>
+                                <li><a class="dropdown-item" href="#">팔로우</a></li>
+                                <li><a class="dropdown-item" href="#">검색</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <!--            <div class="col-md-3 text-end">-->
         <!--                <div class="mb-2">-->
         <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>-->

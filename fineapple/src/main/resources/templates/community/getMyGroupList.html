@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+</head>
+<body>
+	<div th:insert="index/toolbar :: toolbar">
+	</div>
+	<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element">
+					<div data-text-content="true"
+					style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);">오늘의 추천 음식?
+					</div>
+				</div>
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+				<br>
+				<br>
+				
+				
+				<div>
+				<button  style="height: 30px; width: 60px; text-align: center; font-size: 5px;" id= "addPost"  th:onclick="|location.href='@{/community/addGroupView}'|">소그룹생성
+				</button>
+				</div>	
+				<table class="table table-hover table-striped">			
+					<thead>
+						<tr>
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">소그룹 명</th>         
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">소그룹 회원</th>         
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">소그룹 소개글</th>           
+						<th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">생성날짜</th>                        
+						</tr>
+					</thead>
+					<tbody>
+						
+						<tr th:each = "data : ${list}">
+						<td th:text = "${data.groupName}"></td>
+						<!-- <td>
+							<a th:href="@{/community/getPost(postNo=${data.postNo})}" th:text = "${data.content}"></a>
+						</td> -->
+						<td th:text = "${data.User.userId}"></td>
+						<td th:text = "${data.groupIntro}" ></td>
+						<td th:text = "${data.groupBirth}" ></td>
+								
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+
+</body>
+</html>

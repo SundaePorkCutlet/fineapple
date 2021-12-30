@@ -15,8 +15,6 @@
 	<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
 	</div>
 	<div class="col-md-10">
-	<div style="">
-	</div>
 	
 	
 	
@@ -33,39 +31,50 @@
 
 <div>
 	<div style="font-weight:bold;font-size:32px; text-align : center;">자유게시판</div>
-	<input type="hidden" name="postNo" th:value="${board.postNo}">
+	<input type="hidden" name="postNo" th:value="${map.board.postNo}">
 	<div style="text-align: left;">
+	<span th:if="${false}" >
 	<button id="updateButton" type="button">수정하기</button>
 	<button id="deleteButton" type="button">삭제하기</button>
+	</span>
+	<button id="reportButton" type="button" style="text-align: right;">신고하기</button>
 	</div>
 	
-	<div style="background-color: rgb(198, 198, 198); width: 10000px; height: 10px; text-align: center;"></div>
+	<div style="background-color: rgb(198, 198, 198); width: 1000px; height: 10px; text-align: center;"></div>
 	
 	<div>
-	<div style="font-size: 40px; text-align: left;" th:text="${board.title}"> </div>
-	</div>
-	
-	<div>
-	<span th:text="${board.user.userId}"></span>
-	
-	<span th:text="${board.postDate}"></span>
-	</div>
-	
-	<div style="background-color: rgb(198, 198, 198); width: 10000px; height: 10px; text-align: center;"></div>
-	
-	<div>
-	<div style=" height:300px; width:1000px; background: rgb(); font-size: 100px; text-align: center; color:   rgb(255, 255, 204); background-color: rgb(176, 155, 155);">사진</div>
+	<div style="font-size: 40px; text-align: left;" th:text="${map.board.title}"> </div>
 	</div>
 	
 	<div>
-	<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p th:text="${board.content}"></p></div>
+	<span th:text="${map.board.user.userId}"></span>
+	
+	<span th:text="${map.board.postDate}"></span>
 	</div>
 	
+	<div style="background-color: rgb(198, 198, 198); width: 1000px; height: 10px; text-align: center;"></div>
 	
+
+	<div style="text-align: center;">
+		<div style=" height:300px; width:1000px; background: rgb(); font-size: 100px; text-align: r; color:   rgb(255, 255, 204); background-color: rgb(176, 155, 155);">사진</div>
+	
+	
+		<div>
+		<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p th:text="${map.board.content}"></p></div>
+
+		<button  th:if="${true}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-primary" th:text="${map.board.postLikeCount}"></button>		
+		<button  th:if="${false}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-danger" th:text="${map.board.postLikeCount}"></button>
+		</div>	
+	
+		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
+		<div style="text-align: left;" th:insert="community/getCmnt :: getCmnt"></div>
+	</div>
 </div>
 
-<div th:insert="community/addcmnt :: addCmnt"></div>
 
+
+</div>
+</div>
 <script th:inline="javascript">
 
 function checkLikeGood(){
@@ -82,12 +91,5 @@ function checkLikeGood(){
 
 
 </script>
-
-
-
-
-</div>
-</div>
-
 </body>
 </html>

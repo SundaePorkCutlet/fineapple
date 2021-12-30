@@ -22,13 +22,14 @@ public class Board {
 	private int viewCount;
 	private int cmntCount;
 	private int postLikeCount;
+	private int postLikeStt;
 	private int updateStt;
 	private int cateName;
 	//private List<Img> img;
 	
 	
 	public Board() {
-		System.out.println("Board 档皋牢 按眉 积己");
+		System.out.println(getClass().getName()+  "积己窃");
 	}
 	
 }
