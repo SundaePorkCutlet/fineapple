@@ -61,6 +61,9 @@
 	
 		<div>
 		<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p th:text="${map.board.content}"></p></div>
+
+		<button  th:if="${true}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-primary" th:text="${map.board.postLikeCount}"></button>		
+		<button  th:if="${false}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-danger" th:text="${map.board.postLikeCount}"></button>
 		</div>	
 	
 		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>

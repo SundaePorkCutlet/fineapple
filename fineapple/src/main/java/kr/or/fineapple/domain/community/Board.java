@@ -22,6 +22,7 @@ public class Board {
 	private int viewCount;
 	private int cmntCount;
 	private int postLikeCount;
+	private int postLikeStt;
 	private int updateStt;
 	private int cateName;
 	//private List<Img> img;
