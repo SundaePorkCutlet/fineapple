@@ -22,8 +22,13 @@
 		
 		
  }
-
  
+ function timer(){
+		popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		
+		
+}
+
  </script>
     
     
@@ -186,7 +191,7 @@ div.mainProfile{
                             <li><a class="dropdown-item"   th:href="@{../exer/getAddExer}">운동등록</a></li>
                             <li><a class="dropdown-item"   th:href="@{../exer/addDailyBurnning}">일일운동량</a></li>
 							 <li><a class="dropdown-item"  th:href="@{../exer/searchExerPlace}">운동장소찾기</a></li>
-							 <li><a class="dropdown-item"   th:href="@{../exer/exerIndex}">타이머</a></li>
+							 <li><a class="dropdown-item"  th:onclick="|javascript:timer()|">운동하기</a></li>
 							                          <!--  th:href="@{../exer/timer}" -->
                         </ul>
 

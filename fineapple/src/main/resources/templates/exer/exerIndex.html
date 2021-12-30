@@ -14,7 +14,7 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>         
     <link rel="stylesheet" href="styles.css" />
-    <title>운동 타이머</title>
+    <title>운동 시간 기록</title>
   </head>
   <body>
     <header class="header">
@@ -198,6 +198,7 @@
     function inputCurrentWatch() {
       jsStopWatch.textContent = jsMainStopWatch.textContent;
       jsCompleteBtn.removeEventListener('click', inputCurrentWatch);
+      jsCompleteBtn.remove();
     }
 
     // timer();
@@ -239,7 +240,7 @@
 
       const labelWorkoutTitle = document.createElement('label');
       labelWorkoutTitle.classList.add('main__addWorkoutTitleText');
-      labelWorkoutTitle.textContent = '운동종목';
+      labelWorkoutTitle.textContent = '운동';
       divTitle.appendChild(labelWorkoutTitle);
 
       const inputWorkoutTitle = document.createElement('input');
@@ -310,6 +311,7 @@
         function inputCurrentWatchOthers() {
           divStopWatch.textContent = jsMainStopWatch.textContent;
           completBtn.removeEventListener('click', inputCurrentWatchOthers);
+          completBtn.remove();
         }
         completBtn.addEventListener('click', inputCurrentWatchOthers);
         divComBtn.appendChild(completBtn);
@@ -360,6 +362,7 @@
       function inputCurrentWatchOthers() {
         divStopWatch.textContent = jsMainStopWatch.textContent;
         completBtn.removeEventListener('click', inputCurrentWatchOthers);
+        completBtn.remove();
       }
       completBtn.addEventListener('click', inputCurrentWatchOthers);
       divComBtn.appendChild(completBtn);
@@ -426,6 +429,7 @@
       function inputCurrentWatchOthers() {
         divStopWatch.textContent = jsMainStopWatch.textContent;
         completBtn.removeEventListener('click', inputCurrentWatchOthers);
+        completBtn.remove();
       }
       completBtn.addEventListener('click', inputCurrentWatchOthers);
       divComBtn.appendChild(completBtn);
@@ -437,6 +441,8 @@
       li.appendChild(divComBtn);
       jsWorkoutUl.appendChild(li);
     });
+    
+    
     $(function() {
 		
 		$( "#back-btn").on("click" , function() {

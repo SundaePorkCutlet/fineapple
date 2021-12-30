@@ -324,6 +324,8 @@ public String searchExerPlace() {
 	
 }
 
+
+
 @RequestMapping(value="exerIndex")
 public String timer(Model model,HttpServletRequest request) {
 	
@@ -339,6 +341,8 @@ public String timer(Model model,HttpServletRequest request) {
 	
 	
 }
+
+
 
 @GetMapping("getRoutineList")
 public String getRoutineList(Model model,HttpServletRequest request) throws Exception {
@@ -399,8 +403,7 @@ public String addRoutineInfo() {
 	
 	return "exer/getExerList.html";
 	
-	
-	
+
 }
 
 

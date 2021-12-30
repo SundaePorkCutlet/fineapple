@@ -156,6 +156,7 @@ kakao.maps.event.addListener(marker, 'mouseover', function() {
     infowindow.close();
 });
 
+
 // 마커의 드래그가 끝나면 현재 위치 갱신
 kakao.maps.event.addListener(marker, 'dragend', function() {
     currentPos = marker.getPosition();
@@ -202,7 +203,6 @@ function getCurrentPosByPickBtn(){
             kakao.maps.event.addListener(marker, 'dragend', function() {
                 currentPos = marker.getPosition();
             });
-
 
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
