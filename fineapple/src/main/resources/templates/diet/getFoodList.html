@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
  
 
+	
+
 </head>
-<body>
+<body> 	
 
 
 <div th:insert="index/toolbar :: toolbar">
 	</div>
 
-	
 	
 <script type="text/javascript">
 function fncGetUserList(currentPage) {
@@ -101,6 +102,22 @@ function CheckAll() {
 
 
 
+function openModal(){
+	  
+	
+	  $.ajax({
+		url: "/diet/modal",
+		success:function(data){
+			
+			$("#mmodalHolder").html(data);
+			$("#mmodal").modal("show");			
+			
+		}  
+		  
+	  });
+
+}
+
 
 
 
@@ -170,26 +187,13 @@ function CheckAll() {
 					</div>
 			</form>
 			</div>
-			
-						
-<ul class="nav">
- <li>
-  <a data-toggle="modal" href="#loginModal">LOGIN</a>
-  <div class="modal fade" id="loginModal" role="dialog">
-   <div class="modal-dialog">
-    <div class="modal-content">
-     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">×</button>
-      <h1 class="modal-title" align="center">즐겨찾기리스트</h1>
-     </div>
-     <div class="modal-body">
-      <th:block th:insert="diet/getFavMealList :: setLogin"></th:block>
-     </div>
-    </div>
-   </div>
-  </div>
- </li>
-</ul>
+	
+<button type="button" th:onclick="javascript:openModal()">홍짬</button>
+  
+  
+
+  
+  
 			
 			
 			
@@ -228,6 +232,10 @@ function CheckAll() {
 			</div>
 			</div>
 			</div>		
+			
+			<div id="mmodalHolder" style="width:200px;">
+			
+			</div>
 			
 			
 			

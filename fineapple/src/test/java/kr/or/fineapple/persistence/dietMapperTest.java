@@ -44,26 +44,20 @@ class dietMapperTest {
 //	@Test
 	public void addIntakeRecord() throws Exception {
 		IntakeRecord record = new IntakeRecord();
-		Food food = new Food() ;
 		DietServ dietServ = new DietServ();
 		
 		String userId = "aaa123@naver.com";
 		
+		Food food = new Food();
 		food.setFoodCarb(1.1);
-		food.setFoodImg(null);
-		food.setFoodIntoStt(1);
 		food.setFoodKcal(313.2);
-		food.setFoodNo(50000);
-		food.setFoodName("È«ï¿½ï¿½È£");
-		food.setFoodCd("D9393");
+		food.setFoodName("È«Áø");
 		food.setFoodProtein(23.1);
 		food.setFoodSodium(1.1);
 		food.setFoodSugar(33.1);
-		food.setIsAPI(0);
 		food.setPrice(1002320);
-		food.setPurchaseConnLink(null);
 		food.setServingSize(100);
-		food.setStoreName(null);
+		food.setFoodCd("U1");
 		
 		
 		dietServ.setBodyFat(40.1);
@@ -77,7 +71,7 @@ class dietMapperTest {
 		
 		record.setFood(food);
 		record.setUserFoodIntake(313.7);
-		record.setMeal("ï¿½ï¿½");
+		record.setMeal("¾ÆÄ§");
 		record.setUserId("aaa123@naver.com");
 
 
@@ -88,7 +82,7 @@ class dietMapperTest {
 
 	}
 	
-//	@Test
+	@Test
 	public void addfavmeal() throws Exception{
 		FavMeal favMeal = new FavMeal();
 		Food food = new Food();
@@ -96,10 +90,10 @@ class dietMapperTest {
 
 		food.setStoreName(null);
 		
-		diet = dietService.getDietService("aaa123@naver.com");
+		diet = dietService.getDietService("aaa");
 		favMeal.setFavMealKcal(0);
 		favMeal.setUserServiceNo(diet.getUserServiceNo());
-		favMeal.setUserId("aaa123@naver.com");
+		favMeal.setUserId("aaa");
 		favMeal.setFavMealName("¶ËÁøÈ£");
 		
 		log.info("++"+dietService.addFavMeal(favMeal));
@@ -283,7 +277,7 @@ class dietMapperTest {
 		log.info("++"+dietService.updateFavMealItem(fav));
 	}
 	
-	@Test
+//	@Test
 	public void getIntakeRecord() throws Exception {
 		
 	IntakeRecord record = new IntakeRecord();
@@ -298,6 +292,7 @@ class dietMapperTest {
 		
 	}
 	
+//	@Test
 	public void deleteIntakeRecord() throws Exception{
 		
 		int IntakeRecordNo = 2;
@@ -305,6 +300,70 @@ class dietMapperTest {
 		
 		
 	}
+	
+	
+//	@Test
+	public void insertFood() throws Exception{
+		
+		
+		Food food = new Food();
+		food.setFoodCarb(1.1);
+		food.setFoodKcal(313.2);
+		food.setFoodName("È«Áø");
+		food.setFoodProtein(23.1);
+		food.setFoodSodium(1.1);
+		food.setFoodSugar(33.1);
+		food.setPrice(1002320);
+		food.setServingSize(100);
+		
+		
+		log.info("++" + dietService.addFood(food));
+		
+		
+		
+		
+	}
+	
+//	@Test
+	public void updateFood() {
+		
+		
+		Food food = new Food();
+		food.setFoodCarb(1.1);
+		food.setFoodKcal(313.2);
+		food.setFoodName("È«Áøgh");
+		food.setFoodProtein(23.1);
+		food.setFoodSodium(1.1);
+		food.setFoodSugar(33.1);
+		food.setPrice(1002320);
+		food.setServingSize(100);
+		food.setFoodCd("u2");
+		
+		log.info("++"+dietMapper.updateFood(food));
+		
+		
+		
+	}
+	
+	
+//	@Test
+	public void updateIntakeRecord() throws Exception {
+		
+		
+		IntakeRecord record = new IntakeRecord();
+		
+		record.setIntakeRecordNo(9);
+		record.setUserFoodIntake(7000);
+		
+		log.info("++"+dietService.updateIntakeRecord(record));
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 	

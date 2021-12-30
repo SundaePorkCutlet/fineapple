@@ -48,5 +48,13 @@ public interface DietMapper {
        int updateFavMealItem(FavMeal favMeal);
        
        IntakeRecord getIntakeRecordList(int dietServiceNo);
+       
+       int updateIntakeRecord(IntakeRecord record);
+       
+       int addFood(Food food);
+       
+       int updateFood(Food food);
+       
+       int deleteFood(String foodCd);
 }
 

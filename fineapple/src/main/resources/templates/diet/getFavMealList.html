@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -7,7 +7,15 @@
 
 </head>
 <body>
-<th:block th:fragment="setLogin">
+
+	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="hong">		
+   <div  class="modal-dialog modal-sm" style="width:600px; height:1300px;">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h1 class="modal-title" align="center">즐겨찾기리스트</h1>
+     </div>
+     <div class="modal-body">
 
 
 	
@@ -46,7 +54,7 @@ $(function() {
 	
        <tbody>
 	<tr th:each="data, i : ${list}">
-		<td></td>
+		<td><input type="checkbox" class="checkedfav" name="favCheck"  onclick='Chk();'></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.favMealName}" th:attr="data-favMealNo=${data.favMealNo}"  style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
@@ -63,10 +71,21 @@ $(function() {
 			<div style="position:absolute; top:0px;	left:460px; "><button type="button" class="btn btn-primary">즐겨찾기삭제</button></div>
 
 
-		
+
+     </div>
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">이전</button>
+     </div>
+    </div>
+   </div>
+  </div>		
 
 
-	</th:block>
+
+
+
+
+
 		
 </body>
 </html>
