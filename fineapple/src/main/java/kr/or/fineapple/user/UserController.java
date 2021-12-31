@@ -53,7 +53,7 @@ public class UserController {
 		System.out.println("login시도:POST");
 		User userDB = userService.getUser(user.getUserId());
 		
-		System.out.println("1111111111111111111111111111111111111111111111"+userDB);
+		System.out.println("userDB : "+userDB);
 		
 		if(user.getPassword().equals(userDB.getPassword())) {
 			if(userDB.getUserLeaveStt() == 0) {
@@ -110,7 +110,7 @@ public class UserController {
 		userService.addUser(user);
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");
-		return "redirect:/user/login";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="getUser",method=RequestMethod.GET)

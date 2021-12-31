@@ -53,12 +53,11 @@
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
       var age =$("#age").val();
-      var height = $("heignt").val();
+      var height = $("height").val();
       var weight = $("#weight").val();
       var trgtWeight=$("trgtWeight").val();
       var userId = $("#userId").val();
       var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-      var disagree = $("#disagree").val();
       if($("#male").val() == 'male'){
     	  var gender=$("#male").val();
       }
@@ -92,9 +91,6 @@
     	  return;
       }else if(trgtWeight == ""){
     	  alert("목표제중을 입력하지 않으셨습니다.");
-    	  return;
-      }else if(disagree == "disagree"){
-    	  alert("약관비동의시 회원가입이 제한됩니다.");
     	  return;
       }
       else{

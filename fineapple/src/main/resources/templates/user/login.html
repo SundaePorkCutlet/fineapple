@@ -61,13 +61,14 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 					console.log(kakao_account);
 					var userId =kakao_account.email;
 					var gender = kakao_account.gender;
-					var name = kakao_account.profile.nickname;
+					var userName = kakao_account.profile.nickname;
 					var profile = kakao_account.profile.profile_image_url;
 					console.log(userId);
 					console.log(gender);
 					console.log(profile);
 					console.log(name);
 					var data ={
+							userName :userName,
 							userId: userId,
 							gender : gender,
 							password : "kakaopassword"
@@ -84,6 +85,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 							var data ={
 									userId: userId,
 									gender : gender,
+									userName:userName,
 									password : "kakaopassword"
 							};
 							if(map.result == 0){
