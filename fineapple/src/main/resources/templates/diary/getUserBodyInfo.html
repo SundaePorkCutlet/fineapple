@@ -8,9 +8,36 @@
 <body>
 <div th:insert="index/toolbar :: toolbar"></div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [0, 10, 5, 2, 20, 30, 45],
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+
 <script>
 
 $(function() {
@@ -22,8 +49,11 @@ $(function() {
 	    buttonImageOnly: true,
 	    changeMonth: true,
 	    todayHightlight: true,
-	    endDate: "d"
-	    
+	    maxDate: "today",
+	    showMonthAfterYear:true,
+	    yearSuffix: "년",
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNamesMin: ['일','월','화','수','목','금','토']
 	});
 	
 	$( "#weight_bttn" ).on("click" , function() {
@@ -49,6 +79,15 @@ $(function() {
 		<!-- 그래프 부분 -->
 		<div class="col-md-6">
 			<h4>나의 신체 변화 추이 그래프</h4>
+				<div>
+				  <canvas id="myChart"></canvas>
+				</div>
+				<div class="form-group row">
+					<label for="date" class="col-md-3 col-md-offset-5 control-label">
+						<span><input type="text" class="form-control"id="dateRangePicker" placeholder="기간 선택"></span>
+					</label>
+				</div>	
+				
 		</div>
 		<!-- 그래프 부분 end -->
 		
@@ -57,7 +96,7 @@ $(function() {
 			<h4>체중/체지방률(선택)/골격근량(선택) 기록</h4>
 				<div class="form-group row">
 					<label for="date" class="col-md-3 col-md-offset-5 control-label">
-						<input type="text" class="form-control" id="date" placeholder="일자 선택">
+						<span><input type="text" class="form-control" id="date" placeholder="일자 선택"></span>
 					</label>
 				</div>	
 				<div class="form-group">
@@ -81,6 +120,12 @@ $(function() {
 	</div>
 
 </div>
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
 
 </body>
 </html>
