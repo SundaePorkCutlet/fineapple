@@ -7,6 +7,7 @@ import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 
 public interface ExerService {
@@ -54,7 +55,14 @@ public interface ExerService {
 	
 	
 	//추천운동리스트
-	public Map<String,Object> recommandExerList(Search search)throws Exception;
+	public List<Exer> recommandExerList(Double overKcal)throws Exception;
+	
+	
+	public Double sumIntakeKcal(String userId)throws Exception;
+	
+	
+	public User needDaliyIntakeKcal(String userId)throws Exception;
+	
 	
 	
 	//운동장소 찾기

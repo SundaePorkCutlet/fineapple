@@ -115,7 +115,9 @@
 	a.exer_service_no,
 	a.gender,a.role,
 	a.user_img,
-	b.weight
+	a.user_leave_stt,
+	b.weight,
+	b.height
 	from 
 	users a, 
 	user_body_info b
@@ -161,9 +163,9 @@
 </update>
 
 <select id="checkDuplication" parameterType="user" resultType="String">
-	SELECT user_id
+	SELECT count(*)
 	FROM users
-	WHERE user_id LIKE '%'||#{userId:VARCHAR}||'%'
+	WHERE user_id = #{userId:VARCHAR}
 </select>
  
 <select id ="getUserList" parameterType="user" resultMap="userSelectMap">

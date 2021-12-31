@@ -16,6 +16,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <script>
+    
+    $(function() {
+   
+    	    $("#logintwo").on("click" , function() {
+
+    	        $.ajax({
+    	            url: "/user/login",
+    	            success:function(data){
+    	               $("#mmodalHolder").html(data);
+    	               $("#mmodal").modal("show");         
+    	            }  
+    	           });
+    	   });
+    	});  
+    	
         function listcart() {
             popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
         }

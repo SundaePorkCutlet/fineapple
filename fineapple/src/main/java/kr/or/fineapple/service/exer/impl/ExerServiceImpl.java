@@ -11,6 +11,7 @@ import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.ExerMapper;
 import kr.or.fineapple.service.exer.ExerService;
@@ -175,21 +176,40 @@ public class ExerServiceImpl implements ExerService {
 	
 
 	@Override
-	public Map<String, Object> recommandExerList(Search search) {
+	public List<Exer> recommandExerList(Double overKcal) {
 
 		System.out.println("recommandExerListtService");
 	
+		List list = exerMapper.recommandExerList(overKcal);
+		 
 		
-		return null;
+		return list;
+		
 	}
+
+	@Override
+	public Double sumIntakeKcal(String userId) throws Exception {
+		
+		
+		return exerMapper.sumIntakeKcal(userId);
+	}
+	
+	@Override
+	public User needDaliyIntakeKcal(String userId) throws Exception {
+		
+		
+		return exerMapper.needDaliyIntakeKcal(userId);
+	}
+
+	
+	
+
 
 	@Override
 	public int searchExerPlace() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
 
 	
 	

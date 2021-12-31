@@ -9,7 +9,7 @@
 		$("#getUserList").on("click",function(){
 			var userName = $("#userName").val();
 			var cellphone =$("#cellphone").val();
-			if(userId == ""){
+			if(userName == ""){
 				alert("닉네임(이름) 입력되지 않았습니다.");
 				return;
 			}else if(cellphone == ""){
@@ -22,16 +22,36 @@
 				};
 				$.ajax({
 					type :"POST",
-					url  : "/rest/getUserList/",
-					dataType : JSON.stringify(data),
+					url  : "/user/rest/getUserList",
+					data : JSON.stringify(data),
+					accept : "application/json",
 					contentType : "application/json"	
-				}).done(function(){
-				var displayValue="<h4>" + "userId : " + JSONData.userId + "</h4>"
+				}).done(function(JSONData){
+					console.log(JSONData);
+					if(JSONData.length == 0){
+						alert("아이디가 없습니다.");
+					}
+				var result = "<p><h2>검색결과</h2></p>"
+				$("#appendList").append(result)
+					for(i = 0 ; i < JSONData.length ; i++){
+				var displayValue= "<br><p><h4> userId : " + JSONData[i].userId + "</h4></p>" ; 
+				$("#appendList").append(displayValue);
+					}
+				var displayButton = "<form><p><input type = 'submit' value = '로그인' id = 'login' name ='login'><p></form>"
+				$("#appendList").append(displayButton);
+				
+				$(function(){
+					$("#login").on("click",function(){
+						$("form").attr("method","GET").attr("action","/user/login").submit();
+						
+					})
 				})
-				alert("ajax 괄호")
+				})
 			}
 		});
 	});
+	
+	
 
 </script>
 <div th:insert="index/toolbar :: toolbar">
@@ -56,6 +76,7 @@
 <br>
 <form method="POST">
 <div align="center">
+
 <p>이름(닉네임)</p>
 <p><input type="text" id = "userName" name = "userName" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름(닉네임)" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
 </div>
@@ -65,8 +86,11 @@
 <p><input type="text" id = "cellphone"  name = "cellphone" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="번호만 입력하세요" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
 </div>
 <br>
-<div align="center">
-<input type="submit" id="getUserList" name="getUserList" value ="아이디찾기">
+<div align="center" id="appendList">
+<input type="button" id="getUserList" name="getUserList" value ="아이디찾기">
+</div>
+<div>
+
 </div>
 </form>
 <br>

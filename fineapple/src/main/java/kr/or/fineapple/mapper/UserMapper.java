@@ -25,5 +25,7 @@ public interface UserMapper{
 		public String checkDuplication(User user) throws Exception;
 		
 		public List<Object> getUserList(User user) throws Exception;
+
+		public String checkDuplication(String userId);
 	}
 
