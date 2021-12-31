@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import groovyjarjarantlr4.v4.runtime.misc.FlexibleHashMap.Entry;
 import kr.or.fineapple.domain.DietServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
@@ -280,7 +281,7 @@ public String modal(Model model,HttpServletRequest request,@RequestParam("checka
 
 
 @GetMapping("addFavMealItem")
-public String getaddFavMeal2(Model model, @RequestParam("checkarray")String foodCd,HttpServletRequest request) throws Exception {
+public String getaddFavMeal(Model model, @RequestParam("checkarray")String foodCd,HttpServletRequest request) throws Exception {
 		
 	System.out.println("오긴온다");
 	
@@ -298,9 +299,41 @@ public String getaddFavMeal2(Model model, @RequestParam("checkarray")String food
 	model.addAttribute("list",map.get("list"));
 	model.addAttribute("food", food);
 
-	return "diet/addFavMealItem :: hong";
+	return "diet/addFavMealItem :: addFavMealItem";
 }
 
+
+@PostMapping("addFavMealItem")
+public String postaddFavMeal(Model model, @RequestParam("favMealNo")int favMealNo,
+								@RequestParam("userFoodIntake")double userFoodIntake,
+								@RequestParam("foodCd")String foodCd) throws Exception {
+	
+	System.out.println("addFav진입");
+	System.out.println(favMealNo+"+"+userFoodIntake+"+"+foodCd);
+	
+	double Intake = 0;
+	Food food = new Food();
+	if(!foodCd.substring(0).equals("U")) {
+		food = dietService.getFood(foodCd);
+	
+	}
+	
+	FavMeal fav = new FavMeal();
+	Intake= (userFoodIntake/food.getServingSize());
+	food.setFoodKcal(food.getFoodKcal()*Intake);
+	food.setFoodCarb(food.getFoodCarb()*Intake);
+	food.setFoodProtein(food.getFoodProtein()*Intake);
+	food.setFoodFat(food.getFoodFat()*Intake);
+	
+	
+	
+	fav.setIntake(food.getServingSize()*Intake);
+	fav.setFood(food);
+	fav.setFavMealNo(favMealNo);
+	
+	dietService.addFavMealItem(fav);
+	return null;
+}
 
 
 	

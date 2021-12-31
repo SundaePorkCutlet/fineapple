@@ -14,6 +14,7 @@ public class FavMeal {
 	String userId;
 	int userServiceNo;
 	int favMealNo;
+	String foodCd;
 	int favMealInfoNo;
 	String favMealName;
 	double favMealKcal;
