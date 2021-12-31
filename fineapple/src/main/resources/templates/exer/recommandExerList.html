@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+
+</head>
+<body>
+
+<div th:insert="index/toolbar :: toolbar">
+	</div>
+
+	<script type="text/javascript">
+	
+	function fncGetUserList(currentPage) {
+		
+		$("form").attr("method" , "GET").attr("action" , "/exer/getExerList").submit();
+	  	
+	}
+	$(function() {
+		 
+		 $( "button.btn.btn-sm.btn-primary" ).on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+			fncGetUserList(1);
+		});
+	});
+	
+		
+	
+	</script>			
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+			<br>
+			<br><br><br>
+			
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >추천 운동 리스트</div>
+			<br><br><br>
+
+<!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
+
+				<div align="right">
+			   <!--  <form class="form-inline" name="detailForm">
+			    			
+				  	<div align="right" class="form-group">
+					<select class="form-control" name="searchCondition" style="width: 100px;">
+					<option value="0" th:selected= "${search.searchCondition}=='0'">이름순</option>
+					<option value="1" th:selected= "${search.searchCondition}=='1'">칼로리순</option>
+
+				</select>
+				
+									  
+			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
+			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }" name="searchKeyword">
+			
+			<button data-text-content="true" class="btn btn-sm btn-primary">검색</button>
+			<br>
+			
+			<a href="#">이름순</a>
+			<a href="#">칼로리순</a>
+			</div>
+			</form> -->
+			
+			<p th:text="| ${session.user.userName}님의 당일 초과 칼로리는  ${overKcal} kcal입니다.|"  align="right"></p>
+			</div>	
+			
+ 		<table class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">번호</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">운동명</th>         
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">운동종류</th>           
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">소모칼로리(10분당)</th>                       
+            <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">칼로리를 소모 해야할 시간 입니다(분)</th>                       
+          </tr>
+        </thead>
+        
+	
+      <tbody>
+	<tr th:each="exer ,i: ${list}">
+		
+		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>
+		
+		<td> 
+		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
+		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${exer.recommTime}" style="cursor:pointer; text-align: left;"></td>
+	</tr>
+	</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
+
+	</table>
+	
+
+			</div>
+			</div>
+			</div>		
+
+</body>
+</html>
