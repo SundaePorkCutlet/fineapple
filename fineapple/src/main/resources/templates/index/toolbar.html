@@ -19,18 +19,6 @@
         function listcart() {
             popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
         }
- function listroutine(){
-		popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-		
-		
- }
- 
- function timer(){
-		popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-		
-		
-}
-
     </script>
 
 
@@ -187,10 +175,10 @@
                 <div class="columns large-12 text-center ">
                     <div style="width:fit-content; margin: auto;position: relative;">
                     <a th:href="@{../user/banner}" style="text-decoration:none; color:black;">     <p class="logo-typo">FineApple</p> </a>
+
                         <img alt="logo" class="logo" src="../assets/img/logo.png"/>
                     </div>
-                        
-                  
+
                 </div>
             </div>
             <div class="col-xs-12 col-md-3">
@@ -230,7 +218,6 @@
         <!--            </ul>-->
 
 <!--                    <a th:if="${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listcart()|">&#127869;</a> -->
-                <!-- <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listroutine()|">&#128095;</a> -->
         <!--            <div class="col-md-3 text-end">-->
         <!--                <div class="mb-2">-->
         <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>-->
@@ -314,7 +301,8 @@
 
 
     </div>
-</div>
+    
+
 
 
 </body>
