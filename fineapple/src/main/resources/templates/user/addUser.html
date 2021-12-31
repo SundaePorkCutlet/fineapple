@@ -19,23 +19,39 @@
 	});
 	
 	$(function(){
-		$("#checkDuplication").on("click",function(){
+		$("#userId").on("keyup",function(){
+			console.log("올라갔닝")
 			var userId = $("#userId").val()
 			console.log(userId);
+			data = { 
+					userId : userId
+					}
 			$.ajax(
 					{
-						url:"/user/json/checkDuplication"+userId,
-						method:"GET",
-						dataType:"json",
-						headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-						},
-						success : function(JSONData,status){
-							
+						url:"/user/checkDuplication",
+						method:"POST",
+						data: JSON.stringity(data),
+						accept : "application/json",
+						contentType : "application/json"
+			}).done(function(result){
+				console.log(result);
+				if(result == 0){
+					if(userId != ""){
+						if(userId.indexOf('@') <1 || email.indexOf(',') == -1){
+							$("#userId").html("올바른 email형식이 아닙니다.");
 						}
-						
+						else{
+							$("#userId").html('사용가능한 아이디입니다.');
+							$("#userId").css('color','green');
+						}
+					}else{
+						$("#userId").html("");
+					}
 					
+				}else{
+					$("#userId").html("이미 사용중인 아이디 이거나 중복된 아이디 입니다.");
+					$("#userId"),css('color',"red");
+				}
 			})
 		});
 	});
