@@ -120,6 +120,9 @@
 	</insert>
 
 	<insert id="addCmnt" parameterType="cmnt">
+	<selectKey keyProperty="cmntNo" keyColumn="CMNT_NO" resultType="int">
+	SELECT seq_comments_cmnt_no.CURRVAL FROM dual
+	</selectKey>
 	INSERT INTO COMMENTS 
 	(
 	CMNT_NO, 
@@ -131,12 +134,12 @@
 	) 
 	VALUES
 	(
-	seq_comments_cmnt_no,
+	seq_comments_cmnt_no.NEXTVAL,
 	#{board.postNo},
 	#{user.userId},
 	#{updateStt},
 	#{cmntContenct},
-	#{cmntDate}
+	SYSDATE
 	)
 	</insert>
 	
@@ -169,20 +172,27 @@
 	</select>
 	
 	<select id="getPost" parameterType="board" resultMap="boardMap">
+	
 	SELECT
-	post_no,
-	user_id,
-	group_no,
-	post_cate,
-	update_stt,
-	title,
-	content,
-	post_date,
-	view_count
+	b.post_no,
+	b.user_id,
+	b.group_no,
+	b.post_cate,
+	b.update_stt,
+	b.title,
+	b.content,
+	b.post_date,
+	b.view_count,
+	ral.like_stt AS postLikeStt,
+	totals.counts AS post_like_count
 	FROM
-	board
+	board b,
+	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId} AND like_stt = 1 </trim>) ral,
+	(SELECT COUNT(*) counts FROM  report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND like_stt = 1 </trim>) totals
 	<where>
-	post_no = #{postNo}
+	b.post_no = #{postNo}
+	AND
+	b.post_no = ral.post_no(+)
 	</where>
 	</select>
 	
@@ -210,39 +220,37 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<update id="updatePostLike" parameterType="map">
-	UPDATE
-	INTO
-	board
-	<trim prefix="SET" suffixOverrides=",">
-	<if test="flag == 0">
-	POST_LIKE_COUNT = POST_LIKE_COUNT + 1
-	</if>
-	<if test="flag == 1">
-	POST_LIKE_COUNT = POST_LIKE_COUNT - 1
-	</if>
-	</trim>
-	<where> 
+	<insert id="addPostLike" parameterType="board">
+	INSERT INTO report_and_like
+	(
+	REPORT_NO, 
+	USER_ID, 
+	REPORTED_USER_ID, 
+	POST_NO, 
+	LIKE_STT
+	)
+	VALUES
+	(
+	seq_report_and_like_no.NEXTVAL,
+	#{user.userId},
+	#{user.userId},
+	#{postNo},
+	1
+	)
+	</insert>
+	
+	<delete id="deletePostLike" parameterType="board">
+	DELETE
+	FROM
+	report_and_like
+	<where>
 	post_no = #{postNo}
+	AND
+	user_id = #{user.userId}
+	AND
+	like_Stt = 1
 	</where>
-	</update>
-
-	<update id="updateCmntLike" parameterType="map">
-	UPDATE
-	INTO
-	comments
-	<trim prefix="SET" suffixOverrides=",">
-	<if test="flag == 0">
-	POST_LIKE_COUNT = POST_LIKE_COUNT + 1
-	</if>
-	<if test="flag == 1">
-	POST_LIKE_COUNT = POST_LIKE_COUNT - 1
-	</if>
-	</trim>
-	<where> 
-	post_no = #{board.postNo}
-	</where>
-	</update>
+	</delete>
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	

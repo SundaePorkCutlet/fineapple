@@ -35,6 +35,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void addCmnt(Cmnt cmnt) {
+		communityMapper.addCmnt(cmnt);
 	}
 
 	@Override
@@ -56,17 +57,20 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void updatePostLike(Board board, int flag) {
-		Map map = new HashMap();
-		map.put(board, flag);
-		communityMapper.updatePostLike(map);
+	public Board updatePostLike(Board board) {
+		
+		if (board.getPostLikeStt() == 0) {
+			communityMapper.addPostLike(board);
+		}
+		else if (board.getPostLikeStt() == 1){
+			communityMapper.deletePostLike(board);
+		}
+		
+		return communityMapper.getPost(board);
 	}
 
 	@Override
-	public void updateCmntLike(Cmnt cmnt, int flag) {
-		Map map = new HashMap();
-		map.put(cmnt, flag);
-		communityMapper.updateCmntLike(map);
+	public void updateCmntLike(Cmnt cmnt) {
 	}
 	
 	@Override
