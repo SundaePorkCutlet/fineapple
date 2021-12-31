@@ -22,9 +22,9 @@ public interface CommunityService {
 	
 	public void updatePostViewCount(Board board);
 	
-	public void updatePostLike(Board board, int flag);
+	public Board updatePostLike(Board board);
 	
-	public void updateCmntLike(Cmnt cmnt, int flag);
+	public void updateCmntLike(Cmnt cmnt);
 	
 	public List<Group> getGroupInterGroup(GroupUser groupUser);
 	

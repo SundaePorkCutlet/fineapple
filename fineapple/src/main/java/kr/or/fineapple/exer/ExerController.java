@@ -445,7 +445,7 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 	
 	if(user.getGender().equals("male")) {
 		
-	
+	  
 	  dailyIntakeKcal	= 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
 		
 		
@@ -471,16 +471,18 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 		
 	}
 	
+	System.err.println(totaldailyIntakeKcal);
 	
-	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) * (-1);
+	
+	
+	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
 	
 	
 	
 	System.out.println("초과 칼로리 입니다   " + overKcal);
 	
 	
-	if(overKcal <= 0) {
-		
+	if(overKcal >= 0) {
 		
 	
 	List list = exerService.recommandExerList(Math.abs(overKcal));

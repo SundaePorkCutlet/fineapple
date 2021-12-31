@@ -46,7 +46,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value = "checkDuplication",method = RequestMethod.POST)
-	public Map<String, Object> checkDuplication(@RequestBody User user) throws Exception{
+	public String checkDuplication(@RequestBody User user) throws Exception{
 		System.out.println("checkDuplication");
 		
 		
@@ -54,10 +54,11 @@ public class UserRestController {
 		
 		String result = userService.checkDuplication(user);
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", result);
-		map.put("user", user);
-		return map;
+		/*
+		 * Map<String, Object> map = new HashMap<>(); map.put("result", result);
+		 * map.put("user", user);
+		 */
+		return result;
 		
 	}
 	

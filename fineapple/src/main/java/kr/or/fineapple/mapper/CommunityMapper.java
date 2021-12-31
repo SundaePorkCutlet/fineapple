@@ -29,9 +29,9 @@ public interface CommunityMapper {
 	
 	public void updatePostViewCount(Board board);
 	
-	public void updatePostLike(Map map);
+	public void addPostLike(Board board);
 	
-	public void updateCmntLike(Map map);
+	public void deletePostLike(Board board);
 	
 	public void updatePost(Board board);
 	
