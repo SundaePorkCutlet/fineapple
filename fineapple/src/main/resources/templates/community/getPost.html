@@ -31,7 +31,7 @@
 
 <div>
 	<div style="font-weight:bold;font-size:32px; text-align : center;">자유게시판</div>
-	<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt}">
+	<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
 	<div style="text-align: left;">
 	<span th:if="${false}" >
 	<button id="updateButton" type="button">수정하기</button>
