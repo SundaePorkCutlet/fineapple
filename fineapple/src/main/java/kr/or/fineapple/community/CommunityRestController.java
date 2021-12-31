@@ -44,8 +44,9 @@ public class CommunityRestController {
 	}
 	
 	@RequestMapping(value = "addCmnt", method = RequestMethod.POST)
-	public Cmnt addCmnt(@RequestBody Cmnt cmnt, @RequestParam("postNo") String postNoStr) {
+	public Cmnt addCmnt(@RequestBody Cmnt cmnt, @RequestParam String postNoStr) {
 		
+		System.out.println(postNoStr);
 		Board board = new Board();
 		board.setPostNo(Integer.parseInt(postNoStr));
 		cmnt.setBoard(board);

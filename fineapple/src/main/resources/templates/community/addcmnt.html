@@ -20,6 +20,7 @@ function fnAddCmnt(){
 			postNo : $("#postNo").val(),
 			cmntContent : $("#content").val
 			}
+	console.log(data)
 	$.ajax({
 		url: "/community/json/addCmnt",
 		type: "POST",
@@ -32,7 +33,7 @@ function fnAddCmnt(){
 		})
 	})
 				
-};
+}; 
 
 </script>
 </div>
