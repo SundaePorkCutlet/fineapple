@@ -455,13 +455,14 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 		
 		
 	}
+	
 	System.out.println(dailyIntakeKcal);
 	
-	if(user.getServiceTrgt().equals("1")) {
+	if(user.getServiceTrgt().equals("체중증량")) {
 		
 		totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
 		
-	} if (user.getServiceTrgt().equals("2")){
+	} if (user.getServiceTrgt().equals("체중유지")){
 		
 		totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
 		
@@ -477,6 +478,7 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 	
 	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
 	
+	overKcal = Math.round(overKcal*100)/100.0;
 	
 	
 	System.out.println("초과 칼로리 입니다   " + overKcal);
@@ -504,9 +506,10 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 		
 	}
 
-	
 
 }
+
+
 
 
 
