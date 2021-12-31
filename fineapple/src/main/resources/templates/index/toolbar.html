@@ -16,6 +16,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <script>
+    
+    $(function() {
+   
+    	    $("#logintwo").on("click" , function() {
+
+    	        $.ajax({
+    	            url: "/user/login",
+    	            success:function(data){
+    	               $("#mmodalHolder").html(data);
+    	               $("#mmodal").modal("show");         
+    	            }  
+    	           });
+    	   });
+    	});   
         function listcart() {
             popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
         }
@@ -168,10 +182,10 @@
                     </div>
                     <div class="col-xs-12 col-md-8 btn-wrap">
                         <div th:if="${session.user == null}">
-                            <button type="button" class="btn btn-default btn-header me-2" th:onclick="|location.href='@{/user/login}'|">
+                            <button type="button" id="logintwo" class="btn btn-default btn-header me-2">
                                 로그인
                             </button>
-                            <button type="button" class="btn btn-default btn-header" th:onClick="|location.href='@{../user/addUser}'|">
+                            <button type="button"  class="btn btn-default btn-header" th:onClick="|location.href='@{../user/addUser}'|">
                                 회원가입
                             </button>
                         </div>
@@ -187,22 +201,25 @@
                 <div class="columns large-12 text-center ">
                     <div style="width:fit-content; margin: auto;position: relative;">
                     <a th:href="@{../user/banner}" style="text-decoration:none; color:black;">     <p class="logo-typo">FineApple</p> </a>
+
                         <img alt="logo" class="logo" src="../assets/img/logo.png"/>
                     </div>
-                        
-                  
+
                 </div>
             </div>
             <div class="col-xs-12 col-md-3">
                 <div class="mb-2">
                     <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header me-2">문의하기</button>
-                    <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">회원탈퇴</button>
+                    <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header" th:onclick="|location.href='@{/user/updateUserLeave(userId=${session.user.userId})}'|">회원탈퇴</button>
                     <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
                   <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;">    </a> 
                  <a th:if = "${session.user != null}"><img src="../assets/img/555.png" style ="height: 50px; width: 50px;">     </a> 
  
                 </div>
             </div>
+               <div id="mmodalHolder" style="width:200px;">     
+         </div>
+         
         </header>
         <!--        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-3 border-bottom">-->
         <!--            <div class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">-->
@@ -230,7 +247,6 @@
         <!--            </ul>-->
 
 <!--                    <a th:if="${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listcart()|">&#127869;</a> -->
-                <!-- <a th:if = "${session.user != null}" style="font-size:50px;" th:onclick="|javascript:listroutine()|">&#128095;</a> -->
         <!--            <div class="col-md-3 text-end">-->
         <!--                <div class="mb-2">-->
         <!--                    <button th:if="${session.user != null}" type="button" class="btn btn-default me-2">문의하기</button>-->
@@ -314,7 +330,10 @@
 
 
     </div>
-</div>
+    
+
+
+
 
 
 </body>

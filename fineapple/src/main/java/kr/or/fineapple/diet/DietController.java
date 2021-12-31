@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,11 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import groovyjarjarantlr4.v4.runtime.misc.FlexibleHashMap.Entry;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.User;
@@ -143,30 +145,31 @@ public class DietController {
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		Map<String, Object> map4 = new HashMap<String, Object>();
 		List list = new ArrayList();
-		List list2 = new ArrayList();
+		List<Food> list2 = new ArrayList<Food>();
+		list=dietService.getFoodAPIlist(search);
 		
-		list.add(dietService.getFoodAPIlist(search));
+		list2=dietService.getFoodList(search1);
 		
-		map2 = dietService.getFoodList(search1);
-		map3.put("list",dietService.getFoodAPIlist(search));
+		list.addAll(list2);
 		
 		
-		map3.put("list", dietService.getFoodAPIlist(search));
-		map4.putAll(map2);
-		map4.putAll(map3);
-		model.addAttribute("list", map3.get("list"));
+//		JSONArray array = new JSONArray();
+//		JSONArray array2 = new JSONArray();
+//		
+//		list2=dietService.getFoodList(search1);
+//		
+//		   for (Food userFood : list2) {
+//		        array2.add(userFood);
+//		    }
+//		array=dietService.getFoodAPIlist(search);
+//
+//		array.addAll(array2);
+//		
+		
+		model.addAttribute("list", list);
 		model.addAttribute("search", search);
 		
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		
-//		User user =(User)request.getSession(true).getAttribute("user");
-//		DietServ serv = dietService.getDietService(user.getUserId());
-//		map = dietService.getFavMealList(serv.getUserServiceNo());
-//		System.out.println(map);
-//		model.addAttribute("list1",map.get("list"));
-//		
-		
-		
+
 		
 		
 		
@@ -181,13 +184,6 @@ public class DietController {
 		food = dietService.getFood(foodCd);
 		System.out.println(foodCd);
 		model.addAttribute("food",food);
-		return "diet/getFood.html";
-		}
-	
-	@GetMapping("getFood1")
-	public String getFood() throws Exception {
-		
-		
 		return "diet/getFood.html";
 		}
 
@@ -251,9 +247,8 @@ public class DietController {
 	}
 		
 @GetMapping("getAddDaily")
-public String getAddDaily(Model model,@RequestParam("chekarray")String[] foodCd)throws Exception{
+public String getAddDaily(Model model)throws Exception{
 	
-	System.out.println(foodCd);
 	
 	
 	
@@ -262,7 +257,7 @@ public String getAddDaily(Model model,@RequestParam("chekarray")String[] foodCd)
 	
 
 @GetMapping("modal")
-public String modal(Model model,HttpServletRequest request) throws Exception {
+public String modal(Model model,HttpServletRequest request,@RequestParam("checkarray")String foodCd) throws Exception {
 	
 	String hong = "byung";
 	Map<String,Object> map = new HashMap<String,Object>();
@@ -272,10 +267,38 @@ public String modal(Model model,HttpServletRequest request) throws Exception {
 	map = dietService.getFavMealList(serv.getUserServiceNo());
 	System.out.println(map);
 	model.addAttribute("list",map.get("list"));
+	System.out.println(foodCd);
+	model.addAttribute("foodCd",foodCd);
 	
 	return "diet/getFavMealList :: hong";
 	
 	
+}
+
+
+
+
+
+@GetMapping("addFavMealItem")
+public String getaddFavMeal2(Model model, @RequestParam("checkarray")String foodCd,HttpServletRequest request) throws Exception {
+		
+	System.out.println("오긴온다");
+	
+	Food food = new Food();
+		
+	food = dietService.getFood(foodCd);
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	DietServ serv = dietService.getDietService(user.getUserId());
+	map = dietService.getFavMealList(serv.getUserServiceNo());
+	System.out.println(map);
+	
+	model.addAttribute("list",map.get("list"));
+	model.addAttribute("food", food);
+
+	return "diet/addFavMealItem :: hong";
 }
 
 

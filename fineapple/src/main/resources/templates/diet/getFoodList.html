@@ -38,24 +38,57 @@ $(function() {
 		//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
 		
 		
-		var chek_arr = [];
+		var cd_arr = [];
+		var servingsize_arr = [];
+		var name_arr = [];
+		var kcal_arr = [];
+		var carb_arr = [];
+		var protein_arr = [];
+		var fat_arr = [];
 		$("input[name=foodCheck]:checked").each(function(){
 		var foodCd = $(this).val();
-		chek_arr.push(foodCd);
+// 		var foodServingSize = $(this).attr("data-servingSize");
+// 		var foodName = $(".foodName").attr("data-foodName");
+// 		var foodKcal = $(".foodKcal").attr("data-foodKcal");
+// 		var foodCarb = $(".foodCarb").attr("data-foodCarb");
+// 		var foodProtein = $(".foodProtein").attr("data-foodProtein");
+// 		var foodFat = $(".foodFat").attr("data-foodFat");
+		
+		cd_arr.push(foodCd);
+// 		servingsize_arr.push(foodServingsize);
+// 		name_arr.push(foodName);
+// 		kcal_arr.push(foodKcal);
+// 		carb_arr.push(foodCarb);
+// 		protein_arr.push(foodProtein);
+// 		fat_arr.push(foodFat);
+		
+		
+		
+		
 })		
-		if(chek_arr==0){
+		if(cd_arr==0){
 			alert('선택한 상품이 없습니다!')
 			
 		}
-		if(chek_arr.length>9){
-			alert('9개까지만 가능합니다!')
+		if(cd_arr.length>5){
+			alert('5개까지만 가능합니다!')
 			
 		}
 		
 		
-		if(chek_arr.length<10 && chek_arr.length!=0){
-		console.log(chek_arr);
-		popWin = window.open("/diet/getAddDaily?chekarray="+chek_arr,"popWin","left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		if(cd_arr.length<6 && cd_arr.length!=0){
+		console.log(cd_arr);
+		  $.ajax({
+				url: "/diet/addFavMealItem?checkarray="+cd_arr.join(","),
+				success:function(data){
+					$("#mmodalHolder").html(data);
+					$("#mmodal").modal("show");			
+					
+				}  
+				  
+			  });
+		
+		
 		 }
 	});
 });	
@@ -108,7 +141,6 @@ function openModal(){
 	  $.ajax({
 		url: "/diet/modal",
 		success:function(data){
-			
 			$("#mmodalHolder").html(data);
 			$("#mmodal").modal("show");			
 			
@@ -156,7 +188,7 @@ function openModal(){
 						class="">오늘의 추천 음식?</div>
 				</div>
 
-				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 400px; width: 195px;"/></a>
 			</div>
 			<div class="col-md-10">
 			<br>
@@ -181,26 +213,13 @@ function openModal(){
  -->			<button data-text-content="true" class="btn btn-primary">검색</button>
 			<br>
 			
-	<div style="position:absoulte;top:100px;left:0px;">		    			
-	<button type="button" class="btn btn-success">일일섭취식단에 추가</button>
-			<button type="button" class="btn btn-warning">즐겨찾기에 추가</button>
-					</div>
 			</form>
 			</div>
-	
-<button type="button" th:onclick="javascript:openModal()">홍짬</button>
-  
-  
-
-  
-  
-			
 			
 			
  		<table class="table table-hover table-striped" >			
   		<thead>
           <tr>
-            <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center"><input type="checkbox" id="checkedAllFood" name="foodAllCheck" onclick='CheckAll();'></th>         
             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>         
             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>         
             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>         
@@ -214,14 +233,13 @@ function openModal(){
 	
        <tbody>
 	<tr th:each="data, i : ${list}">
-		<td><input type="checkbox" class="checkedfood" name="foodCheck" th:value="${data.foodCd}"  onclick='Chk();'></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodName}" th:attr="data-foodCd=${data.foodCd}"  class="foodName" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodKcal}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodCarb}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodProtein}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodFat}" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodName}"  th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodKcal}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
 	</tr>
 </tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
