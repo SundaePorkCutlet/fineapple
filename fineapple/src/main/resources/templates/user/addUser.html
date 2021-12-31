@@ -53,24 +53,28 @@
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
       var age =$("#age").val();
-      var height = $("heignt").val();
+      var height = $("height").val();
       var weight = $("#weight").val();
       var trgtWeight=$("trgtWeight").val();
       var userId = $("#userId").val();
+      var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
       if($("#male").val() == 'male'){
     	  var gender=$("#male").val();
       }
       if($("#female").val() == 'female'){
     	  var gender=$("#female").val();
       }
-      
       if(userName == ""){
     	  alert("닉네임을 입력하지 않으셨습니다.");
     	  return;
-      }else if(userId == "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1 )){
-    	  alert("이메일을 형식이 아닙니다.");
+      }else if(userId == ""){
+    	  alert("이메일을 입력하지 않으셨습니다.");
     	  return;
-      }else if(password == ""){
+      }else if(textTest.test(userId) == false){
+    	  alert("이메일 형식으로 입력해주세요.")
+    	  return;
+      }
+      else if(password == ""){
     	  alert("비밀번호를 입력하지 않으셨습니다.");
     	  return;
       }else if(cellphone == ""){
@@ -88,7 +92,8 @@
       }else if(trgtWeight == ""){
     	  alert("목표제중을 입력하지 않으셨습니다.");
     	  return;
-      }else{
+      }
+      else{
     	  alert("회원가입에 성공하셨습니다.");
           $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
       }
@@ -196,8 +201,8 @@
 <br>
 <div align = "center">
 <span style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >약관동의</span>
-<span><input class = "agreement" id = "agree" type = "radio" name = "agreement" checked = "checked" style = "font-size : 20px;">약관동의</span>
-<span><input class = "agreement" id = "disagree"type = "radio" name = "agreement" style = "font-size : 20px;">비동의</span>
+<span><input class = "agreement" id = "agree" type = "radio" name = "agreement" checked = "checked" style = "font-size : 20px;" value = "agree">약관동의</span>
+<span><input class = "agreement" id = "disagree"type = "radio" name = "agreement" style = "font-size : 20px;" value = "disagree">비동의</span>
 <span><input type = "button" class="agreement-button" id = "agreementbt"  placeholder = "약관동의서" ></span>
 </div>
 <br>

@@ -9,6 +9,7 @@ import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 
 
@@ -77,10 +78,11 @@ public interface ExerMapper {
        
        
        //추천운동리스트
-       List<Search>recommandExerList(Search search);
+       List<Exer>recommandExerList(Double overKcal);
        
-       
-  
+       Double sumIntakeKcal(String userId);
+   
+       User needDaliyIntakeKcal(String userId);
        
 
    }
