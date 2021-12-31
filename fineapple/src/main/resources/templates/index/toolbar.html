@@ -213,7 +213,7 @@
                     <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header" th:onclick="|location.href='@{/user/updateUserLeave(userId=${session.user.userId})}'|">회원탈퇴</button>
                     <button th:if="${session.user != null}" type="button" class="btn btn-default btn-header" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">내정보보기</button>
                   <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;">    </a> 
-                 <a th:if = "${session.user != null}"><img src="../assets/img/555.png" style ="height: 50px; width: 50px;">     </a> 
+                 <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:listroutine()|">     </a> 
  
                 </div>
             </div>

@@ -484,7 +484,6 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 	
 	if(overKcal >= 0) {
 		
-		
 	
 	List list = exerService.recommandExerList(Math.abs(overKcal));
 	
