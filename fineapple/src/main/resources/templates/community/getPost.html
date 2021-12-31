@@ -31,7 +31,7 @@
 
 <div>
 	<div style="font-weight:bold;font-size:32px; text-align : center;">자유게시판</div>
-	<input type="hidden" name="postNo" th:value="${map.board.postNo}">
+	<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt}">
 	<div style="text-align: left;">
 	<span th:if="${false}" >
 	<button id="updateButton" type="button">수정하기</button>
@@ -62,8 +62,9 @@
 		<div>
 		<div style=" height:300px; width:1000px; font-size:16px; text-align: center;"><p th:text="${map.board.content}"></p></div>
 
-		<button  th:if="${true}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-primary" th:text="${map.board.postLikeCount}"></button>		
-		<button  th:if="${false}" style="height: 100px; width: 100px; border-radius: 50%" type="button" class="btn btn-danger" th:text="${map.board.postLikeCount}"></button>
+		<button  class = "likeStt" th:if="${map.board.postLikeStt == 0}" style="height: 100px; width: 100px; border-radius: 50%" type="button"  th:text="${map.board.postLikeCount}" th:onclick="javascript:fnUpdatePostLike()"></button>		
+		<button class = "likeStt" th:if="${map.board.postLikeStt == 1}" style="height: 100px; width: 100px; border-radius: 50%" type="button"  th:text="${map.board.postLikeCount}" th:onclick="javascript:fnUpdatePostLike()"></button>
+		
 		</div>	
 	
 		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
@@ -75,21 +76,52 @@
 
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
-
-function checkLikeGood(){
-	
-	$.ajax({
-		url : "/community/json/checkLikeGood",
-		type : "POST",
-		data : JSON.stringify(data),
-		contentType: "application/json"
+/* $(function(){
+	function fnUpdatePostLike(){
+		var data = {postNo : $("#postNo").val(),
+			        likeStt : $("likeStt").val()
+			       };
+		
+		$.ajax({
+			url: "/community/json/updatePostLike",
+			type: "POST",
+			data: JSON.stringify(data),
+			contentType: "application/json"
 		})
-}
-	
-
-
-
+	}
+}); */
+/* https://minchoi0912.tistory.com/66 */
+/* $(function(){ */
+	function fnUpdatePostLike(){
+		var data = {postNo : $("#postNo").val(),
+				postLikeCount : $(".likeStt").text(),
+				postLikeStt : $("#postNo").attr("data-postLikeStt")
+		       };
+		$.ajax({
+			url: "/community/json/updatePostLike",
+			type: "POST",
+			dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify(data),
+			/* data: {
+				postLikeCount : $(".likeStt").text(),
+				postLikeStt : $("#postNo").attr("data-postLikeStt")
+			}, */
+			success : (function(data){
+				console.log(data)
+				$(".likeStt").text(data.postLikeCount);
+				$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+			}) 
+			
+		})/* .done(function(data){
+			console.log(data)
+			$(".likeStt").text(data.postLikeCount);
+			$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+		}) */
+	};
+/* }); */
 </script>
 </body>
 </html>

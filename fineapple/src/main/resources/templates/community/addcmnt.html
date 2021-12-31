@@ -7,39 +7,35 @@
 <div th:fragment="addCmnt">
 <form id="addcmnt">
 	<div>
-		<div style="font-weight:bold;font-size:24px" >댓글 쓰기</div>
-		<input type="hidden" name="postNo" th:value="${board.postNo}">
-		<input name = "content" style="height:50px; width:300px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
-		<button id="cmntButton" type="button" class="btn btn-primary">등록</button>
+		<div style="font-weight:bold;font-size:24px" >댓글쓰기</div>
+		<input id="content"  name = "content" style="height:50px; width:300px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
+		<button id="cmntButton" type="button" class="btn btn-primary" th:onclick="javascript:fnAddCmnt()">등록</button>
 	</div>
 </form>
-</div>
 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-
-$(function(){
-	$("#cmntButton").on("click", function(){
-		$("#addcmnt").attr("method", "POST").attr("action", "/community/addPost").submit();
-	});
-});ㅌㅌ 
-
-/* $.ajax( 
-        {
-           url : "/product/json/getProduct/"+prodNo ,
-           method : "GET" ,
-           dataType : "json" ,
-           headers : {
-              "Accept" : "application/json",
-              "Content-Type" : "application/json"
-           },
-           success : function(JSONData , status) { */
-                 
-              //Debug...
-              //alert(status);
-              //Debug...
-//               alert("JSONData : \n"+JSONData);
-
+function fnAddCmnt(){
+	var data = {
+			postNo : $("#postNo").val(),
+			cmntContent : $("#content").val
+			}
+	console.log(data)
+	$.ajax({
+		url: "/community/json/addCmnt",
+		type: "POST",
+		dataType: 'json',
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success : (function(data){
+			console.log(data)
+			
+		})
+	})
+				
+}; 
 
 </script>
+</div>
 </body>
 </html>

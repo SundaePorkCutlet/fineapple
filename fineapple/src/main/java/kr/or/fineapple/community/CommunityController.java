@@ -24,6 +24,10 @@ import kr.or.fineapple.service.community.CommunityService;
 @RequestMapping("/community/*")
 public class CommunityController {
 	
+	public CommunityController() {
+		System.out.println(getClass().getName() + "생성함");
+	}
+	
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
@@ -31,7 +35,14 @@ public class CommunityController {
 	@GetMapping(value = "getPost")
 	public String getViewTest(@ModelAttribute("board") Board board, Model model) {
 		
+		User user = new User();
+		
+		user.setUserId("aaa123@naver.com");
+		board.setUser(user);
+		
 		Map map =  communityService.getPost(board);
+		
+		System.out.println(map.get("board")+"Scope에 담기전 Board");
 		
 		model.addAttribute("map", map);
 		 
