@@ -71,7 +71,8 @@
     #{trgtWeight : VARCHAR}
     )
 
-<<<<<<< HEAD
+</insert>
+
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -142,31 +143,6 @@ VALUES (#{userId:VARCHAR},
 		#{lastConTime:DATE},
 		'상태메세지없음')
 >>>>>>> refs/heads/KIM
-=======
->>>>>>> refs/remotes/origin/master
-</insert>
-
-
-<insert id="addUserBodyInfo" parameterType="user">
-	INSERT 
-	into 
-	USER_BODY_INFO
-	(
-	USER_BODY_INFO_NO,
-	USER_ID,
-	height,
-	WEIGHT,
-	USER_BODY_INFO_DATE
-	)
-	VALUES
-	(
-	seq_user_body_info_no.nextval,
-	#{userId:VARCHAR},
-	#{height:VARCHAR},
-	#{weight:INTEGER},
-	SYSDATE
-	)
-
 </insert>
 
 

@@ -99,32 +99,9 @@ div.profile{
 		<th scope="row"><b>나이</b></th>
 		<td th:text="${session.user.age}"></td>
 		<th scope="row"><b>활성서비스내역</b></th>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
-		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
-		<td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
-		
-=======
-		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
-=======
->>>>>>> refs/remotes/origin/master
-		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
-<<<<<<< HEAD
-      <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>
-      <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
->>>>>>> refs/heads/KIM
-=======
-		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
-		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
-      <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>
-      <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
->>>>>>> refs/heads/KIM
-=======
         <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>      
         <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
->>>>>>> refs/remotes/origin/master
 	</tr>
 	<tr>
 		<th scope="row"><b>전화번호</b></th>
