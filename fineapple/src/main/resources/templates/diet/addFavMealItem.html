@@ -22,8 +22,8 @@
 function fncGetUserList(currentPage) {
 	console.log('온다');
 	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
-    if (!confirm("등록되었습니다! 확인하시겠어요?")) {
-       self.location="/diet/getFavMeal";
+    if (confirm("등록되었습니다! 확인하시겠어요?")) {
+       self.location="/diet/getFavMealList";
     } else {
     	$('#modal').modal("hide");
     }	
