@@ -9,12 +9,41 @@
 
 
 
-	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="hong">		
+
+
+	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addFavMealItem">		
    <div  class="modal-dialog " style="width:800px; height:1300px;">
     <div class="modal-content">
       <button type="button" class="close" data-dismiss="modal">×</button>
       <h1 class="modal-title" align="center">즐겨찾기에 추가</h1>
      <div class="modal-header">
+
+<script>
+function fncGetUserList(currentPage) {
+	console.log('온다');
+	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
+    if (!confirm("등록되었습니다! 확인하시겠어요?")) {
+       self.location="/diet/getFavMeal";
+    } else {
+    	$('#modal').modal("hide");
+    }	
+}
+
+$(function() {
+
+	 
+	 $("button.btn.btn-success").on("click" , function() {
+		 fncGetUserList(1);
+		
+});
+});
+
+</script>
+
+
+
+
+
 
 
 
@@ -22,7 +51,7 @@
      </div>
         <div class="modal-body" style="height:500px;">
 
-
+<form>
 <div class="row">
 <div class="col-12">
 <div align="center">
@@ -40,9 +69,9 @@
        <tbody>
 	<tr>
 		<td th:text="${food.foodName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${food.servingSize}" th:attr="data-foodCd=${food.foodCd}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${food.servingSize}" id="foodCd" th:attr="data-foodCd=${food.foodCd}"  style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${food.foodKcal}" style="cursor:pointer; text-align: left;"></td>
-		<td ><input type="number" min="0" max="9999" name=userFoodIntake></td>
+		<td ><input id="userFoodIntake" type="number" min="0" max="9999" name=userFoodIntake></td>
 		<td></td>
 	</tr>
 </tbody>
@@ -65,7 +94,7 @@
 	
        <tbody>
 	<tr th:each="data, i : ${list}">
-		<td><input type="radio" class="favMealNo" name="favMealNo" th:attr="data-favMealNo=${data.favMealNo}"  ></td>
+		<td><input type="radio" class="favMealNo" name="favMealNo" th:value="${data.favMealNo}"  ></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.favMealName}"  style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
@@ -78,11 +107,12 @@
 </div>
 </div>
 </div>
-
+</form>
 
  </div>
  
      <div class="modal-footer">
+         <button type="button" class="btn btn-success" >등록</button>
      <button type="button" class="btn btn-default" data-dismiss="modal">이전</button>
      </div>
     </div>
