@@ -19,9 +19,9 @@ public class IntakeRecord {
 	double foodCarb;	
 	double foodProtein;
 	double foodFat;
-	double userFoodIntake;
+	double userFoodIntake; //사용자가 입력하는 칼로리
 	double userWtrIntake;
-	double remainKcal;
+	double remainKcal; //사용자 잔여칼로리?
 	String meal;
 	LocalDate date;
 	Food food;

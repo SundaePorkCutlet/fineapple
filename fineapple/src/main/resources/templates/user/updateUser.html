@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+</head>
+<body>
+
+
+<style>
+table{
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  padding:10px;
+ 
+  margin : 20px 10px;
+}
+table th{
+  width: 150px;
+  padding:5px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #38610B;
+  font-size : 0.85em;
+  border-top: 1px solid #ccc;
+  border-left: 6px solid rgba(51, 132, 86, 0.62);
+  text-align: left;
+ 
+}
+
+table td{
+  width: 250px;
+   font-size : 0.8em;
+  border-top:1px solid #ccc;
+  vertical-align: top;
+
+}
+
+div.relative{
+ position: relative;
+  left: 30px;
+}
+
+div.box{
+	width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+    display:block;
+    margin:auto;
+}
+
+div.profile{
+ width: 100%;
+    height: 100%;
+    object-fit: cover;
+   width : 200px;
+}
+
+</style>
+
+<script>
+	$(function (){
+		
+		$("#updateUser").on("click",function(){
+			$("form").attr("method","POST").attr("action","/user/updateUser/result").submit();		
+		})
+		
+	})
+</script>
+<form method="POST" enctype="multipart/form-data" >
+<div th:insert="index/toolbar :: toolbar">
+</div>
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+
+<div class="col-md-10">
+<br>
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">내정보보기</div>
+<br>
+<p align="center">신체정보는 다이어리에서 수정가능합니다.</p>
+<br>
+
+<div class="box" >
+	<img th:src="@{../assets/profile/}+${session.user.userImg}" height="200" class="profile">
+</div>
+<p align ="center"><b>프로필사진</b></p>
+<p align="center"><input type="file" id="userImg1" name="userImg1"></p>
+<p align="center"><b>상태메세지</b></p>
+<p align="center">
+<input type="text" th:value="${session.user.userSttMsg}" id="userSttMsg" name="userSttMsg">
+
+</p>
+<br>
+<div align="center" class="relative">
+<table >
+	<tr>
+		<th scope="row"><b>닉네임</b></th>
+		<td>
+			<input type="text" th:value="${session.user.userName}" id="userName" name="userName">
+		</td>
+		<th scope="row"><b>최근 로그인 내역</b></th>
+		<td th:text="${session.user.regDate}"></td>	
+	</tr>
+	<tr>
+		<th scope="row"><b>이메일</b></th>
+	    <td><input type="text" th:value="${session.user.userId}" id="userId" name="userId" readonly></td>
+		<th scope="row"><b>블랙리스트여부</b></th>
+		<td th:if="${session.user.blcRgsStt} == 0">일반회원</td>
+		<td th:unless="${session.user.blcRgsStt} == 0">블랙리스트</td>
+		
+	</tr>
+	<tr>
+		<th><b>나이</b></th>
+		<td th:text="${session.user.age}"></td>
+		<th scope="row"><b>활성서비스내역</b></th>
+		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
+		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
+		<td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
+		
+	</tr>
+	<tr>
+		<th scope="row"><b>전화번호</b></th>
+		<td><input type="text" th:value="${session.user.cellphone}" id="cellphone" name="cellphone"></td>
+		<th scope="row"><b>키</b></th>
+		<td th:text="${session.user.height}"></td>
+	</tr>
+	<tr>
+		<th scope="row"><b>가입날짜</b></th>
+		<td th:text="${session.user.regDate}"></td>
+		<th scope="row"><b>몸무게</b></th>
+		<td th:text="${session.user.weight}"></td>
+	</tr>
+	<tr>
+		<th><b>성별</b></th>
+		<td th:if="${session.user.gender} == male">남</td>
+		<td th:unless="${session.user.gender} == male">여</td>
+		
+	</tr>
+	
+</table>
+</div>
+<br>
+<div align="center">
+	<input class="updateUser" type= "submit" value ="확 인" id="updateUser" name="updateUser" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;">
+</div>
+<br>
+</div>
+
+</div>
+</div>
+</form>
+</body>
+
+</html>

@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
+import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,52 +24,25 @@ public class BoardTest {
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
 	
-	
-	//@Test
-	public void Boardtest() {
-		
-		
-	}
-	
 	//@Test
 	public void addPost() {
-		
 		Board board = new Board();
 		User user = new User();
-		/*
-		 * user.setUserId("aaa123@naver.com"); user.setUserName("홍길동");
-		 * board.setUser(user); board.setTitle("안녕하세요"); board.setContent("반갑습니다.");
-		 * board.setPostDate(LocalDate.now()); board.setCateName(2);
-		 */
-
 		communityService.addPost(board);
-		
-	//	int postNo = board.getPostNo();
-		
-	//	System.out.println(postNo +"aaaaaaaaaa");
-		
 	}
 	
-	@Test
+	//@Test
 	public void getPostList() {
-		
 		List<Board> list = communityService.getPostList();
-		
 		for (Board board : list) {
 			System.out.println(board);
 		}
-		
 	}
-	
-	
 	
 	//@Test
 	public void updatePostviewCount() {
-		
 		Board board = new Board();
-		
 		board.setPostNo(4);
-		
 		communityService.updatePostViewCount(board);
 
 	}
@@ -79,24 +55,46 @@ public class BoardTest {
 		board.setPostNo(4);
 		
 	}
-	
 	//@Test
-	public void updateCmntLike() {
-		
-		Cmnt cmnt = new Cmnt();
-
+	public void groupInterUser() {
+		GroupUser groupUser = new GroupUser();
+		User user = new User();
+		user.setUserId("aaa123@naver.com");
+		groupUser.setUser(user);
+		groupUser.setGroupStt(2);
+		List<User> list = communityService.getGroupInterUser(groupUser);
+		for (User user2 : list) {
+			System.out.println(user2.getUserId());
+		}
 	}
 	
+	//@Test
+	public void groupInterGroup() {
+		GroupUser groupUser = new GroupUser();
+		User user = new User();
+		user.setUserId("bbb123@gmil.com");
+		groupUser.setUser(user);
+		groupUser.setGroupStt(2);
+		List<Group> list = communityService.getGroupInterGroup(groupUser);
+		for (Group group : list) {
+			System.out.println(group);
+		}
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+	//@Test
+	public void addReport() {
+		Report report = new Report();
+		User user = new User();
+		User reportedUser = new User();
+		user.setUserId("aaa123@naver.com");
+		reportedUser.setUserId("bbb123@gmil.com");
+		report.setReportCate("회원신고");
+		report.setUser(user);
+		report.setReportedUser(reportedUser);
+		Board reportedBoard = new Board();
+		reportedBoard.setPostNo(1);
+		report.setReportTrgt(reportedBoard);
+		report.setReportCntnt("이 게시글이 매우 이상해요!");
+		communityService.addReport(report);	
+	}
 }

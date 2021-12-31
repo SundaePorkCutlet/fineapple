@@ -1,8 +1,11 @@
 package kr.or.fineapple.exer;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.fineapple.domain.Exer;
+import kr.or.fineapple.domain.ExerServ;
+import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
 
@@ -31,16 +37,85 @@ public class ExerController {
 	public ExerController() {
 	}
 
-	
-@RequestMapping(value="addUserService")
-public String addUserService() {
-	
-    System.out.println("addUserService");
 
-	return "exer/addUserService.html";
+@GetMapping(value="addUserService")
+public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
+    System.out.println("get: addUserService");
+
+
+	if((User)request.getSession(true).getAttribute("user")!=null) {
+		
+		User user =(User)request.getSession(true).getAttribute("user");
+		
+		System.out.println(user);
+	
+		ExerServ serv = exerService.getUserService(user.getUserId());
+		
+		System.out.println(serv);
+		
+		if(serv!=null) {
+				if(serv.getUserServiceNo()!=0) {
+		
+					model.addAttribute("user",user);
+					model.addAttribute("exerServ",serv);
+					return "exer/getUserService.html";
+					}else {
+						return "exer/addUserService.html";}
+		}else {
+			model.addAttribute("user",user);
+			return "exer/addUserService.html";}
+		
+	}else {
+		
+		return "user/login"; }
 	
 }
+    
+@PostMapping("addUserService")
+public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
+							HttpServletRequest request,
+							Model model) throws Exception{
+	System.out.println("post:addUserService");
+	System.out.println(serv);
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	String userId = user.getUserId();
+	serv.setUserId(userId);
+	
+	if(user.getExerServiceNo()==0) {
+	exerService.addUserService(serv);
+	}else {
+		exerService.updateUserService(serv);
+	}
+			
+	serv = exerService.getUserService(userId);
+	model.addAttribute("exerServ",serv);
+	model.addAttribute("user",user);
+	
+	
+
+	return "exer/getUserService.html";
+}
+
+@GetMapping("updateUserService")
+public String updateUserService(Model model, HttpServletRequest request) throws Exception {
+	System.out.println("get:updateUserService");
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	System.out.println(user);
+
+	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+	
+	model.addAttribute("user",user);
+	model.addAttribute("exerServ",serv);
+	
+	return "exer/updateUserService.html";
+		
+	
+}
+	
 
 
 @RequestMapping("getExerList")
@@ -237,6 +312,199 @@ return "exer/addDailyBurnning.html";
 
 }
 
+
+@RequestMapping(value="searchExerPlace")
+public String searchExerPlace() {
+	
+	
+	System.out.println("searchExerPlace");
+
+	
+	return "exer/searchExerPlace.html";
+	
+	
+}
+
+
+
+@RequestMapping(value="exerIndex")
+public String timer(Model model,HttpServletRequest request) {
+	
+	System.out.println("timer");
+	
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+ 
+	
+	model.addAttribute("user", user);
+	
+	return "exer/exerIndex.html";
+	
+	
+}
+
+
+
+@GetMapping("getRoutineList")
+public String getRoutineList(Model model,HttpServletRequest request) throws Exception {
+	
+	
+	System.out.println("getRoutineList");
+	
+
+	User user =(User)request.getSession(true).getAttribute("user");
+
+	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	
+	map = exerService.getRoutineList(serv.getUserServiceNo());
+	
+	model.addAttribute("list", map.get("list"));
+	
+	return "exer/getRoutineList.html";
+
+}
+
+
+
+@GetMapping("getRoutine")
+public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Model model) throws Exception {
+
+	routine = exerService.getRoutine(routine.getRoutineNo());
+	
+	
+	System.out.println("getRoutine");
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	
+	map = exerService.getRoutineInfoList(routine.getRoutineNo());
+	
+	
+	
+	model.addAttribute("list", map.get("list"));
+	model.addAttribute("routine", routine);
+	
+	return "exer/getRoutine.html";
+	
+
+}
+
+
+
+@RequestMapping("addRoutineInfo")
+public String addRoutineInfo() {
+	
+	
+	System.out.println("addRoutineInfo");
+	
+	
+	
+	return "exer/getExerList.html";
+	
+
+}
+
+
+
+
+@GetMapping("addRoutine")
+public String addRoutine() {
+
+	
+	
+	System.out.println("addRoutine");
+	
+
+	return "exer/getExerList.html";
+	
+}
+
+
+
+@GetMapping("recommandExerList")
+public String recommandExerList(Model model, HttpServletRequest request) throws Exception {
+	
+	System.out.println("recommandExerList");
+	
+	User user =(User)request.getSession().getAttribute("user");
+
+	
+	System.out.println(user.getUserId());
+	Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
+	System.out.println(sumIntakeKcal);
+	
+	user = exerService.needDaliyIntakeKcal(user.getUserId());
+	System.out.println(user);
+	
+	
+	Double  dailyIntakeKcal	= 0.0;
+	Double 	totaldailyIntakeKcal = 0.0;
+	
+	if(user.getGender().equals("male")) {
+		
+	
+	  dailyIntakeKcal	= 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+		
+		
+	} else {
+		
+	 dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+		
+		
+	}
+	System.out.println(dailyIntakeKcal);
+	
+	if(user.getServiceTrgt().equals("1")) {
+		
+		totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+		
+	} if (user.getServiceTrgt().equals("2")){
+		
+		totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+		
+	} else {
+		
+		totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+		
+	}
+	
+	
+	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) * (-1);
+	
+	
+	
+	System.out.println("초과 칼로리 입니다   " + overKcal);
+	
+	
+	if(overKcal <= 0) {
+		
+		
+	
+	List list = exerService.recommandExerList(Math.abs(overKcal));
+	
+	
+	
+	model.addAttribute("overKcal", overKcal);
+	model.addAttribute("list", list);
+	
+	
+	return "exer/recommandExerList.html";
+	
+	
+	} else {
+		
+		
+		return "user/login";
+		
+		
+	}
+
+	
+
+}
 
 
 

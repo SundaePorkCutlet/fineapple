@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });W
+</script>
+</head>
+<body>
+<div th:replace="index/toolbar :: head"></div>
+<div th:insert="index/toolbar :: toolbar"></div>
+
+<div class="container">
+
+	<div class="row mb-3">
+	    <div class="col-md-2 themed-grid-col"></div>
+	    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
+	    <div class="col-md-2 themed-grid-col"></div>
+	</div>
+	
+</div>
+</body>
+</html>

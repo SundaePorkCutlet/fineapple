@@ -29,24 +29,19 @@
 		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncGetTrgtHabit(1)">커피 끊기</div>
 		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncGetTrgtHabit(2)">금주</div>
 		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncGetTrgtHabit(3)">금연</div>
-		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncGetTrgtHabit(4)">사용자설정 항목</div>
+		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncGetTrgtHabit(4)" th:text="${userHabitName}"></div>
 		    <div class="col-4 themed-grid-col"></div>
 		</div>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col">총 <span th:text="${trgtHabit.trgtHabitSuccDayCount}"></span>일차</div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col" th:replace="trgtHabit/time.html :: time"><span th:text="|${time.hour}:${time.min}:${time.sec}|"></span></div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
-		<div class="row mb-4">
+		<div class="row mb-6">
 		    <div class="col-4 themed-grid-col"></div>
-		    <div class="col-2 themed-grid-col"><a class="btn btn-primary" th:onclick="javascript:fncAddTrgtHabit()" role="button">시작</a></div>
-		    <div class="col-2 themed-grid-col"><a class="btn btn-default" th:onclick="|javascript:fncEndTrgtHabit(${trgtHabit.trgtHabitServiceNo})|" role="button">초기화</a></div>
-		    <div class="col-4 themed-grid-col"></div>		    
+		    <div class="col-1 themed-grid-col"></div>
+		    <div class="col-1 themed-grid-col"></div>
+		    <div class="col-1 themed-grid-col"></div>
+		    <div class="col-1 themed-grid-col" th:onclick="javascript:fncAddUserHabitName()">+ 추가</div>
+		    	<input type="text" style="display:none"/>
+		    <div class="col-4 themed-grid-col"></div>
+		</div>
+		<div class="row mb-6" th:replace="trgtHabit/getATrgtHabitInfo.html :: trgtHabitInfo">
 		</div>
 </div>
 
@@ -54,94 +49,9 @@
 <div class="container">
 	<h3 class="mt-4">오늘의 물 마시기 기록</h3>
 	<p th:text="|${session.user.userName}님의 일일 권장 수분 섭취량은 ${session.user.strdWtrIntake}L입니다.|"></p>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col">그림 삽입</div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
-		<div class="row mb-3">
-		    <div class="col-md-2 themed-grid-col"></div>
-		    <div class="col-md-8 themed-grid-col" th:text="|오늘 총 ${userWtrIntake}L를 마셨어요!|"></div>
-		    <div class="col-md-2 themed-grid-col"></div>
-		</div>
+	<div class="row mb-6" th:replace="trgtHabit/getWtrIntake.html :: getWtrIntake">
+	</div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script th:inline="javascript">
-
-
-function fncGetTrgtHabit(trgtHabitCateNo){
-	
-	//조회 실행
-	/*<![CDATA[*/
-	const date = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
-	var data = {userId : [[${session.user.userId}]],
-				trgtHabitCateNo : trgtHabitCateNo,
-				viewDate: date
-				};
-	/*]]*/	
-	$.ajax({
-		url: "/trgtHabit/json/getTrgtHabit",
-		type: "POST",
-		data: JSON.stringify(data),
-		contentType: "application/json"
-	}).done(function(trgtHabit){
-		console.log(trgtHabit);
-		if(typeof trgtHabit == "undefined" || trgtHabit == null || trgtHabit == ""){
-			$("body > div:nth-child(3) > div:nth-child(4) > div.col-md-8.themed-grid-col > span").html(0);
-		} else {
-		$("body > div:nth-child(3) > div:nth-child(4) > div.col-md-8.themed-grid-col > span").html(trgtHabit.trgtHabitSuccDayCount);
-		}
-	})	
-};
-
-
-function fncAddTrgtHabit(trgtHabitCateNo){
-	
-	if(trgtHabitCateNo == 1){
-		var trgtHabitName = "커피";
-	}else if(trgtHabitCateNo == 2){
-		var trgtHabitName = "금주";
-	}else if(trgtHabitCateNo == 3){
-		var trgtHabitName = "금연";
-	}else if(trgtHabitCateNo == 4){
-		var trgtHabitName = "사용자입력";
-	}
-	//목표 습관 도전 시작
-	/*<![CDATA[*/
-	console.log(trgtHabitCateNo);
-	var data = {userId : [[${session.user.userId}]],
-				trgtHabitCateNo: trgtHabitCateNo,
-				trgtHabitCateName: trgtHabitCateName}};
-	/*]]*/	
-	$.ajax({
-		url: "/trgtHabit/json/addTrgtHabit",
-		type: "POST",
-		data: JSON.stringify(data),
-		contentType: "application/json"
-	}).done(function(){
-		//$("body > div:nth-child(3) > div:nth-child(5) > div.col-md-8.themed-grid-col > span").html("00:00:00");
-	}
-);
-
-function fncEndTrgtHabit(trgtHabitServiceNo){
-	
-	//목표 습관 도전 일수 초기화
-	/*<![CDATA[*/
-	console.log(trgtHabitServiceNo);
-	var data = {trgtHabitServiceNo : [[${trgtHabit.trgtHabitServiceNo}]]};
-	/*]]*/	
-	$.ajax({
-		url: "/trgtHabit/json/endTrgtHabit",
-		type: "POST",
-		data: JSON.stringify(data),
-		contentType: "application/json"
-	}).done(function(){
-		$("body > div:nth-child(3) > div:nth-child(5) > div.col-md-8.themed-grid-col > span").html("00:00:00");
-	})	
-};
-
-</script>
 
 </body>
 </html>

@@ -26,12 +26,14 @@
 		
 		<resultMap id ="FoodMap" type="Food">
 		<result property="foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
+		<result property="foodCd"		column="FOOD_CD"			jdbcType="VARCHAR"/>
 		<result property="foodIntoStt" 	column="FOOD_INTO_STT" 		jdbcType="INTEGER"/>
 		<result property="foodName" 				column="FOOD_NAME" 		jdbcType="VARCHAR"/>
 		<result property="servingSize" 	column="SERVING_SIZE" 		jdbcType="INTEGER"/>
   		<result property="foodKcal" 	column="FOOD_KCAL" 		jdbcType="DOUBLE"/>
   		<result property="foodCarb" 	column="FOOD_CARB" 		jdbcType="DOUBLE"/>
   		<result property="foodProtein" 	column="FOOD_PROTEIN" 		jdbcType="DOUBLE"/>
+  		<result property="foodFat"		column="FOOD_FAT"			jdbcType="DOUBLE"/>
   		<result property="foodSodium" 	column="FOOD_SODIUM" 		jdbcType="DOUBLE"/>
   		<result property="foodSugar" 	column="FOOD_SUGAR" 		jdbcType="DOUBLE"/>
   		<result property="price" 	column="PRICE" 		jdbcType="INTEGER"/>
@@ -41,8 +43,17 @@
 		<resultMap id ="FavMealMap" type="FavMeal">		
 		<result property="userServiceNo" 				column="DIET_SERVICE_NO" 		jdbcType="INTEGER"/>
 		<result property="favMealNo" 				column="FAV_MEAL_NO" 		jdbcType="INTEGER"/>
+		<result property="favMealInfoNo" 				column="FAV_MEAL_INFO_NO" 		jdbcType="INTEGER"/>
 		<result property="favMealName" 	column="FAV_MEAL_NAME" 		jdbcType="VARCHAR"/>
 		<result property="favMealKcal" 				column="FAV_MEAL_KCAL" 		jdbcType="DOUBLE"/>
+		<result property="food.foodCd" 				column="FOOD_CD" 		jdbcType="VARCHAR"/>
+		<result property="food.foodIntoStt" 	column="FOOD_INTO_STT" 		jdbcType="INTEGER"/>
+		<result property="food.foodName" 				column="FOOD_NAME" 		jdbcType="VARCHAR"/>
+		<result property="Intake" 	column="SERVING_SIZE" 		jdbcType="DOUBLE"/>
+  		<result property="food.foodKcal" 	column="FOOD_KCAL" 		jdbcType="DOUBLE"/>
+  		<result property="food.foodCarb" 	column="FOOD_CARB" 		jdbcType="DOUBLE"/>
+  		<result property="food.foodProtein" 	column="FOOD_PROTEIN" 		jdbcType="DOUBLE"/>
+  		<result property="totalKcal"		column="TOTAL_KCAL"		jdbcType="DOUBLE"/>
 		</resultMap>
 
 
@@ -82,18 +93,34 @@
 	</update>
 
 	<insert id="insertIntakeRecord" parameterType="IntakeRecord">
-	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_NO, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE, USER_WTR_INTAKE) 
+	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_CD, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE) 
 	VALUES (seq_intake_record_no.NEXTVAL,
 			(SELECT user_service_no from USER_SERVICE WHERE USER_ID = #{userId:VARCHAR}),
-			#{food.foodNo:INTEGER},
+			#{food.foodCd:VARCHAR},
 			#{userId:VARCHAR},
 			SYSDATE,
 			#{meal:VARCHAR},
-			#{userFoodIntake:DOUBLE},
-			#{userWtrIntake:DOUBLE}
+			#{userFoodIntake:DOUBLE}
+
 			)
-	
 	</insert>
+	
+	
+	<select id="getIntakeRecordList" parameterType="Integer" resultMap="IntakeRecordMap">
+	SELECT * FROM INTAKE_RECORD 
+	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
+	<update id="updateIntakeRecord" parameterType="IntakeRecord">
+	UPDATE INTAKE_RECORD SET
+	USER_FOOD_INTAKE =#{userFoodIntake:DOUBLE}
+	WHERE INTAKE_RECORD_NO = #{intakeRecordNo:DOUBLE}
+	</update>
+	
+	
+	
+	
 	
 	
 	   <update id="updateBodyInfo" parameterType="DietServ">
@@ -107,7 +134,7 @@
 	<select  id="getFoodList"  parameterType="hashMap"  resultMap="FoodMap">
 	SELECT *
 	FROM (SELECT inner_table.* , ROWNUM AS food_No
-	FROM(SELECT food_name, food_Kcal, food_carb, food_protein, NVL(food_fat,0) ff, serving_size
+	FROM(SELECT food_cd, food_name, food_Kcal, food_carb, food_protein, food_fat, serving_size 
 	FROM FOOD
 	<if test="searchCondition != null">
 	<where>
@@ -124,6 +151,50 @@
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
+	
+	<select id="getFood" parameterType="INTEGER">
+	SELECT * FROM FOOD
+	WHERE food_no =#{foodNo:INTEGER}
+	
+	
+	</select>
+	
+	<insert id="addFood" parameterType="Food">
+	INSERT INTO FOOD(FOOD_NO,FOOD_CD,FOOD_NAME,FOOD_KCAL,FOOD_CARB,FOOD_PROTEIN,FOOD_FAT,
+					FOOD_SODIUM,FOOD_SUGAR,SERVING_SIZE,IS_API)
+	VALUES(seq_food_food_no.NEXTVAL,
+			'U'||seq_food_food_cd_no.NEXTVAL,
+			#{foodName:VARCHAR},
+			#{foodKcal:DOUBLE},
+			#{foodCarb:DOUBLE},
+			#{foodProtein:DOUBLE},
+			#{foodFat:DOUBLE},
+			#{foodSodium:DOUBLE},
+			#{foodSugar:DOUBLE},
+			#{servingSize:DOUBLE},
+			1)
+	</insert>
+	
+	<update id="updateFood" parameterType="Food">
+	update food set
+	Food_NAME = #{foodName:VARCHAR},
+	FOOD_KCAL = #{foodKcal:DOUBLE},
+	FOOD_CARB = #{foodCarb:DOUBLE},
+	FOOD_PROTEIN = #{foodProtein:DOUBLE},
+	FOOD_FAT = #{foodFat:DOUBLE},
+	FOOD_SODIUM = #{foodSodium:DOUBLE},
+	FOOD_SUGAR = #{foodSugar:DOUBLE},
+	SERVING_SIZE = #{servingSize:DOUBLE}
+	</update>
+	
+	<delete id="deleteFood" parameterType="String">
+	delete from food
+	where food_cd = #{value}
+	
+	
+	</delete>
+	
+	
 
 	<insert id="insertFavMeal" parameterType="FavMeal">
 	INSERT INTO FAV_MEAL(fav_Meal_no,
@@ -134,6 +205,73 @@
 	#{favMealKcal:DOUBLE} )
 	
 	</insert>
+	
+	<update id="updateFavMealName" parameterType="FavMeal">
+	UPDATE FAV_MEAL SET
+	fav_meal_name = #{favMealName:VARCHAR}
+	WHERE FAV_MEAL_NO=#{favMealNo:INTEGER}
+	</update>
+	
+	<delete id="deleteFavMeal" parameterType="Integer">
+	Delete FROM FAV_MEAL
+	WHERE FAV_MEAL_NO = #{VALUE}
+	</delete>
+	
+	
+	<select id="getFavMealList" parameterType="Integer" resultMap="FavMealMap">
+    select a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal,sum(b.food_kcal) total_kcal 
+    from FAV_MEAL a left join fav_meal_info b on a.fav_meal_no=b.fav_meal_no
+	WHERE diet_service_no=#{value}
+	group by a.fav_meal_no,a.diet_service_no,a.fav_meal_name,a.fav_meal_kcal
+   </select>
+	
+
+	
+	<insert id="insertFavMealItem" parameterType="FavMeal">
+	INSERT INTO FAV_MEAL_INFO(FAV_MEAL_INFO_NO,FAV_MEAL_NO,FOOD_CD,FOOD_NAME,FOOD_PROTEIN,FOOD_FAT,SERVING_SIZE,FOOD_KCAL,FOOD_CARB)
+	VALUES (seq_fav_meal_info_no.NEXTVAL,
+			#{favMealNo:INTEGER},
+			#{food.foodCd:VARCHAR},
+			#{food.foodName:VARCHAR},
+			#{food.foodProtein:DOUBLE},
+			#{food.foodFat:DOUBLE},
+			#{intake:DOUBLE},
+			#{food.foodKcal:DOUBLE},
+			#{food.foodCarb:DOUBLE})
+	
+	
+	</insert>
+	
+	<select id="getFavMealItemList" parameterType="Integer" resultMap="FavMealMap">
+	SELECT * FROM FAV_MEAL_INFO
+	WHERE FAV_MEAL_NO = #{VALUE}
+	</select>
+	
+	<delete id="deleteFavMealItem" parameterType="Integer">
+	DELETE FAV_MEAL_INFO
+	WHERE FAV_MEAL_INFO_NO = #{VALUE}	
+	</delete>
+	
+	<update id="updateFavMealItem" parameterType="FavMeal">
+	update fav_meal_info set
+	serving_size = #{intake:DOUBLE}
+	WHERE FAV_MEAL_INFO_No = #{favMealInfoNo:INTEGER}
+	</update>
+	
+	<update id="updatebadge" parameterType="badge">
+	update badge set
+	 DIET_BADGE_COUNT = 1
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

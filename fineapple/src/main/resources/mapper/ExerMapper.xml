@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.fineapple.mapper.ExerMapper">
 
-	<resultMap id="UserServiceMap" type="ExerService">
+	<resultMap id="UserServiceMap" type="ExerServ">
 		<result property="dailyTrgtBurnningKcal" 			column="DAILY_TRGT_BURNNING_KCAL" 	jdbcType="FLOAT"/>
 		<result property="trgtBodyMuscle"	column="TRGT_BODY_MUSCLE" 		jdbcType="FLOAT" />	
 		<result property="exerServiceTrgt" 	column="SERVICE_TRGT" 		jdbcType="VARCHAR" />
@@ -31,19 +31,22 @@
 		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
 		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="VARCHAR" />	
 		<result property="exerLink" 				column="EXER_LINK" 					jdbcType="VARCHAR" />		
+		<result property="recommTime" 		column="recommTime"	javaType="double" 					jdbcType="FLOAT" />		
 	</resultMap>
 
 
+
 	<resultMap id="routineInfoMap" type="Routine">
-		<result property="routine.routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
-		<result property="exer.exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
-		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="TIMESTAMP" />
-		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 					jdbcType="INTEGER" />
-		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="TIMESTAMP" />
-		<result property="restTime" 				column="REST_TIME" 					jdbcType="TIMESTAMP" />
-		<collection property="routine" column="ROUTINE_NO" javaType="java.util.ArrayList">
-      </collection>
-	</resultMap> 
+		<result property="routineInfoNo" 			column="ROUTINE_INFO_NO" 			jdbcType="INTEGER"/>
+		<result property="routineNo" 			column="ROUTINE_NO" 			jdbcType="INTEGER"/>
+		<result property="exerNo"	column="EXER_NO" 		jdbcType="INTEGER" />
+		<result property="exerName" 				column="a" 					jdbcType="VARCHAR" />
+		<result property="anExerTime" 	column="AN_EXER_TIME" 		jdbcType="VARCHAR" />
+		<result property="anExerKcal" 	column="AN_EXER_KCAL" 		jdbcType="FLOAT" />
+		<result property="totalExerSetCount" 				column="TOTAL_EXER_SET_COUNT" 	jdbcType="INTEGER" />
+		<result property="aSetTime" 				column="A_SET_TIME" 					jdbcType="VARCHAR" />
+		<result property="restTime" 				column="REST_TIME" 					jdbcType="VARCHAR" />
+		</resultMap> 
 	
      <!--  <resultMap id ="FavMealMap" type="FavMeal">
       <result property="favMealNo"             column="FOOD_NO"       jdbcType="INTEGER"/>
@@ -54,31 +57,42 @@
       </resultMap>
        -->
       
-	<resultMap id="routineMap" type="Routine">
+	<resultMap id="routineMap" type="Routine">	
+		<result property="routineNo" 	column="ROUTINE_NO" 		jdbcType="INTEGER" />
 		<result property="routineName" 	column="ROUTINE_NAME" 		jdbcType="VARCHAR" />
-		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="TIMESTAMP" />
+		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="VARCHAR" />
 		<result property="routineKcal" 				column="ROUTINE_KCAL" 					jdbcType="FLOAT" />
 	</resultMap>
 
 
-	<insert id="addUserService" parameterType="ExerService">
-	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
-	VALUES (2,
+	<insert id="addUserService" parameterType="ExerServ">
+	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE, BODY_MUSCLE) 
+	VALUES (seq_user_service_no.NEXTVAL,
 			#{userId:VARCHAR},
 			#{dailyTrgtBurnningKcal:FLOAT},
-			#{trgtBodyMuscle:FLOAT}
+			#{trgtBodyMuscle:FLOAT},
+			#{bodyMuscle:FLOAT},
 			)
 	
 	</insert>
+	
+	<update id="updateUserService" parameterType="ExerServ">
+	UPDATE USER_SERVICE SET 
+	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:FLOAT},
+	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:FLOAT},
+	BODY_MUSCLE=#{bodyMuscle:FLOAT}
+	WHERE USER_ID=#{userId:VARCHAR}
+	</update>
+	
 		
-	<select	id="getUserService"	 parameterType="ExerService">
+	<select	id="getUserService"	 parameterType="String" resultType="ExerServ">
 			SELECT * FROM USER_SERVICE WHERE USER_ID=#{value}
 	</select>
 	
 	
 	<insert id="addDailyBurnning" parameterType="BurnningRecord">
 	INSERT INTO BURNNING_RECORD (BURNNING_RECORD_NO, USER_SERVICE_NO, EXER_NO, BURNNING_RECORD_DATE, EXER_LV, AN_EXER_TIME, USER_EXER_BURNNING) 
-	VALUES (5,
+	VALUES (seq_burnning_record_no.NEXTVAL,
 			(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR}),
 			#{exer.exerNo:INTEGER},
 			SYSDATE,
@@ -90,8 +104,7 @@
 	</insert>
 	
 	
-	
-   <update id="updateServiceTrgt" parameterType="ExerService">
+   <update id="updateServiceTrgt" parameterType="ExerServ">
    UPDATE USERS 
    SET SERVICE_TRGT = #{exerServiceTrgt:VARCHAR}
    WHERE USER_ID = #{userId:VARCHAR}
@@ -99,7 +112,7 @@
 	
 	
 	
-	<update id="updateBodyInfo" parameterType="ExerService">
+	<update id="updateBodyInfo" parameterType="ExerServ">
    UPDATE USER_BODY_INFO
    SET BODY_MUSCLE = #{bodyMuscle:FLOAT}
    WHERE USER_ID = #{userId:VARCHAR}
@@ -191,18 +204,134 @@
    	WHERE EXER_NO = #{exerNo:INTEGER}
    	</delete> 
 	
-
-	<update id="updateUserService" parameterType="BurnningRecord">
-	UPDATE BURNNING_RECORD
-    SET (5,
-       (SELECT user_service_no from user_service where user_id = #{userId:VARCHAR}),
-   			exer_no= #{exer.exerNo:INTEGER},
-			BURNNING_RECORD_DATE= SYSDATE,
-			exer_lv= #{exerLv:INTEGER},
-			an_exer_time = #{anExerTime:INTEGER},
-			user_burnning_record = #{userExerBurnning:FLOAT)
 	
-	</update>
+	<insert id="addRoutine" parameterType="Routine">
+	INSERT INTO ROUTINE(routine_no, user_service_no, routine_name, routine_time , routine_kcal)
+	VALUES(seq_routine_routine_no.NEXTVAL,
+		(SELECT user_service_no from user_service where user_id =#{userId:VARCHAR} ),
+        #{routineName:VARCHAR},
+	    #{routineTime:VARCHAR},
+	    #{routineKcal:FLOAT} )	
+	</insert>
+
+
+	 <update id="updateRoutine"  parameterType="Routine">
+     UPDATE ROUTINE
+     SET ROUTINE_NAME  = #{routineName:VARCHAR},
+         ROUTINE_TIME = #{routineTime:VARCHAR},
+         ROUTINE_KCAL = #{routineKcal:FLOAT}
+     WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	</update>
+   	
+   	
+
+	<select	id="getRoutine"	parameterType="Integer"  resultMap="routineMap">
+			SELECT routine_no, user_service_no, routine_name, routine_time , routine_kcal
+			FROM   ROUTINE
+			WHERE  ROUTINE_NO= #{VALUE}
+	</select>
+	 
+	 
+ 
+	<delete id="deleteRoutine" parameterType="Integer">  
+   	DELETE 
+   	FROM ROUTINE
+   	WHERE ROUTINE_NO = #{VALUE}
+   	</delete> 
+
+
+
+	<select  id="getRoutineList"  parameterType="hashMap"  resultMap="routineMap">
+	SELECT *
+	FROM (SELECT inner_table.* , ROWNUM AS row_seq
+	FROM (SELECT R.routine_no, R.routine_name, R.routine_time
+	FROM ROUTINE R
+	ORDER BY routine_no ) inner_table)
+	<!-- WHERE ROWNUM &lt;= 10) -->
+	WHERE row_seq BETWEEN 1 AND 10
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
+
+
+
+	<insert id="addRoutineInfo" parameterType="Routine">
+	INSERT INTO ROUTINE_INFO(routine_info_no, routine_no, exer_no, an_exer_time, an_exer_kcal )
+	VALUES(seq_routine_info_no.NEXTVAL,
+          #{routineNo:INTEGER},
+          #{exer.exerNo:INTEGER},
+	      #{anExerTime:VARCHAR},	
+	      #{anExerKcal:VARCHAR})	
+	</insert>
+
+   
+
+	<select	id="getRoutineInfoList"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT *
+			FROM( SELECT ri.*, e.exer_name a
+			FROM   ROUTINE_INFO ri LEFT JOIN exer e ON ri.exer_no = e.exer_no)
+			WHERE  ROUTINE_NO= #{VALUE}
+	</select>
+	 
+
+
+	<delete id="deleteRoutineInfo" parameterType="Integer">  
+ 	DELETE 
+   	FROM ROUTINE_INFO
+   	WHERE ROUTINE_INFO_NO = #{VALUE}
+   	</delete> 
+
+
+	<select  id="recommandExerList"  parameterType="int"  resultMap="exerMap">
+	SELECT exer_no, exer_name, exer_cate, exer_kcal, ROUND(#{value:INTEGER}/exer_kcal)*10 as "recommTime"
+	FROM (SELECT inner_table.* , ROWNUM AS row_seq
+	FROM (SELECT exer.exer_no, exer.exer_name, exer.exer_cate, exer.exer_kcal
+	FROM EXER
+	<if test="searchCondition != null">
+	<where>
+	<if test="searchCondition == 0 and searchKeyword !='' ">
+	exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
+	</if>
+	<if test="searchCondition == 1 and searchKeyword !='' ">
+	exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
+	</if>
+	</where>
+	</if>
+	ORDER BY exer_No ) inner_table)
+	WHERE row_seq BETWEEN 1 AND 10
+	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	</select>
+	 
+	
+	
+<select id="sumIntakeKcal" resultType="double">
+<!-- 해당일자 섭취 칼로리 총합 -->
+ SELECT SUM(user_food_intake)
+FROM intake_record
+WHERE user_id = #{userId:VARCHAR}
+AND TRUNC(intake_record_date) = TRUNC(SYSDATE)
+</select> 
+
+
+
+<select id="needDaliyIntakeKcal"  resultType="user"> 
+<!-- 하루칼로리 필요량 공식 산정에 필요한 값 구하기 -->
+SELECT user_body_info.weight as "weight", user_body_info.height as "height", users.age as "age", users.service_trgt as "service_trgt", users.gender as "gender"
+FROM user_body_info JOIN users ON user_body_info.user_id = users.user_id
+WHERE users.user_id = #{userId:VARCHAR}
+AND TRUNC(user_body_info_date) = TRUNC(SYSDATE)
+</select>
+
+
+<!-- 
+<select id="" > 
+추천운동 리스트 선정
+SELECT exer_no, exer_name, exer_cate, exer_kcal, ROUND(초과칼로리/exer_kcal)*10
+FROM exer
+ORDER BY 5 DESC
+</select> 
+ -->
 	
 	
 

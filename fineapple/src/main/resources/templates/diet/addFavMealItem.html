@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+
+
+</head>
+<body>
+
+
+
+	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="hong">		
+   <div  class="modal-dialog " style="width:800px; height:1300px;">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h1 class="modal-title" align="center">즐겨찾기에 추가</h1>
+     <div class="modal-header">
+
+
+
+
+     </div>
+        <div class="modal-body" style="height:500px;">
+
+
+<div class="row">
+<div class="col-12">
+<div align="center">
+ 		<table style="width:600px; " class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">식품명</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">1회제공량</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">1회제공량당 칼로리</th>         
+            <th style="	background-color: rgba(51, 255, 255, 0.62);" align="center">나의 섭취량</th>         
+          </tr>
+        </thead>
+        
+	
+       <tbody>
+	<tr>
+		<td th:text="${food.foodName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${food.servingSize}" th:attr="data-foodCd=${food.foodCd}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${food.foodKcal}" style="cursor:pointer; text-align: left;"></td>
+		<td ><input type="number" min="0" max="9999" name=userFoodIntake></td>
+		<td></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+
+	</table>
+
+<br><br><br>
+	<table style="width:400px;"  class="table table-hover table-striped" >			
+  		<thead>
+          <tr>
+            <th style="	background-color: rgba(255, 255, 51, 0.62);"  align="center">선택</th>         
+            <th style="	background-color: rgba(255, 255, 51, 0.62);"  align="center">번호</th>         
+            <th style="	background-color: rgba(255, 255, 51, 0.62);"  align="center">즐겨찾기명</th>         
+            <th style="	background-color: rgba(255, 255, 51, 0.62);" align="center">총합칼로리</th>         
+          </tr>
+        </thead>
+        
+        
+	
+       <tbody>
+	<tr th:each="data, i : ${list}">
+		<td><input type="radio" class="favMealNo" name="favMealNo" th:attr="data-favMealNo=${data.favMealNo}"  ></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.favMealName}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
+		<td></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+
+	</table>
+</div>
+</div>
+</div>
+
+
+ </div>
+ 
+     <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">이전</button>
+     </div>
+    </div>
+   </div>
+  </div>		
+</body>
+</html>

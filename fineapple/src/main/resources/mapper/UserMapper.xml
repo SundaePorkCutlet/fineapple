@@ -15,7 +15,7 @@
 	<result property="userLeaveStt" column="user_leave_stt"	jdbcType="INTEGER"/>
 	<result property="lastConTime"	column="last_con_time"	jdbcType="DATE"/>
 	<result property="regDate"	column="reg_date"	jdbcType="DATE"/>
-	<result property="strdWtrIntake"	column="str_wtr_intake"	jdbcType="DOUBLE"/>
+	<result property="strdWtrIntake"	column="strd_wtr_intake"	jdbcType="DOUBLE"/>
 	<result	property="userSttMsg"	column="user_stt_msg"	jdbcType="VARCHAR"/>
 	<result property="blcAddDate"	column="blc_add_date"	jdbcType="DATE"/>
 	<result property="blcAddWhy"	column="blc_add_why"	jdbcType="VARCHAR"/>
@@ -23,12 +23,55 @@
 	<result property="exerServiceNo"	column="exer_service_no"	jdbcType="INTEGER"/>
 	<result property="trgtWeight"		column="trgt_weight"		jdbcType="DOUBLE"/>
 	<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
-	<result	property="trgtBodyMuscle"	column="trgt_body_muscle"	jdbcType="DOUBLE"/>
 	<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
 	<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
 </resultMap>
 
+<insert id="addUser"   parameterType="User">
+	INSERT 
+	into 
+	USERS 
+	(
+	USER_ID,
+	ROLE,
+	GENDER,
+	BLC_RGS_STT,
+	USER_LEAVE_STT,
+	USER_IMG,
+	CELLPHONE,
+	USER_NAME,
+	PASSWORD,
+	AGE,
+	REG_DATE,
+	STRD_WTR_INTAKE,
+	BLC_ADD_DATE,
+	BLC_ADD_WHY,
+	LAST_CON_TIME,
+	USER_STT_MSG,
+	TRGT_WEIGHT
+	)   
+	VALUES 
+	(
+	#{userId:VARCHAR},
+    'user',
+    #{gender:VARCHAR},      
+    0,
+    0,
+    #{userImg:VARCHAR},
+    #{cellphone:VARCHAR},
+    #{userName:VARCHAR},
+    #{password:VARCHAR},
+    #{age:INTEGER},
+    SYSDATE,
+    2,
+    #{blcAddDate:DATE},
+    #{blcAddWhy:VARCHAR},
+    #{lastConTime:DATE},
+    '상태메세지없음',
+    #{trgtWeight : VARCHAR}
+    )
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -99,24 +142,111 @@ VALUES (#{userId:VARCHAR},
 		#{lastConTime:DATE},
 		'상태메세지없음')
 >>>>>>> refs/heads/KIM
+=======
+>>>>>>> refs/remotes/origin/master
 </insert>
 
 
 <insert id="addUserBodyInfo" parameterType="user">
-	INSERT into USER_BODY_INFO(USER_BODY_INFO_NO,USER_ID,WEIGHT,USER_BODY_INFO_DATE)
-	VALUES(seq_user_body_info_no.nextval,
-		#{userId:VARCHAR},
-		#{weight:INTEGER},
-		SYSDATE)
+	INSERT 
+	into 
+	USER_BODY_INFO
+	(
+	USER_BODY_INFO_NO,
+	USER_ID,
+	height,
+	WEIGHT,
+	USER_BODY_INFO_DATE
+	)
+	VALUES
+	(
+	seq_user_body_info_no.nextval,
+	#{userId:VARCHAR},
+	#{height:VARCHAR},
+	#{weight:INTEGER},
+	SYSDATE
+	)
+
 </insert>
 
+
+
 <select id = "getUser" parameterType ="String" resultMap = "userSelectMap">
-SELECT
-a.user_stt_msg, a.user_id, a.user_name, a.password, a.cellphone, a.age, a.reg_date, a.last_con_time, a.blc_rgs_stt, a.diet_service_no, a.exer_service_no,a.gender,a.role,a.user_img,a.height,b.weight
-from users a, user_body_info b
-where a.user_id = #{value}
-AND a.user_id = b.user_id
+	SELECT *
+	FROM
+	(SELECT
+	a.user_stt_msg, 
+	a.user_id, 
+	a.user_name, 
+	a.password, 
+	a.cellphone, 
+	a.age, 
+	a.reg_date, 
+	a.last_con_time, 
+	a.blc_rgs_stt, 
+	a.diet_service_no, 
+	a.exer_service_no,
+	a.gender,a.role,
+	a.user_img,
+	a.user_leave_stt,
+	b.weight,
+	b.height
+	from 
+	users a, 
+	user_body_info b
+	<where>
+	a.user_id = #{value}
+	AND a.user_id = b.user_id
+	</where> 
+	ORDER BY b.user_body_info_date DESC)
+	WHERE ROWNUM = 1
+
+
 </select>
+
+<update id="updateUser" parameterType="user">
+	UPDATE users
+	<set>
+	user_id=#{userId:VARCHAR},
+	user_name = #{userName:VARCHAR},
+	cellphone = #{cellphone:VARCHAR},
+	user_img=#{userImg:VARCHAR},
+	user_stt_msg=#{userSttMsg:VARCHAR}
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
+
+<update id="updateUserLeave" parameterType="user">
+	UPDATE users
+	<set>
+	user_id = #{userId:VARCHAR},
+	user_leave_stt = 1
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
+
+
+<update id = "restoreUser" parameterType="user">
+	UPDATE users
+	<set>
+	user_id = #{userId:VARCHAR},
+	user_leave_stt = 0
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
+
+<select id="checkDuplication" parameterType="user" resultType="String">
+	SELECT count(*)
+	FROM users
+	WHERE user_id = #{userId:VARCHAR}
+</select>
+ 
+<select id ="getUserList" parameterType="user" resultMap="userSelectMap">
+	SELECT user_name, cellphone, user_id
+	FROM users
+	WHERE user_name=#{userName:VARCHAR} AND cellphone=#{cellphone:VARCHAR}
+</select>
+
 
 
 </mapper>

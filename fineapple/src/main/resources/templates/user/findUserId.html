@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+</head>
+<body>
+<script>
+	$(function(){
+		$("#getUserList").on("click",function(){
+			var userName = $("#userName").val();
+			var cellphone =$("#cellphone").val();
+			if(userName == ""){
+				alert("닉네임(이름) 입력되지 않았습니다.");
+				return;
+			}else if(cellphone == ""){
+				alert("휴대폰번호가 입력되지 않았습니다.");
+				return;
+			}else{
+				var data = {
+					userName : userName,
+					cellphone : cellphone
+				};
+				$.ajax({
+					type :"POST",
+					url  : "/user/rest/getUserList",
+					data : JSON.stringify(data),
+					accept : "application/json",
+					contentType : "application/json"	
+				}).done(function(JSONData){
+					console.log(JSONData);
+					if(JSONData.length == 0){
+						alert("아이디가 없습니다.");
+					}
+				var result = "<p><h2>검색결과</h2></p>"
+				$("#appendList").append(result)
+					for(i = 0 ; i < JSONData.length ; i++){
+				var displayValue= "<br><p><h4> userId : " + JSONData[i].userId + "</h4></p>" ; 
+				$("#appendList").append(displayValue);
+					}
+				var displayButton = "<form><p><input type = 'submit' value = '로그인' id = 'login' name ='login'><p></form>"
+				$("#appendList").append(displayButton);
+				
+				$(function(){
+					$("#login").on("click",function(){
+						$("form").attr("method","GET").attr("action","/user/login").submit();
+						
+					})
+				})
+				})
+			}
+		});
+	});
+	
+	
+
+</script>
+<div th:insert="index/toolbar :: toolbar">
+</div>
+<div class="container show-grid">
+		<div class="row">
+			<div class="col-md-2">
+				<div data-obj-id="PTjxr" data-obj-type="element"
+					data- text-editable="true" class="">
+					<div data-text-content="true"
+						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
+						class="">오늘의 추천 음식?</div>
+				</div>
+
+				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
+			</div>
+			<div class="col-md-10">
+<br>
+<ins>
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">아이디 찾기</div>
+</ins>
+<br>
+<form method="POST">
+<div align="center">
+
+<p>이름(닉네임)</p>
+<p><input type="text" id = "userName" name = "userName" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름(닉네임)" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
+</div>
+<br>
+<div align="center">
+<p>핸드폰번호</p>
+<p><input type="text" id = "cellphone"  name = "cellphone" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="번호만 입력하세요" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
+</div>
+<br>
+<div align="center" id="appendList">
+<input type="button" id="getUserList" name="getUserList" value ="아이디찾기">
+</div>
+<div>
+
+</div>
+</form>
+<br>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package kr.or.fineapple.domain;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import lombok.Getter;
@@ -15,32 +16,58 @@ public class BurnningRecord {
 	int burnningRecordNo;
 	Double recommendExerKcal;
 	Double trgtWeight;
-	LocalTime anExerTime;
-	LocalTime dailyExerTime;
+	String anExerTime;
+	String dailyExerTime;
 	Double dailyExerKcal;
 	/*ist<Exer> exer;*/
 	Exer exer;
 	int exerLv;
 	Double userExerBurnning;
+	LocalDate date;	
+	String hour;
+	String min;
+	String sec;
+	
 	
 	public BurnningRecord() {
 		
 	}
 
-	
-	public String setAnExerTime(int h, int m, int s) {
-		
-		return h+":"+m+":"+s;
-		
-		
+
+	public String getAnExerTime() {
+		return anExerTime;
 	}
 
 
-	public String setDailyExerTime(int h, int m, int s) {
+	public void setAnExerTime(String hour, String min, String sec) {
 		
-		return h+":"+m+":"+s;
+		this.anExerTime =  hour + min + sec;
+		
+		/*
+		 * if(anExerTime !=null) { // JSON ==> Domain Object Binding을 위해 추가된 부분
+		 * this.setAnExerTime( anExerTime.split(":")[0] +":"+ anExerTime.split(":")[1] +
+		 * ":" +anExerTime.split(":")[2] ); }
+		 */
+	}
+		
+	
+
+
+	public String getDailyExerTime() {
+		return dailyExerTime;
+	}
+
+
+	public void setDailyExerTime(String dailyExerTime) {
+		
+		this.dailyExerTime = dailyExerTime;
+		
+		/*
+		 * if(dailyExerTime !=null) { // JSON ==> Domain Object Binding을 위해 추가된 부분
+		 * this.setDailyExerTime( dailyExerTime.split(":")[0] +":"+
+		 * dailyExerTime.split(":")[1] + ":" +dailyExerTime.split(":")[2] ); }
+		 */
 		
 	}
-	
-	
+
 }

@@ -11,6 +11,8 @@ function fncGetUserList(currentPage) {
 	//document.getElementById("currentPage").value = currentPage;
 
    	//document.detailForm.submit();
+   	
+   	
 	$("form").attr("method" , "POST").attr("action" , "/diet/addDietService").submit();
 }
 
@@ -18,7 +20,12 @@ $(function() {
 
 	 
 	 $("#add").on("click" , function() {
+	if($("#dailyTrgtIntakeKcal").val()!=null ){	 
 		 fncGetUserList(1);
+	 }else{
+		 alert('필수값은 모두 입력해주세요')
+		 
+	 }
 		
 });
 });
@@ -64,7 +71,7 @@ $(function() {
 			</div><br><br>
 			<span style="position:absolute; right:750px; font-weight:bold;font-size:18px; " class="">체중</span>
 			<div style="position:absolute; left:800px;">
-			<input type="number" step="0.1"  name="weight" value="${user.weight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1"  name="weight" th:value="${user.weight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			<span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">키</span>
@@ -86,7 +93,7 @@ $(function() {
 			
 			<span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">목표체중</span>
 			<div style="position:absolute; left:800px;">
-			<input type="number" step="0.1" value="0.0" name="trgtWeight" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input type="number" step="0.1" value="0.0" name="trgtWeight"  th:value="${user.trgtWeight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>kg</span>
 			</div><br><br>
 			
@@ -104,7 +111,7 @@ $(function() {
 			
 				<span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리섭취량</span>
 			<div style="position:absolute; left:800px;">
-			<input type="number" step="0.1"  value="0.0" name="dailyTrgtIntakeKcal" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+			<input required type="number" step="0.1" id="dailyTrgtIntakeKcal" value="0.0" name="dailyTrgtIntakeKcal" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
 			<span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 칼로리는 입니다.</span>
 			</div><br><br>
 			

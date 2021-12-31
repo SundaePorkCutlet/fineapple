@@ -2,28 +2,27 @@ package kr.or.fineapple.diet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import groovyjarjarantlr4.v4.runtime.misc.FlexibleHashMap.Entry;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.User;
@@ -64,11 +63,14 @@ public class DietController {
 						}else {
 							return "diet/addDietService.html";}
 			}else {
+				model.addAttribute("user",user);
 				return "diet/addDietService.html";}
 			
 		}else {
 			
-			return "../user/login";}
+
+			return "user/login"; }
+
 		
 	}
 		
@@ -123,7 +125,7 @@ public class DietController {
 		model.addAttribute("user",user);
 		model.addAttribute("dietServ",serv);
 		
-		return "diet/addDietService.html";
+		return "diet/updateDietService.html";
 			
 		
 	}
@@ -131,87 +133,8 @@ public class DietController {
 	
 
 	@GetMapping("getFoodList")
-	public String getFoodList(Model model, @ModelAttribute("search") Search search) throws Exception {
-
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		JSONArray jsonArray = new JSONArray();
-
-		try {
-			RestTemplate resttemplate = new RestTemplate();
-
-			HttpHeaders header = new HttpHeaders();
-
-			HttpEntity<?> entity = new HttpEntity<>(header);
-
-			String baseUrl = "";
-			if (search.searchCondition == 0) {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/DESC_KOR="
-						+ search.searchKeyword;
-			} else {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/MAKER_NAME="
-						+ search.searchKeyword;
-			}
-
-			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
-					Map.class);
-
-			map.put("statusCode", resultMap.getStatusCodeValue());
-			map.put("header", resultMap.getHeaders());
-			map.put("body", resultMap.getBody());
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("I2790");
-			ArrayList is = (ArrayList) im.get("row");
-
-			for (int i = 0; is.size() > i; i++) {
-				LinkedHashMap aa = (LinkedHashMap) is.get(i);
-				
-				Food food = new Food();
-
-				String makerName = aa.get("MAKER_NAME").toString();
-				String name = aa.get("DESC_KOR").toString();
-				String serv = aa.get("SERVING_SIZE").toString();
-				if (serv == null || serv == "") {
-					serv = "0.0";
-				}
-				String kcal = aa.get("NUTR_CONT1").toString();
-				if (kcal == null || kcal == "") {
-					kcal = "0.0";
-				}
-				String carb = aa.get("NUTR_CONT2").toString();
-				if (carb == null || carb == "") {
-					carb = "0.0";
-				}
-				String protein = aa.get("NUTR_CONT3").toString();
-				if (protein == null || protein == "") {
-					protein = "0.0";
-				}
-				String fat = aa.get("NUTR_CONT4").toString();
-				if (fat == null || fat == "") {
-					fat = "0.0";
-				}
-
-				food.setFoodName(name);
-				food.setMakerName(makerName);
-				food.setServingSize(Double.parseDouble(serv));
-				food.setFoodKcal(Double.parseDouble(kcal));
-				food.setFoodCarb(Double.parseDouble(carb));
-				food.setFoodProtein(Double.parseDouble(protein));
-				food.setFoodFat(Double.parseDouble(fat));
-
-				jsonArray.add(food);
-			}
-
-		} catch (Exception e) {
-			map.put("statusCode", "999");
-			map.put("body", "excpetion오류");
-			System.out.println(e.toString());
-
-		}
-
+	public String getFoodList(Model model, @ModelAttribute("search") Search search,HttpServletRequest request) throws Exception {
+			
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
 		search1.setPageSize(30);
@@ -221,65 +144,168 @@ public class DietController {
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		Map<String, Object> map4 = new HashMap<String, Object>();
-
-		map2 = dietService.getFoodList(search1);
-		map3.put("list", jsonArray);
-		map4.putAll(map2);
-		map4.putAll(map3);
-		model.addAttribute("list", map4.get("list"));
+		List list = new ArrayList();
+		List<Food> list2 = new ArrayList<Food>();
+		list=dietService.getFoodAPIlist(search);
+		
+		list2=dietService.getFoodList(search1);
+		
+		list.addAll(list2);
+		
+		
+//		JSONArray array = new JSONArray();
+//		JSONArray array2 = new JSONArray();
+//		
+//		list2=dietService.getFoodList(search1);
+//		
+//		   for (Food userFood : list2) {
+//		        array2.add(userFood);
+//		    }
+//		array=dietService.getFoodAPIlist(search);
+//
+//		array.addAll(array2);
+//		
+		
+		model.addAttribute("list", list);
 		model.addAttribute("search", search);
+		
+
+		
+		
+		
 
 		return "diet/getFoodList.html";
 	}
 
+	@GetMapping("getFood")
+	public String getFood(@RequestParam("foodCd")String foodCd, Model model) throws Exception {
+		
+		Food food = new Food();
+		food = dietService.getFood(foodCd);
+		System.out.println(foodCd);
+		model.addAttribute("food",food);
+		return "diet/getFood.html";
+		}
+
 	
 	
 	@GetMapping("getPurchaseFoodList")
-	public String PostFoodList(@ModelAttribute("search") Search search, Model model) throws Exception {
-		System.out.println("getPurchaseFoodList");
+	public String PurchasaeFoodList(Model model,@ModelAttribute("search") Search search) throws Exception {
+		System.out.println("post:getPurchaseFoodList");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		JSONArray jsonArray = new JSONArray();
-
-		try {
-			RestTemplate resttemplate = new RestTemplate();
-
-			HttpHeaders header = new HttpHeaders();
-
-			HttpEntity<?> entity = new HttpEntity<>(header);
-
-			String baseUrl = "https://openapi.naver.com/v1/search/shop.json?query=";
-
-			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
-					Map.class);
-
-			map.put("statusCode", resultMap.getStatusCodeValue());
-			map.put("header", resultMap.getHeaders());
-			map.put("body", resultMap.getBody());
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("I2790");
-			ArrayList is = (ArrayList) im.get("row");
-
-		} catch (Exception e) {
-			map.put("statusCode", "999");
-			map.put("body", "excpetion오류");
-			System.out.println(e.toString());
-
+		search.setCurrentPage(1);
+		search.setPageSize(30);
+		search.setSearchCondition(0);
+		if(search.searchKeyword=="") {
+			search.setSearchKeyword("샐러드");
 		}
+
+		List list = new ArrayList();
+		String result = dietService.shoppingAPI(search.searchKeyword);
+		  JSONParser parser = new JSONParser();
+          JSONObject obj = (JSONObject)parser.parse(result);
+          System.out.println(obj);
+          JSONParser parser2 = new JSONParser();
+          Object obj2 = parser2.parse(obj.get("items").toString());
+          JSONArray array2 = (JSONArray)obj2;
+          for(int i=0; i<array2.size(); i++) {
+          System.out.println(((JSONObject)array2.get(i)).get("image"));
+          Food food = new Food();
+         if(((JSONObject)array2.get(i)).get("category1").toString().equals("식품")) {
+          food.setFoodImg(((JSONObject)array2.get(i)).get("image").toString());
+         food.setPrice(Integer.parseInt(((JSONObject)array2.get(i)).get("lprice").toString()));
+         food.setFoodName(((JSONObject)array2.get(i)).get("title").toString());
+         food.setPurchaseConnLink(((JSONObject)array2.get(i)).get("link").toString());
+         food.setMakerName(((JSONObject)array2.get(i)).get("brand").toString());
+         food.setStoreName(((JSONObject)array2.get(i)).get("maker").toString());
+         
+          list.add(food);
+          }
+          }
+          
+          model.addAttribute("list",list);
+          model.addAttribute("search",search);
+		
+		
 
 		return "diet/getPurchaseFoodList.html";
 
+	
+}
+	@GetMapping("getFavMealList")
+	public String getFavMealList(Model model,HttpServletRequest request)	throws Exception {
+			System.out.println("getFavMealList");
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			
+			User user =(User)request.getSession(true).getAttribute("user");
+			DietServ serv = dietService.getDietService(user.getUserId());
+			map = dietService.getFavMealList(serv.getUserServiceNo());
+			System.out.println(map);
+			model.addAttribute("list",map.get("list"));
+		return "diet/getFavMealList.html";
 	}
+		
+@GetMapping("getAddDaily")
+public String getAddDaily(Model model)throws Exception{
+	
+	
+	
+	
+	return "diet/getAddDailyIntakeMeal.html";
+}
+	
 
-	@RequestMapping(value = "addDailyIntakeMeal")
-	public String addDailyIntakeMeal() {
-		System.out.println("addDailyIntakeMeal");
+@GetMapping("modal")
+public String modal(Model model,HttpServletRequest request,@RequestParam("checkarray")String foodCd) throws Exception {
+	
+	String hong = "byung";
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	DietServ serv = dietService.getDietService(user.getUserId());
+	map = dietService.getFavMealList(serv.getUserServiceNo());
+	System.out.println(map);
+	model.addAttribute("list",map.get("list"));
+	System.out.println(foodCd);
+	model.addAttribute("foodCd",foodCd);
+	
+	return "diet/getFavMealList :: hong";
+	
+	
+}
 
-		return "diet/addDailyIntakeMeal.html";
 
-	}
+
+
+
+@GetMapping("addFavMealItem")
+public String getaddFavMeal2(Model model, @RequestParam("checkarray")String foodCd,HttpServletRequest request) throws Exception {
+		
+	System.out.println("오긴온다");
+	
+	Food food = new Food();
+		
+	food = dietService.getFood(foodCd);
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	DietServ serv = dietService.getDietService(user.getUserId());
+	map = dietService.getFavMealList(serv.getUserServiceNo());
+	System.out.println(map);
+	
+	model.addAttribute("list",map.get("list"));
+	model.addAttribute("food", food);
+
+	return "diet/addFavMealItem :: hong";
+}
+
+
+
+	
 
 }
+
+
+

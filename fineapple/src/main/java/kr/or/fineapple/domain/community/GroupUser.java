@@ -11,8 +11,9 @@ import lombok.ToString;
 public class GroupUser {
 	
 	private int groupUserNo;
+	private Group group;
 	private User user;
-	private int userStt;
-	private Boolean userCaptainStt;
+	private int groupStt;
+	private int captainStt;
 
 }

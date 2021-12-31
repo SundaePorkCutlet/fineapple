@@ -75,7 +75,7 @@ div.profile{
 <br>
 <div class="box" >
 	<img th:src="@{../assets/profile/}+${session.user.userImg}" height="200" class="profile">
-</div>
+	</div>
 <p align ="center"><b>프로필사진</b></p>
 <p align="center"><b>상태메세지</b></p>
 <p th:text="${session.user.userSttMsg}" align ="center"></p>
@@ -96,9 +96,10 @@ div.profile{
 		<td th:unless="${session.user.blcRgsStt} == 0">블랙리스트</td>
 	</tr>
 	<tr>
-		<th scope="row"><b>비밀번호</b></th>
-		<td>●●●●●●●</td>
+		<th scope="row"><b>나이</b></th>
+		<td th:text="${session.user.age}"></td>
 		<th scope="row"><b>활성서비스내역</b></th>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
@@ -107,7 +108,10 @@ div.profile{
 		
 =======
 		<td th:if ="${session.user.dietServiceNo} != null">식단서비스</td>
+=======
+>>>>>>> refs/remotes/origin/master
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
+<<<<<<< HEAD
       <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>
       <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
 >>>>>>> refs/heads/KIM
@@ -117,6 +121,10 @@ div.profile{
       <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>
       <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
 >>>>>>> refs/heads/KIM
+=======
+        <td th:if ="${session.user.exerServiceNo} != 0">운동서비스</td>      
+        <td th:if ="${session.user.exerServiceNo} == 0 AND ${session.user.dietServiceNo} == 0">활성화된 서비스가 없습니다.</td>
+>>>>>>> refs/remotes/origin/master
 	</tr>
 	<tr>
 		<th scope="row"><b>전화번호</b></th>
@@ -134,14 +142,15 @@ div.profile{
 		<th><b>성별</b></th>
 		<td th:if="${session.user.gender} == male">남</td>
 		<td th:unless="${session.user.gender} == male">여</td>
-		<th><b>나이</b></th>
-		<td th:text="${session.user.age}"></td>
 	</tr>
 	
 </table>
 </div>
-
-
+<br>
+<div align="center">
+	<input type = "button" value ="수 정" id="updateUser"  th:onClick = "|location.href='@{/user/updateUser(userId=${session.user.userId})}'|"data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;">
+</div>
+<br>
 </div>
 </div>
 </div>

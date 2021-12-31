@@ -1,10 +1,23 @@
-	<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
 </head>
 <body>
-
+<div th:fragment="getCmnt">
+<table class="table table-hover table-striped">
+	<tbody>
+		<tr th:each = "data : ${map.list}">
+		<td th:text = "${data.cmntNo}" style="display: none;"></td>
+		<td th:text = "${data.board.postNo}" style="display: none;"></td>
+		<td th:text = "${data.user.userId}" ></td>
+		<td th:text = "${data.cmntContent}" ></td>
+		<td th:text = "${data.cmntDate}" ></td>
+		<td th:text = "${data.cmntLikeCount}"></td>
+		<td> 신고하기</td>
+		</tr>
+	</tbody>
+</table>
+</div>					
 </body>
 </html>

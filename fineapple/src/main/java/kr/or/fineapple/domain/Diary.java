@@ -10,8 +10,8 @@ public class Diary {
 	
 	////기간
 	//월 기간 산정
-	LocalDate startingDate;
-	LocalDate endingDate;
+	LocalDate startDate;
+	LocalDate endDate;
 	
 	////다이어리 제공 정보(일별) : 뱃지, 대표사용자이벤트, 총 섭취소모 칼로리
 	//일별 정보 디스플레이를 위한 일자
@@ -24,8 +24,8 @@ public class Diary {
 	//일별 대표 사용자이벤트 제목
 	String userEventTitle;
 	//일별 총 섭취 소모 칼로리 
-	double dailyIntakeKcal;
-	double dailyBurnningKcal;
+	Double dailyIntakeKcal;
+	Double dailyBurnningKcal;
 	
 	////다이어리 제공 정보(월 전체) : 목표습관 진행 현황
 	//목표습관카테고리 번호:이름
