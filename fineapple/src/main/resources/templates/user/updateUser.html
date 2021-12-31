@@ -54,6 +54,7 @@ div.profile{
  width: 100%;
     height: 100%;
     object-fit: cover;
+   width : 200px;
 }
 
 </style>
@@ -113,15 +114,15 @@ div.profile{
 	</tr>
 	<tr>
 		<th scope="row"><b>이메일</b></th>
-	    <td><input type="text" th:value=${session.user.userId} id="userId" name="userId" readonly></td>
+	    <td><input type="text" th:value="${session.user.userId}" id="userId" name="userId" readonly></td>
 		<th scope="row"><b>블랙리스트여부</b></th>
 		<td th:if="${session.user.blcRgsStt} == 0">일반회원</td>
 		<td th:unless="${session.user.blcRgsStt} == 0">블랙리스트</td>
 		
 	</tr>
 	<tr>
-		<th scope="row"><b>비밀번호</b></th>
-		<td>●●●●●●●</td>
+		<th><b>나이</b></th>
+		<td th:text="${session.user.age}"></td>
 		<th scope="row"><b>활성서비스내역</b></th>
 		<td th:if ="${session.user.dietServiceNo} != 0">식단서비스</td>
 		<td th:if ="${session.user.exerServiceNo} !=0">운동서비스</td>
@@ -144,8 +145,7 @@ div.profile{
 		<th><b>성별</b></th>
 		<td th:if="${session.user.gender} == male">남</td>
 		<td th:unless="${session.user.gender} == male">여</td>
-		<th><b>나이</b></th>
-		<td th:text="${session.user.age}"></td>
+		
 	</tr>
 	
 </table>

@@ -57,6 +57,14 @@ public class UserServiceImpl implements UserService {
 
 		return list;
 	}
+
+	@Override
+	public String kakaoLogin(User user) throws Exception {
+		
+		return userMapper.checkDuplication(user.getUserId());
+	}
+	
+	
 	
 	
 	
