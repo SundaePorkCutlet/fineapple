@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.Badge;
-import kr.or.fineapple.domain.Diary;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
 import kr.or.fineapple.domain.common.ViewDuration;
@@ -15,9 +14,6 @@ import kr.or.fineapple.domain.common.ViewDuration;
 @Mapper
 @Repository
 public interface DiaryMapper {
-	
-	////다이어리(캘린더포맷) 조회
-	Diary getDiary(Map map);
 	
 	////사용자 이벤트 추가(1일 최대 5개까지 등록)
 	void addUserEvent(UserEvent userEvent);
