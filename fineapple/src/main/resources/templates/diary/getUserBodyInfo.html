@@ -1,12 +1,43 @@
 <!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Good - Bootstrap 5 HTML Admin Dashboard Template
+Purchase: https://themes.getbootstrap.com/product/good-bootstrap-5-admin-dashboard-template
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head th:replace="index/toolbar :: head">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
+	<!--begin::Head-->
+	<head><base href="">
+		<title>Good – Bootstrap 5 HTML Admin Dashboard Template by Keenthemes</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="Good admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+		<meta name="keywords" content="Good, bootstrap, bootstrap 5, admin themes, free admin themes, bootstrap admin, bootstrap dashboard, bootstrap dark mode" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Good - Bootstrap 5 HTML Admin Dashboard Template" />
+		<meta property="og:url" content="https://themes.getbootstrap.com/product/good-bootstrap-5-admin-dashboard-template" />
+		<meta property="og:site_name" content="Keenthemes | Good" />
+		<link rel="canonical" href="https://preview.keenthemes.com/good" />
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Page Vendor Stylesheets(used by this page)-->
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/vis-timeline/vis-timeline.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Page Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+	</head>
 <body>
-<div th:insert="index/toolbar :: toolbar"></div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -79,7 +110,7 @@ $(function() {
 		<!-- 그래프 부분 -->
 		<div class="col-md-6">
 			<h4>나의 신체 변화 추이 그래프</h4>
-				<div>
+				<div class="col-md-3">
 				  <canvas id="myChart"></canvas>
 				</div>
 				<div class="form-group row">
