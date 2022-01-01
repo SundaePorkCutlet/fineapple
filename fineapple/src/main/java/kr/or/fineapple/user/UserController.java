@@ -64,6 +64,7 @@ public class UserController {
 			}
 			else if (userDB.getUserLeaveStt() == 1) {
 				System.out.println("Stt == 1");
+				
 				return "redirect:/user/restoreUser";
 			}
 		}
