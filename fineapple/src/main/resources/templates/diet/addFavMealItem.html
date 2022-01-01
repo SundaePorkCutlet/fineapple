@@ -10,7 +10,6 @@
 
 
 
-
 	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addFavMealItem">		
    <div  class="modal-dialog " style="width:800px; height:1300px;">
     <div class="modal-content">
@@ -25,7 +24,7 @@ function fncGetUserList(currentPage) {
     if (confirm("등록되었습니다! 확인하시겠어요?")) {
        self.location="/diet/getFavMealList";
     } else {
-    	$('#modal').modal("hide");
+    	$('#mmodal').modal("hide");
     }	
 }
 
@@ -108,6 +107,7 @@ $(function() {
 </div>
 </div>
 </form>
+
 
  </div>
  
