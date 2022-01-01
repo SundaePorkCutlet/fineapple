@@ -50,8 +50,9 @@ public class UserController {
 	@RequestMapping(value="login/redirect",method = RequestMethod.POST)
 	public String login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
 		
-		System.out.println("login시도:POST");
+		System.out.println("login시도:POST" + user);
 		User userDB = userService.getUser(user.getUserId());
+		
 		
 		System.out.println("userDB : "+userDB);
 		

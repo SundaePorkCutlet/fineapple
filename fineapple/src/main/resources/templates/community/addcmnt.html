@@ -18,8 +18,8 @@
 function fnAddCmnt(){
 	var data = {
 			postNo : $("#postNo").val(),
-			cmntContent : $("#content").val
-			}
+			cmntContent : $("#content").val()
+			};
 	console.log(data)
 	$.ajax({
 		url: "/community/json/addCmnt",
@@ -29,7 +29,7 @@ function fnAddCmnt(){
 		data: JSON.stringify(data),
 		success : (function(data){
 			console.log(data)
-			
+			$("#postNo").attr("data-cmntList", data.list);
 		})
 	})
 				

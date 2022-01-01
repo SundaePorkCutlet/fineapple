@@ -27,6 +27,8 @@ public interface CommunityMapper {
 	
 	public List<Cmnt> getCmntList(Board board);
 	
+	public List<Cmnt> getCmntListAfterAddCmnt(Cmnt cmnt);
+	
 	public void updatePostViewCount(Board board);
 	
 	public void addPostLike(Board board);

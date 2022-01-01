@@ -14,7 +14,7 @@ public interface CommunityService {
 	
 	public void addPost(Board board);
 	
-	public void addCmnt(Cmnt cmnt);
+	public Map addCmnt(Cmnt cmnt);
 	
 	public List<Board> getPostList();
 	

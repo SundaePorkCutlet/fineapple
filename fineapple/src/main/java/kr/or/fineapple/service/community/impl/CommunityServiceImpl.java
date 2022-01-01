@@ -34,8 +34,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void addCmnt(Cmnt cmnt) {
+	public Map addCmnt(Cmnt cmnt) {
 		communityMapper.addCmnt(cmnt);
+		System.out.println(cmnt+ "addÈÄ");
+		Map map = new HashMap();
+		map.put("list", communityMapper.getCmntListAfterAddCmnt(cmnt));
+		return map;
+		
 	}
 
 	@Override
