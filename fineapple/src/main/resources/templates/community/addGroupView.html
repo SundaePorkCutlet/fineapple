@@ -33,7 +33,7 @@
 					<div style="font-weight:bold;font-size:18px; text-align: center;">그룹명</div>
 					<span>
 						<input name ="groupName" id = "groupName" style="height:50px; width:200px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
-						<button style="height:30px; width:100px; font-size: 15px" id = "check" type="button" class="btn btn-primary"> 중복체크</button>
+						<button style="height:30px; width:100px; font-size: 15px" id = "checkGroupName" type="button" class="btn btn-primary" th:onclick="javascript:fnCheckGroupName()"> 중복체크</button>
 					</span>
 					
 					<div style="font-weight:bold;font-size:18px;" >그룹소개글</div>
@@ -58,13 +58,20 @@
 	
 	
 <script type="text/javascript">
-$(function(){
-	
-	$("#addGroupButton").on("click", function(){
-		$("#groupForm").attr("method", "POST").attr("action", "/community/addGroup").submit();
-	});
-	
-});
+function fnCheckGroupName(){
+	var data = {groupName = $("#checkGroupName").val};
+	$.ajax({
+		url: "/community/json/checkGroupName",
+		type: "POST",
+		dataType: 'json',
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success : (function(data){
+			console.log(data)
+		}) 
+		
+	})
+};
 </script>
 </body>
 </html>

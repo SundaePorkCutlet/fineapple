@@ -13,7 +13,7 @@
 		<td th:text = "${data.user.userId}" ></td>
 		<td th:text = "${data.cmntContent}" ></td>
 		<td th:text = "${data.cmntDate}" ></td>
-		<td th:text = "${data.cmntLikeCount}"></td>
+		<td th:text = "${data.cmntLikeCount}" th:onclick="javascript:fnCheckGroupName()"></td>
 		<td> 신고하기</td>
 		</tr>
 	</tbody>

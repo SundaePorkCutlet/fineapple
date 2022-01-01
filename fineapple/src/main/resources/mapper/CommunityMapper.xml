@@ -367,12 +367,12 @@
 	<!-- //////////////////////////////////////////////////////// -->
 	
 	<select id="getGroupUserList" parameterType="group" resultMap="groupUserMap">
-	SELECT
-	*
-	FROM
-	group_user
-	<trim prefix="WHERE" prefixOverrides="AND | OR">
-	group_no = #{groupNo}
+		SELECT
+		*
+		FROM
+		group_user
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+		group_no = #{groupNo}
 	</trim>
 	</select>
 	
@@ -381,17 +381,17 @@
 	<!-- //////////////////////////////////////////////////////// -->
 	
 	<select id="getMyGroupList" parameterType="groupUser" resultMap="groupMap">
-	SELECT
-	g.group_no,
-	g.group_name,
-	g.group_intro,
-	g.group_birth
-	FROM
-	groups g,
-	group_user gu
-	<trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
-	gu.user_id = #{user.userId}
-	AND gu.group_no = g.group_no
+		SELECT
+		g.group_no,
+		g.group_name,
+		g.group_intro,
+		g.group_birth
+		FROM
+		groups g,
+		group_user gu
+		<trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides=",">
+		gu.user_id = #{user.userId}
+		AND gu.group_no = g.group_no
 	</trim>
 	</select>
 	
