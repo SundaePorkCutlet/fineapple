@@ -96,6 +96,13 @@ public class CommunityServiceImpl implements CommunityService {
 	public void addGroup(Group group) {
 		communityMapper.addGroup(group);
 	}
+
+	@Override
+	public List getAlarmList() {
+	
+		return communityMapper.getAlarmList();
+	}
+	
 	
 	
 	

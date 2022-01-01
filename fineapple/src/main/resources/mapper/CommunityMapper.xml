@@ -81,6 +81,15 @@
 		<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
 	</resultMap>
 	
+	<resultMap type="alarm" id="alarmMap">
+	<result property="alarmNo" column="alarm_no"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="otherUser.userId" column="other_user_id"/>
+	<result property="alarmTitle" column="alarm_title"/>
+	<result property="alarmCntnt" column="alarm_cntnt"/>	
+	<result property="alarmTime" column="alarm_time"/>
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -484,6 +493,57 @@
 	
 	
 	<!-- //////////////////////////////////////////////////////// -->
+	
+	<insert id="addAlarm" parameterType="alarm">
+		INSERT
+		INTO
+		ALARM
+		(
+		alarm_no,
+		user_id,
+		alarm_title,
+		alarm_cntnt,
+		alarm_time
+		)
+		VALUES
+		(
+		seq_alarm_alarm_no.NEXTVAL,
+		#{user.userId},
+		#{otherUser.userId:VARCHAR},
+		#{alarmTitle},
+		#{alarmCntnt},
+		SYSDATE
+		)
+	</insert>
+	
+	<delete id="deleteAlarm" parameterType="ALARM">
+	DELETE
+	FROM
+	alarm
+	<where>
+	alarm_no = #{alarmNo}
+	</where>
+	</delete>
+	
+	<select id="getAlarmList" parameterType="user" resultMap="alarmMap">
+	SELECT
+	alarm_no,
+	user_id,
+	other_user_id,
+	alarm_title,
+	alarm_cntnt,
+	alarm_time
+	FROM
+	alarm
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	user_id = #{userId}
+	</trim>
+	</select>
+	
+	
+	
+	
+	
 	
 	
 </mapper>
