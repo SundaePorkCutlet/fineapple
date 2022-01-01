@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
-</body>
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+
+
+		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
+		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
+
+<!-- 
+
+		이런식으로 걍 냅다 넣으면돼 아래가 예시
+		
+		<div class="container">
+		
+			<div class="row mb-3">
+			    <div class="col-md-2 themed-grid-col"></div>
+			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
+			    <div class="col-md-2 themed-grid-col"></div>
+			</div>
+			
+		</div>
+
+-->
+ 
+ 
+ 
+ 
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
+			
+		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
+		
+<!-- 	
+	
+		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
+		
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<script>
+		      document.addEventListener('DOMContentLoaded', function() {
+		        var calendarEl = document.getElementById('calendar');
+		        var calendar = new FullCalendar.Calendar(calendarEl, {
+		          initialView: 'dayGridMonth'
+		        });
+		        calendar.render();
+		      });
+		</script>
+	
+-->
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
+	</body>
+	<!--end::Body-->
 </html>

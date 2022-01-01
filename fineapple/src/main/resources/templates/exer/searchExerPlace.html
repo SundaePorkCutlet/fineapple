@@ -1,58 +1,52 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head th:replace="index/toolbar :: head">
-<meta charset="utf-8">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-</head>
-<body>
 
-<div th:insert="index/toolbar :: toolbar"></div>
-			
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+
+   <!--begin::Body-->
+   <body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+         
 <div class="container show-grid">
-		<div class="row">
-			<div class="col-md-2">
-				<div data-obj-id="PTjxr" data-obj-type="element"
-					data- text-editable="true" class="">
-					<div data-text-content="true"
-						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
-						class="">오늘의 추천 음식?</div>
-				</div>
-				
-				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
-				</div>
-				<div class="col-md-10">
-				<br>
-				<br>		
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동장소 찾기</div>
-			<br><br><br>
-			
-			<div align="right">
-			    <form class="form-inline" name="detailForm">
-			    			
-				  	<div align="right" class="form-group">
-			
-		<!-- 	<a href="#" title="공원"><img src="../assets/img/park.png" style ="height: 50px; width: 50px;">    </a>
-			<a href="#" title="체육관"><img src="../assets/img/gym.png" style ="height: 50px; width: 50px;">   </a>
-		 -->	<!-- <a href="#" title="체육시설"><img src="../assets/img/">   </a> -->
-			</div>
-			</form>
-			
-	
-  		 	<div id="map" style="width:600px;height:400px; position: absolute; left: 180px;" ></div>
-				</div>
-   	
-			<button type="button" class="btn btn-lg btn-primary" id="getMyPositionBtn" onclick="getCurrentPosBtn()" style="width: 100px; height: 50px;  position: absolute; left: 300px; top: 700px; ">현위치</button>
-			<button type="button" class="btn btn-lg btn-primary"  onclick="getCurrentPosByPickBtn()" style="width: 200px; height: 50px;  position: absolute; left: 450px; top: 700px; ">내 위치 직접 선택</button>
-			
-		<!-- 	<input type="text" class="form-control" id="keyword" value="공원"  style="width: 100px; height: 100px;">
-			<button type="button" class="btn btn-lg btn-primary" onclick="keywordSearch()">검색</button>
-			
-			
-	 -->	
-			</div>   	
-			</div>
-			</div>
-			
+      <div class="row">
+         
+            <div class="col-md-10">
+            <br>
+            <br>      
+         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동장소 찾기</div>
+         <br><br><br>
+         
+         <div align="right">
+             <form class="form-inline" name="detailForm">
+                      
+                 <div align="right" class="form-group">
+         
+      <!--    <a href="#" title="공원"><img src="../assets/img/park.png" style ="height: 50px; width: 50px;">    </a>
+         <a href="#" title="체육관"><img src="../assets/img/gym.png" style ="height: 50px; width: 50px;">   </a>
+       -->   <!-- <a href="#" title="체육시설"><img src="../assets/img/">   </a> -->
+         </div>
+         </form>
+         
+   
+            <div id="map" style="width:600px;height:400px; position: absolute; left: 250px;" ></div>
+            </div>
+      
+         <button type="button" class="btn btn-lg btn-primary" id="getMyPositionBtn" onclick="getCurrentPosBtn()" style="width: 100px; height: 50px;  position: absolute; left: 400px; top: 700px; ">현위치</button>
+         <button type="button" class="btn btn-lg btn-primary"  onclick="getCurrentPosByPickBtn()" style="width: 200px; height: 50px;  position: absolute; left: 550px; top: 700px; ">내 위치 직접 선택</button>
+         
+      <!--    <input type="text" class="form-control" id="keyword" value="공원"  style="width: 100px; height: 100px;">
+         <button type="button" class="btn btn-lg btn-primary" onclick="keywordSearch()">검색</button>
+         
+         
+    -->   
+         </div>      
+         </div>
+         </div>
+         
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
@@ -115,7 +109,7 @@ function displayMarker(place) {
     });
 }
 
-	
+   
 function locationLoadSuccess(pos){
  // 현재 위치 받아오기
  var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
@@ -210,7 +204,7 @@ function getCurrentPosByPickBtn(){
     });
 }
 
-</script>			
+</script>         
 
 </body>
 </html>

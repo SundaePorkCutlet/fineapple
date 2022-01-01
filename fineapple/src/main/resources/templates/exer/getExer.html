@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head th:replace="index/toolbar :: head">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
-</head>
-<body>
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
-<div th:insert="index/toolbar :: toolbar">
-	</div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script th:inline="javascript">
+   <!--begin::Body-->
+   <body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+
+
+
+<script type="text/javascript">
 
 function fncUpdateProduct(){
 	
@@ -61,14 +64,14 @@ function count(type)  {
 		var exerKcal = [[${exer.exerKcal}]]; 
 		console.log(exerKcal);
 		console.log($("#sporttime").val());
-		$("#sportsKcal").text((exerKcal*$("#sporttime").val()).toFixed(0)+" kcal");
+		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
 	}
 
 	function sportsTime(){
 		var exerKcal = [[${exer.exerKcal}]]; 
 		console.log(exerKcal);
 		console.log($("#sporttime").val());
-		$("#sportsKcal").text((exerKcal*$("#sporttime").val()).toFixed(0)+" kcal");
+		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
 		//document.getElementById('sportsCal').innerText = $("select[name=order]").val()*obj.query.value;
 	}
 
@@ -116,22 +119,11 @@ function count(type)  {
 		 
 	});
 });	 */
-
-</script>
-
-			
+</script>   
+   			
 <div class="container show-grid">
 		<div class="row">
-			<div class="col-md-2">
-				<div data-obj-id="PTjxr" data-obj-type="element"
-					data- text-editable="true" class="">
-					<div data-text-content="true"
-						style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
-						class="">오늘의 추천 음식?</div>
-				</div>
-
-				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
-			</div>
+			
 			<div class="col-md-10">
 			<br>
 			<br>		
@@ -192,7 +184,7 @@ function count(type)  {
 		<a href="javascript:choiceType('+','10');">+</a>
 		<a href="javascript:choiceType('-','10');">-</a>
 		</span>
-   		  분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>	</span>
+   		  &nbsp;&nbsp;분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>	</span>
    		   	</div>
    		  	
    		  	<div align="left"><button type="button" class="btn btn-success">일일운동량에 추가</button></div>
@@ -212,9 +204,12 @@ function count(type)  {
 			<br><br>
 			</div>
 			</div>
-			<div id="mmodalHolder" style="width:200px;">
 			
-			</div>
 			
+   <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+   
+   
+   
+
 </body>
 </html>
