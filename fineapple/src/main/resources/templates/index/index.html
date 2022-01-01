@@ -505,7 +505,7 @@
 										<!--begin::Info-->
 										<div class="me-2">
 											<!--begin::Username-->
-											<a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-0">유저이름</a>
+											<a class="text-gray-800 text-hover-primary fs-6 fw-bold lh-0" id = "logintwo" name = "logintwo">로그인</a>
 											<!--end::Username-->
 											<!--begin::Description-->
 											<span class="text-gray-400 fw-bold d-block fs-8">상태메시지</span>
@@ -765,6 +765,8 @@
 			</span>
 			<!--end::Svg Icon-->
 		</div>
+		<div id="mmodalHolder" style="width:200px;">     
+         </div>
 		<!--end::Scrolltop-->
 		<!--end::Main-->
 		<script>var hostUrl = "assets/";</script>
@@ -792,6 +794,21 @@
 		<script src="assets/js/custom/modals/create-project/files.js"></script>
 		<script src="assets/js/custom/modals/create-project/complete.js"></script>
 		<script src="assets/js/custom/modals/create-project/main.js"></script>
+		<script>
+		 $(function() {
+   
+           $("#logintwo").on("click" , function() {
+
+               $.ajax({
+                   url: "/user/login",
+                   success:function(data){
+                      $("#mmodalHolder").html(data);
+                      $("#mmodal").modal("show");         
+                   }  
+                  });
+          });
+       });   
+		 </script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
 	</body>
