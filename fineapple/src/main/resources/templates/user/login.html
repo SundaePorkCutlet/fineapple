@@ -4,59 +4,58 @@
 <meta charset="utf-8">
 </head>
 <body>
-   <div id="mmodal" class="modal fade" role="dialog" th:fragment ="hong">      
+   <div id="loginModal" class="modal fade" role="dialog" th:fragment ="hong">
    <div  class="modal-dialog " style="width:470px; height:1300px;">
     <div class="modal-content">
       <button type="button" class="close" data-bs-dismiss="modal">×</button>
       <h1 class="modal-title" align="center"></h1>
      <div class="modal-header">
      </div>
-     
+
         <div class="modal-body" style="height:500px; width:400px;">
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
 $(function(){
 	$("#userId").focus();
-	
+
 	$("#login").on("click",function(){
 		var userId = $("#userId").val();
 		var password =$("#password").val();
 		console.log(userId);
 		console.log(password);
-		
+
 		if(userId == null || userId.length< 1){
 			alert("ID를 입력해주세요.")
 			$("#userId").focus();
 			return;
 		}
-		
+
 		if(password == null || password.length< 1){
 			alert("비밀번호를 입력해주세요.")
 			$("#password").focus();
 			return;
 		}
 		$("form").attr("method","POST").attr("action","/user/login/redirect").submit();
-	});	
+	});
 });
 
 $(function(){
 	$("#join").on("click",function(){
 		self.location = "/user/addUser";
 	})
-	
+
 })
 
 function kakaoLogin(){
 window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
-	
+
 	window.Kakao.Auth.login({
 		scope:'profile_nickname, profile_image,account_email,gender',
 		success : function(authObj){
 			console.log(authObj);
 			window.Kakao.API.request({
 				url:'/v2/user/me',
-				success:res => {		
+				success:res => {
 					const kakao_account = res.kakao_account;
 					console.log(kakao_account);
 					var userId =kakao_account.email;
@@ -95,32 +94,32 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 									data : JSON.stringify(data),
 									accept:"application/json",
 									contentType : "application/json",
-									
+
 								}).done(function(){
 									alert("회원가입이 되셨습니다.")
 									//$("form").attr("method","GET").attr("action","/user/kakaoLogin/"+userId).submit();
-									
+
 								})
-								
+
 							}
-							
+
 						}
-						
-				
-						
+
+
+
 					})
-			
+
 					}
-				
-			
-				
-	
+
+
+
+
 			});
-			
-			
+
+
 		}
 
-		
+
 	})
 
 }
@@ -168,7 +167,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
      <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
      </div>
     </div>
- 
-  
+
+
 </body>
 </html>
