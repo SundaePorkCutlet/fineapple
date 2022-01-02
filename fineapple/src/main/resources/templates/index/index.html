@@ -720,7 +720,7 @@
 						<!--begin::Container-->
 						<div id="kt_content_container" class="container-fluid">
 							<!--begin::Row-->
-							컨텐츠
+							<span id="kt_typedjs_example_1" class="fs-1 fw-bolder"></span>
 							<!--end::Row-->
 						</div>
 						<!--end::Container-->
@@ -793,6 +793,7 @@
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
 		<script src="assets/js/scripts.bundle.js"></script>
 		<!--end::Global Javascript Bundle-->
 		<!--begin::Page Vendors Javascript(used by this page)-->
@@ -828,6 +829,13 @@
                   });
           });
        });   
+		 
+		 var typed = new Typed("#kt_typedjs_example_1", {
+			    strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리해보자.", "정보를 공유해보자.","FineApple"],
+			    typeSpeed: 50
+			});	 
+		 
+		 
 		 </script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->

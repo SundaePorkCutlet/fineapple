@@ -276,6 +276,7 @@ public class DietServiceImpl implements DietService{
 				food.setFoodCholesterol(Double.parseDouble(cholesterol));
 				food.setFoodSaturatedFattyAcid(Double.parseDouble(saturatedFattyAcid));
 				food.setFoodTransFat(Double.parseDouble(transFat));
+				food.setIsAPI(1);
 
 				jsonArray.add(food);
 				
