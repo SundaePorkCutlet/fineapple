@@ -33,4 +33,6 @@ public interface CommunityService {
 	public void addReport(Report report);
 	
 	public void addGroup(Group group);
+	
+	public List getAlarmList();
 }

@@ -122,6 +122,14 @@ public class CommunityController {
 		
 	}
 	
+	@GetMapping(value="getAlarmList")
+	public List getAlarmList() {
+		User user = new User();
+		return communityService.getAlarmList();
+	}
+	
+	
+	
 	
 	
 	
