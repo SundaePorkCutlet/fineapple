@@ -35,7 +35,7 @@
 			<br><br><br>
     </div>
     <div class="card-footer">
-     <button type="button" class="btn btn-success">일일섭취식단에 추가</button>
+     <button type="button" class="btn btn-success"  data-bs-toggle="modal">일일섭취식단에 추가</button>
 			<button type="button" class="btn btn-danger" data-bs-toggle="modal">즐겨찾는식단에 추가</button>
 			<button type="button" class="btn btn-warning" th:onclick="|location.href='@{../diet/getPurchaseFoodList?searchKeyword={searchKeyword}(searchKeyword=${food.foodName})}'|">유사상품 검색하기</button>
     </div>
@@ -98,6 +98,36 @@ $(function() {
 		
 		  $.ajax({
 				url: "/diet/addFavMealItem?checkarray="+foodCd,
+				success:function(data){
+					$("#mmodalHolder").html(data);
+					$("#mmodal").modal("show");			
+					
+				}  
+				  
+			  });
+		
+		
+		 
+	});
+});	
+
+
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	 $( "button.btn.btn-success" ).on("click" , function() {
+		//Debug..
+		//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+		
+		
+	
+		var foodCd = $("#foodCd").attr("data-foodCd");
+	
+	
+	
+		
+		  $.ajax({
+				url: "/diet/getaddDailyIntakeMeal?checkarray="+foodCd,
 				success:function(data){
 					$("#mmodalHolder").html(data);
 					$("#mmodal").modal("show");			
