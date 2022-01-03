@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
@@ -49,9 +49,8 @@ $(function() {
        <tbody>
 	<tr th:each="data, i : ${list}">
 		<td></td>
-		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.routineName}" class="routineName" th:attr="data-routineNo=${data.routineNo}" style="cursor:pointer; text-align: left;"></td>
-		
 		<td th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
 		
 	</tr>

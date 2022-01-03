@@ -22,10 +22,12 @@ public interface ExerMapper {
 	   
 	   ExerServ getUserService(String userId);
 	   
+	   
 	   int updateUserService(ExerServ service);
 	   
        
        int updateServiceTrgt(ExerServ service);
+       
        
        int updateBodyInfo(ExerServ service);
 
@@ -35,7 +37,9 @@ public interface ExerMapper {
        //老老 款悼樊 CRUD
        int addDailyBurnning(BurnningRecord record);
        
+       BurnningRecord getBurnningRecordList(int userServiceNo);
        
+       int updateBurrningRecord(BurnningRecord record);
        
        
        //款悼CRUD

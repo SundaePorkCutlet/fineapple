@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-	<!-- 공통 header -->
+	<!-- 怨듯넻 header -->
 	<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
+		<!-- 怨듯넻 SideBar -->
 		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
 
 		<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -26,9 +26,17 @@
             }
 
 		    var typed = new Typed("#kt_typedjs_example_1", {
-			    strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리해보자.", "정보를 공유해보자.","FineApple"],
+			    strings: ["移쇰줈由щ�� �븣怨� 癒뱀옄.", "�젙蹂대�� �븣怨� �슫�룞�븯�옄.", "�뒿愿��룄 愿�由ы빐蹂댁옄.", "�젙蹂대�� 怨듭쑀�빐蹂댁옄.","FineApple"],
 			    typeSpeed: 50
 			});
+		    function listroutine(){
+		        popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		       	        
+		   }  
+		    function listcart() {
+	            popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+	        }
+		   
 		 </script>
 	</body>
 	<!--end::Body-->

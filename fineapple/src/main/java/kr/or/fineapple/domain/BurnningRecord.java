@@ -14,6 +14,7 @@ public class BurnningRecord {
 
 	String userId;
 	int burnningRecordNo;
+	int userServiceNo;
 	Double recommendExerKcal;
 	Double trgtWeight;
 	String anExerTime;

@@ -16,7 +16,7 @@ function fncGetUserList(currentPage) {
    //document.getElementById("currentPage").value = currentPage;
 
       //document.detailForm.submit();
-   $("form").attr("method" , "POST").attr("action" , "/diet/addUserService").submit();
+   $("form").attr("method" , "POST").attr("action" , "/exer/addUserService").submit();
 }
 
 $(function() {
@@ -27,21 +27,20 @@ $(function() {
       
 });
 });
+$(function() {
+	
+	$("#reset").on("click" , function() {
+		
+		$("form")[0].reset();
+});
+	
+});
 </script>   
    
       <form>   
 <div class="container show-grid">
       <div class="row">
-         <div class="col-md-2">
-            <div data-obj-id="PTjxr" data-obj-type="element"
-               data- text-editable="true" class="">
-               <div data-text-content="true"
-                  style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);"
-                  class="">오늘의 추천 음식?</div>
-            </div>
-
-            <a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
-         </div>
+         
          <div class="col-md-10">
          <br>
          <br>
@@ -49,86 +48,96 @@ $(function() {
          <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 서비스 활성화 </div>
          </ins>
          <br>
-         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 26px; color: rgba(41, 96, 47, 0.55);" class="">정보 입력 </div>
+         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 26px; color: rgba(41, 96, 47, 0.55);" class="">
          <div data-text-content="true" style="font-size: 13px; text-align: center; line-height: 1.4em;" class="">운동 관리 기능 및 운동 관리 기능을 사용하시려면<div>정보가 필요합니다. 
          </div><div>데이터 산출 목적에만 사용되고 그 외 목적에는 사용되지 않습니다.</div></div>   
+         </div>
+         <br><br><br><br>
                
-         <div data-image-content="true" style="background-image: url(/static/images/shape/line-horizontal.svg);"></div>      
-               
-         <div data-obj-id="V67Vq" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 447.75px; left: 543px; width: 300px; height: 27px;">
-         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 16px;" class="">  *필수입력 사항</div>   </div>
-         <div data-obj-id="E5prC" data-obj-type="element" data-text-editable="true" class="" style="position: absolute; top: 443.993px; left: 535.344px; width: 300px; height: 36px;">
-         <div data-text-content="true" style="font-weight: bold; font-size: 24px; text-decoration: none;" class="">  정보입력</div></div>
-         <br><br><br><br><br><br>
-         <div style="position:absolute; left:663px;">
+         <div align="left">
+         <span data-text-content="true" style="font-weight: bold; font-size: 24px;" class=""> 정보입력
+         <span data-text-content="true" style="font-weight: bold; font-size: 16px; text-decoration: none;" class=""> *필수입력 사항</span>
+         </span>
+        
+        
+       
+         <br><br>
+         <div align="center">
          <div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*운동 관리 목적
+         &nbsp;&nbsp;&nbsp;
          <select style="font-size:15px">
          <option>체중감량</option>
          <option>체중유지</option>
          <option>체중증량</option>         
          </select>
          </div>
-         </div><br><br>
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; " class="">체중</span>
-         <div style="position:absolute; left:800px;">
+         <br><br>
+         <span style=" font-weight:bold;font-size:18px; " class="">체중</span>
+          &nbsp;&nbsp;&nbsp;
          <input type="number" step="0.1"  name="weight" th:value="${user.weight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
          <span style=font-weight:bold;font-size:16px;>kg</span>
-         </div><br><br>
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">키</span>
-         <div style="position:absolute; left:800px;">
+         <br><br>
+         
+         <span style=" font-weight:bold;font-size:18px; "  class="">키</span>
+    
+          &nbsp;&nbsp;&nbsp;
          <input type="number" step="0.1" name="height" th:value="${user.height}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
          <span style=font-weight:bold;font-size:16px;>cm</span>
-         </div><br><br>
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">나이</span>
-         <div style="position:absolute; left:800px;">
+         <br><br>
+         
+         
+         <span style=" font-weight:bold;font-size:18px; "  class="">나이</span>
+          &nbsp;&nbsp;&nbsp;
          <input type="number" step="0.1" name="age" th:value="${user.age}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
          <span style=font-weight:bold;font-size:16px;>세</span>
-         </div><br><br>
+         <br><br>
          
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">성별</span>
-         <div style="position:absolute; left:800px;">
+         <span style="font-weight:bold;font-size:18px; "  class="">성별</span>      
+          &nbsp;&nbsp;&nbsp;
          <input checked readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="0">남성&nbsp;&nbsp;&nbsp;&nbsp; 
          <input readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="1">여성 
-         </div><br><br>
+         <br><br>
          
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">목표체중</span>
-         <div style="position:absolute; left:800px;">
+         <span style="font-weight:bold;font-size:18px; "  class="">목표체중</span>
+ 		  &nbsp;&nbsp;&nbsp;
          <input type="number" step="0.1"  name="trgtWeight" th:value="${user.trgtWeight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
          <span style=font-weight:bold;font-size:16px;>kg</span>
-         </div><br><br>
+         <br><br>
          
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">골격근량</span>
-         <div style="position:absolute; left:800px;">
-         <input type="number" step="0.1" value="0.0" name="bodyMusle" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+         <span style="font-weight:bold;font-size:18px; "  class="">골격근량</span>
+         &nbsp;&nbsp;&nbsp;
+         <input type="number" step="0.1"  name="bodyMuscle" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>%</span>
-         </div><br><br>
+         <br><br>
          
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">목표골격근량</span>
-         <div style="position:absolute; left:800px;">
-         <input type="number" step="0.1" value="0.0" name="trgtBodyMuscle" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+         <span style=" font-weight:bold;font-size:18px; "  class="">목표골격근량</span>    
+          &nbsp;&nbsp;&nbsp;
+         <input type="number" step="0.1" name="trgtBodyMuscle" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>%</span>
-         </div><br><br>
+         <br><br>
          
-         <span style="position:absolute; right:750px; font-weight:bold;font-size:18px; "  class="">*하루목표칼로리소모량</span>
-         <div style="position:absolute; left:800px;">
-         <input type="number" step="0.1"  value="0.0" name="dailyTrgtBurnningKcal" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-         <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;">&nbsp; &nbsp; 회원님의 적정 운동 칼로리는 ()입니다.</span>
-         </div><br><br>
-         
-         
-         <div style="position:absolute; left:750px;">
+         <span style="font-weight:bold;font-size:18px; "  class="">*하루 목표 소모칼로리</span>
+          &nbsp;&nbsp;&nbsp;
+         <input type="number" step="0.1"   name="dailyTrgtBurnningKcal" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
+         <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;"></span>
+         <br><br><br>
+       
+       
+         <div align="center">
          <button id="add" type="button" class="btn btn-primary" >등 &nbsp;록</button>
          <button id="cancel" type="button" class="btn btn-primary" >취 &nbsp;소</button>
          </div>
          <br><br>
-         <div style="position:absolute; left:790px;">
+         <div align="center">
          <button id="reset" type="button" class="btn btn-primary" >초기화</button>
          </div>
          
          </div>
          </div>
          </div>
-         
+         </div>
+          </div>
+          
          </form>
 			
    <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
