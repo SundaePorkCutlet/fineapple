@@ -1,0 +1,218 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+
+
+		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
+		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
+
+<!-- 
+
+		이런식으로 걍 냅다 넣으면돼 아래가 예시
+		
+		<div class="container">
+		
+			<div class="row mb-3">
+			    <div class="col-md-2 themed-grid-col"></div>
+			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
+			    <div class="col-md-2 themed-grid-col"></div>
+			</div>
+			
+		</div>
+
+-->
+ 
+ <div class="card">
+										<div class="card-header align-items-center py-5 gap-5">
+											<!--begin::Actions-->
+											<div class="d-flex flex-wrap gap-2">
+
+												<!--begin::Move-->
+												<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Move">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
+													<span class="svg-icon svg-icon-2" th:onclick="|location.href='@{/community/addPostView}'|">
+														작성하기
+													</span>
+													<!--end::Svg Icon-->
+												</a>
+												<!--end::Move-->
+											</div>
+											<!--end::Actions-->
+											
+											<!--begin::Pagination-->
+											<div class="d-flex align-items-center flex-wrap gap-2">
+												<!--begin::Search-->
+												<div class="d-flex align-items-center position-relative">
+													<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+													<span class="svg-icon svg-icon-2 position-absolute ms-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<input type="text" data-kt-inbox-listing-filter="search" class="form-control form-control-sm form-control-solid mw-100 min-w-200px ps-12" placeholder="Search Inbox">
+												</div>
+												<!--end::Search-->
+												<!--begin::Sort-->
+												<span>
+													<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Sort">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen059.svg-->
+														<span class="svg-icon svg-icon-2 m-0">
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
+																<rect y="6" width="16" height="3" rx="1.5" fill="black"></rect>
+																<rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="black"></rect>
+																<rect opacity="0.3" width="12" height="3" rx="1.5" fill="black"></rect>
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</a>
+													<!--begin::Menu-->
+													<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+														<!--begin::Menu item-->
+														<div class="menu-item px-3">
+															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_newest">Newest</a>
+														</div>
+														<!--end::Menu item-->
+														<!--begin::Menu item-->
+														<div class="menu-item px-3">
+															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_oldest">Oldest</a>
+														</div>
+														<!--end::Menu item-->
+														<!--begin::Menu item-->
+														<div class="menu-item px-3">
+															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_unread">Unread</a>
+														</div>
+														<!--end::Menu item-->
+													</div>
+													<!--end::Menu-->
+												</span>
+												<!--end::Sort-->
+											</div>
+											<!--end::Pagination-->
+										</div>
+										<div class="card-body p-0">
+											<!--begin::Table-->
+											<div id="kt_inbox_listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table table-hover table-row-dashed fs-6 gy-5 my-0 dataTable no-footer" id="kt_inbox_listing">
+												<!--begin::Table head-->
+												<thead class="d-none">
+													<tr><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Checkbox: activate to sort column ascending" style="width: 0px;">Checkbox</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 0px;">Actions</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Author: activate to sort column ascending" style="width: 0px;">Author</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 0px;">Title</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th></tr>
+												</thead>
+												<!--end::Table head-->
+												
+												
+												
+												
+												
+												
+												
+													
+												<tr class="fw-bold fs-7 text-danger border-bottom border-gray-200 py-4">
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">작성자</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">제목</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">내용</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">댓글수</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">조회수</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">좋아요</span>
+														</td>
+														<td class="w-100px text-end fs-7 pe-9">
+															<span class="fw-bold">날짜</span>
+														</td>
+												</tr>
+												
+												<tr th:each = "data : ${list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
+												 	<td th:text = "사진" ></td>
+													<td th:text = "${data.title}"></td>
+													<td>
+														<a th:href="@{/community/getPost(postNo=${data.postNo})}" th:text = "${data.content}"></a>
+													</td>
+													<td th:text = "${data.user.userId}"></td>
+													<td th:text = "${data.postDate}" ></td>
+													<td th:text = "${data.viewCount}" ></td>
+													<td th:text = "${data.cmntCount}"></td>
+													<td th:text = "${data.postLikeCount}"></td>
+												</tr>
+													
+													
+												<tbody>	
+													
+												
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													
+													</tbody>
+												<!--end::Table body-->
+											</table></div></div>
+											<!--end::Table-->
+										</div>
+									</div>
+ 
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
+			
+		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
+		
+<!-- 	
+	
+		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
+		
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<script>
+		      document.addEventListener('DOMContentLoaded', function() {
+		        var calendarEl = document.getElementById('calendar');
+		        var calendar = new FullCalendar.Calendar(calendarEl, {
+		          initialView: 'dayGridMonth'
+		        });
+		        calendar.render();
+		      });
+		</script>
+	
+-->
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
+	</body>
+	<!--end::Body-->
+</html>
