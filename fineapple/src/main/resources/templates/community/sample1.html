@@ -1,0 +1,117 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+
+
+		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
+		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
+
+<!-- 
+
+		이런식으로 걍 냅다 넣으면돼 아래가 예시
+		
+		<div class="container">
+		
+			<div class="row mb-3">
+			    <div class="col-md-2 themed-grid-col"></div>
+			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
+			    <div class="col-md-2 themed-grid-col"></div>
+			</div>
+			
+		</div>
+
+-->
+<div class="card-body"> 
+	<div class="d-flex align-items-center flex-wrap gap-2">
+		<!--begin::Heading-->
+		<h2 class="fw-bold me-3 my-1">Trip Reminder. Thank you for flying with us!</h2>
+		<!--begin::Heading-->
+		<!--begin::Badges-->
+		<span class="badge badge-light-primary my-1 me-2">inbox</span>
+		<span class="badge badge-light-danger my-1">important</span>
+		<!--end::Badges-->
+	</div>
+	<div class="d-flex align-items-center">
+		<!--begin::Avatar-->
+		<div class="symbol symbol-50 me-4">
+			<span class="symbol-label" style="background-image:url(/good/assets/media/avatars/150-1.jpg);"></span>
+		</div>
+		<!--end::Avatar-->
+		<div class="pe-5">
+			<!--begin::Author details-->
+			<div class="d-flex align-items-center flex-wrap gap-1">
+				<a href="#" class="fw-bolder text-dark text-hover-primary">Emma Smith</a>
+				<!--begin::Svg Icon | path: icons/duotune/abstract/abs050.svg-->
+				<span class="svg-icon svg-icon-7 svg-icon-success mx-3">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					
+				</svg>
+				</span>
+				<!--end::Svg Icon-->
+			</div>
+			<!--end::Author details-->
+		</div>
+	</div>
+	<span class="fw-bold text-muted text-end me-3">10 Mar 2022, 6:43 am</span>
+	
+	
+	<div class="py-5">
+	<p>Hi Bob,</p>
+	<p>With resrpect, i must disagree with Mr.Zinsser. We all know the most part of important part of any article is the title.Without a compelleing title, your reader won't even get to the first sentence.After the title, however, the first few sentences of your article are certainly the most important part.</p>
+	<p>Jornalists call this critical, introductory section the "Lede," and when bridge properly executed, it's the that carries your reader from an headine try at attention-grabbing to the body of your blog post, if you want to get it right on of these 10 clever ways to omen your next blog posr with a bang</p>
+	<p>Best regards,</p>
+	<p class="mb-0">Jason Muller</p>
+	</div>
+ 
+ 
+ 
+</div>
+<div class="d-flex flex-wrap gap-2 flex-stack cursor-pointer">
+	<a href="#" class="fw-bolder text-dark text-hover-primary">Max Smith</a>
+	<div class="text-muted fw-bold mw-450px" data-kt-inbox-message="preview">Jornalists call this critical, introductory section the "Lede," and when bridge properly executed....</div>
+	<span class="fw-bold text-muted text-end me-3">21 Feb 2022, 6:05 pm</span>
+</div>
+
+
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
+			
+		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
+		
+<!-- 	
+	
+		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
+		
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
+		<script>
+		      document.addEventListener('DOMContentLoaded', function() {
+		        var calendarEl = document.getElementById('calendar');
+		        var calendar = new FullCalendar.Calendar(calendarEl, {
+		          initialView: 'dayGridMonth'
+		        });
+		        calendar.render();
+		      });
+		</script>
+	
+-->
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
+	</body>
+	<!--end::Body-->
+</html>
