@@ -54,7 +54,9 @@ public interface DietService {
 	
 	public int updateIntakeRecord(IntakeRecord record)throws Exception;
 	
-	public IntakeRecord getIntakeRecordList(int dietServiceNo)throws Exception;
+	public List<IntakeRecord> getIntakeRecordList(int dietServiceNo)throws Exception;
+	
+	public void deleteIntakeRecord(int IntakeRecordNo)throws Exception;
 	
 	
 

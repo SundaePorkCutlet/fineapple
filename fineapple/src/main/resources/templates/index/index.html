@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-	<!-- 공통 header -->
-	<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+	<!-- 怨듯넻 header -->
+	<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+		<!-- 怨듯넻 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
 		<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 			<div id="kt_content_container" class="container-fluid">
@@ -16,7 +16,7 @@
 
 		<div id="mmodalHolder" style="width:200px;"></div>
 
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 
 		<script>
             var hostUrl = "assets/";
@@ -26,7 +26,7 @@
             }
 
 		    var typed = new Typed("#kt_typedjs_example_1", {
-			    strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리해보자.", "정보를 공유해보자.","FineApple"],
+			    strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리하자.", "정보를 공유하자.","FineApple"],
 			    typeSpeed: 50
 			});
 		 </script>

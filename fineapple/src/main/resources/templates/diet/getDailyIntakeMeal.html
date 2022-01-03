@@ -1,0 +1,329 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+	
+	
+	<div class="container show-grid">
+		<div class="row">
+			
+			<div class="col-md-10">
+			<br>
+			<br>
+			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">일일 섭취 식단</div>
+			
+			<br><br><br>
+			<div align="center">
+			<span  data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;총 섭취칼로리 : &nbsp;</span>
+			<span  data-text-content="true" style="font-weight: normal; font-size: 24px;" id="f" ></span></div>
+			<div align="center">
+			<span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;잔여 칼로리 : &nbsp;</span>
+			<span data-text-content="true" style="font-weight: normal; font-size: 24px;" id="g"></span></div>
+			<div align="center">
+			<span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;내 목표 섭취 칼로리 : &nbsp;</span>
+			<span data-text-content="true" style="font-weight: normal; font-size: 24px;" id="h" th:attr="data-trgtKcal=${serv.dailyTrgtIntakeKcal}" th:text="|${serv.dailyTrgtIntakeKcal}Kcal|"></span>
+			</div>
+			<br><br>
+			<div align="center">
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">즐겨찾기등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
+			<button style="width:130px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">직접등록</button>	
+			</div>	
+			<br><br>
+			<div align="right"><button th:if="${radio}!=1" class="btn btn-danger" id="deleteview">섭취식품삭제</button>
+			<button th:if="${radio}==1" class="btn btn-success">취소</button>
+			<button th:if="${radio}==1" class="btn btn-danger" id="delete">삭제하기</button>
+			</div>
+			<div class="card card-dashed" align="center">
+    <div class="card-header">
+        <h3 class="card-title" align="center">아침</h3>
+        <div class="card-toolbar">
+			<br><br></div></div>
+			   <div class="card-body">
+<table class="table">
+
+    <tbody>
+        <tr th:each="data, i : ${list}">
+        	<td th:if="${radio}==1 and ${data.meal}==아침"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
+            <td th:if="${data.meal}==아침" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
+            <td th:if="${data.meal}==아침" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
+            <td class="aKcal" th:if="${data.meal}==아침" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
+            <td th:if="${data.meal}==아침" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
+            <td th:if="${data.meal}==아침" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
+            <td th:if="${data.meal}==아침" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
+        </tr>
+        </tbody>
+        </table>
+			</div>
+			  <div class="card-footer" id="a">
+        Footer
+    </div>
+			</div>
+			
+			
+			
+			
+			<br><br>
+			<div class="card card-dashed" align="center">
+    <div class="card-header">
+        <h3 class="card-title" align="center">점심</h3>
+        <div class="card-toolbar">
+			<br><br></div></div>
+			   <div class="card-body">
+<table class="table">
+
+    <tbody>
+        <tr th:each="data, i : ${list}">
+          <td th:if="${radio}==1 and ${data.meal}==점심"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
+            <td th:if="${data.meal}==점심" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
+            <td th:if="${data.meal}==점심" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
+            <td class="bKcal" th:if="${data.meal}==점심" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
+            <td th:if="${data.meal}==점심" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
+            <td th:if="${data.meal}==점심" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
+            <td th:if="${data.meal}==점심" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
+        </tr>
+        </tbody>
+        </table>
+			</div>
+			  <div class="card-footer" id="b">
+        Footer
+    </div>
+			</div>
+			
+				<br><br>
+			<div class="card card-dashed" align="center">
+    <div class="card-header">
+        <h3 class="card-title" align="center">저녁</h3>
+        <div class="card-toolbar">
+			<br><br></div></div>
+			   <div class="card-body">
+<table class="table">
+
+    <tbody>
+        <tr th:each="data, i : ${list}">
+             <td th:if="${radio}==1 and ${data.meal}==저녁"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
+              <td th:if="${data.meal}==저녁" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
+            <td th:if="${data.meal}==저녁" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
+            <td class="cKcal" th:if="${data.meal}==저녁" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
+            <td th:if="${data.meal}==저녁" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
+            <td th:if="${data.meal}==저녁" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
+            <td th:if="${data.meal}==저녁" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
+        </tr>
+        </tbody>
+        </table>
+			</div>
+			  <div class="card-footer" id="c">
+        Footer
+    </div>
+			</div>
+			
+				<br><br>
+			<div class="card card-dashed" align="center">
+    <div class="card-header">
+        <h3 class="card-title" align="center">간식</h3>
+        <div class="card-toolbar">
+			<br><br></div></div>
+			   <div class="card-body">
+<table class="table">
+
+    <tbody>
+        <tr th:each="data, i : ${list}">
+             <td th:if="${radio}==1 and ${data.meal}==간식"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
+              <td th:if="${data.meal}==간식" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
+            <td th:if="${data.meal}==간식" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
+            <td class="dKcal" th:if="${data.meal}==간식" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
+            <td th:if="${data.meal}==간식" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
+            <td th:if="${data.meal}==간식" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
+            <td th:if="${data.meal}==간식" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
+        </tr>
+        </tbody>
+        </table>
+			</div>
+			  <div class="card-footer" id="d">
+        Footer
+    </div>
+			</div>
+			
+				<br><br>
+			<div class="card card-dashed" align="center">
+    <div class="card-header">
+        <h3 class="card-title" align="center">야식</h3>
+        <div class="card-toolbar">
+			<br><br></div></div>
+			   <div class="card-body">
+<table class="table">
+
+    <tbody>
+        <tr th:each="data, i : ${list}">
+        	 <td th:if="${radio}==1 and ${data.meal}==야식"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
+            <td th:if="${data.meal}==야식" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
+            <td th:if="${data.meal}==야식" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
+            <td class="eKcal" th:if="${data.meal}==야식" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
+            <td th:if="${data.meal}==야식" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
+            <td th:if="${data.meal}==야식" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
+            <td th:if="${data.meal}==야식" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
+        </tr>
+        </tbody>
+        </table>
+			</div>
+			  <div class="card-footer" id="e">
+        Footer
+    </div>
+			</div>
+			
+			
+			
+			
+			
+			
+			</div>
+			
+		
+			
+			
+			</div>
+			</div>
+			
+	    <div id="mmodalHolder" style="width:200px;"></div>
+	
+			 
+	<th:block th:replace="layout/fragments/footer.html :: footer">
+
+	</th:block>
+	
+	<script type="text/javascript">
+// 	$(document).ready(function(){
+			var sum1=0;
+			window.onload=	$(".aKcal").each(function(){
+				sum1+=Number($(this).attr("data-foodKcal"));
+			});
+			$("#a").html("총합 : <b>"+sum1.toFixed(1)+"<b>Kcal");
+			
+			var sum2=0;
+			window.onload=	$(".bKcal").each(function(){
+				sum2+=Number($(this).attr("data-foodKcal"));
+			});
+			$("#b").html("총합 : <b>"+sum2.toFixed(1)+"<b>Kcal");
+			
+			var sum3=0;
+			window.onload=	$(".cKcal").each(function(){
+				sum3+=Number($(this).attr("data-foodKcal"));
+			});
+			$("#c").html("총합 : <b>"+sum3.toFixed(1)+"<b>Kcal");
+			
+			var sum4=0;
+			window.onload=	$(".dKcal").each(function(){
+				sum4+=Number($(this).attr("data-foodKcal"));
+			});
+			$("#d").html("총합 : <b>"+sum4.toFixed(1)+"<b>Kcal");
+			
+			var sum5=0;
+			window.onload=	$(".eKcal").each(function(){
+				sum5+=Number($(this).attr("data-foodKcal"));
+			});
+			$("#e").html("총합 : <b>"+sum5.toFixed(1)+"<b>Kcal");
+			
+			var sum6=Number(sum1+sum2+sum3+sum4+sum5);
+			window.onload=$("#f").html(sum6.toFixed(1)+"Kcal");
+			
+			var sum7=Number($("#h").attr("data-trgtKcal")-sum6)
+			window.onload=$("#g").html(sum7.toFixed(1)+"Kcal");
+
+			
+
+			
+$(function() {
+				 $( "button.btn.btn-secondary" ).on("click" , function() {
+				
+				
+					  $.ajax({
+							url: "/diet/getFavMealList?menu=0",
+							success:function(data){
+								$("#mmodalHolder").html(data);
+								$("#mmodal").modal("show");			
+								
+							}  
+							  
+						  });
+					
+				});
+			});
+
+
+$(function() {
+	 $( "button.btn.btn-light" ).on("click" , function() {
+	
+	
+		  self.location="../diet/getFoodList";
+		
+	});
+});	
+
+$(function() {
+	 $( "button.btn.btn-info" ).on("click" , function() {
+	
+	
+		  self.location="../diet/getaddFood";
+		
+	});
+});	
+
+
+
+
+$(function() {
+	 $( "#deleteview" ).on("click" , function() {
+	
+		 self.location="../diet/getDailyIntakeMeal?radio=1";
+
+
+
+		
+	});
+});	
+
+$(function() {
+	 $( "#delete" ).on("click" , function() {
+	
+		 var IntakeRecordNo = $("input[name=chek]:checked").attr("intakeRecordNo");
+		 
+	
+			self.location= "/diet/deleteIntakeMeal?IntakeNo="+IntakeRecordNo;
+				
+			
+		
+		
+		}		 
+		)}
+	)
+	
+
+
+
+
+
+$(function() {
+	 $( "button.btn.btn-success" ).on("click" , function() {
+	
+		 self.location="../diet/getDailyIntakeMeal";
+
+
+
+		
+	});
+});	
+
+
+
+
+	
+	</script>
+
+</body>
+</html>

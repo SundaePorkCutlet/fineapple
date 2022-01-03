@@ -18,6 +18,12 @@
 		
 		<resultMap id ="IntakeRecordMap" type="IntakeRecord">
 		<result property="food.foodNo" 				column="FOOD_NO" 		jdbcType="INTEGER"/>
+		<result property="food.foodName"		column="FOOD_NAME"	jdbcType="VARCHAR"/>
+		<result property="food.foodCd"		column="FOOD_CD"	jdbcType="VARCHAR"/>
+		<result property="food.foodKcal"		column="FOOD_KCAL"	jdbcType="INTEGER"/>
+		<result property="food.foodCarb"		column="FOOD_CARB"	jdbcType="INTEGER"/>
+		<result property="food.foodProtein"		column="FOOD_PROTEIN"	jdbcType="INTEGER"/>
+		<result property="food.foodFat"		column="FOOD_FAT"	jdbcType="INTEGER"/>
 		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR"/>
 		<result property="meal" 				column="MEAL" 		jdbcType="VARCHAR"/>
 		<result property="userFoodIntake" 	column="USER_FOOD_INTAKE" 		jdbcType="INTEGER"/>
@@ -93,10 +99,11 @@
 	</update>
 
 	<insert id="insertIntakeRecord" parameterType="IntakeRecord">
-	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_CD,FOOD_KCAL,FOOD_CARB,FOOD_PROTEIN,FOOD_FAT, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE) 
+	INSERT INTO INTAKE_RECORD (INTAKE_RECORD_NO, USER_SERVICE_NO, FOOD_CD,FOOD_NAME,FOOD_KCAL,FOOD_CARB,FOOD_PROTEIN,FOOD_FAT, USER_ID, INTAKE_RECORD_DATE, MEAL, USER_FOOD_INTAKE) 
 	VALUES (seq_intake_record_no.NEXTVAL,
 			(SELECT user_service_no from USER_SERVICE WHERE USER_ID = #{userId:VARCHAR}),
 			#{food.foodCd:VARCHAR},
+			#{food.foodName:VARCHAR},
 			#{food.foodKcal:DOUBLE},
 			#{food.foodCarb:DOUBLE},
 			#{food.foodProtein:DOUBLE},
@@ -121,6 +128,13 @@
 	USER_FOOD_INTAKE =#{userFoodIntake:DOUBLE}
 	WHERE INTAKE_RECORD_NO = #{intakeRecordNo:DOUBLE}
 	</update>
+	
+	<delete id="deleteIntakeRecord" parameterType="Integer">
+	DELETE FROM INTAKE_RECORD
+	WHERE INTAKE_RECORD_NO = #{value}
+	
+	
+	</delete>
 	
 	
 	
