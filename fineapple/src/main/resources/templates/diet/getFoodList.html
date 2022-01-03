@@ -4,280 +4,242 @@
 <!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
-	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+<!--begin::Body-->
+<body id="kt_body" class="aside-enabled">
+<!-- 공통 SideBar -->
+<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+
+<form>
+    <div class="container show-grid">
+        <div class="row">
+
+            <div class="col-md-10">
+                <br>
+                <br>
+
+                <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="">식품
+                    리스트
+                </div>
+                <br><br>
+                <!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
+
+                <div align="right">
+                    <form class="form-inline" name="detailForm">
+                        <select class="form-control" name="searchCondition" style="width: 100px;">
+                            <option value="0" th:selected="${search.searchCondition}=='0'">식품명</option>
+                            <option value="1" th:selected="${search.searchCondition}=='1'">제조사</option>
+                        </select>
 
 
+                        <input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);" th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
 
-	
+                        <!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
+                         -->
+                        <button data-text-content="true" class="btn btn-primary">검색</button>
+                        <br>
 
-<!-- Button trigger modal -->
+                    </form>
+                </div>
 
 
-	<form>
-			
-<div class="container show-grid">
-		<div class="row">
-			
-			<div class="col-md-10">
-			<br>
-			<br>
-			
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >식품 리스트</div>
-			<br><br>
-<!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
+                <!--  		<table class="table table-hover table-striped" >			 -->
+                <!--   		<thead> -->
+                <!--           <tr> -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>          -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>          -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>          -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>            -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                        -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                        -->
+                <!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                        -->
+                <!--           </tr> -->
+                <!--         </thead> -->
+                <div class="tab-content">
+                    <!--begin::Tab panel-->
+                    <div id="kt_billing_months" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_billing_months">
+                        <!--begin::Table container-->
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table table-row-bordered align-middle gy-4 gs-9">
+                                <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
+                                <tr>
+                                    <td class="min-w-150px">확인된정보</td>
+                                    <td class="min-w-60px">번호</td>
+                                    <td class="min-w-150px">제조사</td>
+                                    <td class="min-w-200px">식품명</td>
+                                    <td class="min-w-100px">식품칼로리</td>
+                                    <td class="min-w-100px">식품탄수화물</td>
+                                    <td class="min-w-100px">식품단백질</td>
+                                    <td class="min-w-100px">식품지방</td>
+                                </tr>
+                                </thead>
 
-				<div align="right">
-			    <form class="form-inline" name="detailForm">
-					<select class="form-control" name="searchCondition" style="width: 100px;">
-					<option value="0" th:selected= "${search.searchCondition}=='0'">식품명</option>
-					<option value="1" th:selected= "${search.searchCondition}=='1'">제조사</option>
-					</select>
-				
-									  
-			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
-			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
-			
-<!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
- -->			<button data-text-content="true" class="btn btn-primary">검색</button>
-			<br>
-			
-			</form>
-			</div>
-			
-			
-<!--  		<table class="table table-hover table-striped" >			 -->
-<!--   		<thead> -->
-<!--           <tr> -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">번호</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);"  align="center">제조사</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품명</th>          -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품칼로리</th>            -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품탄수화물</th>                        -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품단백질</th>                        -->
-<!--             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">식품지방</th>                        -->
-<!--           </tr> -->
-<!--         </thead> -->
-        		<div class="tab-content">
-									<!--begin::Tab panel-->
-									<div id="kt_billing_months" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_billing_months">
-										<!--begin::Table container-->
-										<div class="table-responsive">
-											<!--begin::Table-->
-											<table class="table table-row-bordered align-middle gy-4 gs-9">
-												<thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
-													<tr>
-														<td class="min-w-150px">확인된정보</td>
-														<td class="min-w-60px">번호</td>
-														<td class="min-w-150px">제조사</td>
-														<td class="min-w-200px">식품명</td>
-														<td class="min-w-100px">식품칼로리</td>
-														<td class="min-w-100px">식품탄수화물</td>
-														<td class="min-w-100px">식품단백질</td>
-														<td class="min-w-100px">식품지방</td>
-													</tr>
-												</thead>
-	
-       <tbody>
-	<tr th:each="data, i : ${list}">
-	<td align="left"><span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span></td>
-		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.makerName}"   style="cursor:pointer; text-align: left;"></td>
-		<td   th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;"><a href="#" th:text="${data.foodName}"></a></td>
-		<td th:text="${data.foodKcal}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
-	</tr>
-</tbody>
-	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+                                <tbody>
+                                <tr th:each="data, i : ${list}">
+                                    <td align="left">
+                                        <span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span>
+                                    </td>
+                                    <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.makerName}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;">
+                                        <a href="#" th:text="${data.foodName}"></a></td>
+                                    <td th:text="${data.foodKcal}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
+                                </tr>
+                                </tbody>
+                                <!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
 
-	</table>
-	</div></div></div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
-			</div>
-			</div>		
-			
-			<div id="mmodalHolder" style="width:200px;">
-			
-			</div>
-			
-			
-			
-			
+            </div>
+        </div>
+    </div>
+    <div id="mmodalHolder" style="width:200px;"></div>
 </form>
 
+<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+
+<script type="text/javascript">
+    function fncGetUserList(currentPage) {
+        //document.getElementById("currentPage").value = currentPage;
+        //document.detailForm.submit();
+        $("form").attr("method", "POST").attr("action", "/diet/getFood").submit();
+    }
+
+    $(function () {
+        $(".foodName").on("click", function () {
+            console.log('오내')
+            self.location = "/diet/getFood?foodCd=" + $(this).attr("data-foodCd");
+        });
+    });
+
+    $(function () {
+        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+        //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
+        $("button.btn.btn-success").on("click", function () {
+            //Debug..
+            //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
 
 
- 
-	<th:block th:replace="/layout/fragments/footer.html :: footer">
+            var cd_arr = [];
+            var servingsize_arr = [];
+            var name_arr = [];
+            var kcal_arr = [];
+            var carb_arr = [];
+            var protein_arr = [];
+            var fat_arr = [];
+            $("input[name=foodCheck]:checked").each(function () {
+                var foodCd = $(this).val();
+                // 		var foodServingSize = $(this).attr("data-servingSize");
+                // 		var foodName = $(".foodName").attr("data-foodName");
+                // 		var foodKcal = $(".foodKcal").attr("data-foodKcal");
+                // 		var foodCarb = $(".foodCarb").attr("data-foodCarb");
+                // 		var foodProtein = $(".foodProtein").attr("data-foodProtein");
+                // 		var foodFat = $(".foodFat").attr("data-foodFat");
 
-	</th:block>
-	  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-function fncGetUserList(currentPage) {
-	//document.getElementById("currentPage").value = currentPage;
-
-   	//document.detailForm.submit();
-	$("form").attr("method" , "POST").attr("action" , "/diet/getFood").submit();
-}
-
-$(function() {
-
-	 
-	 $(".foodName").on("click" , function() {
-		 console.log('오내')
-			self.location="/diet/getFood?foodCd="+$(this).attr("data-foodCd");		
-});
-});
-
-$(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $( "button.btn.btn-success" ).on("click" , function() {
-		//Debug..
-		//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
-		
-		
-		var cd_arr = [];
-		var servingsize_arr = [];
-		var name_arr = [];
-		var kcal_arr = [];
-		var carb_arr = [];
-		var protein_arr = [];
-		var fat_arr = [];
-		$("input[name=foodCheck]:checked").each(function(){
-		var foodCd = $(this).val();
-// 		var foodServingSize = $(this).attr("data-servingSize");
-// 		var foodName = $(".foodName").attr("data-foodName");
-// 		var foodKcal = $(".foodKcal").attr("data-foodKcal");
-// 		var foodCarb = $(".foodCarb").attr("data-foodCarb");
-// 		var foodProtein = $(".foodProtein").attr("data-foodProtein");
-// 		var foodFat = $(".foodFat").attr("data-foodFat");
-		
-		cd_arr.push(foodCd);
-// 		servingsize_arr.push(foodServingsize);
-// 		name_arr.push(foodName);
-// 		kcal_arr.push(foodKcal);
-// 		carb_arr.push(foodCarb);
-// 		protein_arr.push(foodProtein);
-// 		fat_arr.push(foodFat);
-		
-		
-		
-		
-})		
-	
-		
-		
-		if(cd_arr.length<6 && cd_arr.length!=0){
-		console.log(cd_arr);
-		  $.ajax({
-				url: "/diet/addFavMealItem?checkarray="+cd_arr.join(","),
-				success:function(data){
-					$("#mmodalHolder").html(data);
-					$("#mmodal").modal("show");			
-					
-				}  
-				  
-			  });
-		
-		
-		 }
-	});
-});	
-
-function Chk() {
-
-	var result = Array();
-
-	var cnt = 0;
-
-	var chkbox = $(".checkedfood");
-
-	for(i=0;i<chkbox.length;i++) {
-
-		if(chkbox[i].checked == true) {
-
-			result[cnt] = chkbox[i].value;
-
-			cnt++;
-
-		}
-
-	}
-
-	$('#result').val(result);
-
-}
-
-function CheckAll() {
-
-	var chkbox = $(".checkedfood");
-
-	var chkall = document.getElementById('checkedAllFood');
-
-	for(i=0;i<chkbox.length;i++) {
-
-		chkbox[i].checked = chkall.checked;
-
-	}
-
-	Chk();
-
-}
+                cd_arr.push(foodCd);
+                // 		servingsize_arr.push(foodServingsize);
+                // 		name_arr.push(foodName);
+                // 		kcal_arr.push(foodKcal);
+                // 		carb_arr.push(foodCarb);
+                // 		protein_arr.push(foodProtein);
+                // 		fat_arr.push(foodFat);
 
 
-
-function openModal(){
-	  
-	
-	  $.ajax({
-		url: "/diet/modal",
-		success:function(data){
-			$("#mmodalHolder").html(data);
-			$("#mmodal").modal("show");			
-			
-		}  
-		  
-	  });
-
-}
+            })
 
 
+            if (cd_arr.length < 6 && cd_arr.length != 0) {
+                console.log(cd_arr);
+                $.ajax({
+                    url: "/diet/addFavMealItem?checkarray=" + cd_arr.join(","),
+                    success: function (data) {
+                        $("#mmodalHolder").html(data);
+                        $("#mmodal").modal("show");
+
+                    }
+
+                });
 
 
+            }
+        });
+    });
+
+    function Chk() {
+
+        var result = Array();
+
+        var cnt = 0;
+
+        var chkbox = $(".checkedfood");
+
+        for (i = 0; i < chkbox.length; i++) {
+
+            if (chkbox[i].checked == true) {
+
+                result[cnt] = chkbox[i].value;
+
+                cnt++;
+
+            }
+
+        }
+
+        $('#result').val(result);
+
+    }
+
+    function CheckAll() {
+
+        var chkbox = $(".checkedfood");
+
+        var chkall = document.getElementById('checkedAllFood');
+
+        for (i = 0; i < chkbox.length; i++) {
+
+            chkbox[i].checked = chkall.checked;
+
+        }
+
+        Chk();
+
+    }
 
 
+    function openModal() {
 
 
+        $.ajax({
+            url: "/diet/modal",
+            success: function (data) {
+                $("#mmodalHolder").html(data);
+                $("#mmodal").modal("show");
+
+            }
+
+        });
+
+    }
 
 
-// $.ajax(
-// 		{
-// 			url : "/diet/getFoodList",
-// 			type : 'get',
-// 			data:JSON.stringify({"currentPage":page,"searchCondition":searchCondition,"searchKeyword":searchKeyword}),
-// 			dataType : "JSON",
-// 			contentType : "application/json; charset=utf-8",
-				
-// 			}
-// 		});
+    // $.ajax(
+    // 		{
+    // 			url : "/diet/getFoodList",
+    // 			type : 'get',
+    // 			data:JSON.stringify({"currentPage":page,"searchCondition":searchCondition,"searchKeyword":searchKeyword}),
+    // 			dataType : "JSON",
+    // 			contentType : "application/json; charset=utf-8",
+
+    // 			}
+    // 		});
 
 
-
-</script>	
-
-
-
-
-
-
+</script>
 </body>
 </html>

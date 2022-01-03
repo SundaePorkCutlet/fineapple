@@ -2,20 +2,121 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
-<title>Insert title here</title>
+
+
 </head>
 <body>
 
 
 
- <select class="selectpicker" data-style="btn-success">
-    <option>아침</option>
-    <option>점심</option>
-    <option>저녁</option>
-    <option>간식</option>
-    <option>야식</option>
-  </select>
+
+	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="getaddDailyIntakeMeal">		
+   <div  class="modal-dialog " style="width:800px; height:1300px;">
+    <div class="modal-content">
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+      <h1 class="modal-title" align="center">일일섭취식단에 추가</h1>
+     <div class="modal-header">
+
+<script>
+function fncGetUserList(currentPage) {
+	console.log('온다');
+	$("form").attr("method" , "POST").attr("action" , "/diet/postaddDailyIntakeMeal?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
+    if (confirm("등록되었습니다! 확인하시겠어요?")) {
+    } else {
+    	$('#mmodal').modal("hide");
+    }	
+}
+
+$(function() {
+
+	 
+	 $("button.btn.btn-success").on("click" , function() {
+		 fncGetUserList(1);
+		
+});
+});
+
+</script>
 
 
+
+
+
+
+
+
+
+     </div>
+        <div class="modal-body" style="height:500px;">
+
+<form>
+<div class="row">
+<div class="col-12">
+<div align="center">
+ 		<table class="table table-rounded table-flush">
+    <thead>
+        <tr class="fw-bold fs-7 text-primary border-bottom border-gray-200 py-4" style="color:#F06445">		
+            <th class="min-w-130px">식품명</th>         
+            <th class="min-w-80px">1회제공량</th>         
+            <th class="min-w-150px" >1회제공량당 칼로리</th>         
+            <th class="min-w-50px">나의 섭취량</th>         
+          </tr>
+        </thead>
+        
+	
+       <tbody>
+	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
+		<td th:text="${food.foodName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${food.servingSize}+g" id="foodCd" th:attr="data-foodCd=${food.foodCd}"  style="cursor:pointer; text-align: left;">g</td>
+		<td th:text="${food.foodKcal}+Kcal" style="cursor:pointer; text-align: left;">Kcal</td>
+		<td class="min-w-50px" ><input style="width:100px;" class="userFoodIntake" type="number" maxlength="4" name=userFoodIntake></td>
+		<td></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+
+	</table>
+
+<br><br><br>
+<select name="meal" class="form-select" data-control="select2" data-placeholder="Select an option">
+    <option></option>
+    <option value="아침">아침</option>
+    <option value="점심">점심</option>
+    <option value="저녁">저녁</option>
+    <option value="간식">간식</option>
+    <option value="야식">야식</option>
+</select>
+
+</div>
+</div>
+</div>
+</form>
+
+
+ </div>
+ 
+     <div class="modal-footer">
+         <button type="button" class="btn btn-success" >등록</button>
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+  <script src="assets/plugins/global/plugins.bundle.js"></script>
+  	  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+  $('.userFoodIntake').maxlength({
+	    warningClass: "badge badge-warning",
+	    limitReachedClass: "badge badge-success"
+	});
+  
+  </script>
+  		
 </body>
 </html>
