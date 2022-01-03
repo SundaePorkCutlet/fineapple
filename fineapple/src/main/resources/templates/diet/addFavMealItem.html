@@ -22,9 +22,19 @@
 <script>
 function fncGetUserList(currentPage) {
 	console.log('온다');
-// 	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
-    if (confirm("등록되었습니다! 확인하시겠어요?")) {
-       self.location="/diet/getFavMealList";
+	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
+	
+	if (confirm("등록되었습니다! 확인하시겠어요?")) {
+    	 $.ajax({
+ 			url: "/diet/getFavMealList?menu="+0,
+ 			success:function(data){
+ 				$('#mmodal').modal("hide");
+ 				$("#mmodalHolder").html(data);
+ 				$("#favMealList").modal("show");			
+ 				
+ 			}  
+ 			  
+ 		  });
     } else {
     	$('#mmodal').modal("hide");
     }	
@@ -52,7 +62,9 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form>
+<form target="iframe1">
+
+<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 <div class="row">
 <div class="col-12">
 <div align="center">

@@ -24,8 +24,15 @@ function fncGetUserList(currentPage) {
 	console.log('온다');
 	$("form").attr("method" , "POST").attr("action" , "/diet/postaddDailyIntakeMeal?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
     if (confirm("등록되었습니다! 확인하시겠어요?")) {
+  	 self.location="../diet/getDailyIntakeMeal";
+    	
+    	
+    	
+    	
     } else {
     	$('#mmodal').modal("hide");
+//     	$('#mmodal').modal("show");
+
     }	
 }
 
@@ -51,7 +58,10 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form>
+<form target="iframe1">
+
+<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+
 <div class="row">
 <div class="col-12">
 <div align="center">
@@ -104,6 +114,12 @@ $(function() {
     </div>
    </div>
   </div>
+  
+  			<div id="mmodalHolder" style="width:200px;">
+			
+			</div>
+  
+  
   <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
   <script src="assets/plugins/global/plugins.bundle.js"></script>
   	  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
