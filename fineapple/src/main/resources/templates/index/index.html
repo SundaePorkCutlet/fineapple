@@ -306,6 +306,40 @@
 										</div>
 									</div>
 								</div>
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion" th:if="${session.user != null}">
+									<span class="menu-link">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
+											<span class="svg-icon svg-icon-5">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="black" />
+													<path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="black" />
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">My</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion menu-active-bg">
+										<div class="menu-item">
+											<a class="menu-link" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">내정보보기</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" th:onclick="|location.href='@{/user/updateUserLeave(userId=${session.user.userId})}'|">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">회원탈퇴</span>
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 							<!--end::Menu-->
 						</div>
@@ -321,8 +355,13 @@
 								<!--begin::User image-->
 								<div class="me-5">
 									<!--begin::Symbol-->
-									<div class="symbol symbol-40px cursor-pointer" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
-										<img src="assets/media/avatars/150-26.jpg" alt="" />
+									<div>
+									<div th:if="${session.user == null}" class="symbol symbol-40px cursor-pointer" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
+										<img th:src="@{../assets/profile/defaultProfile.jpg}" alt="" />
+									</div>
+									<div th:if = "${session.user != null}"class="symbol symbol-40px cursor-pointer" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
+										<img th:src="@{../assets/profile/}+${session.user.userImg}" alt="" />
+									</div>
 									</div>
 									<!--end::Symbol-->
 									<!--begin::Menu-->
@@ -515,10 +554,10 @@
 										<div th:if="${session.user != null}">
 											<!--begin::Username-->
 											
-											<a class="text-gray-800 text-hover-primary fs-6 fw-bold lh-0" id = "userName" name = "userName" th:text= "${session.user.userName}" th:href="@{../user/getUser}"></a>
+											<a class="text-gray-800 text-hover-primary fs-6 fw-bold lh-0" id = "userName" name = "userName" th:text= "${session.user.userName}" th:onclick="|location.href='@{/user/getUser(userId=${session.user.userId})}'|"></a>
 											<!--end::Username-->
 											<!--begin::Description-->
-											<span class="text-gray-400 fw-bold d-block fs-8" th:text ="${session.user.userSttMsg}" th:href="@{../user/getUser}"></span>
+											<span class="text-gray-400 fw-bold d-block fs-8" th:text ="${session.user.userSttMsg}"></span>
 											<!--end::Description-->
 										</div>
 										</div>
@@ -732,17 +771,23 @@
 						<div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
 							<!--begin::Copyright-->
 							<div class="text-dark order-2 order-md-1">
-								<span class="text-muted fw-bold me-1">2021©</span>
+								<span class="text-muted fw-bold me-1">2022©</span>
 								<a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">fineapple.or.kr</a>
 							</div>
 							<!--end::Copyright-->
 							<!--begin::Menu-->
 							<ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
+								
 								<li class="menu-item">
-									<a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+									<a th:href="@{../user/logout}" class="menu-link px-2">Logout</a>
 								</li>
 								<li class="menu-item">
-									<a href="https://keenthemes.com/support" target="_blank" class="menu-link px-2">Support</a>
+								<div th:if="${session.user != null}" >
+									<a th:href="@{../user/addUser}" class="menu-link px-2" >Join</a>
+									</div>
+								<div th:if="${session.user == null}" >
+									<a th:href="@{../user/updateUserLeave}" class="menu-link px-2" >Leave</a>
+									</div>
 								</li>
 								<li class="menu-item">
 									<a href="https://themes.getbootstrap.com/product/good-bootstrap-5-admin-dashboard-template" target="_blank" class="menu-link px-2">FAQ</a>
