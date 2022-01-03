@@ -1,11 +1,13 @@
 package kr.or.fineapple.community;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,7 +75,37 @@ public class CommunityRestController {
 		return map;
 	}
 	
+	@PostMapping(value = "addCmnts")
+	public Cmnt addCmnts(@RequestBody String postNoStr){
+		
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(postNoStr);
+		
+		Board board = new Board();
+		board.setPostNo(Integer.parseInt(jsonObject.get("postNo").toString()));
+		
+		Cmnt cmnt = new Cmnt();
+		
+		cmnt.setCmntContent(jsonObject.get("cmntContent").toString());
+		
+		
+		cmnt.setBoard(board);
+		User user = new User();
+		user.setUserId("bbb123@gmail.com");
+		cmnt.setUser(user);
+		System.out.println("===============================");
+		System.out.println(cmnt);
+		
+		
+		
+		return  null;
+	}
 	
+	
+	@PostMapping(value = "addAlarm")
+	public void addAlarm() {
+		
+	}
 	
 	
 	

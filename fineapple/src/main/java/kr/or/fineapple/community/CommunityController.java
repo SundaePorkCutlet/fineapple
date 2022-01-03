@@ -118,9 +118,21 @@ public class CommunityController {
 	public String addGroup(@ModelAttribute("group") Group group) {
 		communityService.addGroup(group);
 		
-		return null;
+		return "community/addGroup.html";
 		
 	}
+	
+	@GetMapping(value="getAlarmList")
+	public List getAlarmList() {
+		return communityService.getAlarmList();
+	}
+	
+	
+	@GetMapping(value="Test")
+	public String Test() {
+		return "community/sample.html";
+	}
+	
 	
 	
 	
