@@ -1,0 +1,73 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 등록</div>
+
+<br><br>
+<div align="center">
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">식품명</label>
+    <input name="foodName" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">1회제공량</label>
+    <input name="servingSize" type="number" class="form-control form-control-solid" placeholder="ex)111.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">1회제공량당칼로리</label>
+    <input name="foodKcal" type="number" class="form-control form-control-solid" placeholder="ex)111.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >1회제공량당탄수화물</label>
+    <input name="foodCarb" type="number" class="form-control form-control-solid" placeholder="ex)11.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >1회제공량당단백질</label>
+    <input name="foodProtein" type="number" class="form-control form-control-solid" placeholder="ex)11.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >1회제공량당지방</label>
+    <input name="foodFat" type="number" class="form-control form-control-solid" placeholder="ex)11.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >1회제공량당나트륨</label>
+    <input name="foodSodium" type="number" class="form-control form-control-solid" placeholder="ex)11.1"/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >1회제공량당당류</label>
+    <input name="foodSugar" type="number" class="form-control form-control-solid" placeholder="ex)11.1"/>
+</div>
+
+
+		<button class="btn btn-success" style="max-width:100px;">등록</button>
+			<button class="btn btn-info" style="max-width:100px;" >이전</button>
+
+</div>
+	<th:block th:replace="layout/fragments/footer.html :: footer">
+
+	</th:block>
+<script>
+$(function() {
+
+	 
+	 $("button.btn.btn-success").on("click" , function() {
+		 $("form").attr("method" , "POST").attr("action" , "/diet/postaddFood").submit();
+		
+});
+});	
+</script>	
+	
+	
+	
+	
+	
+
+</body>
+</html>

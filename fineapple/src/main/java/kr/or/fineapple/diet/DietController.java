@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,10 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import groovyjarjarantlr4.v4.runtime.misc.FlexibleHashMap.Entry;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
+import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.diet.DietService;
@@ -234,7 +232,8 @@ public class DietController {
 	
 }
 	@GetMapping("getFavMealList")
-	public String getFavMealList(Model model,HttpServletRequest request)	throws Exception {
+	public String getFavMealList(Model model,HttpServletRequest request,
+								@RequestParam("menu")int menu)	throws Exception {
 			System.out.println("getFavMealList");
 			
 			Map<String,Object> map = new HashMap<String,Object>();
@@ -244,7 +243,9 @@ public class DietController {
 			map = dietService.getFavMealList(serv.getUserServiceNo());
 			System.out.println(map);
 			model.addAttribute("list",map.get("list"));
-		return "diet/getFavMealList.html";
+			System.out.println(menu);
+			model.addAttribute("menu",menu);
+			return "diet/getFavMealList :: getFavMealList";
 	}
 		
 @GetMapping("getAddDaily")
@@ -334,6 +335,148 @@ public String postaddFavMeal(Model model, @RequestParam("favMealNo")int favMealN
 	dietService.addFavMealItem(fav);
 	return null;
 }
+
+@GetMapping("getaddDailyIntakeMeal")
+public String getaddDailyIntakeMeal(Model model, @RequestParam("checkarray")String foodCd,HttpServletRequest request)throws Exception{
+	
+	Food food = new Food();
+	
+	food = dietService.getFood(foodCd);
+	
+	model.addAttribute("food",food);
+	
+	
+	
+	return "diet/getaddDailyIntakeMeal :: getaddDailyIntakeMeal";
+}
+
+
+
+
+
+
+
+
+@PostMapping("postaddDailyIntakeMeal")
+public String postaddDailyIntakeMeal(Model model,
+		@RequestParam("userFoodIntake")double userFoodIntake,
+		@RequestParam("foodCd")String foodCd,
+		@RequestParam("meal")String meal,HttpServletRequest request) throws Exception {
+		
+	System.out.println("오긴온다");
+	
+	Food food = new Food();
+	double Intake = 0;
+	if(!foodCd.substring(0).equals("U")) {
+		food = dietService.getFood(foodCd);
+	
+	}
+	
+	Intake= (userFoodIntake/food.getServingSize());
+	food.setFoodKcal(food.getFoodKcal()*Intake);
+	food.setFoodCarb(food.getFoodCarb()*Intake);
+	food.setFoodProtein(food.getFoodProtein()*Intake);
+	food.setFoodFat(food.getFoodFat()*Intake);
+	
+	
+	
+	
+	
+	
+	
+	IntakeRecord record = new IntakeRecord();
+	User user =(User)request.getSession(true).getAttribute("user");
+	
+	record.setFood(food);
+	record.setMeal(meal);
+	record.setUserFoodIntake(userFoodIntake);
+	record.setUserId(user.getUserId());
+	System.out.println(record);
+	dietService.addIntakeRecord(record);
+	
+	
+	List<IntakeRecord> list = new ArrayList<IntakeRecord>();
+	int radio=0; 
+	
+	DietServ serv = dietService.getDietService(user.getUserId());
+	list= dietService.getIntakeRecordList(serv.getUserServiceNo());
+	model.addAttribute("list",list);
+	model.addAttribute("serv",serv);
+	model.addAttribute("radio",radio);
+	
+	
+	
+	
+
+	return "diet/getDailyIntakeMeal.html";
+}
+
+@GetMapping("getDailyIntakeMeal")
+public String getDailyIntakeMeal(Model model,HttpServletRequest request,
+								@RequestParam(value="radio",required=false)String radio) throws Exception {
+	
+	List<IntakeRecord> list = new ArrayList<IntakeRecord>();
+	
+	
+	if(radio==null) {
+		radio="0";
+		
+	}
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+	
+	DietServ serv = dietService.getDietService(user.getUserId());
+	list= dietService.getIntakeRecordList(serv.getUserServiceNo());
+	model.addAttribute("list",list);
+	model.addAttribute("serv",serv);
+	model.addAttribute("radio",radio);
+	
+	
+	return "diet/getDailyIntakeMeal.html";
+}
+
+
+@GetMapping("deleteIntakeMeal")
+public String deleteIntakeMeal(Model model,HttpServletRequest request,@RequestParam("IntakeNo")int IntakeNo) throws Exception {
+	List<IntakeRecord> list = new ArrayList<IntakeRecord>();
+
+	System.out.println(IntakeNo);
+	dietService.deleteIntakeRecord(IntakeNo);
+	int radio=0;
+	User user =(User)request.getSession(true).getAttribute("user");
+	
+	DietServ serv = dietService.getDietService(user.getUserId());
+	list= dietService.getIntakeRecordList(serv.getUserServiceNo());
+	model.addAttribute("list",list);
+	model.addAttribute("serv",serv);
+	model.addAttribute("radio",radio);
+	
+	
+	return "diet/getDailyIntakeMeal.html";
+	
+	
+	
+}	
+
+@GetMapping("getaddFood")
+public String getaddFood(Model model) {
+	
+	
+	
+	
+	return "diet/addFood.html";
+}
+
+@PostMapping("postaddFood")
+public String postaddFood(@ModelAttribute Food food,Model model) throws Exception {
+	
+	System.out.println(food);
+	dietService.addFood(food);
+	
+	
+	return "diet/getFoodList.html";
+}
+
 
 
 

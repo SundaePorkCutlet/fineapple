@@ -38,7 +38,7 @@ public class ExerController {
 	}
 
 
-@GetMapping(value="addUserService")
+@GetMapping("addUserService")
 public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
     System.out.println("get: addUserService");
@@ -59,16 +59,22 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 		
 					model.addAttribute("user",user);
 					model.addAttribute("exerServ",serv);
+					
 					return "exer/getUserService.html";
+					
 					}else {
-						return "exer/addUserService.html";}
+						return "exer/addUserService.html";
+						}
 		}else {
 			model.addAttribute("user",user);
+			
 			return "exer/addUserService.html";}
 		
 	}else {
 		
-		return "user/login"; }
+		return "user/login";
+		
+	}
 	
 }
     
@@ -76,7 +82,9 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 							HttpServletRequest request,
 							Model model) throws Exception{
+	
 	System.out.println("post:addUserService");
+	
 	System.out.println(serv);
 	
 	User user =(User)request.getSession(true).getAttribute("user");
@@ -84,8 +92,11 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	serv.setUserId(userId);
 	
 	if(user.getExerServiceNo()==0) {
+		
 	exerService.addUserService(serv);
+	
 	}else {
+		
 		exerService.updateUserService(serv);
 	}
 			
@@ -97,6 +108,18 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 
 	return "exer/getUserService.html";
 }
+
+
+
+
+@GetMapping("getUserService")
+public String getUserService(Model model, HttpServletRequest request) {
+	
+	return "exer/getUserService.html";
+}
+
+
+
 
 @GetMapping("updateUserService")
 public String updateUserService(Model model, HttpServletRequest request) throws Exception {
@@ -303,12 +326,18 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 
 
 
-@RequestMapping(value="addDailyBurnning")
+
+
+@GetMapping(value="getAddDailyBurnning")
 public String addDailyBurnning() {
 
-System.out.println("addDailyBurnning");
+System.out.println("getAddDailyBurnning");
 
-return "exer/addDailyBurnning.html";
+
+
+
+
+return "exer/getaddDailyBurnning.html";
 
 
 }
@@ -395,19 +424,35 @@ public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Mod
 }
 
 
-
-@RequestMapping("addRoutineInfo")
-public String addRoutineInfo() {
+@GetMapping("addRoutineInfo")
+public String getAddRoutineInfo(Model model, @RequestParam("routineInfo")int exerNo,HttpServletRequest request) throws Exception {
 	
 	
 	System.out.println("addRoutineInfo");
 	
+	Exer exer = new Exer();
+	
+	exer = exerService.getExer(exerNo);
+	
+	User user =(User)request.getSession(true).getAttribute("user");
+
+	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+	Map<String,Object> map = new HashMap<String,Object>();
+	
+	map = exerService.getRoutineList(serv.getUserServiceNo());
+
+	
+	model.addAttribute("list",map.get("list"));
+	model.addAttribute("exer", exer);
 	
 	
-	return "exer/getExerList.html";
+	return "exer/addRoutineInfo :: addRoutineInfo";
 	
 
 }
+
+
 
 
 
@@ -474,45 +519,41 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 		
 	}
 	
-	System.err.println(totaldailyIntakeKcal);
+	System.out.println(totaldailyIntakeKcal);
 	
 	
 	
-	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
-	
-	overKcal = Math.round(overKcal*100)/100.0;
+	Double remainKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
 	
 	
-	System.out.println("ÃÊ°ú Ä®·Î¸® ÀÔ´Ï´Ù   " + overKcal);
+	
+	remainKcal = Math.round(remainKcal*100)/100.0;
 	
 	
-	if(overKcal >= 0) {
+	System.out.println(" ÀÜ¿© Ä®·Î¸® ÀÔ´Ï´Ù   " + remainKcal);
+	
+	
+	if(remainKcal >= 0) {
 		
+		remainKcal = 0.0;
+		
+	}if(remainKcal < 0) {
+		
+		remainKcal = remainKcal * (-1);
+		
+	}
 	
-	List list = exerService.recommandExerList(Math.abs(overKcal));
+	List list = exerService.recommandExerList(Math.abs(remainKcal));
 	
 	
-	
-	model.addAttribute("overKcal", overKcal);
+	model.addAttribute("overKcal", remainKcal);
 	model.addAttribute("list", list);
 	
 	
 	return "exer/recommandExerList.html";
 	
 	
-	} else {
-		
-		
-		return "user/login";
-		
-		
-	}
-
-
 }
-
-
-
 
 
 }

@@ -16,7 +16,7 @@ public interface ExerService {
 	
 	public ExerServ getUserService(String userId)throws Exception;
 	
-	public int updateUserService(ExerServ serivce)throws Exception;
+	public int updateUserService(ExerServ service)throws Exception;
 	
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
@@ -29,7 +29,16 @@ public interface ExerService {
 	
 	public int deleteExer(int exerNo)throws Exception;
 	
+	
+	
+	
 	public int addDailyBurnning(BurnningRecord record)throws Exception;
+	
+	public BurnningRecord getBurnningRecordList(int userServiceNo)throws Exception;
+	
+	public int updateBurnningRecord(BurnningRecord record)throws Exception;
+	
+	
 	
 	
 	
@@ -42,6 +51,8 @@ public interface ExerService {
 	public int deleteRoutine(int routineNo)throws Exception;
 	
 	public Map<String ,Object> getRoutineList(int exerServiceNo)throws Exception;
+	
+	
 	
 	
 	public int addRoutineInfo(Routine routine)throws Exception;
@@ -57,9 +68,7 @@ public interface ExerService {
 	//추천운동리스트
 	public List<Exer> recommandExerList(Double overKcal)throws Exception;
 	
-	
 	public Double sumIntakeKcal(String userId)throws Exception;
-	
 	
 	public User needDaliyIntakeKcal(String userId)throws Exception;
 	

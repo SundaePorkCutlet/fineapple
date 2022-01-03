@@ -432,7 +432,7 @@ public class DietServiceImpl implements DietService{
 
 
 	@Override
-	public IntakeRecord getIntakeRecordList(int dietServiceNo) throws Exception {
+	public List<IntakeRecord> getIntakeRecordList(int dietServiceNo) throws Exception {
 		return dietMapper.getIntakeRecordList(dietServiceNo);
 	}
 
@@ -462,6 +462,14 @@ public class DietServiceImpl implements DietService{
 	@Override
 	public int updateIntakeRecord(IntakeRecord record) throws Exception {
 		return dietMapper.updateIntakeRecord(record);
+	}
+
+
+
+	@Override
+	public void deleteIntakeRecord(int IntakeRecordNo) throws Exception {
+		dietMapper.deleteIntakeRecord(IntakeRecordNo);
+		
 	}
 	
 	

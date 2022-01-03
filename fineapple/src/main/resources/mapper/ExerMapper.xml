@@ -3,11 +3,11 @@
 <mapper namespace="kr.or.fineapple.mapper.ExerMapper">
 
 	<resultMap id="UserServiceMap" type="ExerServ">
-		<result property="dailyTrgtBurnningKcal" 			column="DAILY_TRGT_BURNNING_KCAL" 	jdbcType="FLOAT"/>
-		<result property="trgtBodyMuscle"	column="TRGT_BODY_MUSCLE" 		jdbcType="FLOAT" />	
-		<result property="exerServiceTrgt" 	column="SERVICE_TRGT" 		jdbcType="VARCHAR" />
+		<result property="dailyTrgtBurnningKcal" 			column="DAILY_TRGT_BURNNING_KCAL" 	jdbcType="DOUBLE"/>
+		<result property="trgtBodyMuscle"	column="TRGT_BODY_MUSCLE" 		jdbcType="DOUBLE" />	
+		<result property="serviceTrgt" 	column="SERVICE_TRGT" 		jdbcType="VARCHAR" />
 		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR" />	
-		<result property="bodyMuscle" 				column="BODY_MUSCLE" 	jdbcType="FLOAT" />	
+		<result property="bodyMuscle" 				column="BODY_MUSCLE" 	jdbcType="DOUBLE" />	
 	</resultMap>
 	
 	
@@ -15,7 +15,7 @@
 	<resultMap id="BurnningRecordMap" type="BurnningRecord">
 		<result property="exer.exerNo" 			column="EXER_NO" 			jdbcType="INTEGER"/>
 		<result property="burnningRecordDate"	column="BURNNING_RECORD_DATE" 		jdbcType="DATE" />	
-		<result property="exerLv" 	column="EXER_LV" 		jdbcType="INTEGER" />
+		<result property="exerLv" 	column="EXER_LV" 		jdbcType="VARCHAR" />
 		<result property="anExerTime" 				column="AN_EXER_TIME" 	  jdbcType="TIMESTAMP" />
 		<result property="userExerBurnning" 				column="USER_EXER_BURNNING" 	jdbcType="FLOAT" />
 	</resultMap>
@@ -66,28 +66,31 @@
 
 
 	<insert id="addUserService" parameterType="ExerServ">
-	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE, BODY_MUSCLE) 
+	INSERT INTO  USER_SERVICE (USER_SERVICE_NO, USER_ID, DAILY_TRGT_BURNNING_KCAL, TRGT_BODY_MUSCLE) 
 	VALUES (seq_user_service_no.NEXTVAL,
 			#{userId:VARCHAR},
-			#{dailyTrgtBurnningKcal:FLOAT},
-			#{trgtBodyMuscle:FLOAT},
-			#{bodyMuscle:FLOAT},
-			)
-	
+			#{dailyTrgtBurnningKcal:DOUBLE},
+			#{trgtBodyMuscle:DOUBLE})	
 	</insert>
+	
+	
 	
 	<update id="updateUserService" parameterType="ExerServ">
 	UPDATE USER_SERVICE SET 
-	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:FLOAT},
-	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:FLOAT},
-	BODY_MUSCLE=#{bodyMuscle:FLOAT}
+	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:DOUBLE},
+	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:DOUBLE}
 	WHERE USER_ID=#{userId:VARCHAR}
 	</update>
+
 	
 		
 	<select	id="getUserService"	 parameterType="String" resultType="ExerServ">
-			SELECT * FROM USER_SERVICE WHERE USER_ID=#{value}
+	SELECT *
+	FROM ( SELECT us.*, ui.body_muscle
+	FROM   USER_SERVICE  us LEFT JOIN user_body_info ui ON us.user_id = ui.user_id)
+	WHERE  user_id= #{userId:VARCHAR}			
 	</select>
+	
 	
 	
 	<insert id="addDailyBurnning" parameterType="BurnningRecord">
@@ -103,10 +106,27 @@
 	
 	</insert>
 	
+	<select id="getBurnningRecordList" parameterType="Integer" resultMap="BurnningRecordMap">
+	SELECT * 
+	FROM BURNNING_RECORD 
+	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
+	
+	
+	<update id="updateBurnningRecord" parameterType="BurnningRecord">
+	UPDATE BURNNING_RECORD 
+	SET USER_EXER_BURNNING =#{userExerBurnning:DOUBLE}
+	WHERE BURNNING_RECORD_NO = #{burnningRecordNo:DOUBLE}
+	</update>
+	
+	
+	
 	
    <update id="updateServiceTrgt" parameterType="ExerServ">
    UPDATE USERS 
-   SET SERVICE_TRGT = #{exerServiceTrgt:VARCHAR}
+   SET SERVICE_TRGT = #{serviceTrgt:VARCHAR}
    WHERE USER_ID = #{userId:VARCHAR}
    </update>
 	
@@ -114,28 +134,18 @@
 	
 	<update id="updateBodyInfo" parameterType="ExerServ">
    UPDATE USER_BODY_INFO
-   SET BODY_MUSCLE = #{bodyMuscle:FLOAT}
+   SET BODY_MUSCLE = #{bodyMuscle:DOUBLE}
    WHERE USER_ID = #{userId:VARCHAR}
    	</update>
 	
 	
-		
-	<!-- <select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap" >
-	  	SELECT *
-		FROM (SELECT inner_table.* , ROWNUM AS exer_No
-		FROM(SELECT exer_name, exer_cate, exer_kcal
-		FROM EXER
-		ORDER BY exer_No ) inner_table)
-		WHERE exer_No BETWEEN 1 AND 4
-	 </select> -->
-	 
 	 
  	<insert id="addExer"  parameterType="Exer">
 	INSERT
 	INTO EXER (EXER_NO, EXER_CATE, EXER_LV, EXER_NAME, EXER_KCAL, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LINK)
 	VALUES(10,
     #{exerCate:INTEGER},
-    #{exerLv:INTEGER},
+    #{exerLv:VARCHAR},
 	#{exerName:VARCHAR},
     #{exerKcal:FLOAT},
     #{exerVideoName:VARCHAR},
@@ -242,15 +252,20 @@
 
 
 	<select  id="getRoutineList"  parameterType="hashMap"  resultMap="routineMap">
-	SELECT *
+<!-- 	SELECT *
 	FROM (SELECT inner_table.* , ROWNUM AS row_seq
 	FROM (SELECT R.routine_no, R.routine_name, R.routine_time
 	FROM ROUTINE R
 	ORDER BY routine_no ) inner_table)
-	<!-- WHERE ROWNUM &lt;= 10) -->
-	WHERE row_seq BETWEEN 1 AND 10
-	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+	WHERE ROWNUM &lt;= 10)
+	WHERE row_seq BETWEEN 1 AND 10 and user_service_no = #{value}
+	WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+	SELECT *
+	FROM( SELECT us.*, r.routine_no, r.routine_name, r.routine_time, r.routine_kcal
+	FROM   USER_SERVICE  us LEFT JOIN routine r ON us.user_service_no = r.user_service_no)
+	WHERE  user_service_no= #{value}
+	
 	</select>
 
 
@@ -261,7 +276,7 @@
           #{routineNo:INTEGER},
           #{exer.exerNo:INTEGER},
 	      #{anExerTime:VARCHAR},	
-	      #{anExerKcal:VARCHAR})	
+	      #{anExerKcal:VARCHAR} )	
 	</insert>
 
    

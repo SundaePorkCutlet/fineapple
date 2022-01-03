@@ -46,9 +46,12 @@ public class ExerServiceImpl implements ExerService {
 	}
 	
 	@Override
-	public int updateUserService(ExerServ serivce) throws Exception {
+	public int updateUserService(ExerServ service) throws Exception {
 		
-		return exerMapper.updateUserService(serivce);
+		exerMapper.updateServiceTrgt(service);
+		exerMapper.updateBodyInfo(service);
+		
+		return exerMapper.updateUserService(service);
 		
 		
 	}
@@ -97,15 +100,6 @@ public class ExerServiceImpl implements ExerService {
 		
 	}
 	
-	@Override
-	public int addDailyBurnning(BurnningRecord record) {
-		
-		
-		return exerMapper.addDailyBurnning(record);
-		
-		
-	}
-
 	
 	@Override
 	public int addRoutine(Routine routine) {
@@ -202,13 +196,32 @@ public class ExerServiceImpl implements ExerService {
 	}
 
 	
-	
-
 
 	@Override
 	public int searchExerPlace() {
-		// TODO Auto-generated method stub
+		
 		return 0;
+	}
+
+	
+	
+	@Override
+	public int addDailyBurnning(BurnningRecord record) {
+		
+		return exerMapper.addDailyBurnning(record);
+		
+	}
+	
+	@Override
+	public BurnningRecord getBurnningRecordList(int userServiceNo) throws Exception {
+		
+		return exerMapper.getBurnningRecordList(userServiceNo);
+	}
+
+	@Override
+	public int updateBurnningRecord(BurnningRecord record) throws Exception {
+		
+		return exerMapper.updateBurrningRecord(record);
 	}
 
 	

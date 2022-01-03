@@ -12,7 +12,7 @@ public class ExerServ {
 	double dailyTrgtBurnningKcal;
 	double trgtBodyMuscle;
 	double bodyMuscle;
-	String exerServiceTrgt;
+	String serviceTrgt;
 	String userId;
 	int	userServiceNo;
 	

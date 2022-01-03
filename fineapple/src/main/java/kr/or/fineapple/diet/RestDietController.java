@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,10 +19,23 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.fineapple.service.diet.DietService;
+import kr.or.fineapple.service.user.UserService;
+
 @RestController
 @RequestMapping("/diet/rest/*")
 public class RestDietController {
 
+	@Autowired
+	@Qualifier("dietServiceImpl")
+	private DietService dietService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	
+	
 	public RestDietController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -84,4 +99,10 @@ public class RestDietController {
 	
 	return jsonArray.toString();
 }
+	
+	
+
+	
+	
+	
 }

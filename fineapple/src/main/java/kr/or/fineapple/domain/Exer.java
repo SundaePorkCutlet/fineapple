@@ -15,11 +15,13 @@ public class Exer {
 	String exerCate;
 	String exerName;
 	Double exerKcal;
+	Double anExerKcal;
 	String exerVideoName;
 	String exerVideoTime;
 	String dodbogi;
 	String exerLink;
 	Double recommTime;
+	String anExerTime;
 
 
 	public Exer() {

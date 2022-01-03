@@ -49,9 +49,8 @@ $(function() {
        <tbody>
 	<tr th:each="data, i : ${list}">
 		<td></td>
-		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.routineName}" class="routineName" th:attr="data-routineNo=${data.routineNo}" style="cursor:pointer; text-align: left;"></td>
-		
 		<td th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
 		
 	</tr>

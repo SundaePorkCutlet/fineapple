@@ -10,31 +10,23 @@
 
 
 
-	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addFavMealItem">		
+	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addRoutineInfo">		
    <div  class="modal-dialog " style="width:800px; height:1300px;">
     <div class="modal-content">
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
                 </div>
-      <h1 class="modal-title" align="center">즐겨찾기에 추가</h1>
+      <h1 class="modal-title" align="center">루틴에 추가</h1>
      <div class="modal-header">
 
 <script>
 function fncGetUserList(currentPage) {
-	console.log('온다');
-	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
 	
-	if (confirm("등록되었습니다! 확인하시겠어요?")) {
-    	 $.ajax({
- 			url: "/diet/getFavMealList?menu="+0,
- 			success:function(data){
- 				$('#mmodal').modal("hide");
- 				$("#mmodalHolder").html(data);
- 				$("#favMealList").modal("show");			
- 				
- 			}  
- 			  
- 		  });
+	 
+// 	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
+   
+if (confirm("등록되었습니다! 확인하시겠어요?")) {
+       self.location="/exer/getRoutineList";
     } else {
     	$('#mmodal').modal("hide");
     }	
@@ -46,8 +38,48 @@ $(function() {
 	 $("button.btn.btn-success").on("click" , function() {
 		 fncGetUserList(1);
 		
+ 
+	 
+	 
 });
 });
+
+	 function call(){
+	 var exerKcal = [[${exer.exerKcal}]]/10; 
+	 var exerLv = $(".exerLv").val();
+	 var anExerTime = $("#anExerTime").val();
+	 var anExerKcal =  $(".anExerKcal").val();
+	 
+	 alert(exerKcal)
+	 alert(exerLv)
+	 alert(anExerTime)
+	 alert(anExerKcal)
+	 
+	  if(exerLv == "강"){
+		  
+		anExerKcal = exerKcal*parseInt(anExerTime.value) + 30;
+		alert(anExerKcal)
+		
+	 }if(exerLv == "중"){
+		 
+		/*  anExerKcal = exerKcal*parseInt(anExerTime.value) + 20; */
+		 
+		 alert(anExerKcal)
+		 
+	 } if(exerLv == "약"){
+		 
+		 anExerKcal = exerKcal*parseInt(anExerTime.value) + 10;
+		 
+		 alert(anExerKcal)
+	 } 
+	 
+	 }
+	/*  { 
+		 
+	   if(exerLv.value && anExerTime.value){
+		  anExerKcal.value =parseInt(exerLv.value) * parseInt(anExerTime.value);
+	  } 
+	 }*/
 
 </script>
 
@@ -62,30 +94,34 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form target="iframe1">
-
-<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+<form>
 <div class="row">
 <div class="col-12">
 <div align="center">
  		<table class="table table-rounded table-flush">
     <thead>
         <tr class="fw-bold fs-7 text-primary border-bottom border-gray-200 py-4" style="color:#F06445">		
-            <th class="min-w-130px">식품명</th>         
-            <th class="min-w-80px">1회제공량</th>         
-            <th class="min-w-150px" >1회제공량당 칼로리</th>         
-            <th class="min-w-50px">나의 섭취량</th>         
+            <th class="min-w-130px">운동명</th>         
+            <th class="min-w-80px">운동강도</th>         
+            <th class="min-w-150px">운동 소요시간(분)</th>         
+            <th class="min-w-150px">소모 칼로리</th>         
           </tr>
         </thead>
         
 	
        <tbody>
 	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
-		<td th:text="${food.foodName}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${food.servingSize}+g" id="foodCd" th:attr="data-foodCd=${food.foodCd}"  style="cursor:pointer; text-align: left;">g</td>
-		<td th:text="${food.foodKcal}+Kcal" style="cursor:pointer; text-align: left;">Kcal</td>
-		<td class="min-w-50px" ><input style="width:100px;" class="userFoodIntake" type="number" maxlength="4" name=userFoodIntake></td>
-		<td></td>
+		<td th:text="${exer.exerName}"   style="cursor:pointer; text-align: left;"></td>
+		<td style="cursor:pointer; text-align: left;">
+		 <select style="font-size:15px" id="exerLv" class="exerLv" onkeyup='call()'>
+         <option value="강" >강</option>
+         <option value="중" selected="selected">중</option>
+         <option value="약">약</option>         
+         </select>
+		</td>
+		<td class="min-w-50px"><input style="width:100px;"  id="anExerTime" onkeyup='call()' class="userExerBurnning" type="number" maxlength="4" name=userExerBurnning/>분</td>
+		<td align="right" th:attr="anExerKcal=${exer.anExerKcal}" th:value=${exer.exerKcal} class="anExerKcal">kcal</td>
+		
 	</tr>
 </tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
@@ -98,8 +134,8 @@ $(function() {
         <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
             <th align="left">선택</th>         
             <th align="left">번호</th>         
-            <th align="center">즐겨찾기명</th>         
-            <th align="center">총합칼로리</th>         
+            <th align="center">루틴명</th>         
+            <th align="center">총 시간</th>         
           </tr>
         </thead>
         
@@ -107,10 +143,10 @@ $(function() {
 	
        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-		<td><input  type="radio" class="favMealNo" name="favMealNo" th:value="${data.favMealNo}"  ></td>
+		<td><input  type="radio" class="routineNo" name="routineNo" th:value="${data.routineNo}"  ></td>
 		<td align="center" th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.favMealName}"  style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.totalKcal}+Kcal" style="cursor:pointer; text-align: left;"></td>
+		<td align="center" th:text="${data.routineName}"  style="cursor:pointer; text-align: left;"></td>
+		<td align="center" th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
 		<td></td>
 	</tr>
 </tbody>
@@ -132,7 +168,7 @@ $(function() {
     </div>
    </div>
   </div>
-  <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+  <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
   <script src="assets/plugins/global/plugins.bundle.js"></script>
   	  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>

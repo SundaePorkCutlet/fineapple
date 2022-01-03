@@ -89,36 +89,65 @@ function count(type)  {
 	}
 
 
-	
+	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		 $( "button.btn.btn-danger" ).on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+			
+			
+		
+			var exerNo = $("#exerNo").attr("data-exerNo");
+		
+			alert(exerNo)
+		
+			
+			  $.ajax({
+					url: "/exer/addRoutineInfo?routineInfo="+exerNo,
+					success:function(data){
+						$("#mmodalHolder").html(data);
+						$("#mmodal").modal("show");			
+						
+					}  
+					  
+				  });
+			
+			
+			 
+		});
+	});	
 
-/* $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $( "button.btn.btn-danger" ).on("click" , function() {
-		//Debug..
-		//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+/* 
+	$(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		 $( "button.btn.btn-success" ).on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+			
+			
+		
+			var foodCd = $("#foodCd").attr("data-foodCd");
 		
 		
-	
-		var foodCd = $("#exerNo").attr("data-exerNo");
-	
-	
-	
 		
-		  $.ajax({
-				url: "/diet/addFavMealItem?checkarray="+foodCd,
-				success:function(data){
-					$("#mmodalHolder").html(data);
-					$("#mmodal").modal("show");			
-					
-				}  
-				  
-			  });
-		
-		
-		 
-	});
-});	 */
+			
+			  $.ajax({
+					url: "/diet/getaddDailyIntakeMeal?checkarray="+foodCd,
+					success:function(data){
+						$("#mmodalHolder").html(data);
+						$("#mmodal").modal("show");			
+						
+					}  
+					  
+				  });
+			
+			
+			 
+		});
+	});	 */
+
 </script>   
    			
 <div class="container show-grid">
@@ -169,6 +198,7 @@ function count(type)  {
 			<span data-text-content="true" style="font-size:30px;" id="exerkcal" class="" th:value=${exer.exerKcal} th:text=${exer.exerKcal}>	
 			</span>  (10분당 kcal 입니다)
 			
+			<div hidden="" th:attr="data-exerNo=${exer.exerNo}" id="exerNo"> </div>
    		  	</div>
    		  	
    		  	<br>
@@ -184,11 +214,11 @@ function count(type)  {
 		<a href="javascript:choiceType('+','10');">+</a>
 		<a href="javascript:choiceType('-','10');">-</a>
 		</span>
-   		  &nbsp;&nbsp;분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>	</span>
+   		  &nbsp;&nbsp;분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>kcal</span>
    		   	</div>
    		  	
-   		  	<div align="left"><button type="button" class="btn btn-success">일일운동량에 추가</button></div>
-			<div align="left"><button type="button" class="btn btn-danger" >루틴에 추가</button></div>
+   		  	<div align="left"><button type="button" class="btn btn-success" data-bs-toggle="modal" >일일운동량에 추가</button></div>
+			<div align="left"><button type="button" class="btn btn-danger" data-bs-toggle="modal" >루틴에 추가</button></div>
 	
      		  	
    		  
@@ -205,11 +235,18 @@ function count(type)  {
 			</div>
 			</div>
 			
+				<div id="mmodalHolder" style="width:200px;">
+			
+			</div>
+			
 			
    <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
    
    
-   
+   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>		
 
 </body>
 </html>

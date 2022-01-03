@@ -52,7 +52,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" th:href="@{../diet/addDailyIntakeMeal}">
+                                        <a class="menu-link" th:href="@{../diet/getDailyIntakeMeal}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -273,6 +273,7 @@
                                     </div>
                                     <div class="menu-item">
                                         <a class="menu-link" href="../dist/authentication/general/error-404.html">
+
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -350,12 +351,11 @@
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../dist/account/referrals.html" class="menu-link px-5">Referrals</a>
-                                            </div>
+                                          <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:listroutine()|"></a></div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="../dist/account/billing.html" class="menu-link px-5">Billing</a>
+                                               <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;">    </a> 
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
@@ -621,6 +621,20 @@
                             });
                         });
                     });
+                    function timer(){
+                        popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+                    }
+                    function listroutine(){
+                        popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+                        
+                        
+                   }
+                    
+                    function listcart() {
+                        popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+                    }
+                   
+
                 </script>
 </th:block>
 </html>

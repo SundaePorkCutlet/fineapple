@@ -8,15 +8,15 @@
 </head>
 <body>
 
-	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="hong">		
-   <div  class="modal-dialog modal-sm" style="width:600px; height:1300px;">
+	<div id="favMealList" class="modal fade" role="dialog" th:fragment ="getFavMealList">		
+   <div  class="modal-dialog" style="width:800px; height:1300px;">
     <div class="modal-content">
-     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">×</button>
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
       <h1 class="modal-title" align="center">즐겨찾기리스트</h1>
-     </div>
-     <div class="modal-body" style="height:500px;">
-
+     <div class="modal-header">
+    
 
 	
 	
@@ -38,21 +38,24 @@ $(function() {
 
 </script>	
 	
+			 </div>
+     <div class="modal-body"style="height:500px;">
+				
+
 			
 			
-			
- 		<table style="width:400px; position:absolute; top:38px; left:100px; " class="table table-hover table-striped" >			
+	<table class="table table-rounded table-flush">
   		<thead>
-          <tr>
-            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">선택</th>         
-            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">번호</th>         
-            <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">즐겨찾기명</th>         
-            <th style="	background-color: rgba(51, 255, 255, 0.62);" align="center">총합칼로리</th>         
+        <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
+     <th align="left">선택</th>         
+            <th align="left">번호</th>         
+            <th align="center">즐겨찾기명</th>         
+            <th align="center">총합칼로리</th>        
           </tr>
         </thead>
         
 	
-       <tbody>
+       <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
 		<td><input type="checkbox" class="checkedfav" name="favCheck"  onclick='Chk();'></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
@@ -65,16 +68,17 @@ $(function() {
 
 	</table>
 	
-		<div style="position:absolute; top:0px;left:20px"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
-			<div style="position:absolute; top:0px; left:197px; "><button type="button" class="btn btn-warning">즐겨찾기명수정</button></div>
-			<div style="position:absolute; top:0px; left:336px;"><button type="button" class="btn btn-danger" th:onClick="|location.href='@{../user/addUser}'|">즐겨찾기생성</button></div>
-			<div style="position:absolute; top:0px;	left:460px; "><button type="button" class="btn btn-primary">즐겨찾기삭제</button></div>
+
 
 
 
      </div>
      <div class="modal-footer">
-     <button type="button" class="btn btn-default" data-dismiss="modal">이전</button>
+     				<div align="center"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
+			<button th:if="${menu}!=0" type="button" class="btn btn-warning">즐겨찾기명수정</button>
+			<button th:if="${menu}!=0" type="button" class="btn btn-danger" th:onClick="|location.href='@{../user/addUser}'|">즐겨찾기생성</button>
+		<button th:if="${menu}!=0" type="button" class="btn btn-primary">즐겨찾기삭제</button>
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
      </div>
     </div>
    </div>

@@ -5,9 +5,20 @@
 </head>
 <body>
 <div th:fragment="getCmnt">
-<table class="table table-hover table-striped">
+<div class="text-dark" style="font-size: 30px;">댓글</div>
+<div class="separator border-5 my-10"></div>
+<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
 	<tbody>
-		<tr th:each = "data : ${map.list}">
+		
+		<tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+		<td>작성자</td>
+		<td>내용</td>
+		<td>작성일</td>
+		<td>좋아요</td>
+		<td>비고</td>
+		</tr>
+		
+		<tr th:each = "data : ${map.list}">	
 		<td th:text = "${data.cmntNo}" style="display: none;"></td>
 		<td th:text = "${data.board.postNo}" style="display: none;"></td>
 		<td th:text = "${data.user.userId}" ></td>
@@ -21,3 +32,4 @@
 </div>					
 </body>
 </html>
+	 

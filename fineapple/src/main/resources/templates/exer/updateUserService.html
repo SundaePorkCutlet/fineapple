@@ -13,21 +13,32 @@
 
 <script type="text/javascript">
 function fncGetUserList(currentPage) {
-	
-	$("form").attr("method" , "GET").attr("action" , "/exer/updateUserService").submit();
+   //document.getElementById("currentPage").value = currentPage;
+
+      //document.detailForm.submit();
+   $("form").attr("method" , "GET").attr("action" , "/exer/getUserService").submit();
 }
 
 $(function() {
 
-	 
-	 $("#update").on("click" , function() {
-		 fncGetUserList(1);
-		
+    
+    $("#add").on("click" , function() {
+       fncGetUserList(1);
+      
 });
 });
 
+
+$(function() {
+	
+	$("#reset").on("click" , function() {
+		
+		$("form")[0].reset();
+});
+	
+});
 </script>   
- 
+   
       <form>   
 <div class="container show-grid">
       <div class="row">
@@ -36,7 +47,7 @@ $(function() {
          <br>
          <br>
          <ins>
-         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 서비스 활성화 조회</div>
+         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 서비스 활성화 </div>
          </ins>
          <br>
          <div align="center" data-text-content="true" style="font-weight: bold; font-size: 26px; color: rgba(41, 96, 47, 0.55);" class="">
@@ -54,9 +65,13 @@ $(function() {
        
          <br><br>
          <div align="center">
-         <div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="" th:value="${user.serviceTrgt}">*운동 관리 목적
+         <div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="" th:value="${user.serviceTrgt}" >*운동 관리 목적
          &nbsp;&nbsp;&nbsp;
-        
+         <select style="font-size:15px">
+         <option>체중감량</option>
+         <option>체중유지</option>
+         <option>체중증량</option>         
+         </select>
          </div>
          <br><br>
          <span style=" font-weight:bold;font-size:18px; " class="">체중</span>
@@ -87,34 +102,37 @@ $(function() {
          
          <span style="font-weight:bold;font-size:18px; "  class="">목표체중</span>
  		  &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="trgtWeight"  th:value="${user.trgtWeight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+         <input type="number" step="0.1"  name="trgtWeight" th:value="${user.trgtWeight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
          <span style=font-weight:bold;font-size:16px;>kg</span>
          <br><br>
          
          <span style="font-weight:bold;font-size:18px; "  class="">골격근량</span>
          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="bodyMuscle" th:value="${exerServ.bodyMuscle}" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(0, 0, 0);" class="">
+         <input type="number" step="0.1"  name="bodyMuscle" th:value="${exerServ.bodyMuscle}"  style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>%</span>
          <br><br>
          
          <span style=" font-weight:bold;font-size:18px; "  class="">목표골격근량</span>    
           &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1" name="trgtBodyMuscle" th:value="${exerServ.trgtBodyMuscle}"  readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
+         <input type="number" step="0.1" name="trgtBodyMuscle" th:value="${exerServ.trgtBodyMuscle}" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>%</span>
          <br><br>
          
          <span style="font-weight:bold;font-size:18px; "  class="">*하루 목표 소모칼로리</span>
           &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"   name="dailyTrgtBurnningKcal"  th:value="${exerServ.dailyTrgtBurnningKcal}" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
+         <input type="number" step="0.1"   name="dailyTrgtBurnningKcal" th:value="${exerServ.dailyTrgtBurnningKcal}" style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;"></span>
          <br><br><br>
        
        
          <div align="center">
-         <button id="update" type="button" class="btn btn-primary" >수 &nbsp;정</button>
-         <button id="cancel" type="button" class="btn btn-primary" >이 &nbsp;전</button>
+         <button id="add" type="button" class="btn btn-primary" >수정&nbsp;완료</button>
+         <button id="cancel" type="button" class="btn btn-primary" >취 &nbsp;소</button>
          </div>
-         <br><br>        
+         <br><br>
+         <div align="center">
+         <button id="reset" type="button" class="btn btn-primary" >초기화</button>
+         </div>
          
          </div>
          </div>
@@ -125,7 +143,6 @@ $(function() {
          </form>
 			
    <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
-   
    
    
    
