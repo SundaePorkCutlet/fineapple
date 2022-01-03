@@ -100,10 +100,9 @@ function fcReportPost(){
 	var data = $("#postNo").val();
 	$.ajax({
 		url: "/community/reportPost",
+		data: "?data=" + data,
 		success : (function(data){
 			console.log(data)
-			$(".likeStt").text(data.postLikeCount);
-			$("#postNo").attr("data-postLikeStt", data.postLikeStt);
 		})
 		
 	})
