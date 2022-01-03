@@ -302,6 +302,7 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 }
 
 
+
 @RequestMapping(value="addDailyBurnning")
 public String addDailyBurnning() {
 
@@ -311,6 +312,7 @@ return "exer/addDailyBurnning.html";
 
 
 }
+
 
 
 @RequestMapping(value="searchExerPlace")

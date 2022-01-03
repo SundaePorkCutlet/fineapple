@@ -1,0 +1,42 @@
+#kt_header .header-brand p.logo-typo{
+    z-index: 10;
+    font-weight: bold;
+    font-size: 26px;
+    font-family: "Arial Black", serif;
+}
+
+#kt_header .header-brand img.logo{
+    position: absolute;
+    width: 52px;
+    height: 73px;
+    top: 4px;
+    left: 146px;
+    transform: rotate(0.184336rad);
+    z-index: -1;
+}
+
+/*PC*/
+@media (min-width: 992px) {
+    .header .header-brand {
+        width: 220px;
+    }
+    .aside .aside-menu {
+        width: 220px;
+    }
+    .aside {
+        width: 220px;
+    }
+    .wrapper {
+        padding-left: 220px;
+    }
+}
+
+/*Mobile*/
+@media (max-width: 991.98px){
+    #kt_header .header-brand img.logo{
+        width: 32px;
+        height: 43px;
+        top: 4px;
+        left: 145px;
+    }
+}

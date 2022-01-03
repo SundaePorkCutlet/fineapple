@@ -124,6 +124,7 @@ public class CommunityController {
 	
 	@GetMapping(value="getAlarmList")
 	public List getAlarmList() {
+
 		return communityService.getAlarmList();
 	}
 	
@@ -132,6 +133,9 @@ public class CommunityController {
 	public String Test() {
 		return "community/sample.html";
 	}
+
+
+
 	
 	
 	

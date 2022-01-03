@@ -11,34 +11,39 @@
 
 
 
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 상세정보</div>
+<br><br>
 
-
-<div class="container show-grid">
-		<div class="row">
-				
-			<div class="col-md-10">
-			<br>
-			<br>		
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 상세정보</div>
-			<br><br><br>
-			
-			<div data-text-content="true" style="font-weight:bold;font-size:40px;" class="" align="center" th:text=${food.foodName}></div>
+<div class="card card-stretch-25 card-bordered mb-5">
+    <div class="card-header">
+     <div data-text-content="true" style="font-weight:bold;font-size:30px;" class="" align="center" th:text=${food.foodName}></div>
+        <div class="card-toolbar">
+            
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="foodCd" style="font-weight:bold;font-size:25px;" th:attr="data-foodCd=${food.foodCd}" align="center">1회제공량 : <span th:text="${food.servingSize}+g" ></span></div>
 			<br><br>
-			<div id="foodCd" style="font-weight:bold;font-size:30px;" th:attr="data-foodCd=${food.foodCd}" align="center">1회제공량 : <span th:text="${food.servingSize}+g" ></span></div>
-			<br>
-			<div style="font-size:20px;" align="center">칼로리 : <span th:text="|${food.foodKcal}(kcal)(1회제공량당)|"></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;탄수화물 : <span th:text="|${food.foodCarb} (g)(1회제공량당)|"></span></div>
-			<div style="font-size:20px;" align="center">단백질 : <span th:text="|${food.foodProtein} (g)(1회제공량당)|"></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지방 : <span th:text="|${food.foodFat} (g)(1회제공량당)|"></span></div>
-			<div style="font-size:20px;"align="center">콜레스테롤 : <span th:text="|${food.foodCholesterol} (mg)(1회제공량당)|"></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포화지방산 : <span th:text="|${food.foodSaturatedFattyAcid} (g)(1회제공량당)|"></span></div>
-			<div style="font-size:20px;"align="center">당류 : <span th:text="|${food.foodSugar} (g)(1회제공량당)|"></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;나트륨 : <span th:text="|${food.foodSodium} (mg)(1회제공량당)|"></span></div>
-			<br><br><br><br><br><br>
+			<div style="font-size:20px;" align="center">칼로리 : <span th:text="|${food.foodKcal}(kcal)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;" align="center">탄수화물 : <span th:text="|${food.foodCarb} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;" align="center">단백질 : <span th:text="|${food.foodProtein} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;" align="center">지방 : <span th:text="|${food.foodFat} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;"align="center">콜레스테롤 : <span th:text="|${food.foodCholesterol} (mg)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;" align="center">포화지방산 : <span th:text="|${food.foodSaturatedFattyAcid} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;"align="center">당류 : <span th:text="|${food.foodSugar} (g)(1회제공량당)|"></span></div>
+			<div style="font-size:20px;" align="center">나트륨 : <span th:text="|${food.foodSodium} (mg)(1회제공량당)|"></span></div>
+			<br><br><br>
+    </div>
+    <div class="card-footer">
+     <button type="button" class="btn btn-success">일일섭취식단에 추가</button>
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal">즐겨찾는식단에 추가</button>
+			<button type="button" class="btn btn-warning" th:onclick="|location.href='@{../diet/getPurchaseFoodList?searchKeyword={searchKeyword}(searchKeyword=${food.foodName})}'|">유사상품 검색하기</button>
+    </div>
+</div>
+
+		
 			
-			<div align="left"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
-			<div align="left"><button type="button" class="btn btn-danger" >즐겨찾기에 추가</button></div>
-			<div align="left"><button type="button" class="btn btn-warning" th:onclick="|location.href='@{../diet/getPurchaseFoodList?searchKeyword={searchKeyword}(searchKeyword=${food.foodName})}'|">유사상품 검색하기</button></div>
+			
    		  	
 			
 			<br><br><br><br>
@@ -49,10 +54,7 @@
 		</div>
 		<br/>
 		
- 	</div>
 			<br><br>
-			</div>
-			</div>
 			<div id="mmodalHolder" style="width:200px;">
 			
 			</div>
