@@ -56,7 +56,7 @@ public class CommunityController {
 		
 		model.addAttribute("list", list);
 		
-		return "community/sample.html";
+		return "community/getBoard.html";
 		
 	}
 	
