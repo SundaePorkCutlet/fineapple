@@ -29,8 +29,9 @@
 		</div>
 
 -->
-
+<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-000=${map.board.postLikeStt}">
 <div class="card-body">
+	
 	<div class="d-flex align-items-center">
 		<!--begin::Avatar-->
 		<div class="symbol symbol-50 me-4">
@@ -44,10 +45,20 @@
 			</div>
 		</div>
 	</div>
-	<h2 class="fw-bold me-3 my-1" th:text="${map.board.title}">!</h2>
+	<div>
+	
+	<h2 class="fw-bold me-3 my-1" th:text="${map.board.title}"></h2>
 	<span class="fw-bold text-muted text-end me-3" th:text="${map.board.postDate}"></span>
+	<span style="text-align: right;">
+	<a href="#" class="btn btn-warning btn-hover-rotate-start">수정하기</a>
+	<a href="#" class="btn btn-success btn-hover-rotate-end">삭제하기</a>
+	<a href="#" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fcReportPost()" >신고하기</a>
+	</span>
+	</div>
+	<div class="separator border-5 my-10"></div>
 	<div class="py-5" th:text="${map.board.content}">
 	</div>
+	<div class="separator border-5 my-10"></div>
 	<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
 	<div style="text-align: left;" th:insert="community/getCmnt :: getCmnt"></div>
 </div>
@@ -80,7 +91,24 @@
 		</script>
 	
 -->
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>		
+<script type="text/javascript">
+function fcReportPost(){
+	var data = $("#postNo").val();
+	$.ajax({
+		url: "/community/reportPost",
+		success : (function(data){
+			console.log(data)
+			$(".likeStt").text(data.postLikeCount);
+			$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+		})
+		
+	})
+};	
+</script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
 	</body>
 	<!--end::Body-->
