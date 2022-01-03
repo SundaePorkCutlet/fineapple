@@ -59,4 +59,6 @@ public interface CommunityMapper {
 	
 	public void addReport(Report report);
 	
+	public List getAlarmList();
+	
 }
