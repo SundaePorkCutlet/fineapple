@@ -474,39 +474,40 @@ public String recommandExerList(Model model, HttpServletRequest request) throws 
 		
 	}
 	
-	System.err.println(totaldailyIntakeKcal);
+	System.out.println(totaldailyIntakeKcal);
 	
 	
 	
-	Double overKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
-	
-	overKcal = Math.round(overKcal*100)/100.0;
+	Double remainKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
 	
 	
-	System.out.println("ÃÊ°ú Ä®·Î¸® ÀÔ´Ï´Ù   " + overKcal);
+	
+	remainKcal = Math.round(remainKcal*100)/100.0;
 	
 	
-	if(overKcal >= 0) {
+	System.out.println(" ÀÜ¿© Ä®·Î¸® ÀÔ´Ï´Ù   " + remainKcal);
+	
+	
+	if(remainKcal >= 0) {
 		
+		remainKcal = 0.0;
+		
+	}if(remainKcal < 0) {
+		
+		remainKcal = remainKcal * (-1);
+		
+	}
 	
-	List list = exerService.recommandExerList(Math.abs(overKcal));
+	List list = exerService.recommandExerList(Math.abs(remainKcal));
 	
 	
-	
-	model.addAttribute("overKcal", overKcal);
+	model.addAttribute("overKcal", remainKcal);
 	model.addAttribute("list", list);
 	
 	
 	return "exer/recommandExerList.html";
 	
 	
-	} else {
-		
-		
-		return "user/login";
-		
-		
-	}
 
 
 }
