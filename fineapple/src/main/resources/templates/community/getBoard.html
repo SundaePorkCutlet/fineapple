@@ -38,7 +38,7 @@
 												<!--begin::Move-->
 												<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Move">
 													<!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
-													<span class="svg-icon svg-icon-2">
+													<span class="svg-icon svg-icon-2" th:onclick="|location.href='@{/community/addPostView}'|">
 														작성하기
 													</span>
 													<!--end::Svg Icon-->
@@ -139,7 +139,7 @@
 														</td>
 												</tr>
 												
-												<tr th:each = "data : ${map.list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
+												<tr th:each = "data : ${list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
 												 	<td th:text = "사진" ></td>
 													<td th:text = "${data.title}"></td>
 													<td>

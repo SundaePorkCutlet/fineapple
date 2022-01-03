@@ -5,14 +5,9 @@
 </head>
 <body>
 <div th:fragment="getCmnt">
-<table class="table table-hover table-striped">
+<table class="table table-rounded table-flush">
 	<tbody>
-		<tr th:each = "data : ${map.list}">
-		<td th:text = "사진" ></td>
-		<td th:text = "${data.title}"></td>
-		<td>
-			<a th:href="@{/community/getPost(postNo=${data.postNo})}" th:text = "${data.content}"></a>
-		</td>
+		<tr th:each = "data : ${map.list}" class="fw-bold fs-7 text-danger border-bottom border-gray-200 py-4">	
 		<td th:text = "${data.user.userId}"></td>
 		<td th:text = "${data.postDate}" ></td>
 		<td th:text = "${data.viewCount}" ></td>
@@ -24,3 +19,4 @@
 </div>					
 </body>
 </html>
+	 

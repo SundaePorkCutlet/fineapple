@@ -7,13 +7,30 @@
 <div th:fragment="addCmnt">
 <form id="addcmnt">
 	<div>
-		<div style="font-weight:bold;font-size:24px" >댓글쓰기</div>
-		<input id="content"  name = "content" style="height:50px; width:300px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
-		<button id="cmntButton" type="button" class="btn btn-primary" th:onclick="javascript:fnAddCmnt()">등록</button>
+	<div class="d-block">										
+		<<div class="input-group mb-5">
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="댓글을 입력하세요(최대400자)" aria-describedby="basic-addon2" id="kt_docs_maxlength_basic" maxlength="400"/>
+    <span class="input-group-text" id="basic-addon2"></span>
+	</div>
+		<!--end::Message-->
+		<!--begin::Attachments-->
+	
+	<div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+		<div class="d-flex align-items-center me-3">
+			<div class="btn-group me-4">
+			<span class="btn btn-primary fs-bold px-6" data-kt-inbox-form="send">
+				<span class="indicator-label">Send</span>
+			</span>
+			</div>	
+		</div>
+	</div>
+	</div>
 	</div>
 </form>
 
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript">
 function fnAddCmnt(){
 	var data = {
@@ -34,6 +51,13 @@ function fnAddCmnt(){
 	})
 				
 }; 
+
+
+$('#kt_docs_maxlength_basic').maxlength({
+    warningClass: "badge badge-warning",
+    limitReachedClass: "badge badge-success"
+});
+
 
 </script>
 </div>

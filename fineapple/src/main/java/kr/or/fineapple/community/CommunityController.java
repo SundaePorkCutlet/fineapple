@@ -49,7 +49,8 @@ public class CommunityController {
 		return "community/getPost.html";
 	}
 	
-	@RequestMapping(value = "getBoard", method = RequestMethod.GET)
+	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
+	@GetMapping(value = "getBoard")
 	public String getPostList(Model model) {
 		
 		List<Board> list = communityService.getPostList();
