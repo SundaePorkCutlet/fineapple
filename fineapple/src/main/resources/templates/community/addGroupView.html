@@ -13,7 +13,7 @@
     <!--begin::Input group-->
     <div class="fv-row mb-10">
         <!--begin::Label-->
-        <label class="required fw-bold fs-6 mb-2">소그룹명</label>
+        <label class="required fw-bold fs-6 mb-2">Text Input</label>
         <!--end::Label-->
 
         <!--begin::Input-->
@@ -25,23 +25,17 @@
     <!--begin::Actions-->
     <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary">
         <span class="indicator-label">
-            중복체크
+            Validation Form
         </span>
         <span class="indicator-progress">
-            잠시만... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
         </span>
     </button>
     <!--end::Actions-->
-    
-    <!--begin::basic autosize textarea-->
-	<!--end::basic autosize textarea-->
+    <label class="form-label">Textarea example</label>
+	<textarea class="form-control" id="kt_docs_maxlength_textarea" maxlength="400" placeholder="" rows="6"></textarea>
+	<span class="fs-6 text-muted">Bootstrap maxlength supports textarea as well as inputs</span>
 	
-	<!--begin::solid autosize textarea-->
-	<div class="rounded border d-flex flex-column p-10">
-	    <label for="" class="form-label">Solid autosize textarea</label>
-	    <textarea class="form-control form-control form-control-solid" data-kt-autosize="true"></textarea>
-	</div>
-	<!--end::solid autosize textarea-->
 </form>
 <!--end::Form-->
     
@@ -58,7 +52,7 @@ var validator = FormValidation.formValidation(
             'text_input': {
                 validators: {
                     notEmpty: {
-                        message: '소그룹 명을 입력해주세요'
+                        message: 'Text input is required'
                     }
                 }
             },
@@ -76,7 +70,7 @@ var validator = FormValidation.formValidation(
 );
 
 // Submit button handler
-const submitButton = document.getElementById('ktt_docs_formvalidation_ext_submit');
+const submitButton = document.getElementById('kt_docs_formvalidation_text_submit');
 submitButton.addEventListener('click', function (e) {
     // Prevent default button action
     e.preventDefault();
@@ -103,7 +97,7 @@ submitButton.addEventListener('click', function (e) {
 
                     // Show popup confirmation
                     Swal.fire({
-                        text: "좋은 소그룹명 입니다.",
+                        text: "사용해도 좋은 소그룹명 입니다!",
                         icon: "success",
                         buttonsStyling: false,
                         confirmButtonText: "닫기",
@@ -119,38 +113,11 @@ submitButton.addEventListener('click', function (e) {
     }
 });
 
+$('#kt_docs_maxlength_textarea').maxlength({
+    warningClass: "badge badge-primary",
+    limitReachedClass: "badge badge-success"
+});
 
-
-//Define form element
-const form = document.getElementById('kt_docs_formvalidation_email');
-
-// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-var validator = FormValidation.formValidation(
-    form,
-    {
-        fields: {
-            'email_input': {
-                validators: {
-                    emailAddress: {
-                        message: 'The value is not a valid email address'
-                    },
-                    notEmpty: {
-                        message: 'Email address is required'
-                    }
-                }
-            },
-        },
-
-        plugins: {
-            trigger: new FormValidation.plugins.Trigger(),
-            bootstrap: new FormValidation.plugins.Bootstrap5({
-                rowSelector: '.fv-row',
-                eleInvalidClass: '',
-                eleValidClass: ''
-            })
-        }
-    }
-);
 </script>
 	</body>
 	<!--end::Body-->
