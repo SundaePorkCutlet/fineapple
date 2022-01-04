@@ -37,41 +37,43 @@ $(function() {
 	 
 	 $("button.btn.btn-success").on("click" , function() {
 		 fncGetUserList(1);
-		
- 
-	 
+			 
 	 
 });
 });
 
 	 function call(){
+		 
 	 var exerKcal = [[${exer.exerKcal}]]/10; 
 	 var exerLv = $(".exerLv").val();
 	 var anExerTime = $("#anExerTime").val();
-	 var anExerKcal =  $(".anExerKcal").val();
+	 var anExerKcal =  $("#anExerKcal").val();
 	 
-	 alert(exerKcal)
+	 
+	/*  alert(exerKcal)
 	 alert(exerLv)
 	 alert(anExerTime)
-	 alert(anExerKcal)
+	 alert(anExerKcal) */
 	 
 	  if(exerLv == "강"){
 		  
-		anExerKcal = exerKcal*parseInt(anExerTime.value) + 30;
+		anExerKcal = exerKcal*parseInt(anExerTime) + 30;
 		alert(anExerKcal)
 		
 	 }if(exerLv == "중"){
 		 
-		/*  anExerKcal = exerKcal*parseInt(anExerTime.value) + 20; */
+		 anExerKcal = exerKcal*parseInt(anExerTime) + 20; 
 		 
 		 alert(anExerKcal)
 		 
 	 } if(exerLv == "약"){
 		 
-		 anExerKcal = exerKcal*parseInt(anExerTime.value) + 10;
+		 anExerKcal = exerKcal*parseInt(anExerTime) + 10;
 		 
 		 alert(anExerKcal)
 	 } 
+	 
+	 $('label').append(anExerKcal);
 	 
 	 }
 	/*  { 
@@ -113,15 +115,14 @@ $(function() {
 	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
 		<td th:text="${exer.exerName}"   style="cursor:pointer; text-align: left;"></td>
 		<td style="cursor:pointer; text-align: left;">
-		 <select style="font-size:15px" id="exerLv" class="exerLv" onkeyup='call()'>
+		 <select style="font-size:15px" id="exerLv" class="exerLv"  onchange='call()'>
          <option value="강" >강</option>
          <option value="중" selected="selected">중</option>
          <option value="약">약</option>         
          </select>
 		</td>
-		<td class="min-w-50px"><input style="width:100px;"  id="anExerTime" onkeyup='call()' class="userExerBurnning" type="number" maxlength="4" name=userExerBurnning/>분</td>
-		<td align="right" th:attr="anExerKcal=${exer.anExerKcal}" th:value=${exer.exerKcal} class="anExerKcal">kcal</td>
-		
+		<td class="min-w-50px"><input style="width:100px;"  id="anExerTime"  onchange='call()' class="userExerBurnning" type="number" maxlength="3" name=userExerBurnning/>분</td>
+		<td align="left"  th:value=${exer.anExerKcal} id="anExerKcal" ><label></label>Kcal</td>
 	</tr>
 </tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
@@ -175,7 +176,7 @@ $(function() {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
-  $('.userFoodIntake').maxlength({
+  $('.userExerBurnning').maxlength({
 	    warningClass: "badge badge-warning",
 	    limitReachedClass: "badge badge-success"
 	});

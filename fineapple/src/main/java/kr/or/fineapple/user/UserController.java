@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -84,19 +85,26 @@ public class UserController {
 	
 	
 	@RequestMapping(value="addUser")
-	public String addUser(@RequestBody(required=false) User user, HttpSession session){
-		System.out.println("UserController:addUser()");
+	public String addUser(@ModelAttribute("user") User user, HttpSession session){
+		System.out.println("찐UserController:addUser()");
+		System.out.println(user);
 		session.setAttribute("user", user);
+		System.out.println();
+		if(user.getUserId() != null) {
+			user.setPassword("kakaopassword");
+		}
+		System.out.println(user);
 		return "user/addUser.html";
 	}
 	
 	
+	
 	@RequestMapping(value="addUser/redirect", method= RequestMethod.POST)
-	public String addUserRedirect(@ModelAttribute("user") User user , @RequestParam(value="userImg1", required = false) MultipartFile file) throws Exception {  
+	public String addUserRedirect(@ModelAttribute("user") User user , @RequestParam(value="userImg1", required = false) MultipartFile file , HttpSession session) throws Exception {  
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		
-		
+		user.setPassword("kakaopassword");
 		if(!file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
 			file.transferTo(new File(filePath, file.getOriginalFilename()));
@@ -112,8 +120,15 @@ public class UserController {
 		userService.addUser(user);
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");
+		if(user.getPassword().equals("kakaopassword")) {
+			session.setAttribute("user",user);
+		}
 		return "redirect:/";
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value="getUser",method=RequestMethod.GET)
 	public String getUser(@RequestParam("userId") String userId,Model model)throws Exception{
