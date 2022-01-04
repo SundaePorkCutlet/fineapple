@@ -11,7 +11,7 @@ public class Exer {
 
 	
 	int exerNo;
-	int exerLv;
+	String exerLv;
 	String exerCate;
 	String exerName;
 	Double exerKcal;

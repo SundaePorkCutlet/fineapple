@@ -13,6 +13,7 @@ public class Routine {
 	int routineInfoNo;
 	int routineNo;
 	int exerNo;
+	String exerLv;
 	String exerName;
 	String routineName;
 	int totalExerSetCount; 

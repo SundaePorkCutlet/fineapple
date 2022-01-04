@@ -20,16 +20,33 @@
      <div class="modal-header">
 
 <script>
+
 function fncGetUserList(currentPage) {
 	
-	 
-// 	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
+	var exerNo = $("#exerNo").attr("data-exerNo");
+	var routineNo =  $("#routineNo:checked").attr("data-routineNo");
+	
+	
+ $("form").attr("method" , "POST").attr("action" , "/exer/addRoutineInfo?exerNo="+exerNo + "&exerLv=" +$(".exerLv").val() 
+		                                                              + "&anExerKcal=" + $("#anExerKcal").html()
+		                                                              + "&anExerTime=" + $("#anExerTime").val() 
+		                                                              + "&routineNo=" + routineNo).submit();
    
-if (confirm("등록되었습니다! 확인하시겠어요?")) {
-       self.location="/exer/getRoutineList";
-    } else {
-    	$('#mmodal').modal("hide");
-    }	
+ 
+ if (confirm("등록되었습니다! 확인하시겠어요?")) {
+	 $.ajax({
+			url: "/exer/getRoutineList?menu="+0,
+			success:function(data){
+				$('#mmodal').modal("hide");
+				$("#mmodalHolder").html(data);
+				$("#routineList").modal("show");			
+				
+			}  
+			  
+		  });
+} else {
+	$('#mmodal').modal("hide");
+}	
 }
 
 $(function() {
@@ -47,41 +64,43 @@ $(function() {
 	 var exerKcal = [[${exer.exerKcal}]]/10; 
 	 var exerLv = $(".exerLv").val();
 	 var anExerTime = $("#anExerTime").val();
-	 var anExerKcal =  $("#anExerKcal").val();
+	 var anExerKcal = $("#anExerKcal").val();
 	 
 	 
 	/*  alert(exerKcal)
 	 alert(exerLv)
-	 alert(anExerTime)
-	 alert(anExerKcal) */
+	 alert(anExerTime)*/
+	 
+	 //alert(anExerKcal) 
 	 
 	  if(exerLv == "강"){
 		  
 		anExerKcal = exerKcal*parseInt(anExerTime) + 30;
-		alert(anExerKcal)
+		
+		//alert(anExerKcal)
+		
+		
 		
 	 }if(exerLv == "중"){
 		 
 		 anExerKcal = exerKcal*parseInt(anExerTime) + 20; 
 		 
-		 alert(anExerKcal)
+		//alert(anExerKcal)
 		 
 	 } if(exerLv == "약"){
 		 
 		 anExerKcal = exerKcal*parseInt(anExerTime) + 10;
 		 
-		 alert(anExerKcal)
+		// alert(anExerKcal)
 	 } 
 	 
-	 $('label').append(anExerKcal);
+	 
+	  $('label').html(anExerKcal); 
+	 	  
+	// alert(anExerKcal)
 	 
 	 }
-	/*  { 
-		 
-	   if(exerLv.value && anExerTime.value){
-		  anExerKcal.value =parseInt(exerLv.value) * parseInt(anExerTime.value);
-	  } 
-	 }*/
+	
 
 </script>
 
@@ -96,7 +115,9 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form>
+<form >
+
+<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 <div class="row">
 <div class="col-12">
 <div align="center">
@@ -113,16 +134,16 @@ $(function() {
 	
        <tbody>
 	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
-		<td th:text="${exer.exerName}"   style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${exer.exerName}" id="exerNo" th:attr="data-exerNo=${exer.exerNo}" style="cursor:pointer; text-align: left;"></td>
 		<td style="cursor:pointer; text-align: left;">
-		 <select style="font-size:15px" id="exerLv" class="exerLv"  onchange='call()'>
+		 <select style="font-size:15px" id="exerLv" class="exerLv" onchange='call()'>
          <option value="강" >강</option>
          <option value="중" selected="selected">중</option>
          <option value="약">약</option>         
          </select>
 		</td>
-		<td class="min-w-50px"><input style="width:100px;"  id="anExerTime"  onchange='call()' class="userExerBurnning" type="number" maxlength="3" name=userExerBurnning/>분</td>
-		<td align="left"  th:value=${exer.anExerKcal} id="anExerKcal" ><label></label>Kcal</td>
+		<td class="min-w-50px"><input style="width:100px;"  id="anExerTime"  onchange='call()' th:value="${exer.anExerTime}"  class="userExerBurnning" type="number" maxlength="3" name=anExerTime/>분</td>
+		<td align="left"><input hidden=""  th:value="${exer.anExerKcal}" name="anExerKcal"/><label id="anExerKcal"></label>Kcal</td>
 	</tr>
 </tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
@@ -144,7 +165,7 @@ $(function() {
 	
        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-		<td><input  type="radio" class="routineNo" name="routineNo" th:value="${data.routineNo}"  ></td>
+		<td><input  type="radio" id="routineNo" th:value="${data.routineNo}" th:attr="data-routineNo=${data.routineNo}"></td>
 		<td align="center" th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td align="center" th:text="${data.routineName}"  style="cursor:pointer; text-align: left;"></td>
 		<td align="center" th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
@@ -176,7 +197,7 @@ $(function() {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script>
-  $('.userExerBurnning').maxlength({
+  $('.anExerTime').maxlength({
 	    warningClass: "badge badge-warning",
 	    limitReachedClass: "badge badge-success"
 	});

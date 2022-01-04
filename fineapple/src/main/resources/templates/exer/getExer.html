@@ -100,7 +100,7 @@ function count(type)  {
 		
 			var exerNo = $("#exerNo").attr("data-exerNo");
 		
-			alert(exerNo)
+			//alert(exerNo)
 		
 			
 			  $.ajax({
@@ -118,7 +118,7 @@ function count(type)  {
 		});
 	});	
 
-/* 
+ 
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
@@ -128,16 +128,16 @@ function count(type)  {
 			
 			
 		
-			var foodCd = $("#foodCd").attr("data-foodCd");
-		
+			var exerNo = $("#exerNo").attr("data-exerNo");
 		
 		
 			
 			  $.ajax({
-					url: "/diet/getaddDailyIntakeMeal?checkarray="+foodCd,
+				  
+					url: "/exer/addDailyBurnning?addDailyBurnning="+exerNo,
 					success:function(data){
 						$("#mmodalHolder").html(data);
-						$("#mmodal").modal("show");			
+						$("#mmodal").modal("show");					
 						
 					}  
 					  
@@ -146,7 +146,7 @@ function count(type)  {
 			
 			 
 		});
-	});	 */
+	});	 
 
 </script>   
    			

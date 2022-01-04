@@ -328,22 +328,6 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 
 
 
-@GetMapping(value="getAddDailyBurnning")
-public String addDailyBurnning() {
-
-System.out.println("getAddDailyBurnning");
-
-
-
-
-
-return "exer/getaddDailyBurnning.html";
-
-
-}
-
-
-
 @RequestMapping(value="searchExerPlace")
 public String searchExerPlace() {
 	
@@ -387,10 +371,15 @@ public String getRoutineList(Model model,HttpServletRequest request) throws Exce
 
 	ExerServ serv = exerService.getUserService(user.getUserId());
 	
+	System.out.println(serv);
+
 	Map<String,Object> map = new HashMap<String,Object>();
 	
 	
 	map = exerService.getRoutineList(serv.getUserServiceNo());
+	
+	System.out.println(map);
+	
 	
 	model.addAttribute("list", map.get("list"));
 	
@@ -412,36 +401,125 @@ public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Mod
 	
 	
 	map = exerService.getRoutineInfoList(routine.getRoutineNo());
-	
+		
 	
 	
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("routine", routine);
+	
 	
 	return "exer/getRoutine.html";
 	
 
 }
 
+@GetMapping("addDailyBurnning")
+public String getAddDailyBurnning(Model model, @RequestParam("addDailyBurnning")int exerNo,HttpServletRequest request) throws Exception {
+
+System.out.println("getAddDailyBurnning");
+
+Exer exer = new Exer();
+
+exer = exerService.getExer(exerNo);
+
+
+System.out.println(exer);
+
+
+User user =(User)request.getSession(true).getAttribute("user");
+
+
+/*
+ * System.out.println(user);
+ * 
+ * 
+ * ExerServ serv = exerService.getUserService(user.getUserId());
+ * 
+ * 
+ * System.out.println(serv);
+ * 
+ * Map<String,Object> map = new HashMap<String,Object>();
+ * 
+ * map = exerService.getRoutineList(serv.getUserServiceNo());
+ */
+
+//System.out.println(map);
+
+//model.addAttribute("list",map.get("list"));
+model.addAttribute("exer", exer);
+
+
+return "exer/addDailyBurnning :: addDailyBurnning";
+
+
+}
+
+
+@PostMapping("addDailyBurnning")
+public String postAddDailyBurnning() {
+
+System.out.println("postAddDailyBurnning");
+
+
+
+
+
+return "exer/getaddDailyBurnning.html";
+
+
+}
+
+
+
+
+@GetMapping(value="getDailyBurnning")
+public String getDailyBurnning() {
+
+System.out.println("getAddDailyBurnning");
+
+
+
+
+
+return "exer/getDailyBurnning.html";
+
+
+}
+
+
+
+
 
 @GetMapping("addRoutineInfo")
 public String getAddRoutineInfo(Model model, @RequestParam("routineInfo")int exerNo,HttpServletRequest request) throws Exception {
 	
 	
-	System.out.println("addRoutineInfo");
+	System.out.println("getAddRoutineInfo");
 	
 	Exer exer = new Exer();
 	
 	exer = exerService.getExer(exerNo);
 	
+	
+	System.out.println(exer);
+	
+	
 	User user =(User)request.getSession(true).getAttribute("user");
+	
+
+	System.out.println(user);
+	
 
 	ExerServ serv = exerService.getUserService(user.getUserId());
+	
+
+	System.out.println(serv);
 	
 	Map<String,Object> map = new HashMap<String,Object>();
 	
 	map = exerService.getRoutineList(serv.getUserServiceNo());
 
+	//System.out.println(map);
 	
 	model.addAttribute("list",map.get("list"));
 	model.addAttribute("exer", exer);
@@ -452,7 +530,103 @@ public String getAddRoutineInfo(Model model, @RequestParam("routineInfo")int exe
 
 }
 
+@PostMapping("addRoutineInfo")
+public String postAddRoutineInfo(Model model, @RequestParam("exerNo")int exerNo,
+		@RequestParam("anExerKcal")Double anExerKcal ,
+		@RequestParam("routineNo")int routineNo, 
+		@RequestParam("exerLv")String exerLv,
+		@RequestParam("anExerTime")String anExerTime) throws Exception {
+	
 
+
+	
+	System.out.println("postAddRoutineInfo");
+	
+	System.out.println("야임마~~~" + exerNo + anExerKcal + routineNo + exerLv + anExerTime);
+	
+
+	Routine routine = new Routine();
+	
+	Exer exer = new Exer();
+	
+	routine = exerService.getRoutine(routineNo);
+	
+	System.out.println("1"+routine);
+	
+	int hour = Integer.parseInt(routine.getRoutineTime().split(":")[0]) * 60;   // 60
+	int min = Integer.parseInt(routine.getRoutineTime().split(":")[1]) + hour; // 90
+	
+	System.out.println(hour); // 60
+	System.out.println(min);  // 90
+	
+	System.out.println("에헤이" + min);  //01:30:00
+
+	int routineTime = min + Integer.parseInt(anExerTime); // 150
+	
+	System.out.println(routineTime);
+	
+	
+
+	String resultTime1;
+	String resultTime2;
+	
+	
+	int a = Integer.parseInt(anExerTime) / 60;
+	
+	int b =Integer.parseInt(anExerTime) % 60;
+	
+	
+	if(b == 0) {
+		
+		resultTime1 = a + ":" + b + "0" + ":" + "00";
+		
+	} else {
+	
+	resultTime1 = a + ":" + b + ":" + "00";
+	
+	}
+	
+	
+	
+	int c = (routineTime) / 60;
+	
+	int d = (routineTime) % 60;
+	
+	
+	if(d == 0) {
+		
+		 resultTime2 = c + ":" + d +"0"+ ":" + "00";
+		
+	}
+	
+	 resultTime2 = c + ":" + d + ":" + "00";
+	
+	System.out.println(resultTime2);
+	
+	
+	routine.setExerNo(exerNo);
+	
+	
+	exer.setExerNo(routine.getExerNo());
+	
+	routine.setExer(exer);
+	routine.setExerLv(exerLv);
+	routine.setAnExerKcal(anExerKcal);
+	routine.setRoutineKcal(routine.getRoutineKcal() + anExerKcal);
+	routine.setAnExerTime(resultTime1);
+	routine.setRoutineTime(resultTime2);
+	
+	
+	System.out.println("2"+routine);
+	
+	
+	exerService.addRoutineInfo(routine);
+	
+	
+	return "exer/getRoutineList";
+
+	
+}
 
 
 

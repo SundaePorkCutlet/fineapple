@@ -139,7 +139,9 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int addRoutineInfo(Routine routine) {
-
+		
+		exerMapper.updateRoutine(routine);
+		
 		return exerMapper.addRoutineInfo(routine);
 	}
 
@@ -152,6 +154,7 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int updateRoutineInfo(Routine routine) {
+		
 		
 		return exerMapper.updateRoutineInfo(routine);
 	}
