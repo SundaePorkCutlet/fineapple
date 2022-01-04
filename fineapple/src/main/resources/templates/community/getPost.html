@@ -5,108 +5,127 @@
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
-<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+<body id="kt_body" class="aside-enabled">
+	<!-- 공통 SideBar -->
+	<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
 
 
-		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
-		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
 
-<!-- 
 
-		이런식으로 걍 냅다 넣으면돼 아래가 예시
-		
-		<div class="container">
-		
-			<div class="row mb-3">
-			    <div class="col-md-2 themed-grid-col"></div>
-			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
-			    <div class="col-md-2 themed-grid-col"></div>
-			</div>
-			
-		</div>
 
--->
+
 <input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-000=${map.board.postLikeStt}">
 <div class="card-body">
 	
-	<div class="d-flex align-items-center">
-		<!--begin::Avatar-->
-		<div class="symbol symbol-50 me-4">
-			<span class="symbol-label" style="background-image:url(/good/assets/media/avatars/150-1.jpg);"></span>
-		</div>
-		<!--end::Avatar-->
-		<div class="pe-5">
-			<!--begin::Author details-->
-			<div class="d-flex align-items-center flex-wrap gap-1">
-				<a href="#" class="fw-bolder text-dark text-hover-primary" th:text="${map.board.user.userId}" ></a>
-			</div>
-		</div>
-	</div>
-	<div>
-	
-	<h2 class="fw-bold me-3 my-1" th:text="${map.board.title}"></h2>
-	<span class="fw-bold text-muted text-end me-3" th:text="${map.board.postDate}"></span>
-	<span style="text-align: right;">
-	<a href="#" class="btn btn-warning btn-hover-rotate-start">수정하기</a>
-	<a href="#" class="btn btn-success btn-hover-rotate-end">삭제하기</a>
-	<a href="#" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fcReportPost()" >신고하기</a>
-	</span>
-	</div>
-	<div class="separator border-5 my-10"></div>
-	<div class="py-5" th:text="${map.board.content}">
+	<div class="card card-flush shadow-sm">
+    <div class="card-header">
+        
+        
+        <div><h5 class="card-title" th:text="${map.board.title}"></h5>
+        <div th:text="${map.board.postDate}" ></div>
+        <div th:text="${map.board.user.userId}" ></div>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" class="btn btn-sm btn-light" th:onClick="fcReportPost(1)">
+                신고하기
+            </button>
+            <button type="button" class="btn btn-sm btn-light">
+                수정하기
+            </button>
+            <button type="button" class="btn btn-sm btn-light">
+                삭제하기
+            </button>
+        </div>
+     
+    </div>
+    <div class="card-body py-5" th:text="${map.board.content}">
+    </div>
+    <div class="card-footer">
+    <button  class="btn btn-primary btn-hover-rise me-5" th:if="${true}" type="button"  th:text="${map.board.postLikeCount}" th:onclick="javascript:fnUpdatePostLike()"></button>		
+    </div>
 	</div>
 	<div class="separator border-5 my-10"></div>
 	<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
+	<div class="separator border-5 my-10"></div>
 	<div style="text-align: left;" th:insert="community/getCmnt :: getCmnt"></div>
+	<div class="separator border-5 my-10"></div>
 </div>
+
+<div id="mmodalHolder"></div>
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
 <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
 			
-		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
-		
-<!-- 	
-	
-		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
-		
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<script>
-		      document.addEventListener('DOMContentLoaded', function() {
-		        var calendarEl = document.getElementById('calendar');
-		        var calendar = new FullCalendar.Calendar(calendarEl, {
-		          initialView: 'dayGridMonth'
-		        });
-		        calendar.render();
-		      });
-		</script>
-	
--->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>		
+
+
 <script type="text/javascript">
-function fcReportPost(){
-	var data = $("#postNo").val();
+function fcReportPost(cate){
+	var data = {postNo :$("#postNo").val(), cateNo : cate};
+	console.log("안녕");
 	$.ajax({
-		url: "/community/reportPost",
-		data: "?data=" + data,
+		url: "/community/reportPostView", //url : 요청 Url
+		type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+		data: data, //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+		contentType: "text/html; charset-utf-8", // 서버에 보내는 데이터의 타입이다.
+		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+			console.log("성공" + data);
+			
+			$("#mmodalHolder").html(data);
+            $("#reportPostViewModal").modal("show");
+			
+		}
+		
+	});
+}
+
+
+/* $(function(){
+function fnUpdatePostLike(){
+	var data = {postNo : $("#postNo").val(),
+		        likeStt : $("likeStt").val()
+		       };
+	
+	$.ajax({
+		url: "/community/json/updatePostLike",
+		type: "POST",
+		data: JSON.stringify(data),
+		contentType: "application/json"
+	})
+}
+}); */
+/* https://minchoi0912.tistory.com/66 */
+/* $(function(){ */
+function fnUpdatePostLike(){
+	var data = {postNo : $("#postNo").val(),
+			postLikeCount : $(".likeStt").text(),
+			postLikeStt : $("#postNo").attr("data-postLikeStt")
+	       };
+	$.ajax({
+		url: "/community/json/updatePostLike",
+		type: "POST",
+		dataType: 'json',
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		/* data: {
+			postLikeCount : $(".likeStt").text(),
+			postLikeStt : $("#postNo").attr("data-postLikeStt")
+		}, */
 		success : (function(data){
 			console.log(data)
-		})
+			$(".likeStt").text(data.postLikeCount);
+			$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+		}) 
 		
-	})
-};	
+	})/* .done(function(data){
+		console.log(data)
+		$(".likeStt").text(data.postLikeCount);
+		$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+	}) */
+};
+/* }); */
 </script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
 	</body>

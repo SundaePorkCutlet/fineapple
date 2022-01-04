@@ -1,77 +1,157 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head th:replace="index/toolbar :: head">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
-</head>
-<body>
-	<div th:insert="index/toolbar :: toolbar">
-	</div>
-	<div class="container show-grid">
-		<div class="row">
-			<div class="col-md-2">
-				<div data-obj-id="PTjxr" data-obj-type="element">
-					<div data-text-content="true"
-					style="border-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); font-size: 14px; box-shadow: none; background-color: rgba(31, 108, 28, 0.67);">오늘의 추천 음식?
-					</div>
-				</div>
-				<a href="http://item.gmarket.co.kr/Item?goodscode=2042609688"><img src="../assets/img/salad3.jpg" style ="height: 500px; width: 200px;"/></a>
-			</div>
-			<div class="col-md-10">
-				<br>
-				<br>
-				
-				
-				
-				
-				<form id = "groupForm">
-				<div style=" text-align: center;">
-					<div style="font-weight:bold;font-size:32px;">소그룹 생성
-					</div>
-				</div>
-				<div style=" text-align: center; height: 300px; width: 1000px; background-color: rgba(241, 196, 15, 0.31);">
-					
-					<div style="font-weight:bold;font-size:18px; text-align: center;">그룹명</div>
-					<span>
-						<input name ="groupName" id = "groupName" style="height:50px; width:200px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
-						<button style="height:30px; width:100px; font-size: 15px" id = "checkGroupName" type="button" class="btn btn-primary" th:onclick="javascript:fnCheckGroupName()"> 중복체크</button>
-					</span>
-					
-					<div style="font-weight:bold;font-size:18px;" >그룹소개글</div>
-					<span>
-						<input name ="groupIntro" id = "groupintro" style="height:100px; width:400px; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);">
-					</span>
-				</div>
-				<div style="text-align: center;">
-					<button style="height:80px; width:100px; font-size: 20px" id = "addGroupButton" type="button" class="btn btn-primary">소그룹 등록</button>
-				</div>
-				</form>
-				
-				
-				
-				
-				
-				
-				
-			</div>
-		</div>
-	</div>
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+<!--begin::Form-->
+<form id="kt_docs_formvalidation_text" class="form" action="#" autocomplete="off">
+    <!--begin::Input group-->
+    <div class="fv-row mb-10">
+        <!--begin::Label-->
+        <label class="required fw-bold fs-6 mb-2">소그룹명</label>
+        <!--end::Label-->
+
+        <!--begin::Input-->
+        <input type="text" name="text_input" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" value="" />
+        <!--end::Input-->
+    </div>
+    <!--end::Input group-->
+
+    <!--begin::Actions-->
+    <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary">
+        <span class="indicator-label">
+            중복체크
+        </span>
+        <span class="indicator-progress">
+            잠시만... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+    </button>
+    <!--end::Actions-->
+    
+    <!--begin::basic autosize textarea-->
+	<!--end::basic autosize textarea-->
 	
-	
+	<!--begin::solid autosize textarea-->
+	<div class="rounded border d-flex flex-column p-10">
+	    <label for="" class="form-label">Solid autosize textarea</label>
+	    <textarea class="form-control form-control form-control-solid" data-kt-autosize="true"></textarea>
+	</div>
+	<!--end::solid autosize textarea-->
+</form>
+<!--end::Form-->
+    
+		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <script type="text/javascript">
-function fnCheckGroupName(){
-	var data = {groupName = $("#checkGroupName").val};
-	$.ajax({
-		url: "/community/json/checkGroupName",
-		type: "POST",
-		dataType: 'json',
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success : (function(data){
-			console.log(data)
-		}) 
-		
-	})
-};
+//Define form element
+const form = document.getElementById('kt_docs_formvalidation_text');
+
+// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+var validator = FormValidation.formValidation(
+    form,
+    {
+        fields: {
+            'text_input': {
+                validators: {
+                    notEmpty: {
+                        message: '소그룹 명을 입력해주세요'
+                    }
+                }
+            },
+        },
+
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger(),
+            bootstrap: new FormValidation.plugins.Bootstrap5({
+                rowSelector: '.fv-row',
+                eleInvalidClass: '',
+                eleValidClass: ''
+            })
+        }
+    }
+);
+
+// Submit button handler
+const submitButton = document.getElementById('ktt_docs_formvalidation_ext_submit');
+submitButton.addEventListener('click', function (e) {
+    // Prevent default button action
+    e.preventDefault();
+
+    // Validate form before submit
+    if (validator) {
+        validator.validate().then(function (status) {
+            console.log('validated!');
+
+            if (status == 'Valid') {
+                // Show loading indication
+                submitButton.setAttribute('data-kt-indicator', 'on');
+
+                // Disable button to avoid multiple click
+                submitButton.disabled = true;
+
+                // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                setTimeout(function () {
+                    // Remove loading indication
+                    submitButton.removeAttribute('data-kt-indicator');
+
+                    // Enable button
+                    submitButton.disabled = false;
+
+                    // Show popup confirmation
+                    Swal.fire({
+                        text: "좋은 소그룹명 입니다.",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "닫기",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+
+                    //form.submit(); // Submit form
+                }, 2000);
+            }
+        });
+    }
+});
+
+
+
+//Define form element
+const form = document.getElementById('kt_docs_formvalidation_email');
+
+// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+var validator = FormValidation.formValidation(
+    form,
+    {
+        fields: {
+            'email_input': {
+                validators: {
+                    emailAddress: {
+                        message: 'The value is not a valid email address'
+                    },
+                    notEmpty: {
+                        message: 'Email address is required'
+                    }
+                }
+            },
+        },
+
+        plugins: {
+            trigger: new FormValidation.plugins.Trigger(),
+            bootstrap: new FormValidation.plugins.Bootstrap5({
+                rowSelector: '.fv-row',
+                eleInvalidClass: '',
+                eleValidClass: ''
+            })
+        }
+    }
+);
 </script>
-</body>
+	</body>
+	<!--end::Body-->
 </html>

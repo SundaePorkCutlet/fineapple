@@ -1,5 +1,7 @@
 package kr.or.fineapple.community;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +21,9 @@ import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import oracle.net.aso.m;
 
 @Controller
 @RequestMapping("/community/*")
@@ -130,11 +135,21 @@ public class CommunityController {
 	}
 	
 	
-	@GetMapping(value="Test")
-	public String Test() {
-		return "community/sample.html";
+//	@RequestMapping(value="reportPostView", method = RequestMethod.POST)
+//	public String Test(@RequestBody String str) {
+//		System.out.println(str);
+//		System.out.println("ddddddddddddddddd");
+//		return null;
+//	}
+	
+	@RequestMapping(value="reportPostView", method = RequestMethod.POST)
+	public String report(@RequestBody String str, Model model) {
+		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy MM dd HH mm"));
+		
+		model.addAttribute("time", time);
+		
+		return "community/addReportView :: reportPostView";
 	}
-
 
 
 	

@@ -11,5 +11,3 @@ public class FineappleApplication {
 		SpringApplication.run(FineappleApplication.class, args);
 	}
 }
-	
-
