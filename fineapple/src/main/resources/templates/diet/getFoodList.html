@@ -63,7 +63,6 @@
                             <table class="table table-row-bordered align-middle gy-4 gs-9">
                                 <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
                                 <tr>
-                                    <td class="min-w-150px">확인된정보</td>
                                     <td class="min-w-60px">번호</td>
                                     <td class="min-w-150px">제조사</td>
                                     <td class="min-w-200px">식품명</td>
@@ -71,14 +70,12 @@
                                     <td class="min-w-100px">식품탄수화물</td>
                                     <td class="min-w-100px">식품단백질</td>
                                     <td class="min-w-100px">식품지방</td>
+                                    <td class="min-w-150px">확인된정보</td>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <tr th:each="data, i : ${list}">
-                                    <td align="left">
-                                        <span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span>
-                                    </td>
                                     <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.makerName}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;">
@@ -87,6 +84,9 @@
                                     <td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
+                                    <td align="left">
+                                        <span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span>
+                                    </td>
                                 </tr>
                                 </tbody>
                                 <!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->

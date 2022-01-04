@@ -181,7 +181,7 @@ public class DietController {
 		
 		Food food = new Food();
 		food = dietService.getFood(foodCd);
-		System.out.println(foodCd);
+		System.out.println(food);
 		model.addAttribute("food",food);
 		return "diet/getFood.html";
 		}
@@ -333,7 +333,8 @@ public String postaddFavMeal(Model model, @RequestParam("favMealNo")int favMealN
 	fav.setFavMealNo(favMealNo);
 	
 	dietService.addFavMealItem(fav);
-	return null;
+	
+	return  "diet/addFood.html";
 }
 
 @GetMapping("getaddDailyIntakeMeal")
@@ -472,6 +473,21 @@ public String postaddFood(@ModelAttribute Food food,Model model) throws Exceptio
 	
 	System.out.println(food);
 	dietService.addFood(food);
+	
+	
+	Search search1 = new Search();
+	search1.setCurrentPage(1);
+	search1.setPageSize(30);
+	search1.setSearchCondition(0);
+	search1.setSearchKeyword(food.getFoodName());
+	List<Food> list2 = new ArrayList<Food>();
+
+	list2=dietService.getFoodList(search1);
+	
+	model.addAttribute("list", list2);
+	model.addAttribute("search", search1);
+	
+	
 	
 	
 	return "diet/getFoodList.html";

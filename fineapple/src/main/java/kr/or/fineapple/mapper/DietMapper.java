@@ -57,6 +57,8 @@ public interface DietMapper {
        
        int deleteFood(String foodCd);
        
+       Food getFood(String foodCd);
+       
        void deleteIntakeRecord(int IntakeRecordNo);
 }
 

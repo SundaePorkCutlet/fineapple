@@ -170,9 +170,9 @@
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	
-	<select id="getFood" parameterType="INTEGER">
+	<select id="getFood" parameterType="String" resultMap="FoodMap">
 	SELECT * FROM FOOD
-	WHERE food_no =#{foodNo:INTEGER}
+	WHERE food_cd =#{value}
 	
 	
 	</select>
