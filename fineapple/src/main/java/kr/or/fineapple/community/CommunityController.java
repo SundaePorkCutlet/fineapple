@@ -150,7 +150,15 @@ public class CommunityController {
 		
 		return "community/addReportView :: reportPostView";
 	}
-
+	
+	
+	@RequestMapping(value = "addBattleView", method = RequestMethod.POST)
+	public String addBattleView(Model model) {
+		
+		System.out.println("addBattleView °ÅÄ§");
+		
+		return "community/addBattleView :: addBattleView";
+	}
 
 	
 	
