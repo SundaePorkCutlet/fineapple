@@ -3,10 +3,13 @@ package kr.or.fineapple.community;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +36,10 @@ public class CommunityRestController {
 	private CommunityService communityService;
 	
 	@RequestMapping(value = "updatePostLike", method = RequestMethod.POST)
-	public Board updatePostLike(@RequestBody Board board) {
+	public Board updatePostLike(@RequestBody Board board, HttpServletRequest request) {
 		
-		User user = new User();
-		user.setUserId("bbb123@gmail.com");
-		board.setUser(user); 
+
+		board.setUser((User)request.getSession(true).getAttribute("user")); 
 		System.out.println("=======================================================");
 		System.out.println(board);
 		
@@ -50,7 +52,7 @@ public class CommunityRestController {
 	}
 	
 	@RequestMapping(value = "addCmnt", method = RequestMethod.POST)
-	public Map addCmnt(@RequestBody String postNoStr) throws JsonMappingException, JsonProcessingException {
+	public Map addCmnt(@RequestBody String postNoStr, HttpServletRequest request, Model model) throws JsonMappingException, JsonProcessingException {
 		
 		
 		JSONObject jsonObject = (JSONObject)JSONValue.parse(postNoStr);
@@ -64,19 +66,20 @@ public class CommunityRestController {
 		
 		
 		cmnt.setBoard(board);
-		User user = new User();
-		user.setUserId("bbb123@gmail.com");
-		cmnt.setUser(user);
+		
+		cmnt.setUser((User)request.getSession(true).getAttribute("user"));
 		System.out.println("===============================");
 		System.out.println(cmnt);
 		
 		Map map = communityService.addCmnt(cmnt);
+		
 		System.out.println("==============================");
+		
 		return map;
 	}
 	
 	@PostMapping(value = "addCmnts")
-	public Cmnt addCmnts(@RequestBody String postNoStr){
+	public Cmnt addCmnts(@RequestBody String postNoStr, HttpServletRequest request){
 		
 		
 		JSONObject jsonObject = (JSONObject)JSONValue.parse(postNoStr);
@@ -90,9 +93,7 @@ public class CommunityRestController {
 		
 		
 		cmnt.setBoard(board);
-		User user = new User();
-		user.setUserId("bbb123@gmail.com");
-		cmnt.setUser(user);
+		cmnt.setUser((User)request.getSession(true).getAttribute("user"));
 		System.out.println("===============================");
 		System.out.println(cmnt);
 		
