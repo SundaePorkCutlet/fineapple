@@ -355,7 +355,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                               <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;">    </a> 
+                                               <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:getFavMealList()|">    </a> 
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
@@ -613,7 +613,7 @@
                         $("#logintwo").on("click", function () {
 
                             $.ajax({
-                                url: "user/login",
+                                url: "../user/login",
                                 success: function (data) {
                                 	console.log(data)
                                     $("#loginModalHolder").html(data);
@@ -622,6 +622,21 @@
                             });
                         });
                     });
+                
+                       function getFavMealList() {
+
+                            $.ajax({
+                                url: "../diet/getFavMealList?menu=1",
+                                success: function (data) {
+                                	console.log(data)
+                                    $("#loginModalHolder").html(data);
+                                    $("#favMealList").modal("show");
+                                }
+                            });
+                        };
+                    
+                    
+                    
                     function timer(){
                         popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
                     }

@@ -420,7 +420,7 @@ public class DietServiceImpl implements DietService{
 
 
 	@Override
-	public List getFavMealItemList(int favMealNo) throws Exception {
+	public List<FavMeal> getFavMealItemList(int favMealNo) throws Exception {
 		return dietMapper.getFavMealItemList(favMealNo);
 	}
 
@@ -479,6 +479,13 @@ public class DietServiceImpl implements DietService{
 	public void deleteIntakeRecord(int IntakeRecordNo) throws Exception {
 		dietMapper.deleteIntakeRecord(IntakeRecordNo);
 		
+	}
+
+
+
+	@Override
+	public FavMeal getFavMealItem(int favMealInfoNo) {
+		return dietMapper.getFavMealItem(favMealInfoNo);
 	}
 	
 	

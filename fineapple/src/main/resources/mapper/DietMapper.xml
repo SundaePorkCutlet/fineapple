@@ -265,6 +265,11 @@
 	WHERE FAV_MEAL_NO = #{VALUE}
 	</select>
 	
+	<select id="getFavMealItem" parameterType="Integer" resultMap="FavMealMap">
+	SELECT * FROM FAV_MEAL_INFO
+	WHERE FAV_MEAL_INFO_NO = #{VALUE}
+	</select>
+	
 	<delete id="deleteFavMealItem" parameterType="Integer">
 	DELETE FAV_MEAL_INFO
 	WHERE FAV_MEAL_INFO_NO = #{VALUE}	

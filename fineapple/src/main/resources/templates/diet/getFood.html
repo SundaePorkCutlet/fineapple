@@ -99,6 +99,7 @@ $(function() {
 		  $.ajax({
 				url: "/diet/addFavMealItem?checkarray="+foodCd,
 				success:function(data){
+					
 					$("#mmodalHolder").html(data);
 					$("#mmodal").modal("show");			
 					

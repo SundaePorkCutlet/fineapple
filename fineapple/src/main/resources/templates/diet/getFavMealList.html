@@ -9,7 +9,7 @@
 <body>
 
 	<div id="favMealList" class="modal fade" role="dialog" th:fragment ="getFavMealList">		
-   <div  class="modal-dialog" style="width:800px; height:1300px;">
+   <div  class="modal-dialog" style=" height:1300px;">
     <div class="modal-content">
     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
@@ -31,11 +31,102 @@ function fncGetUserList(currentPage) {
 $(function() {
 
 	 
-	 $(".foodName").on("click" , function() {
-			self.location="/diet/getFood?foodCd="+$(this).attr("data-foodCd");		
+	 $(".favMealName").on("click" , function() {
+		 $("#favMealList").modal("hide");	
+		 
+		 
+	  $.ajax({
+			url: "/diet/getFavMealItem?favMealNo="+$(this).attr("data-favMealNo")+"&favMealName="+$(this).attr("data-favMealName"),
+			success:function(data){
+				$("#mmodalHolder").html(data);
+				$("#favMealItem").modal("show");			
+				
+			}  
+			  
+		  });
+	
+	 
+	 
+	 
 });
 });
 
+
+function addFavMeal() {
+	var userInput = prompt("원하시는 즐겨찾는식단명을 입력해주세요");
+	
+	
+	 
+	 
+	 
+	  $.ajax({
+			url: "/diet/addFavMeal?favMealName="+userInput,
+			type : 'post',
+			success:function(data){
+				$("#favMealList").modal("hide");	
+				$("#mmodalHolder").html(data);
+				$("#favMealList").modal("show");			
+				
+			}  
+			  
+		  });
+	
+	
+
+}
+
+$(function() {
+	 $( "button.btn.btn-primary" ).on("click" , function() {
+	
+		 var FavMealNo = $("input[name=chek]:checked").attr("data-favMealNo");
+		 
+		 $("#favMealList").modal("hide");
+		  $.ajax({
+				url: "/diet/deleteFavMeal?favMealNo="+FavMealNo,
+				type : 'post',
+				success:function(data){
+						
+					$("#mmodalHolder").html(data);
+					$("#favMealList").modal("show");			
+					
+				}  
+				  
+			  });
+		
+				
+			
+		
+		
+		}		 
+		)}
+	)
+
+
+$(function() {
+	 $( "button.btn.btn-warning" ).on("click" , function() {
+	var userInput = prompt("원하시는 즐겨찾는식단명을 입력해주세요");
+	
+	 var FavMealNo = $("input[name=chek]:checked").attr("data-favMealNo");
+	 
+	 
+	 
+	 $("#favMealList").modal("hide");
+	  $.ajax({
+			url: "/diet/updateFavMeal?favMealName="+userInput+"&favMealNo="+FavMealNo,
+			type : 'post',
+			success:function(data){
+				console.log(data)
+				$("#mmodalHolder").html(data);
+				$("#favMealList").modal("show");			
+				
+			}  
+			  
+		  });
+	
+	
+	 });
+});	
+	
 </script>	
 	
 			 </div>
@@ -47,7 +138,6 @@ $(function() {
 	<table class="table table-rounded table-flush">
   		<thead>
         <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
-     <th align="left">선택</th>         
             <th align="left">번호</th>         
             <th align="center">즐겨찾기명</th>         
             <th align="center">총합칼로리</th>        
@@ -57,9 +147,9 @@ $(function() {
 	
        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-		<td><input type="checkbox" class="checkedfav" name="favCheck"  onclick='Chk();'></td>
+	    	 <td ><input th:attr="data-favMealNo=${data.favMealNo}" type="radio" class="updateName" name="chek"></td> 
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${data.favMealName}" th:attr="data-favMealNo=${data.favMealNo}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:attr="data-favMealNo=${data.favMealNo},data-favMealName=${data.favMealName}" class="favMealName" style="cursor:pointer; text-align: left;"><a href="#"  th:text="${data.favMealName}"></a></td>
 		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
 		<td></td>
 	</tr>
@@ -74,9 +164,8 @@ $(function() {
 
      </div>
      <div class="modal-footer">
-     				<div align="center"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
 			<button th:if="${menu}!=0" type="button" class="btn btn-warning">즐겨찾기명수정</button>
-			<button th:if="${menu}!=0" type="button" class="btn btn-danger" th:onClick="|location.href='@{../user/addUser}'|">즐겨찾기생성</button>
+			<button th:if="${menu}!=0" type="button" class="btn btn-danger" th:onClick="|javascript:addFavMeal()|">즐겨찾기생성</button>
 		<button th:if="${menu}!=0" type="button" class="btn btn-primary">즐겨찾기삭제</button>
      <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
      </div>
@@ -84,6 +173,7 @@ $(function() {
    </div>
   </div>		
 
+    <div id="mmodalHolder" ></div>
 
 
 
