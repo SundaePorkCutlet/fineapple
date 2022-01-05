@@ -4,160 +4,158 @@
 <meta charset="utf-8">
 </head>
 <body>
-   <div id="loginModal" class="modal fade" role="dialog" th:fragment ="hong">
+   <div id="loginModal" class="modal fade" role="dialog" th:fragment ="hong">      
    <div  class="modal-dialog " style="width:470px; height:1300px;">
     <div class="modal-content">
       <h1 class="modal-title" align="center"></h1>
      <div class="modal-header">
      </div>
-
+     
         <div class="modal-body" style="height:500px; width:400px;">
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 $(function(){
-	$("#userId").focus();
-
-	$("#login").on("click",function(){
-		var userId = $("#userId").val();
-		var password =$("#password").val();
-		console.log(userId);
-		console.log(password);
-
-		if(userId == null || userId.length< 1){
-			alert("ID를 입력해주세요.")
-			$("#userId").focus();
-			return;
-		}
-
-		if(password == null || password.length< 1){
-			alert("비밀번호를 입력해주세요.")
-			$("#password").focus();
-			return;
-		}
-		$("form").attr("method","POST").attr("action","/user/login/redirect").submit();
-	});
+   $("#userId").focus();
+   
+   $("#login").on("click",function(){
+      var userId = $("#userId").val();
+      var password =$("#password").val();
+      console.log(userId);
+      console.log(password);
+      
+      if(userId == null || userId.length< 1){
+         alert("ID를 입력해주세요.")
+         $("#userId").focus();
+         return;
+      }
+      
+      if(password == null || password.length< 1){
+         alert("비밀번호를 입력해주세요.")
+         $("#password").focus();
+         return;
+      }
+      $("#loginform").attr("method","POST").attr("action","/user/login/redirect").submit();
+   });   
 });
 
 $(function(){
-	$("#join").on("click",function(){
-		self.location = "/user/addUser";
-	})
-
+   $("#join").on("click",function(){
+      self.location = "/user/addUser";
+   })
+   
 })
 
 function kakaoLogin(){
 window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
+   
+   window.Kakao.Auth.login({
+      scope:'profile_nickname, profile_image,account_email,gender',
+      success : function(authObj){
+         console.log(authObj);
+         window.Kakao.API.request({
+            url:'/v2/user/me',
+            success:res => {      
+               const kakao_account = res.kakao_account;
+               console.log(kakao_account);
+               var userId =kakao_account.email;
+               var gender = kakao_account.gender;
+               var userName = kakao_account.profile.nickname;
+               var profile = kakao_account.profile.profile_image_url;
+               console.log(userId);
+               console.log(gender);
+               console.log(profile);
+               console.log(name);
+               var data ={
+                     userName :userName,
+                     userId: userId,
+                     gender : gender,
+                     password : "kakaopassword"
+               }
+               $.ajax({
+                  type:"POST",
+                  url:"/user/checkDuplication/kakao",
+                  data: JSON.stringify(data),
+                  accept :"application/json",
+                  contentType : "application/json",
+                  success : function(map){
+                     console.log("return : " + map.result)
+                     var userId = map.user.userId;
+                     var gender = map.user.gender;
+                     var data ={
+                           userId: userId,
+                           gender : gender,
+                           password : "kakaopassword"};
+                     if(map.result == 0){
+                        var userId = map.user.userId;
+                        var gender = map.user.gender;
+                        var data ={
+                              userId: userId,
+                              gender : gender,
+                              userName: 'ㄹㄹㄹㄹ',
+                              password : "kakaopassword"};
+                        
+                        $.ajax({
+                           type :"POST",
+                           url :"/user/addUser/kakao",
+                           data : JSON.stringify(data),
+                           accept:"application/json",
+                           contentType : "application/json",
+                        
+                        }).done(function(user){
+                           alert("첫로그인시 회원가입이 필요합니다.");
+                  
+                           $.ajax({
+                              type :"POST",
+                              url :"/user/addUser/rest",
+                              data :JSON.stringify({userId : user.userId,
+                                    gender : user.gender,
+                                    password : user.password}),
+                              accept:"application/json",
+                              contentType : "application/json",
+                           }).done(function(user){
+                              // alert("회원가입창으로 이동");
+                              // $("#kakao #userId", "#kakao #gender, #kakao #password").attr("method","POST")
+                               window.location="/user/addUser?userId="+userId;
+                           })
+                           
+                        });
+                        
+                     }else {
+                        var data = {
+                           userId : map.user.userId,
+                           password : "kakaopassword"
+                        }
+                        $.ajax({
+                           type :"POST",
+                           url :"user/login/kakao",
+                           data : JSON.stringify(data),
+                           accept : "application/json",
+                           contentType : "application/json"
+                        }).done(function(data){
+                           console.log("kakaologin");
+                           window.location="/"
+                           
+                        });
+                     }
+                     
+                  }
+                  
+            
+                  
+               });
+         
+               }
+            
+         
+            
+   
+         });
+         
+         
+      }
 
-	window.Kakao.Auth.login({
-		scope:'profile_nickname, profile_image,account_email,gender',
-		success : function(authObj){
-			console.log(authObj);
-			window.Kakao.API.request({
-				url:'/v2/user/me',
-				success:res => {
-					const kakao_account = res.kakao_account;
-					console.log(kakao_account);
-					var userId =kakao_account.email;
-					var gender = kakao_account.gender;
-					var userName = kakao_account.profile.nickname;
-					var profile = kakao_account.profile.profile_image_url;
-					console.log(userId);
-					console.log(gender);
-					console.log(profile);
-					console.log(name);
-					var data ={
-							userName :userName,
-							userId: userId,
-							gender : gender,
-							password : "kakaopassword"
-					}
-					$.ajax({
-						type:"POST",
-						url:"/user/checkDuplication/kakao",
-						data: JSON.stringify(data),
-						accept :"application/json",
-						contentType : "application/json",
-						success : function(map){
-							console.log("return : " + map.result)
-							var userId = map.user.userId;
-							var gender = map.user.gender;
-							var data ={
-									userId: userId,
-									gender : gender,
-									password : "kakaopassword"};
-							if(map.result == 0){
-								var userId = map.user.userId;
-								var gender = map.user.gender;
-								var data ={
-										userId: userId,
-										gender : gender,
-										userName: 'ㄹㄹㄹㄹ',
-										password : "kakaopassword"};
-								
-								$.ajax({
-									type :"POST",
-									url :"/user/addUser/kakao",
-									data : JSON.stringify(data),
-									accept:"application/json",
-									contentType : "application/json",
-
-								
-								}).done(function(user){
-									alert("첫로그인시 회원가입이 필요합니다.");
-						
-									$.ajax({
-										type :"POST",
-										url :"/user/addUser/rest",
-										data :JSON.stringify({userId : user.userId,
-												gender : user.gender,
-												password : user.password}),
-										accept:"application/json",
-										contentType : "application/json",
-									}).done(function(user){
-										// alert("회원가입창으로 이동");
-										// $("#kakao #userId", "#kakao #gender, #kakao #password").attr("method","POST")
-										 window.location="/user/addUser?userId="+userId;
-									})
-									
-								});
-								
-							}else {
-								var data = {
-									userId : map.user.userId,
-									password : "kakaopassword"
-								}
-								$.ajax({
-									type :"POST",
-									url :"user/login/kakao",
-									data : JSON.stringify(data),
-									accept : "application/json",
-									contentType : "application/json"
-								}).done(function(data){
-									console.log("kakaologin");
-									window.location="/"
-									
-								});
-							}
-
-						}
-
-						
-				
-						
-					});
-			
-					}
-
-
-
-
-			});
-
-
-		}
-
-
-	})
+      
+   })
 
 }
 </script>
@@ -169,7 +167,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">로그인</div>
 </ins>
 <br>
-<form>
+<form id="loginform">
 <div align="center">
 <input type="text" id = "userId" name = "userId" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
 </div>
@@ -192,11 +190,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 </div>
 <div align = "center">
 <br>
-<form id="kakao">
-<input th:value = "${userId}" type = "hidden" id ="userIdkakao" name ="userIdkakao">
-<input th:value = "${gender}" type = "hidden" id ="genderkakao" name ="genderkakao">
-<input th:value = "${password}" type = "hidden" id ="passwordkakao" name ="passwordkakao">
-</form> 
+
 <a href= "javascript:kakaoLogin();"><img src = "../assets/img/kakao_login_medium_narrow.png"></a>
 
 </div>
@@ -209,7 +203,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
      <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
      </div>
     </div>
-
-
+ 
+  
 </body>
 </html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="index/toolbar :: head">
+<meta charset="utf-8">
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+
+</head>
+<body>
+
+	<div id="favMealItem" class="modal fade" role="dialog" th:fragment ="getFavMealItem">		
+   <div  class="modal-dialog" style="height:1300px;">
+    <div class="modal-content">
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+      <h1 class="modal-title" align="center" th:text="${favMealName}"></h1>
+     <div class="modal-header">
+    
+
+	
+	
+<script type="text/javascript">
+function fncGetUserList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+
+   	//document.detailForm.submit();
+	$("form").attr("method" , "POST").attr("action" , "/diet/getFood").submit();
+}
+
+$(function() {
+
+	 
+	 $(".favMealName").on("click" , function() {
+			self.location="/diet/getFavMealItem?favMealNo="+$(this).attr("data-f");		
+});
+});
+
+
+$(function () {
+    //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+    //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
+    $("button.btn.btn-primary").on("click", function () {
+        //Debug..
+        //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+
+
+        var fav_arr = [];
+        var favNo = $("input[name=favCheck]:checked").attr("data-favMealNo");
+        var favName = $("input[name=favCheck]:checked").attr("data-favMealName");
+        $("input[name=favCheck]:checked").each(function () {
+            var favItmNo = $(this).attr("data-favMealItemNo");
+           
+
+            fav_arr.push(favItmNo);
+
+
+        })
+        if(fav_arr==0){
+			alert('선택한 상품이 없습니다!')
+			
+		}
+        
+
+
+        if (fav_arr.length != 0) {
+            console.log(fav_arr);
+        	$('#favMealItem').modal("hide");
+       	 $.ajax({
+       			url: "../diet/deleteFavMealItem?checkarray="+fav_arr.join(",")+"&favMealNo="+favNo+"&favMealName="+favName,
+       			success:function(data){
+       				console.log(data)
+       				$("#mmodalHolder").html(data);
+       				$("#favMealItem").modal("show");			
+       				
+       			}  
+       			  
+       		  });
+            
+            
+            
+            
+            
+//             self.location="../diet/FavMealItemAddIntakeRecord?checkarray="+fav_arr.join(",");
+            
+
+                }
+
+            });
+
+
+        }
+    );
+    
+    
+    
+$(function () {
+    //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+    //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
+    $("button.btn.btn-success").on("click", function () {
+        //Debug..
+        //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+
+
+        var fav_arr = [];
+        $("input[name=favCheck]:checked").each(function () {
+            var favItmNo = $(this).attr("data-favMealItemNo");
+
+            fav_arr.push(favItmNo);
+
+
+        })
+        if(fav_arr==0){
+			alert('선택한 상품이 없습니다!')
+			
+		}
+        
+
+
+        if (fav_arr.length != 0) {
+            console.log(fav_arr);
+            self.location="../diet/FavMealItemAddIntakeRecord?checkarray="+fav_arr.join(",");
+            
+
+                }
+
+            });
+
+
+        }
+    );    
+    
+
+
+function Chk() {
+
+    var result = Array();
+
+    var cnt = 0;
+
+    var chkbox = $(".checkedfavItem");
+
+    for (i = 0; i < chkbox.length; i++) {
+
+        if (chkbox[i].checked == true) {
+
+            result[cnt] = chkbox[i].value;
+
+            cnt++;
+
+        }
+
+    }
+
+    $('#result').val(result);
+
+}
+
+function CheckAll() {
+
+    var chkbox = $(".checkedfavItem");
+
+    var chkall = document.getElementById('checkedAll');
+
+    for (i = 0; i < chkbox.length; i++) {
+
+        chkbox[i].checked = chkall.checked;
+
+    }
+
+    Chk();
+
+}
+
+
+
+
+
+
+
+
+
+</script>	
+	
+			 </div>
+     <div class="modal-body"style="height:500px;">
+				
+
+		<div class="scroll h-400px px-5">
+  
+			
+	<table class="table table-rounded table-flush">
+  		<thead>
+        <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
+       <th align="center" class="min-w-30px"><input type="checkbox" id="checkedAll" name="cartAllCheck"    onclick='CheckAll();'>      
+            <th align="left"  class="min-w-30px">번호</th>         
+            <th align="center" class="min-w-100px">식품명</th>         
+            <th align="center"  class="min-w-60px">칼로리</th>        
+            <th align="center"  class="min-w-60px">섭취량</th>        
+          </tr>
+        </thead>
+        
+	
+       <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
+	<tr th:each="data, i : ${list}">
+		<td><input type="checkbox" class="checkedfavItem" name="favCheck" th:attr="data-favMealItemNo=${data.favMealInfoNo},data-favMealNo=${favMealNo},data-favMealName=${favMealName}" onclick='Chk();'></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td  th:attr="data-favMealNo=${data.favMealNo}" th:text="${data.food.foodName}" class="favMealInfoName"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="|${data.food.foodKcal}Kcal|" style="cursor:pointer; text-align: left;"></td>
+		<td th:text="|${data.Intake}g|"></td>
+	</tr>
+</tbody>
+	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
+
+	</table>
+	
+  
+</div>	
+
+
+
+     </div>
+     <div class="modal-footer">
+     				<div align="center"><button type="button" class="btn btn-success">일일섭취식단에 추가</button></div>
+		<button th:if="${menu}!=0" type="button" class="btn btn-primary">즐겨찾기삭제</button>
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">닫기</button>
+     </div>
+    </div>
+   </div>
+  </div>		
+	<div id="mmodalHolder" ></div>
+
+
+
+
+
+
+		
+</body>
+</html>

@@ -11,7 +11,7 @@
 
 
 	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="getaddDailyIntakeMeal">		
-   <div  class="modal-dialog " style="width:800px; height:1300px;">
+   <div  class="modal-dialog " style="height:1300px;">
     <div class="modal-content">
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
@@ -23,18 +23,19 @@
 function fncGetUserList(currentPage) {
 	console.log('온다');
 	$("form").attr("method" , "POST").attr("action" , "/diet/postaddDailyIntakeMeal?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
-    if (confirm("등록되었습니다! 확인하시겠어요?")) {
-  	 self.location="../diet/getDailyIntakeMeal";
-    	
-    	
-    	
-    	
-    } else {
-    	$('#mmodal').modal("hide");
-//     	$('#mmodal').modal("show");
+   
 
-    }	
+	let self_ = self;
+    setTimeout(function(){
+        if(confirm("등록되었습니다! 확인하시겠어요?")){
+            self_.location="../diet/getDailyIntakeMeal";
+        }else{
+            $('#mmodal').modal("hide");
+            //$('#mmodal').modal("show");
+        }
+    }, 500)
 }
+	
 
 $(function() {
 

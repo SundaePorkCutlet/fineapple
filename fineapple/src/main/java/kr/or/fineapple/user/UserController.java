@@ -152,7 +152,7 @@ public class UserController {
 		model.addAttribute("user",user);
 		
 	
-		return "/user/updateUser.html";
+		return "user/updateUser.html";
 		
 	}
 	
@@ -213,13 +213,13 @@ public class UserController {
 		
 		model.addAttribute("user",user);
 		
-		return "/user/updateUserLeave.html";
+		return "user/updateUserLeave.html";
 	}
 	
 	@RequestMapping(value="restoreUser", method= RequestMethod.GET)
 	public String restoreUser(){
 		System.out.println("회원복구창 입!짱");
-		return "/user/restoreUser.html";
+		return "user/restoreUser.html";
 	}
 	
 	@RequestMapping(value="restoreUserResult", method=RequestMethod.POST)
@@ -239,7 +239,7 @@ public class UserController {
 	public String getUserList() throws Exception{
 		System.out.println("아이디찾기 들어오세요");
 		
-		return "/user/findUserId.html";
+		return "user/findUserId.html";
 	}
 	
 

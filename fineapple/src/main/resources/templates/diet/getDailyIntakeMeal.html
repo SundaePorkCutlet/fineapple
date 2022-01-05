@@ -241,12 +241,14 @@
 $(function() {
 				 $( "button.btn.btn-secondary" ).on("click" , function() {
 				
+					 console.log('오냐');
 				
 					  $.ajax({
 							url: "/diet/getFavMealList?menu=0",
 							success:function(data){
+								console.log(data)
 								$("#mmodalHolder").html(data);
-								$("#mmodal").modal("show");			
+								$("#favMealList").modal("show");			
 								
 							}  
 							  
