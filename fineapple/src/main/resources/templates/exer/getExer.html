@@ -1,5 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+<script src="assets/js/scripts.bundle.js"></script>
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
@@ -13,13 +15,6 @@
 
 <script type="text/javascript">
 
-function fncUpdateProduct(){
-	
-	$("form").attr("method" , "POST").attr("action" , "/exer/aa").submit();
-	
-}
-
-
 $(function() {
 	
 	$( "button.btn.btn-primary").on("click" , function() {
@@ -28,11 +23,7 @@ $(function() {
  		
 	});	
 	
-	 $( "#plusKcal"  ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
-			fncUpdateProduct();
-		});
+	 
 	
 });
 
@@ -64,6 +55,8 @@ function count(type)  {
 		var exerKcal = [[${exer.exerKcal}]]; 
 		console.log(exerKcal);
 		console.log($("#sporttime").val());
+		
+		
 		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
 	}
 
@@ -71,6 +64,8 @@ function count(type)  {
 		var exerKcal = [[${exer.exerKcal}]]; 
 		console.log(exerKcal);
 		console.log($("#sporttime").val());
+		
+		
 		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
 		//document.getElementById('sportsCal').innerText = $("select[name=order]").val()*obj.query.value;
 	}
@@ -100,7 +95,7 @@ function count(type)  {
 		
 			var exerNo = $("#exerNo").attr("data-exerNo");
 		
-			alert(exerNo)
+			//alert(exerNo)
 		
 			
 			  $.ajax({
@@ -118,7 +113,7 @@ function count(type)  {
 		});
 	});	
 
-/* 
+ 
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
@@ -128,16 +123,16 @@ function count(type)  {
 			
 			
 		
-			var foodCd = $("#foodCd").attr("data-foodCd");
-		
+			var exerNo = $("#exerNo").attr("data-exerNo");
 		
 		
 			
 			  $.ajax({
-					url: "/diet/getaddDailyIntakeMeal?checkarray="+foodCd,
+				  
+					url: "/exer/addDailyBurnning?addDailyBurnning="+exerNo,
 					success:function(data){
 						$("#mmodalHolder").html(data);
-						$("#mmodal").modal("show");			
+						$("#mmodal").modal("show");					
 						
 					}  
 					  
@@ -146,7 +141,7 @@ function count(type)  {
 			
 			 
 		});
-	});	 */
+	});	 
 
 </script>   
    			
@@ -210,6 +205,31 @@ function count(type)  {
 			<input type='button'onclick='count("minus")'value='-'/> -->
 			<input type="text" id="sporttime" name="txtsptime" value="10" onclick="sportsTime();" onkeydown="this.value=this.value.replace(/[^0-9]/g,'')" onkeyup="sportsTime();this.value=this.value.replace(/[^0-9]/g,'');" class="ipt5" style="width:80px" placeholder="">
 		<!-- 	<div id='result'>0</div> -->
+		
+	<div class="input-group w-md-300px"
+    data-kt-dialer="true"
+    data-kt-dialer-min="1000"
+    data-kt-dialer-max="50000"
+    data-kt-dialer-step="1000"
+    data-kt-dialer-postfix="$">
+
+    <!--begin::Decrease control-->
+    <button class="btn btn-icon btn-outline btn-outline-secondary" type="button" data-kt-dialer-control="decrease">
+        <i class="bi bi-dash fs-1"></i>
+    </button>
+    <!--end::Decrease control-->
+
+    <!--begin::Input control-->
+    <input type="text" class="form-control" readonly placeholder="Amount" value="$10000" data-kt-dialer-control="input"/>
+    <!--end::Input control-->
+
+    <!--begin::Increase control-->
+    <button class="btn btn-icon btn-outline btn-outline-secondary" type="button" data-kt-dialer-control="increase">
+        <i class="bi bi-plus fs-1"></i>
+    </button>
+    <!--end::Increase control-->
+</div>
+
 		<span class="btns">
 		<a href="javascript:choiceType('+','10');">+</a>
 		<a href="javascript:choiceType('-','10');">-</a>

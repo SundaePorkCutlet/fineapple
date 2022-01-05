@@ -25,6 +25,7 @@ function fncGetUserList(currentPage) {
 	$("form").attr("method" , "POST").attr("action" , "/diet/postaddDailyIntakeMeal?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
    
 
+
 	let self_ = self;
     setTimeout(function(){
         if(confirm("등록되었습니다! 확인하시겠어요?")){
@@ -59,7 +60,7 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form target="iframe1">
+<form >
 
 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 

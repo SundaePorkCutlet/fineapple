@@ -65,13 +65,11 @@ $(function() {
          <div align="center">
          <div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="">*운동 관리 목적
          &nbsp;&nbsp;&nbsp;
-         <select style="font-size:15px">
-         <option>체중감량</option>
-         <option>체중유지</option>
-         <option>체중증량</option>         
-         </select>
-         </div>
+           <input type="number"  name="serviceTrgt" th:value="${user.serviceTrgt}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+           </div>
          <br><br>
+         
+         
          <span style=" font-weight:bold;font-size:18px; " class="">체중</span>
           &nbsp;&nbsp;&nbsp;
          <input type="number" step="0.1"  name="weight" th:value="${user.weight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">

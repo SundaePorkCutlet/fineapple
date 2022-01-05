@@ -11,7 +11,7 @@ public class Exer {
 
 	
 	int exerNo;
-	int exerLv;
+	String exerLv;
 	String exerCate;
 	String exerName;
 	Double exerKcal;
@@ -20,7 +20,7 @@ public class Exer {
 	String exerVideoTime;
 	String dodbogi;
 	String exerLink;
-	Double recommTime;
+	int recommTime;
 	String anExerTime;
 
 

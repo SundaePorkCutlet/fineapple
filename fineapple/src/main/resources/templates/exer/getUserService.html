@@ -52,12 +52,13 @@ $(function() {
         
         
        
-         <br><br>
          <div align="center">
-         <div  data-text-content="true" style="font-weight:bold;font-size:18px; "  class="" th:value="${user.serviceTrgt}">*운동 관리 목적
-         &nbsp;&nbsp;&nbsp;
+         <br><br>
+          <span style=" font-weight:bold;font-size:18px; " class="">*운동 관리 목적</span>
+          &nbsp;&nbsp;&nbsp;
+         <input type="number" step="0.1"  name="serviceTrgt" th:value="${user.serviceTrgt}"readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+ 
         
-         </div>
          <br><br>
          <span style=" font-weight:bold;font-size:18px; " class="">체중</span>
           &nbsp;&nbsp;&nbsp;
@@ -108,7 +109,7 @@ $(function() {
          <input type="number" step="0.1"   name="dailyTrgtBurnningKcal"  th:value="${exerServ.dailyTrgtBurnningKcal}" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
          <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;"></span>
          <br><br><br>
-       
+        </div>
        
          <div align="center">
          <button id="update" type="button" class="btn btn-primary" >수 &nbsp;정</button>
@@ -120,7 +121,7 @@ $(function() {
          </div>
          </div>
          </div>
-          </div>
+       
           
          </form>
 			

@@ -139,7 +139,9 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int addRoutineInfo(Routine routine) {
-
+		
+		exerMapper.updateRoutine(routine);
+		
 		return exerMapper.addRoutineInfo(routine);
 	}
 
@@ -152,6 +154,7 @@ public class ExerServiceImpl implements ExerService {
 	
 	@Override
 	public int updateRoutineInfo(Routine routine) {
+		
 		
 		return exerMapper.updateRoutineInfo(routine);
 	}
@@ -208,20 +211,29 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int addDailyBurnning(BurnningRecord record) {
 		
+		exerMapper.updateBurnningRecord(record);
+		
+		
 		return exerMapper.addDailyBurnning(record);
 		
 	}
 	
 	@Override
-	public BurnningRecord getBurnningRecordList(int userServiceNo) throws Exception {
-		
+	public List<BurnningRecord> getBurnningRecordList(int userServiceNo) throws Exception {
+	
 		return exerMapper.getBurnningRecordList(userServiceNo);
 	}
 
 	@Override
 	public int updateBurnningRecord(BurnningRecord record) throws Exception {
 		
-		return exerMapper.updateBurrningRecord(record);
+		return exerMapper.updateBurnningRecord(record);
+	}
+
+	@Override
+	public Double sumBurnningKcal(int userServiceNo) throws Exception {
+	
+		return exerMapper.sumBurnningKcal(userServiceNo);
 	}
 
 	
