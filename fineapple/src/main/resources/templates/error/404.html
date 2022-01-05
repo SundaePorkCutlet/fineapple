@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+<body id="kt_body" class="auth-bg">
+<div class="d-flex flex-column flex-root">
+	<div class="d-flex flex-column flex-column-fluid">
+		<div class="d-flex flex-row-fluid flex-column flex-column-fluid text-center p-10 py-lg-20">
+			<div class="pt-lg-20 mb-12">
+				<a href="/">
+					<img alt="Logo" src="/assets/img/logo.png" class="h-125px"/>
+				</a>
+			</div>
+			<h1 class="fw-bolder text-gray-600 mb-10" style="font-size: 120px; letter-spacing: 10px;">404</h1>
+			<div class="fw-bold fs-1 text-muted mb-15">페이지가 존재하지 않습니다.</div>
+			<div class="text-center">
+				<a href="#" class="btn btn-secondary btn-hover-rotate-start" onclick="history.back();">뒤로가기</a>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
