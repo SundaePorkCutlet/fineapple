@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 
 
+
 </head>
 <body>
 
@@ -131,6 +132,7 @@ $(function() {
           </tr>
         </thead>
         
+<<<<<<< HEAD
 	
        <tbody>
 	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
@@ -181,5 +183,62 @@ $(function() {
   
   </script>
   		</div>
+=======
+         <div class="col-md-10">
+         <br>
+         <br>
+         <ins>
+         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">일일 운동량 조회</div>
+         </ins>
+         
+         <br><br><br><!-- 
+         style="width:900px;height:500px; position: absolute; left: 100px;"  -->
+         <div align="center">
+         <span  data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;총 운동칼로리 : </span>
+         <span  data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;2000kcal</span>
+         <span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;내 목표 운동 칼로리 : </span>
+         <span data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;2500kcal</span>
+         <span data-text-content="true" style="font-weight:bold;font-size:24px" class="">&nbsp;&nbsp;&nbsp;&nbsp;초과 칼로리 : </span>
+         <span data-text-content="true" style="font-weight: normal; font-size: 24px;" class="">&nbsp;500kcal</span>
+         </div>
+         <br>
+   <!-- ${session.user.userName} -->
+<!--     ${burnningRecord.recommendExerKcal} -->
+   
+   
+         <br>
+            
+         <div align="center" data-text-content="true" style="background-color: rgba(241, 196, 15, 0.4); color: rgb(255, 255, 255); border-width: 0px; border-style: none; " class="">
+         <br>
+         <button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp;         
+         <button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;         
+         <button style="width:200px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" id="recommandList" class="btn btn-info">운동 추천 리스트</button>         
+         
+         <br><br>
+         <div class="form-group">
+         <span  data-text-content="true"  style="color:black; font-size: 16px; font-weight: bold;" id="exerName">운동명 :  
+         <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value=""  readonly style="height:30px;color: rgb(94, 94, 94); text-align: center; font-size: 13px; font-weight: normal;" class="form-inline">
+         </span>
+         <span  data-text-content="true" style="color:black; font-size: 16px; font-weight: bold;" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 소요시간 :  
+         <input type="text" value="" readonly id="anExerTime" placeholder="운동한 시간을 선택하세요">      
+      <!--    onKeyup="inputTimeColon(this);" maxlength="5" style="text-align:center;width:40px;" -->
+      <!--    <a href="#"><img src="../assets/img/plus2.png" style ="height: 50px; width: 50px;"/></a> -->
+         </span>
+         </div>
+         
+         <div class="form-group" align="center">
+           <div class="col-md-12 text-center " style="position:absolute; top:800px; left:500px; width: 753px; height: 266px;">
+              <button type="button" id="button1" class="btn btn-primary" >수정하기</button>
+           </div>
+      </div>
+         </div>
+            
+         </div>
+         </div>
+         </div>
+         </form>
+   
+ <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+>>>>>>> refs/remotes/origin/zchacha
 </body>
 </html>

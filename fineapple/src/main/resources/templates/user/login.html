@@ -36,6 +36,7 @@ $(function(){
       }
       $("#loginform").attr("method","POST").attr("action","/user/login/redirect").submit();
    });   
+
 });
 
 $(function(){
@@ -168,6 +169,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 </ins>
 <br>
 <form id="loginform">
+
 <div align="center">
 <input type="text" id = "userId" name = "userId" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
 </div>
@@ -178,7 +180,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 </form>
 <br>
 <div align="center">
-<input type="submit" id = "login" name="login" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "Login">
+<input type="button" id = "login" name="login" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "Login">
 </div>
 <br>
 <div align="center">
@@ -205,5 +207,6 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
     </div>
  
   
+
 </body>
 </html>

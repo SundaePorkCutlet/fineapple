@@ -29,7 +29,6 @@ class exerMapperTest {
 				
 		exer.setExerCate("유산소");
 		exer.setExerKcal(130.5);
-		exer.setExerLv(1);
 		exer.setExerName("턱걸이");	
 		exer.setExerNo(1);
 		exer.setExerVideoName("턱걸이 영상");
@@ -39,7 +38,6 @@ class exerMapperTest {
 		  BurnningRecord record = new BurnningRecord();
 		 
 		  //addDailyBurnning
-		  record.setExerLv(3); 
 		  record.setUserExerBurnning(170.7);	  
 		  record.setAnExerTime("2:30:00"); 
 		  record.setUserId("hc@gmail.com");
