@@ -9,7 +9,7 @@
 
 
 
-
+<div class="scroll h-400px px-5">
 	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addDailyBurnning">		
    <div  class="modal-dialog " style="width:800px; height:1300px;">
     <div class="modal-content">
@@ -24,30 +24,30 @@
 function fncGetUserList(currentPage) {
 	
 	var exerNo = $("#exerNo").attr("data-exerNo");
-	var routineNo =  $("#routineNo:checked").attr("data-routineNo");
+	//var routineNo =  $("#routineNo:checked").attr("data-routineNo");
 	
 	
- $("form").attr("method" , "POST").attr("action" , "/exer/addRoutineInfo?exerNo="+exerNo + "&exerLv=" +$(".exerLv").val() 
+ $("form").attr("method" , "POST").attr("action" , "/exer/addDailyBurnning?exerNo="+exerNo + "&exerLv=" +$(".exerLv").val() 
 		                                                              + "&anExerKcal=" + $("#anExerKcal").html()
-		                                                              + "&anExerTime=" + $("#anExerTime").val() 
-		                                                              + "&routineNo=" + routineNo).submit();
+		                                                              + "&anExerTime=" + $("#anExerTime").val()  ).submit();
    
  
- if (confirm("등록되었습니다! 확인하시겠어요?")) {
-	 $.ajax({
-			url: "/exer/getRoutineList?menu="+0,
-			success:function(data){
-				$('#mmodal').modal("hide");
-				$("#mmodalHolder").html(data);
-				$("#routineList").modal("show");			
-				
-			}  
-			  
-		  });
-} else {
-	$('#mmodal').modal("hide");
-}	
+ 
+ let self_ = self;
+ setTimeout(function(){
+     if(confirm("등록되었습니다! 확인하시겠어요?")){
+    	 
+    	 self.location="../exer/getDailyBurnning";
+    	 
+     }else{
+         $('#mmodal').modal("hide");
+         //$('#mmodal').modal("show");
+     }
+ }, 500)
+
+
 }
+
 
 $(function() {
 
@@ -115,7 +115,7 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form >
+<form target="iframe1">
 
 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 <div class="row">
@@ -151,30 +151,7 @@ $(function() {
 	</table>
 
 <br><br><br>
-	<table class="table table-rounded table-flush">
-    <thead>
-        <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
-            <th align="left">선택</th>         
-            <th align="left">번호</th>         
-            <th align="center">루틴명</th>         
-            <th align="center">총 시간</th>         
-          </tr>
-        </thead>
-        
-        
 	
-       <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
-	<tr th:each="data, i : ${list}">
-		<td><input  type="radio" id="routineNo" th:value="${data.routineNo}" th:attr="data-routineNo=${data.routineNo}"></td>
-		<td align="center" th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.routineName}"  style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
-		<td></td>
-	</tr>
-</tbody>
-	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
-
-	</table>
 </div>
 </div>
 </div>
@@ -203,6 +180,6 @@ $(function() {
 	});
   
   </script>
-  		
+  		</div>
 </body>
 </html>

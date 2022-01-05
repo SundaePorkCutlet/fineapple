@@ -16,7 +16,8 @@
 		<result property="exer.exerNo" 			column="EXER_NO" 			jdbcType="INTEGER"/>
 		<result property="burnningRecordDate"	column="BURNNING_RECORD_DATE" 		jdbcType="DATE" />	
 		<result property="exerLv" 	column="EXER_LV" 		jdbcType="VARCHAR" />
-		<result property="anExerTime" 				column="AN_EXER_TIME" 	  jdbcType="TIMESTAMP" />
+		<result property="anExerTime" 				column="AN_EXER_TIME" 	  jdbcType="VARCHAR" />
+		<result property="exerName" 				column="a" 					jdbcType="VARCHAR" />
 		<result property="userExerBurnning" 				column="USER_EXER_BURNNING" 	jdbcType="FLOAT" />
 	</resultMap>
 
@@ -31,7 +32,7 @@
 		<result property="exerVideoName" 				column="EXER_VIDEO_NAME" 					jdbcType="INTEGER" />
 		<result property="exerVideoTime" 				column="EXER_VIDEO_TIME" 					jdbcType="VARCHAR" />	
 		<result property="exerLink" 				column="EXER_LINK" 					jdbcType="VARCHAR" />		
-		<result property="recommTime" 		column="recommTime"	javaType="double" 					jdbcType="FLOAT" />		
+		<result property="recommTime" 		column="recommTime"	javaType="int" 					jdbcType="INTEGER" />		
 	</resultMap>
 
 
@@ -104,17 +105,19 @@
 			#{exer.exerNo:INTEGER},
 			SYSDATE,
 			#{exerLv:VARCHAR},
-			#{anExerTime:TIMESTAMP},
+			#{anExerTime:VARCHAR},
 			#{userExerBurnning:FLOAT}
 			)
 	
 	</insert>
 	
+	
 	<select id="getBurnningRecordList" parameterType="Integer" resultMap="BurnningRecordMap">
 	SELECT * 
-	FROM BURNNING_RECORD 
-	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
-	 AND USER_SERVICE_NO = #{userServiceNo}
+	FROM (SELECT br.* , e.exer_name a
+	        FROM  BURNNING_RECORD br LEFT JOIN EXER e ON br.exer_no = e.exer_no)
+	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD')  = TO_CHAR(SYSDATE,'YYYYMMDD')
+	AND USER_SERVICE_NO = #{value}
 	</select>
 	
 	
@@ -294,6 +297,14 @@
 			ORDER BY ROUTINE_INFO_NO desc
 	</select>
 	 
+	 	
+	 	
+	<select id="sumBurnningKcal" resultType="double">
+	SELECT SUM(USER_EXER_BURNNING)
+	FROM burnning_record
+	WHERE USER_SERVICE_NO = #{value} AND TRUNC(burnning_record_date) = TRUNC(SYSDATE)
+	</select> 
+
 
 
 	<delete id="deleteRoutineInfo" parameterType="Integer">  

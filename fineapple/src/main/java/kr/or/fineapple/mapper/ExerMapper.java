@@ -37,9 +37,12 @@ public interface ExerMapper {
        //老老 款悼樊 CRUD
        int addDailyBurnning(BurnningRecord record);
        
-       BurnningRecord getBurnningRecordList(int userServiceNo);
+       List<BurnningRecord> getBurnningRecordList(int userServiceNo);
        
-       int updateBurrningRecord(BurnningRecord record);
+       int updateBurnningRecord(BurnningRecord record);
+       
+       Double sumBurnningKcal(int userServiceNo);
+       
        
        
        //款悼CRUD

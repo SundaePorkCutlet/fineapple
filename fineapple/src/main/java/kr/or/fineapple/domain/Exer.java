@@ -20,7 +20,7 @@ public class Exer {
 	String exerVideoTime;
 	String dodbogi;
 	String exerLink;
-	Double recommTime;
+	int recommTime;
 	String anExerTime;
 
 
