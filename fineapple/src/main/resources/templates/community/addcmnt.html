@@ -10,8 +10,8 @@
 	<div class="d-block">										
 	<div class="input-group">
     <span class="input-group-text">댓글입력</span>
-    <textarea class="form-control" aria-label="With textarea" name = "cmntcontent"></textarea>
-    <a href="#" class="btn btn-info">댓글쓰기</a>
+    <textarea id = "content"class="form-control" aria-label="With textarea" name = "cmntcontent"></textarea>
+    <button class="btn btn-info" th:onclick="javascript:fnAddCmnt()"> 댓글작성</button>
 	</div>
 	</div>
 	</div>
@@ -38,10 +38,6 @@ function fnAddCmnt(){
 }; 
 
 
-$('#kt_docs_maxlength_basic').maxlength({
-    warningClass: "badge badge-warning",
-    limitReachedClass: "badge badge-success"
-});
 
 
 </script>

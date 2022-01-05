@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -38,12 +40,13 @@ public class CommunityController {
 	private CommunityService communityService;
 	
 	@GetMapping(value = "getPost")
-	public String getViewTest(@ModelAttribute("board") Board board, Model model) {
+	public String getViewTest(@ModelAttribute("board") Board board, Model model, HttpServletRequest request) {
 		
-		User user = new User();
+		User usersys = (User)request.getSession(true).getAttribute("user");
 		
-		user.setUserId("aaa123@naver.com");
-		board.setUser(user);
+		System.out.println(usersys);
+		
+		board.setUser((User)request.getSession().getAttribute("user"));
 		
 		Map map =  communityService.getPost(board);
 		
@@ -73,18 +76,12 @@ public class CommunityController {
 	
 
 	@PostMapping(value = "addPost")
-	public String addPost(@ModelAttribute Board board) {
+	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request) {
 		
-		User user = new User();
 		
-			user.setUserId("bbb123@gmil.com");
-			
-			Group group = new Group();
-			
-			board.setGroup(group);
-			
-			board.setUser(user);	
 		
+		board.setUser((User)request.getSession().getAttribute("user"));
+			
 		communityService.addPost(board);
 		
 		return "redirect:/community/getBoard";

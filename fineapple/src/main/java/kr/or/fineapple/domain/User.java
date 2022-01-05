@@ -37,7 +37,7 @@ public class User {
 	String serviceTrgt;
 	
 	public User() {
-		
+		System.out.println("User 도메인 객체 생성함");
 	}
 
 }

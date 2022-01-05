@@ -2,10 +2,9 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <meta charset="utf-8">
-<body>
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
-
-	<div id="addBattleViewModal" class="addBattleViewModal" role="dialog"  th:fragment ="addBattleView">
+<body>
+	<div id="addBattleViewModal" class="modal fade" role="dialog"  th:fragment ="addBattleView">
 		<div  class="modal-dialog " style="height:1300px;">
 			<div class="modal-content">
 				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -13,15 +12,15 @@
 	            </div>
 	            <h1 class="modal-title" align="center">승부생성</h1>
 				<div class="modal-header">
-				
 				</div>
 				<div class="modal-body" style="height:500px;">
+				<form id="kt_modal_new_target_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
 					
 				<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 					<span class="required">상대회원 ID </span>
-					<span class="required">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</span>
+					<span >aaa@n****.com</span>
 					<span class="required">상대회원 명 </span>
-					<span class="required">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</span>		
+					<span >김철수</span>		
 				</label>
 		
 				<select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option">
@@ -34,13 +33,9 @@
 					<label for="" class="form-label">목표칼로리</label>
 					<input class="form-control form-control-solid" placeholder="목표칼로리를 입력해주세요" id="kt_inputmask_4" inputmode="text">
 					<div class="form-text"></div>
-					
 				</div>
-				<div class="mb-0">
-				    <label class="form-label">종료날짜</label>
-				    <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_3"/>
-				</div>	
-					
+
+				</form>
 				</div>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-danger btn-hover-scale me-5">승부생성</button>
@@ -48,23 +43,22 @@
 				</div>
 			</div>
 		</div>
-	</div>
-<script src="assets/plugins/global/plugins.bundle.js">
-	Inputmask({
-	    "mask": "9",
-	    "repeat": 10,
-	    "greedy": false
-	}).mask("#kt_inputmask_4");
 	
-	$("#kt_daterangepicker_3").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        maxYear: parseInt(moment().format("YYYY"),10)
-    }, function(start, end, label) {
-        var years = moment().diff(start, "years");
-        alert("You are " + years + " years old!");
-    }
-);
-</script>
+	
+		<script>
+			Inputmask({
+			    "mask": "9",
+			    "repeat": 10,
+			    "greedy": false
+			}).mask("#kt_inputmask_4");
+			
+			function fnaddBattle(){
+				
+				var 
+				
+			};
+			
+		</script>
+	</div>
 </body>
+</html>
