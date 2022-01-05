@@ -16,13 +16,13 @@ import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
 @RestController
 @RequestMapping("/trgtHabit/*")
-public class RestTrgtHabitController {
+public class TrgtHabitRestController {
 	
 	@Autowired
 	@Qualifier("trgtHabitServiceImpl")
 	private TrgtHabitService trgtHabitService;
 	
-	public RestTrgtHabitController() {
+	public TrgtHabitRestController() {
 		System.out.println(this.getClass());
 	}
 
@@ -51,7 +51,7 @@ public class RestTrgtHabitController {
 			return emptyTrgtHabit;
 		}
 	}
-	
+		
 	@RequestMapping(value="json/addTrgtHabit", method=RequestMethod.POST)
 	public TrgtHabit addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
 		  
@@ -87,11 +87,11 @@ public class RestTrgtHabitController {
 	}
 	
 	@RequestMapping(value="json/updateWtrIntake", method=RequestMethod.POST)
-	public double updateWtrIntake(@RequestBody TrgtHabit trgtHabit) {
+	public Double updateWtrIntake(@RequestBody TrgtHabit trgtHabit) {
 		//REST 이용위해 TrgtHabit 도메인에 userWtrIntake 필드 추가하여 사용중(일반 컨트롤러 이용한다면 필요X)
 		System.out.println("/trgt/json/updateWtrIntake");
 		////사용자로부터 입력받은 수분섭취량 기록후 기록된값 조회하여 리턴
-		double returnUserWtrIntake = trgtHabitService.updateWtrIntake(trgtHabit.getUserId(), trgtHabit.getUserWtrIntake());
+		Double returnUserWtrIntake = trgtHabitService.updateWtrIntake(trgtHabit.getUserId(), trgtHabit.getUserWtrIntake());
 		
 		return returnUserWtrIntake;
 	}
