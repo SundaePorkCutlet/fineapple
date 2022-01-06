@@ -164,7 +164,7 @@
 	b.post_date,
 	b.view_count,
 	c.cmnt_count,
-	NVL(sub.ssum,0) postLikeCount
+	NVL(sub.ssum,0) post_like_count
 	FROM
 	board b,
 	(SELECT COUNT(*) cmnt_count, c.post_no FROM board b, comments c WHERE b.post_no = c.post_no GROUP BY c.post_no) c,
@@ -190,7 +190,7 @@
 	b.post_date,
 	b.view_count,
 	ral.like_stt AS postLikeStt,
-	totals.counts AS postLikeCount
+	totals.counts AS post_like_count
 	FROM
 	board b,
 	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId} AND like_stt = 1 </trim>) ral,

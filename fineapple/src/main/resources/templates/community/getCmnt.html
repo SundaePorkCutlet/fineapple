@@ -16,18 +16,20 @@
 		<td>비고</td>
 		</tr>
 		
-		<tr th:each = "data : ${map.list}">	
+		<tr th:each = "data ,i: ${map.list}">
+			
+		<td th:text = "${i.count}" style="display: none;"></td>
 		<td th:text = "${data.cmntNo}" style="display: none;"></td>
 		<td th:text = "${data.board.postNo}" style="display: none;"></td>
 		<td th:text = "${data.user.userId}" ></td>
 		<td th:text = "${data.cmntContent}" ></td>
 		<td th:text = "${data.cmntDate}" ></td>
-		<td th:text = "${data.cmntLikeCount}" th:onclick="javascript:fnCheckGroupName()"></td>
-		<td> 신고하기</td>
+		<td th:text = "${data.cmntLikeCount}"></td>
+		<td th:id = "'cmnt' + ${i.count}" th:attr="data-trgtNo=${data.cmntNo},data-userId=${data.user.userId}" th:onclick="javascript:fcReportPost(2, this.id)" > 신고하기</td>
 		</tr>
 	</tbody>
 </table>
-</div>					
+</div>				
 </body>
 </html>
 	 
