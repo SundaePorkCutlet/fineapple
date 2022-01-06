@@ -351,7 +351,7 @@
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                          <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:listroutine()|"></a></div>
+                                          <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" ></a></div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
@@ -634,16 +634,23 @@
                             });
                         };
                     
-                    
+                        function getRoutineList() {
+
+                            $.ajax({
+                                url: "../exer/getRoutineList",
+                                success: function (data) {
+                                	console.log(data)
+                                    $("#loginModalHolder").html(data);
+                                    $("#getRoutineList").modal("show");
+                                }
+                            });
+                        };
                     
                     function timer(){
                         popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
                     }
-                    function listroutine(){
-                        popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-                        
-                        
-                   }
+                    
+                  
                     
                     function listcart() {
                         popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");

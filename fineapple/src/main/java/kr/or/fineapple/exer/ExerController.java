@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.fineapple.domain.BurnningRecord;
+import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
+import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
@@ -313,7 +315,7 @@ public String postAddExer(@ModelAttribute("exer") Exer exer , Model model, @Requ
 	model.addAttribute("exer", exer);
 	
 	//리스트가 바로 안뜨는 이유는 컨디션, 키워드 페이지가 유지되지 않기 때문에 다시 설정 해줘서 가져옴!!!
-	return "exer/getExerList";
+	return "redirect:../exer/getExerList";
 }
 
 
@@ -384,35 +386,39 @@ public String getRoutineList(Model model,HttpServletRequest request) throws Exce
 	
 	System.out.println(map);
 	
-	
 	model.addAttribute("list", map.get("list"));
 	
-	return "exer/getRoutineList.html";
+	return "exer/getRoutineList :: getRoutineList";
 
 }
 
 
 
 @GetMapping("getRoutine")
-public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Model model) throws Exception {
+public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Model model
+								, @RequestParam("routineNo") int routineNo) throws Exception {
 
 	
-	routine = exerService.getRoutine(routine.getRoutineNo());
+	routine = exerService.getRoutine(routineNo);
+	
 	
 	System.out.println("getRoutine");
+	System.out.println("루틴번호    " + routineNo);
 	
 	Map<String,Object> map = new HashMap<String,Object>();
 	
 	
-	map = exerService.getRoutineInfoList(routine.getRoutineNo());
+	map = exerService.getRoutineInfoList(routineNo);
 		
+	
 	
 	
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("routine", routine);
+	model.addAttribute("routineNo", routineNo);
 	
 	
-	return "exer/getRoutine.html";
+	return "exer/getRoutine:: getRoutine";
 	
 
 }
@@ -577,15 +583,69 @@ return "exer/getDailyBurnning.html";
 
 }
 
+@GetMapping("deleteDailyBurnning")
+public String deleteDailyBurnning(Model model, HttpServletRequest request, @RequestParam("burnningRecordNo") int burnningRecordNo)
+		throws Exception {
+	
+	
+	System.out.println("deleteDailyBurnning");
+	
+	
+	List<BurnningRecord> list = new ArrayList<BurnningRecord>();
+
+	System.out.println(burnningRecordNo);
+	
+	
+	exerService.deleteBurnningRecord(burnningRecordNo);
+	
+	
+	int radio = 0;
+	
+	User user = (User) request.getSession(true).getAttribute("user");
+	
+	System.out.println(user);
+
+	ExerServ exerServ = exerService.getUserService(user.getUserId());
+	
+	list = exerService.getBurnningRecordList(exerServ.getUserServiceNo());
+	
+	System.out.println(list);
+	
+	System.out.println(radio);
+	
+	
+	model.addAttribute("list", list);
+	model.addAttribute("serv", exerServ);
+	model.addAttribute("radio", radio);
+
+	return "redirect:../exer/getDailyBurnning";
+
+}
 
 
 
-@GetMapping(value="getDailyBurnning")
+
+
+
+
+
+
+
+
+
+@GetMapping("getDailyBurnning")
 public String getDailyBurnning(@ModelAttribute("exerServ") ExerServ exerServ,
-							   Model model, HttpServletRequest request, HttpSession session) throws Exception {
+							   Model model, HttpServletRequest request, HttpSession session,
+							   @RequestParam(value = "radio", required = false) String radio) throws Exception {
 
 	
 System.out.println("getDailyBurnning");
+
+
+if (radio == null) {
+	radio = "0";
+	
+}
 
 
 User user =(User)request.getSession(true).getAttribute("user");
@@ -597,8 +657,12 @@ User user =(User)request.getSession(true).getAttribute("user");
  */
 
 
+
 exerServ = exerService.getUserService(user.getUserId());
-System.out.println(exerServ);
+
+Double daily = exerServ.getDailyTrgtBurnningKcal();
+
+System.out.println(daily);
 
 
 List<BurnningRecord> list = new ArrayList<BurnningRecord>();
@@ -607,11 +671,25 @@ list= exerService.getBurnningRecordList(exerServ.getUserServiceNo());
 
 Double userExerBurnning =  exerService.sumBurnningKcal(exerServ.getUserServiceNo());
 
+
+
+
 Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
+
+if(sumIntakeKcal == null) {
+	
+	sumIntakeKcal = 0.0;
+}
+
 System.out.println(sumIntakeKcal);
 
 
+
+
 user = exerService.needDaliyIntakeKcal(user.getUserId());
+
+
+
 System.out.println(user);
 
 
@@ -650,12 +728,13 @@ if(user.getServiceTrgt().equals("체중증량")) {
 System.out.println(totaldailyIntakeKcal);
 
 
-
 Double remainKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
 
 
 
 remainKcal = Math.round(remainKcal*100)/100.0;
+
+Double totaldailyIntakeKcal1 = Math.round(totaldailyIntakeKcal*100)/100.0;
 
 
 System.out.println(" 잔여 칼로리 입니다   " + remainKcal);
@@ -671,14 +750,22 @@ if(remainKcal >= 0) {
 	
 }
 
+if(userExerBurnning == null) {
+	
+	userExerBurnning  = 0.0;
+}
+
 List list1 = exerService.recommandExerList(Math.abs(remainKcal));
 
 
 model.addAttribute("list", list1);
+model.addAttribute("totaldailyIntakeKcal", totaldailyIntakeKcal1);
 model.addAttribute("overKcal", remainKcal);
 model.addAttribute("list", list);
 model.addAttribute("exerServ", exerServ);
 model.addAttribute("userExerBurnning", userExerBurnning);
+model.addAttribute("radio", radio);
+model.addAttribute("daily", daily);
 
 
 return "exer/getDailyBurnning.html";
@@ -758,10 +845,18 @@ public String postAddRoutineInfo(Model model, @RequestParam("exerNo")int exerNo,
 	
 	routine = exerService.getRoutine(routineNo);
 	
+	if(routine.getRoutineTime() == null || routine.getRoutineKcal() ==null ) {
+		
+	routine.setRoutineTime("0:00:00");
+	routine.setRoutineKcal(0.0);
+	
+	}
+	
 	System.out.println("1"+routine);
 	
 	int hour = Integer.parseInt(routine.getRoutineTime().split(":")[0]) * 60;   // 60
 	int min = Integer.parseInt(routine.getRoutineTime().split(":")[1]) + hour; // 90
+	
 	
 	System.out.println(hour); // 60
 	System.out.println(min);  // 90
@@ -836,7 +931,7 @@ public String postAddRoutineInfo(Model model, @RequestParam("exerNo")int exerNo,
 	exerService.addRoutineInfo(routine);
 	
 	
-	return "exer/getRoutineList";
+	return "redirect:../exer/getRoutineList";
 
 	
 }
@@ -844,17 +939,61 @@ public String postAddRoutineInfo(Model model, @RequestParam("exerNo")int exerNo,
 
 
 
-@GetMapping("addRoutine")
-public String addRoutine() {
+@PostMapping("addRoutine")
+public String addRoutine(Model model,@RequestParam("routineName")String routineName,
+						HttpServletRequest request) throws Exception {
 
 	
 	
 	System.out.println("addRoutine");
 	
+	User user = (User) request.getSession(true).getAttribute("user");
+	
+	Routine routine = new Routine();
+	
+	routine.setRoutineName(routineName);
+	routine.setUserId(user.getUserId());
+	exerService.addRoutine(routine);
 
-	return "exer/getExerList.html";
+	return "redirect:../exer/getRoutineList?menu=0";
 	
 }
+
+@PostMapping("updateRoutine")
+public String updateRoutine(Model model,@RequestParam("routineNo")String routineNo,
+							@RequestParam("routineName")String routineName) throws Exception {
+	
+	System.out.println("updateRoutine");
+	
+	
+	Routine routine = new Routine();
+	
+	int no = Integer.parseInt(routineNo);
+	
+	routine.setRoutineNo(no);
+	routine.setRoutineName(routineName);
+	
+	exerService.updateRoutineName(routine);
+	
+	
+	return "redirect:../exer/getRoutineList?menu=0";
+}
+
+
+
+@PostMapping("deleteRoutine")
+public String deleteRoutine(Model model,@RequestParam("routineNo")int routineNo,
+						HttpServletRequest request) throws Exception {
+	
+	
+	System.out.println("deleteRoutine");
+	
+	exerService.deleteRoutine(routineNo);
+	
+	return "redirect:../exer/getRoutineList?menu=0";
+}
+
+
 
 
 
@@ -868,6 +1007,13 @@ public String recommandExerList(Model model, HttpServletRequest request, HttpSes
 	
 	System.out.println(user.getUserId());
 	Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
+	
+	if(sumIntakeKcal == null) {
+		
+		sumIntakeKcal = 0.0;
+	}
+
+	
 	System.out.println(sumIntakeKcal);
 	
 	user = exerService.needDaliyIntakeKcal(user.getUserId());

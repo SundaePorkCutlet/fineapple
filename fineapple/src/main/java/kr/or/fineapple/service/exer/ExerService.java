@@ -40,6 +40,10 @@ public interface ExerService {
 	
 	public Double sumBurnningKcal(int userServiceNo)throws Exception;
 	
+	public void deleteBurnningRecord(int burnningRecordNo)throws Exception;
+	
+	
+	
 	
 	
 	public int addRoutine(Routine routine)throws Exception;
@@ -47,6 +51,8 @@ public interface ExerService {
 	public Routine getRoutine(int routineNo)throws Exception;
 	
 	public int updateRoutine(Routine routine)throws Exception;
+	
+	public int updateRoutineName(Routine routine)throws Exception;
 	
 	public int deleteRoutine(int routineNo)throws Exception;
 	
