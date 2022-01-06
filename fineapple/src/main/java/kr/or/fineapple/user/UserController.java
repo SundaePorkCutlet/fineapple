@@ -90,9 +90,7 @@ public class UserController {
 		System.out.println(user);
 		session.setAttribute("user", user);
 		System.out.println();
-		if(user.getUserId() != null) {
-			user.setPassword("kakaopassword");
-		}
+		
 		System.out.println(user);
 		return "user/addUser.html";
 	}
@@ -103,8 +101,9 @@ public class UserController {
 	public String addUserRedirect(@ModelAttribute("user") User user , @RequestParam(value="userImg1", required = false) MultipartFile file , HttpSession session) throws Exception {  
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
-		
-		user.setPassword("kakaopassword");
+		if(user.getPassword() == null) {
+			user.setPassword("kakaopassword");			
+		}
 		if(!file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
 			file.transferTo(new File(filePath, file.getOriginalFilename()));
