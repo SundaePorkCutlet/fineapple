@@ -13,6 +13,7 @@
      
         <div class="modal-body" style="height:500px; width:400px;">
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
 $(function(){
    $("#userId").focus();
@@ -36,6 +37,7 @@ $(function(){
       }
       $("#loginform").attr("method","POST").attr("action","/user/login/redirect").submit();
    });   
+
 
 });
 
@@ -207,6 +209,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
     </div>
  
   
+
 
 </body>
 </html>

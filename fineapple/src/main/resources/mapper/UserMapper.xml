@@ -63,7 +63,7 @@
     #{password:VARCHAR},
     #{age:INTEGER},
     SYSDATE,
-    2,
+    #{strdWtrIntake:DOUBLE},
     #{blcAddDate:DATE},
     #{blcAddWhy:VARCHAR},
     #{lastConTime:DATE},
@@ -103,6 +103,7 @@ HEIGHT)
 	a.gender,a.role,
 	a.user_img,
 	a.user_leave_stt,
+	a.strd_wtr_intake,
 	b.weight,
 	b.height
 	from 
