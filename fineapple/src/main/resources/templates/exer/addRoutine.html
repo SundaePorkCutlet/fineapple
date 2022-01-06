@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
 
@@ -36,7 +36,7 @@
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
 			
 		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->

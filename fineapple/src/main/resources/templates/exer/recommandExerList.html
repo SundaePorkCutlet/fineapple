@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
       <!-- 공통 SideBar -->
-      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+      <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
 
 
@@ -63,7 +63,7 @@ function fncGetUserList(currentPage) {
 			</div>
 			</form> -->
 			
-			<p th:text="| ${session.user.userName}님의 당일 초과 칼로리는  ${overKcal} kcal입니다.|"  align="right"></p>
+			<p th:text="| ${session.user.userName}님의 당일 초과 칼로리는  ${overKcal} kcal입니다.|" style="color: red;" align="right"></p>
 			</div>	
 			
  		<table class="table table-hover table-striped" >			
@@ -88,7 +88,7 @@ function fncGetUserList(currentPage) {
 		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
 		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${exer.recommTime}" style="cursor:pointer; text-align: left;"></td>
+		<td th:utext="|<b>${exer.recommTime}분<b>| " style="cursor:pointer; font-weight: bold; text-align: left;"></td>
 	</tr>
 	</tbody>
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
@@ -99,7 +99,7 @@ function fncGetUserList(currentPage) {
 			</div>
 			</div>
 			</div>		
-   <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+   <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
    
    
    

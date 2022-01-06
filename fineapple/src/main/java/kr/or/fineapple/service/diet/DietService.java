@@ -44,7 +44,7 @@ public interface DietService {
 	
 	public int addFavMealItem(FavMeal favMeal)throws Exception;
 	
-	public List getFavMealItemList(int favMealNo)throws Exception;	
+	public List<FavMeal> getFavMealItemList(int favMealNo)throws Exception;	
 	
 	public int delteFavMealItem(int favMealInfoNo)throws Exception;
 	
@@ -57,6 +57,8 @@ public interface DietService {
 	public List<IntakeRecord> getIntakeRecordList(int dietServiceNo)throws Exception;
 	
 	public void deleteIntakeRecord(int IntakeRecordNo)throws Exception;
+	
+	public FavMeal getFavMealItem(int favMealInfoNo);
 	
 	
 

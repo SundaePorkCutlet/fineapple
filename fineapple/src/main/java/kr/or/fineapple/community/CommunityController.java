@@ -157,6 +157,7 @@ public class CommunityController {
 		return "community/addBattleView :: addBattleView";
 	}
 
+
 	
 	
 	

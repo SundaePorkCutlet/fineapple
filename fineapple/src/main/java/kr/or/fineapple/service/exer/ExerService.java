@@ -34,11 +34,11 @@ public interface ExerService {
 	
 	public int addDailyBurnning(BurnningRecord record)throws Exception;
 	
-	public BurnningRecord getBurnningRecordList(int userServiceNo)throws Exception;
+	public  List<BurnningRecord> getBurnningRecordList(int userServiceNo)throws Exception;
 	
 	public int updateBurnningRecord(BurnningRecord record)throws Exception;
 	
-	
+	public Double sumBurnningKcal(int userServiceNo)throws Exception;
 	
 	
 	

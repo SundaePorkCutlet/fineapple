@@ -300,7 +300,16 @@ public class DietServiceImpl implements DietService{
 
 		Food food = new Food();
 		JSONArray jsonArray = new JSONArray();
-
+		System.out.println("++"+FoodCd.substring(0,1));
+		
+		if(FoodCd.substring(0,1).equals("U")) {
+			
+			food = dietMapper.getFood(FoodCd);
+			
+			
+		}else {
+			
+		
 		try {
 			RestTemplate resttemplate = new RestTemplate();
 
@@ -391,7 +400,7 @@ public class DietServiceImpl implements DietService{
 			System.out.println(e.toString());
 
 		}
-		
+		}
 		return food;
 		
 	
@@ -411,7 +420,7 @@ public class DietServiceImpl implements DietService{
 
 
 	@Override
-	public List getFavMealItemList(int favMealNo) throws Exception {
+	public List<FavMeal> getFavMealItemList(int favMealNo) throws Exception {
 		return dietMapper.getFavMealItemList(favMealNo);
 	}
 
@@ -470,6 +479,13 @@ public class DietServiceImpl implements DietService{
 	public void deleteIntakeRecord(int IntakeRecordNo) throws Exception {
 		dietMapper.deleteIntakeRecord(IntakeRecordNo);
 		
+	}
+
+
+
+	@Override
+	public FavMeal getFavMealItem(int favMealInfoNo) {
+		return dietMapper.getFavMealItem(favMealInfoNo);
 	}
 	
 	

@@ -2,6 +2,7 @@ package kr.or.fineapple.domain;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,11 @@ import lombok.ToString;
 public class BurnningRecord {
 
 	String userId;
+	int exerNo;
 	int burnningRecordNo;
 	int userServiceNo;
+	String exerName;
+	int exerKcal;
 	Double recommendExerKcal;
 	Double trgtWeight;
 	String anExerTime;
@@ -22,12 +26,15 @@ public class BurnningRecord {
 	Double dailyExerKcal;
 	/*ist<Exer> exer;*/
 	Exer exer;
-	int exerLv;
+	String exerLv;
 	Double userExerBurnning;
 	LocalDate date;	
 	String hour;
 	String min;
 	String sec;
+	LocalDate burnningRecordDate;
+	Double anExerKcal;
+	
 	
 	
 	public BurnningRecord() {

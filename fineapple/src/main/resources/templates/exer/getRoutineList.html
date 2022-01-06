@@ -7,7 +7,7 @@
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
       <!-- 공통 SideBar -->
-      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+      <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
 
 
@@ -59,6 +59,7 @@ $(function() {
 
 	</table>
 	
+	         <button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp; 
 	<!-- 	<div style="position:absolute; top:0px;left:20px"><button type="button" class="btn btn-success">일일운동량 등록</button></div>
 			<div style="position:absolute; top:0px; left:197px; "><button type="button" class="btn btn-warning">루틴명수정</button></div>
 			<div style="position:absolute; top:0px; left:336px;"><button type="button" class="btn btn-danger" th:onClick="|location.href='@{../exer/addRoutine}'|">루틴생성</button></div>
@@ -67,8 +68,10 @@ $(function() {
 
 	 -->
 		
-   <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+   <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 	</th:block>
+	
+	
 </body>
 </html>
 

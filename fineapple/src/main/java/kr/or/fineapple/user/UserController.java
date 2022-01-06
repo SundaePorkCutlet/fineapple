@@ -90,9 +90,7 @@ public class UserController {
 		System.out.println(user);
 		session.setAttribute("user", user);
 		System.out.println();
-		if(user.getUserId() != null) {
-			user.setPassword("kakaopassword");
-		}
+		
 		System.out.println(user);
 		return "user/addUser.html";
 	}
@@ -103,8 +101,9 @@ public class UserController {
 	public String addUserRedirect(@ModelAttribute("user") User user , @RequestParam(value="userImg1", required = false) MultipartFile file , HttpSession session) throws Exception {  
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
-		
-		user.setPassword("kakaopassword");
+		if(user.getPassword() == null) {
+			user.setPassword("kakaopassword");			
+		}
 		if(!file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
 			file.transferTo(new File(filePath, file.getOriginalFilename()));
@@ -152,7 +151,7 @@ public class UserController {
 		model.addAttribute("user",user);
 		
 	
-		return "/user/updateUser.html";
+		return "user/updateUser.html";
 		
 	}
 	
@@ -213,13 +212,13 @@ public class UserController {
 		
 		model.addAttribute("user",user);
 		
-		return "/user/updateUserLeave.html";
+		return "user/updateUserLeave.html";
 	}
 	
 	@RequestMapping(value="restoreUser", method= RequestMethod.GET)
 	public String restoreUser(){
 		System.out.println("회원복구창 입!짱");
-		return "/user/restoreUser.html";
+		return "user/restoreUser.html";
 	}
 	
 	@RequestMapping(value="restoreUserResult", method=RequestMethod.POST)
@@ -239,7 +238,7 @@ public class UserController {
 	public String getUserList() throws Exception{
 		System.out.println("아이디찾기 들어오세요");
 		
-		return "/user/findUserId.html";
+		return "user/findUserId.html";
 	}
 	
 

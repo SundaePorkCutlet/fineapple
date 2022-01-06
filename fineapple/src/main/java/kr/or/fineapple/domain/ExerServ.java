@@ -15,6 +15,8 @@ public class ExerServ {
 	String serviceTrgt;
 	String userId;
 	int	userServiceNo;
+	Double remainKcal;
+	
 	
 	public ExerServ() {
 		
