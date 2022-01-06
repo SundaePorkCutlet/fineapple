@@ -38,6 +38,7 @@
      <button type="button" class="btn btn-success"  data-bs-toggle="modal">일일섭취식단에 추가</button>
 			<button type="button" class="btn btn-danger" data-bs-toggle="modal">즐겨찾는식단에 추가</button>
 			<button type="button" class="btn btn-warning" th:onclick="|location.href='@{../diet/getPurchaseFoodList?searchKeyword={searchKeyword}(searchKeyword=${food.foodName})}'|">유사상품 검색하기</button>
+    <button th:if="${session.user.role}==admin and ${food.isAPI}==1" type="button" class="btn btn-success"  data-bs-toggle="modal">식품삭제</button>
     </div>
 </div>
 

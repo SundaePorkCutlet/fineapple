@@ -15,6 +15,9 @@ public class Search {
 		private int endRowNum;
 		private int startRowNum;
 		
+		public int startNum;
+		public int endNum;
+		
 		///Constructor
 		public Search() {
 		}
@@ -55,6 +58,34 @@ public class Search {
 		//==> Select Query 시 ROWNUM 시작 값
 		public int getStartRowNum() {
 			return (getCurrentPage()-1)*getPageSize()+1;
+		}
+		
+		
+		
+		
+
+		public int getStartNum() {
+			return startNum;
+		}
+
+		public void setStartNum(int startNum) {
+			this.startNum = startNum;
+		}
+
+		public int getEndNum() {
+			return endNum;
+		}
+
+		public void setEndNum(int endNum) {
+			this.endNum = endNum;
+		}
+
+		public void setEndRowNum(int endRowNum) {
+			this.endRowNum = endRowNum;
+		}
+
+		public void setStartRowNum(int startRowNum) {
+			this.startRowNum = startRowNum;
 		}
 
 		@Override

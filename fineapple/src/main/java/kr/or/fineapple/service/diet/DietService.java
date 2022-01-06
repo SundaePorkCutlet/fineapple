@@ -30,7 +30,7 @@ public interface DietService {
 	
 	public int deleteFavMeal(int favMealNo)throws Exception;
 	
-	public String shoppingAPI(String searchKeyword)throws Exception;
+	public String shoppingAPI(String searchKeyword,int startNum,int endNum)throws Exception;
 	
 	public Map<String,Object> getFavMealList(int dietServiceNo)throws Exception;
 	

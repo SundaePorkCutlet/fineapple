@@ -28,6 +28,86 @@ $(function() {
 });
 });
 
+
+var page = 1; // ajax로 날려 back단에서 select시 limit옵션을 걸기 위해
+var temp = false; // 데이터가 없을때 계속적으로 ajax호출이 되는것을 방지하기 위해
+var type = "type1";
+
+
+var lastScrollTop = 0;
+$(window).scroll(function () {
+	  console.log($(window).scrollTop());
+      console.log($(document).height());
+      console.log($(window).height());
+	
+	
+// 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight)
+	if($(window).scrollTop()+1 >= $(document).height() - $(window).height()){
+      console.log($(window).scrollTop());
+      console.log($(document).height());
+      console.log($(window).height());
+		
+		++page; 
+      
+        select_list();
+    }
+});
+
+// window.onscroll = function(ev) {
+// 	console.log(window.innerHeight)
+// 	console.log(window.scrollY)
+// 	console.log(document.body.offsetHeight)
+//     if ( window.scrollY >= (window.innerHeight + document.body.offsetHeight)) {
+    
+//         ++page; 
+        
+//         select_list();
+//     }
+// };
+
+
+function select_list() {
+	console.log($("#searchKeyword").val());
+	
+	var searchKeyword = $("#searchKeyword").val();
+$.ajax( 
+
+	{
+		url : "/diet/rest/getPurchaseFoodList",
+		type : 'post',
+		data:JSON.stringify({"currentPage":page, "searchKeyword":searchKeyword}),
+		dataType : "JSON" ,
+		contentType: "application/json; charset=utf-8",
+		success : function(data){
+			console.log(data.list)
+			if(data.list.length > 0 ){
+				$.each(data.list, function (idx, val){
+					
+					var Img = val.foodImg;
+					
+			var html = '<div class="col-sm-6 col-md-4 p-1"><div class="thumbnail"> <div > <img src="'+Img+'" width="100%" height="100%" alt="…"></div>'
+        		html+='<div class="caption"><h4>'+val.foodName+'</h4>'
+            	html+='<p>최저가 : '+val.price+'</p>'
+            	html+='<p>판매처 : '+val.storeName+'</p>'
+            	html+='<p>브랜드 : '+val.makerName+'</p>'
+            	html+='<a href="'+val.purchaseConnLink+'"><button type="button" class="btn btn-primary">구매처 이동</button></a></div></div>'
+				
+            	$(".row").append(html);
+			});
+				
+			}else{
+			console.log("실패")
+            	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
+				temp = true;
+			}
+		}
+		,error: function(xhr, status, error) { console.log(error); }
+	});
+}
+
+
+
+
 </script>	
 	<form>
 			
@@ -48,7 +128,7 @@ $(function() {
 			    			
 				
 									  
-			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
+			<input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" id="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
 			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
 			
 <!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>

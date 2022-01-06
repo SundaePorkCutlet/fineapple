@@ -3,22 +3,33 @@ package kr.or.fineapple.diet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.fineapple.domain.Food;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -100,6 +111,58 @@ public class RestDietController {
 	return jsonArray.toString();
 }
 	
+	
+	@RequestMapping("getPurchaseFoodList")
+	public Map<String,Object> PurchasaeFoodList(Model model, @RequestBody Search search) throws Exception {
+		System.out.println("post:getPurchaseFoodList");
+
+		search.setPageSize(30);
+		search.setSearchCondition(0);
+		if (search.searchKeyword == "") {
+			search.setSearchKeyword("»ø·¯µå");
+		}
+
+		System.out.println(search);
+		int page = 1; 
+		if(search.getCurrentPage()>0) {
+			page = search.getCurrentPage();
+		};
+		search.setStartNum((page-1)*50 +1);
+		search.setEndNum(page*50);
+		
+		List list = new ArrayList();
+		String result = dietService.shoppingAPI(search.searchKeyword,search.getStartNum(),search.getEndNum());
+		JSONParser parser = new JSONParser();
+		JSONObject obj = (JSONObject) parser.parse(result);
+		System.out.println(obj);
+		JSONParser parser2 = new JSONParser();
+		Object obj2 = parser2.parse(obj.get("items").toString());
+		JSONArray array2 = (JSONArray) obj2;
+		for (int i = 0; i < array2.size(); i++) {
+			System.out.println(((JSONObject) array2.get(i)).get("image"));
+			Food food = new Food();
+			if (((JSONObject) array2.get(i)).get("category1").toString().equals("½ÄÇ°")) {
+				food.setFoodImg(((JSONObject) array2.get(i)).get("image").toString());
+				food.setPrice(Integer.parseInt(((JSONObject) array2.get(i)).get("lprice").toString()));
+				food.setFoodName(((JSONObject) array2.get(i)).get("title").toString());
+				food.setPurchaseConnLink(((JSONObject) array2.get(i)).get("link").toString());
+				food.setMakerName(((JSONObject) array2.get(i)).get("brand").toString());
+				food.setStoreName(((JSONObject) array2.get(i)).get("maker").toString());
+
+				list.add(food);
+			}
+		}
+
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("search",search);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+
+		return map;
+
+	}
 	
 
 	

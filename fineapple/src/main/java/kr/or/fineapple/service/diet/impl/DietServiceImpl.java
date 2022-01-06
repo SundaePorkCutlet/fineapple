@@ -112,12 +112,12 @@ public class DietServiceImpl implements DietService{
 
 
 	@Override
-	public String shoppingAPI(String searchKeyword) throws Exception {
+	public String shoppingAPI(String searchKeyword,int startNum,int endNum) throws Exception {
 //		response.setHeader("Access-Control-Allow-Origin", "*");
 	    String result2 = "";  
 		String id = "8zcCrXfCacF47jmSOLA9";
 	        String secret = "nKU9InZEfJ";
-	        final String baseUrl = "https://openapi.naver.com/v1/search/shop.json?display=50&query=";
+	        final String baseUrl = "https://openapi.naver.com/v1/search/shop.json?start="+startNum+"display="+endNum+"&query=";
 	        
 	        try {
 	            String url1 = URLEncoder.encode(searchKeyword, "UTF-8");
@@ -196,10 +196,10 @@ public class DietServiceImpl implements DietService{
 
 			String baseUrl = "";
 			if (search.searchCondition == 0) {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/DESC_KOR="
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/"+search.getStartNum()+"/"+search.getEndNum()+"/DESC_KOR="
 						+ search.searchKeyword;
 			} else {
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/MAKER_NAME="
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/"+search.getStartNum()+"/"+search.getEndNum()+"/MAKER_NAME="
 						+ search.searchKeyword;
 			}
 
@@ -318,7 +318,7 @@ public class DietServiceImpl implements DietService{
 			HttpEntity<?> entity = new HttpEntity<>(header);
 
 			String baseUrl = "";
-				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/30/FOOD_CD="+FoodCd;
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/I2790/json/1/50/FOOD_CD="+FoodCd;
 
 			ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
 					Map.class);

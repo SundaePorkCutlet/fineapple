@@ -31,7 +31,7 @@
                         </select>
 
 
-                        <input type="text" data-min-width="60" data-min-height="30" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);" th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
+                        <input type="text" data-min-width="60" data-min-height="30" id="searchKeyword" name="searchKeyword" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);" th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }">
 
                         <!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
                          -->
@@ -92,6 +92,20 @@
                                 <!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
 
                             </table>
+                            <ul class="pagination pagination-circle">
+    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(1)|" class="page-link">1</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(2)|"  class="page-link">2</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(3)|" class="page-link">3</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(4)|" class="page-link">4</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(5)|" class="page-link">5</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(6)|" class="page-link">6</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(7)|" class="page-link">7</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(8)|" class="page-link">8</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(9)|" class="page-link">9</a></li>
+    <li class="page-item "><a th:onclick="|javascript:pagenation(10)|" class="page-link">10</a></li>
+    <li class="page-item next"><a href="#"  class="page-link"><i class="next"></i></a></li></ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -99,12 +113,88 @@
             </div>
         </div>
     </div>
+    
     <div id="mmodalHolder" style="width:200px;"></div>
 </form>
 
 <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 
 <script type="text/javascript">
+
+// var page = 1; // ajax로 날려 back단에서 select시 limit옵션을 걸기 위해
+// var temp = false; // 데이터가 없을때 계속적으로 ajax호출이 되는것을 방지하기 위해
+// var type = "type1"; // ajax로 날려 back단에서 확인할 type
+
+
+// // $(document).ready(function(){
+// // 	if(window.scrollY==0){
+// //         ++page; 
+// //         select_list();
+// // 	}
+	
+// // });
+
+// $(window).scroll(function () {
+
+	
+// 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight) {
+//         ++page; 
+//         select_list();
+//     }
+// });	
+
+function pagenation() {
+		
+//         document.getElementById("currentPage").value = currentPage;
+//         document.detailForm.submit();
+        $("form").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
+}
+
+
+
+// function select_list() {
+		
+//         //document.getElementById("currentPage").value = currentPage;
+//         //document.detailForm.submit();
+// //         $("form").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
+        
+        
+//         var searchCondition = $("option:selected").val();
+// 		var searchKeyword = $("#searchKeyword").val();
+//         $.ajax({
+//             url: "/diet/rest/addFoodList",
+//             type : "post",
+//             data:JSON.stringify({"page":page,"searchCondition":searchCondition, "searchKeyword":searchKeyword}),
+//             dataType : "JSON" ,
+//         	contentType: "application/json; charset=utf-8",
+//             success: function (data) {
+//             	if(data.length > 0 ){
+// 					$.each(data, function (idx, val){
+// 					console.log(val)
+// 					var html = '<td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>'
+//                     html+='<td th:text="'+val.makerName+'"style="cursor:pointer; text-align: left;"></td> <td th:attr="data-foodCd='+data.foodCd+'" class="foodName" style="cursor:pointer; text-align: left;">'
+//                     html+='<a href="#" th:text="'+data.foodName+'"></a></td><td th:text="'+data.foodKcal+'" class="foodKcal" style="cursor:pointer; text-align: left;"></td>'
+//                     html+='<td th:text="'+data.foodCarb+'" class="foodCarb" style="cursor:pointer; text-align: left;"></td><td th:text="'+data.foodProtein+'" class="foodProtein" style="cursor:pointer; text-align: left;"></td>'
+//                     html+='<td th:text="'+data.foodFat+'" class="foodFat" style="cursor:pointer; text-align: left;"></td><td align="left">'
+//                     html+='<span th:if="'+data.isAPI+'==1" class="badge badge-light-success fs-7 fw-bolder">Ok</span></td>'
+			 		
+//                     // 해당하는 만큼 li를 만들어서 #list 뒤에 붙임
+// // 					$(".container pt-1").append(data.list);
+				
+// 					$(".table-responsive").append(html);
+// 					});	
+// 					1
+//             	}else{
+//     				console.log("실패")
+//                     	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
+//     					temp = true;
+//     				}
+//     			}
+//     			,error: function(xhr, status, error) { alert(error); }
+//     		});
+//     	}
+
+
     function fncGetUserList(currentPage) {
         //document.getElementById("currentPage").value = currentPage;
         //document.detailForm.submit();
@@ -118,98 +208,7 @@
         });
     });
 
-    $(function () {
-        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-        //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
-        $("button.btn.btn-success").on("click", function () {
-            //Debug..
-            //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
 
-
-            var cd_arr = [];
-            var servingsize_arr = [];
-            var name_arr = [];
-            var kcal_arr = [];
-            var carb_arr = [];
-            var protein_arr = [];
-            var fat_arr = [];
-            $("input[name=foodCheck]:checked").each(function () {
-                var foodCd = $(this).val();
-                // 		var foodServingSize = $(this).attr("data-servingSize");
-                // 		var foodName = $(".foodName").attr("data-foodName");
-                // 		var foodKcal = $(".foodKcal").attr("data-foodKcal");
-                // 		var foodCarb = $(".foodCarb").attr("data-foodCarb");
-                // 		var foodProtein = $(".foodProtein").attr("data-foodProtein");
-                // 		var foodFat = $(".foodFat").attr("data-foodFat");
-
-                cd_arr.push(foodCd);
-                // 		servingsize_arr.push(foodServingsize);
-                // 		name_arr.push(foodName);
-                // 		kcal_arr.push(foodKcal);
-                // 		carb_arr.push(foodCarb);
-                // 		protein_arr.push(foodProtein);
-                // 		fat_arr.push(foodFat);
-
-
-            })
-
-
-            if (cd_arr.length < 6 && cd_arr.length != 0) {
-                console.log(cd_arr);
-                $.ajax({
-                    url: "/diet/addFavMealItem?checkarray=" + cd_arr.join(","),
-                    success: function (data) {
-                        $("#mmodalHolder").html(data);
-                        $("#mmodal").modal("show");
-
-                    }
-
-                });
-
-
-            }
-        });
-    });
-
-    function Chk() {
-
-        var result = Array();
-
-        var cnt = 0;
-
-        var chkbox = $(".checkedfood");
-
-        for (i = 0; i < chkbox.length; i++) {
-
-            if (chkbox[i].checked == true) {
-
-                result[cnt] = chkbox[i].value;
-
-                cnt++;
-
-            }
-
-        }
-
-        $('#result').val(result);
-
-    }
-
-    function CheckAll() {
-
-        var chkbox = $(".checkedfood");
-
-        var chkall = document.getElementById('checkedAllFood');
-
-        for (i = 0; i < chkbox.length; i++) {
-
-            chkbox[i].checked = chkall.checked;
-
-        }
-
-        Chk();
-
-    }
 
 
     function openModal() {
@@ -226,6 +225,10 @@
         });
 
     }
+    
+    
+    
+    
 
 
     // $.ajax(
