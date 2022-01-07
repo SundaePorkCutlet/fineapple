@@ -91,7 +91,14 @@
 	</resultMap>
 	
 	<resultMap type="report" id="reportMap">
-	
+	<result property="reportNo" column="report_no"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="reportedUser.userId" column="reported_user_id"/>
+	<result property="reportCate" column="report_cate"/>
+	<result property="reportCntnt" column="report_why"/>
+	<result property="reportStt" column="report_stt"/>
+	<result property="reportDate" column="report_date"/>
+	<result property="TrgtNo" column="rerport_trgt"/>
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -301,9 +308,11 @@
 	<!-- //////////////////////////////////////////////////////// -->
 	
 
-	<insert id="addGroup"  parameterType="group">
+	<insert id="addGroup" parameterType="group">
 
-	<!-- <selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER"> -->
+	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
+	SELECT seq_groups_groups_no.CURRVAL FROM dual
+	</selectKey>
 
 	INSERT
 	INTO
@@ -337,7 +346,7 @@
 	VALUES
 	(
 	seq_group_user_no.NEXTVAL,
-	#{groupNo},
+	#{group.groupNo},
 	#{user.userId},
 	#{captainStt},
 	#{groupStt}
@@ -372,6 +381,18 @@
 	<where>
 	group_no = #{groupNo}
 	</where>
+	</select>
+	
+	<select id="checkGroupName" parameterType="String" resultMap="groupMap">
+	SELECT
+	*
+	FROM
+	groups
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	group_name = #{value}
+			
+	</trim>
+	
 	</select>
 	
 	<!-- //////////////////////////////////////////////////////// -->

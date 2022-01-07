@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+
+ 
+ 				<div class="tab-content">
+                    <!--begin::Tab panel-->
+                    <div id="kt_billing_months" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_billing_months">
+                        <!--begin::Table container-->
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table table-row-bordered align-middle gy-4 gs-9">
+                                <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
+                                <tr>
+                                    <td class="min-w-60px">번호</td>
+                                    <td class="min-w-150px">소그룹 이름</td>
+                                    <td class="min-w-150px">소그룹 소개글</td>
+                                   
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="data, i : ${list}">
+                                    <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.groupName}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.groupIntro}" style="cursor:pointer; text-align: left;"></td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+
+	</body>
+	<!--end::Body-->
+</html>

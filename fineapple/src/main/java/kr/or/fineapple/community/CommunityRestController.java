@@ -23,8 +23,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
+import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import oracle.net.aso.j;
 
 
 
@@ -36,6 +39,10 @@ public class CommunityRestController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
+	
+	
+	
+	
 	
 	@RequestMapping(value = "updatePostLike", method = RequestMethod.POST)
 	public Board updatePostLike(@RequestBody Board board, HttpServletRequest request) {
@@ -79,40 +86,9 @@ public class CommunityRestController {
 		
 		return map;
 	}
-	
-	@PostMapping(value = "addCmnts")
-	public Cmnt addCmnts(@RequestBody String postNoStr, HttpServletRequest request){
 		
 		
-		JSONObject jsonObject = (JSONObject)JSONValue.parse(postNoStr);
-		
-		Board board = new Board();
-		board.setPostNo(Integer.parseInt(jsonObject.get("postNo").toString()));
-		
-		Cmnt cmnt = new Cmnt();
-		
-		cmnt.setCmntContent(jsonObject.get("cmntContent").toString());
-		
-		
-		cmnt.setBoard(board);
-		cmnt.setUser((User)request.getSession(true).getAttribute("user"));
-		System.out.println("===============================");
-		System.out.println(cmnt);
-		
-		
-		
-		return  null;
-	}
-	
-	
-	
-	
-	@PostMapping(value = "addAlarm")
-	public void addAlarm() {
-		
-		
-		
-	}
+
 	
 	@PostMapping(value = "addReport")
 	public void addReport(@RequestBody String str, HttpServletRequest request) {
@@ -161,17 +137,61 @@ public class CommunityRestController {
 		System.out.println(report);
 		
 		communityService.addReport(report);
+
+	}
+	
+	
+	
+	@PostMapping(value = "checkGroupName")
+	public String checkGroupName(@RequestBody String groupName) {
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(groupName);
 		
+		groupName = jsonObject.get("groupName").toString();
+		
+		Group group = communityService.checkGroupName(groupName);
+		
+		System.out.println(group + "oooooooooooooooooooooooooooo");
+		
+		if (group != null) {
+			
+			return "0";
+			
+		}
+		
+		if (group == null) {
+			
+			return "1";
+			
+		}
+		
+		return "3";
+	}
+	
+	
+	@PostMapping(value = "addGroup")
+	public void addGroup(@RequestBody Group group, HttpServletRequest request) {
+		
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setCaptainStt(1);
+		
+		groupUser.setGroupStt(4);
+		
+		communityService.addGroup(group, groupUser);
+		
+		
+		System.out.println(group);
 		
 		
 		
 		
 	}
 	
-	
-	
-	
-	
-	
+
 	
 }

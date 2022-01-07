@@ -32,7 +32,9 @@ public interface CommunityService {
 	
 	public void addReport(Report report);
 	
-	public void addGroup(Group group);
+	public void addGroup(Group group, GroupUser groupUser);
+	
+	public Group checkGroupName(String groupName);
 	
 	public List getAlarmList();
 }

@@ -27,13 +27,13 @@
 		       	<div th:text="${map.board.user.userId}" ></div>
 		       	</div>
 		        <div class="card-toolbar">
-		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="fcReportPost(1,this.id)">
+		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="javascript:fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light"  th:onClick="fcAddBattleView()" >
+		            <button type="button" class="btn btn-sm btn-light"  th:onClick="javascript:fcAddBattleView()" >
 		                수정하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light">
+		            <button type="button" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
 		                삭제하기
 		            </button>
 		        </div>
@@ -120,6 +120,25 @@ function fcAddBattleView(no, cateNo){
 			
 			$("#mmodalHolder").html(data);
             $("#addBattleViewModal").modal("show");
+			
+		}
+		
+	})
+};
+
+
+function fcAddGroupView(no, cateNo){
+	console.log("안녕");
+	$.ajax({
+		url: "/community/addGroupView", //url : 요청 Url
+		type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+		contentType: "text/html", // 서버에 보내는 데이터의 타입이다.
+		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+			console.log("성공" + data);
+			
+			$("#mmodalHolder").html(data);
+            $("#reportPostViewModal").modal("show");
 			
 		}
 		

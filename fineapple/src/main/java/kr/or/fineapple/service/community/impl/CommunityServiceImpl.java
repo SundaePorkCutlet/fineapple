@@ -94,8 +94,11 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void addGroup(Group group) {
+	public void addGroup(Group group, GroupUser groupUser) {
 		communityMapper.addGroup(group);
+		System.out.println(group+"In service addGroup");
+		groupUser.setGroup(group);
+		communityMapper.addGroupUser(groupUser);
 	}
 
 	@Override
@@ -103,6 +106,14 @@ public class CommunityServiceImpl implements CommunityService {
 	
 		return communityMapper.getAlarmList();
 	}
+
+	@Override
+	public Group checkGroupName(String groupName) {
+		// TODO Auto-generated method stub
+		return communityMapper.checkGroupName(groupName);
+	}
+
+	
 	
 	
 	

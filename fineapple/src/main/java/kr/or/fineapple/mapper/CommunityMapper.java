@@ -49,6 +49,8 @@ public interface CommunityMapper {
 	
 	public Group getGroup(Group group);
 	
+	public Group checkGroupName(String groupName);
+	
 	public List<GroupUser> getGroupUserList(Group group);
 	
 	public List<Group> getMyGroupList(GroupUser groupUser);
