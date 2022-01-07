@@ -20,7 +20,6 @@ public interface UserService {
 	public 	List<Object> getUserList(User user) throws Exception;
 	
 	public String kakaoLogin(User user) throws Exception;
-	
-	//public String sendMail(String sendMail) throws Exception;
+
 
 }

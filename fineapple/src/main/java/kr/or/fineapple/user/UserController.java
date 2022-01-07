@@ -88,7 +88,9 @@ public class UserController {
 	public String addUser(@ModelAttribute("user") User user, HttpSession session){
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		 if(user.getUserId() != null) {
 		session.setAttribute("user", user);
+		 }
 		System.out.println();
 		
 		System.out.println(user);
@@ -161,6 +163,7 @@ public class UserController {
 		System.out.println("updateUser:POST 들어왔나요");
 		
 		System.out.println(user);
+		User userDB = userService.getUser(user.getUserId());
 		
 		if(file != null && !file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
@@ -169,9 +172,10 @@ public class UserController {
 			
 		}else {
 			System.out.println("기본이미지");
-			user.setUserImg("defaultProfile.jpg"); 
+			user.setUserImg(userDB.getUserImg());
+			System.out.println(userDB.getUserImg());
+			
 		}
-		User userDB = userService.getUser(user.getUserId());
 		System.out.println(userDB);
 		String sessionId =  ((User)session.getAttribute("user")).getUserId();
 		
