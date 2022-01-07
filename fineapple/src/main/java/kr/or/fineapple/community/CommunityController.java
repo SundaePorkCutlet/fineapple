@@ -2,11 +2,14 @@ package kr.or.fineapple.community;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -19,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
-import oracle.net.aso.m;
 
 @Controller
 @RequestMapping("/community/*")
@@ -139,11 +143,126 @@ public class CommunityController {
 //		return null;
 //	}
 	
-	@RequestMapping(value="reportPostView", method = RequestMethod.POST)
-	public String report(@RequestBody String str, Model model) {
+	@PostMapping(value = "reportPostView")
+	public String reportPostView(HttpServletRequest request, Model model, @RequestBody String str) {
+		
+
+		
+		System.out.println(str);
+		
+		
+		
+		
+		
+		
+		
+		System.out.println(request.getParameter("TrgtNo"));
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		Report report = new Report();
+		
+		report.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		User reportedUser = new User();
+		
+		reportedUser.setUserId(jsonObject.get("userId").toString());
+		
+		report.setReportedUser(reportedUser);
+		
+		report.setReportCate(jsonObject.get("reportCate").toString());
+		
+		report.setTrgtNo(Integer.valueOf((String)jsonObject.get("TrgtNo")));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		System.out.println("============================================");
+		
+		System.out.println("referer:"+request.getHeader("referer"));
+
+		System.out.println("user-agent:"+request.getHeader("user-agent"));
+
+		System.out.println("host:"+request.getHeader("host"));
+
+		System.out.println("WL-Proxy-Client-IP:"+request.getHeader("WL-Proxy-Client-IP"));
+
+		System.out.println("Proxy-Client-IP:"+request.getHeader("Proxy-Client-IP"));
+
+		System.out.println("X-Forwarded-For:"+request.getHeader("X-Forwarded-For"));
+
+		System.out.println("HTTP_CLIENT_IP:"+request.getHeader("HTTP_CLIENT_IP"));
+
+		System.out.println("HTTP_X_FORWARDED_FOR:"+request.getHeader("HTTP_X_FORWARDED_FOR"));
+
+		System.out.println("getContextPath:"+request.getContextPath());
+
+		System.out.println("getProtocol:"+request.getProtocol());
+
+		System.out.println("getQueryString:"+request.getQueryString());
+
+		System.out.println("getRemoteAddr:"+request.getRemoteAddr());
+
+		System.out.println("getRequestURI:"+request.getRequestURI());
+
+		System.out.println("getServerName:"+request.getServerName());
+
+		System.out.println("getServletPath:"+request.getServletPath());
+
+		System.out.println("getSession:"+request.getSession().getId());
+		
+		Enumeration<String> enumm = request.getHeaderNames();
+	    while (enumm.hasMoreElements()) {
+	        String name = (String) enumm.nextElement();
+	        System.out.println(name);
+	  
+	        
+	    }
+	    
+	    
+	    System.out.println(request.getHeader("content-type"));
+
+
+
+	  //request
+
+	    Enumeration en = request.getParameterNames();
+	       while(en.hasMoreElements()){
+	        String param = (String)en.nextElement();
+	        String value = request.getParameter(param);
+	        System.out.println(param+"-"+value);
+	       }
+
+	     
+
+	    //session
+
+	    Enumeration en1 = request.getSession(true).getAttributeNames();
+	    while(en1.hasMoreElements()){
+	     String param = (String)en1.nextElement();
+	     System.out.println(param+"-"+request.getSession(true).getAttribute(param));
+	    }
+		
+		
+
+		System.out.println(report);
+		
+		
 		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy MM dd HH mm"));
 		
 		model.addAttribute("time", time);
+		
+		model.addAttribute("report", report);
+	    
+	    
 		
 		return "community/addReportView :: reportPostView";
 	}

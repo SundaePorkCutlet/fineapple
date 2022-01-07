@@ -163,19 +163,16 @@
 	b.content,
 	b.post_date,
 	b.view_count,
-	c.cmnt_count
+	c.cmnt_count,
+	NVL(sub.ssum,0) post_like_count
 	FROM
 	board b,
-	(
-	SELECT COUNT(*)
-	cmnt_count,
-	c.post_no
-	FROM board b, comments c
-	WHERE b.post_no = c.post_no
-	GROUP BY c.post_no
-	) c
+	(SELECT COUNT(*) cmnt_count, c.post_no FROM board b, comments c WHERE b.post_no = c.post_no GROUP BY c.post_no) c,
+	(SELECT b.post_no, SUM(ral.post_no) ssum FROM board b, report_and_like ral WHERE b.post_no = ral.post_no GROUP BY (b.post_no)) sub
+	
 	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
 	b.post_no = c.post_no(+)
+	AND b.post_no = sub.post_no(+)
 	</trim>
 	<include refid="orderByPostNo"/>
 	</select>

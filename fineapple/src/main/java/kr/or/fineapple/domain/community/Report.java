@@ -15,10 +15,12 @@ public class Report {
 	private User user;
 	private User reportedUser;
 	private String reportCate;
-	private Object reportTrgt;
+	private Board board;
+	private Cmnt cmnt;
 	private String reportCntnt;
 	private int reportStt;
 	private LocalDate reportDate;
+	private int TrgtNo;
 	
 
 }

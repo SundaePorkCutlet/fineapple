@@ -50,6 +50,7 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public Map getPost(Board board) {
+		communityMapper.updatePostViewCount(board);
 		Map map = new HashMap();
 		map.put("list", communityMapper.getCmntList(board));
 		map.put("board", communityMapper.getPost(board));

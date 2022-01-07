@@ -93,7 +93,7 @@ public class BoardTest {
 		report.setReportedUser(reportedUser);
 		Board reportedBoard = new Board();
 		reportedBoard.setPostNo(1);
-		report.setReportTrgt(reportedBoard);
+		//report.setReportTrgt(reportedBoard);
 		report.setReportCntnt("이 게시글이 매우 이상해요!");
 		communityService.addReport(report);	
 	}

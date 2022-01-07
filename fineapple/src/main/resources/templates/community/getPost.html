@@ -27,7 +27,7 @@
 		       	<div th:text="${map.board.user.userId}" ></div>
 		       	</div>
 		        <div class="card-toolbar">
-		            <button type="button" class="btn btn-sm btn-light" th:onClick="fcReportPost(1)">
+		            <button type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${data.user.userId}" class="btn btn-sm btn-light" th:onClick="fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
 		            <button type="button" class="btn btn-sm btn-light"  th:onClick="fcAddBattleView()" >
@@ -67,17 +67,29 @@
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
 			
 
-
+ 
 <script>
-function fcReportPost(cate){
-	var data = {postNo :$("#postNo").val(), cateNo : cate};
-	console.log("안녕");
+function fcReportPost(cate, id){
+	
+	console.log(cate);
+	console.log(id);
+	
+	
+	var reportedTrgtNoData = $('#'+ id).attr("data-trgtNo");
+	var cateNoData = cate
+	var reportedUserData  = $('#'+ id).attr("data-userId");
+	console.log(reportedTrgtNoData);
+	console.log(reportedUserData);
+	
+	
+	var data = {"TrgtNo" : reportedTrgtNoData, "reportCate" : cateNoData, "userId" : reportedUserData};
+	console.log(data);
 	$.ajax({
 		url: "/community/reportPostView", //url : 요청 Url
 		type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
-		data: data, //요청과 함께 서버로 데이터를 전송 할 string 또는 map
-		contentType: "text/html; charset-utf-8", // 서버에 보내는 데이터의 타입이다.
+		data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+		contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
 		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 			console.log("성공" + data);
 			
@@ -86,22 +98,23 @@ function fcReportPost(cate){
 			
 		}
 		
-	});
-}
+	})
+};
 
 
 
 
 
-function fcAddBattleView(){
-	var data = {postNo :$("#postNo").val()};
+function fcAddBattleView(no, cateNo){
+	var data = { "No" : no,
+				"cate" : cateNo};
 	console.log("안녕");
 	$.ajax({
 		url: "/community/addBattleView", //url : 요청 Url
 		type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 		data: data, //요청과 함께 서버로 데이터를 전송 할 string 또는 map
-		contentType: "text/html; charset-utf-8", // 서버에 보내는 데이터의 타입이다.
+		contentType: "text/html", // 서버에 보내는 데이터의 타입이다.
 		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 			console.log("성공" + data);
 			
@@ -110,8 +123,8 @@ function fcAddBattleView(){
 			
 		}
 		
-	});
-}
+	})
+};
 
 
 
@@ -146,12 +159,14 @@ function fnUpdatePostLike(){
 			postLikeCount : $("#postLikeCount").text(),
 			postLikeStt : $("#postNo").attr("data-postLikeStt")
 	       };
+	console.log(data);
 	$.ajax({
 		url: "/community/json/updatePostLike",
 		type: "POST",
 		dataType: 'json',
 		contentType: "application/json",
 		data: JSON.stringify(data),
+		
 		/* data: {
 			postLikeCount : $(".likeStt").text(),
 			postLikeStt : $("#postNo").attr("data-postLikeStt")
