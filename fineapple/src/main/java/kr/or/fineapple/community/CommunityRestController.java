@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
+import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 
 
@@ -103,10 +105,52 @@ public class CommunityRestController {
 	}
 	
 	
+	
+	
 	@PostMapping(value = "addAlarm")
 	public void addAlarm() {
 		
+		
+		
 	}
+	
+	@PostMapping(value = "addReport")
+	public void addReport(@RequestBody String str, HttpServletRequest request) {
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		String reportCate = jsonObject.get("reportCate").toString();
+		
+		String TrgtNo = jsonObject.get("TrgtNo").toString();
+		
+		String time = jsonObject.get("time").toString();
+		
+		String reportedUserId = jsonObject.get("reportedUser").toString();
+		
+		String reportcontent = jsonObject.get("reportcontent").toString();
+		
+		System.out.println(reportCate + "+" + TrgtNo + "+" + time + "+" + reportedUserId + "+" + reportcontent);
+		
+		User user = new User();
+		
+		User reportedUser = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		reportedUser.setUserId(reportedUserId);
+		
+		Report report = new Report();
+		
+		report.setUser(user);
+		
+		report.setReportedUser(reportedUser);
+		
+		//report.setReportDate();
+		
+		
+	}
+	
+	
 	
 	
 	

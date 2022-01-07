@@ -20,12 +20,16 @@
 						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 							<span>신고 날짜 : </span>
 							<span id="time" th:value ="${time}" th:text="${time}"></span>
+						</label>
+						<div>
 							<span>신고 회원 : </span>
 							<span id = "reportedUser" th:value ="${report.reportedUser.userId}" th:text="${report.reportedUser.userId}"></span>
-						</label>
+							</div>
+						<div>
 						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 							<span class="required">신고사유</span>
 						</label>
+						</div>
 						<input id = "reportcontent" type="text" name = "content" class="form-control form-control-solid" placeholder="신고 사유를 입력해주세요" >
 					</form>
 				</div>
@@ -44,8 +48,8 @@
 			data = {
 					reportCate : $("#reportCate").val(), 
 					TrgtNo : $("#TrgtNo").val(),
-					time : $("#time").val(),
-					reportedUser : $("#reportedUser").val(),
+					time : $("#time").text(),
+					reportedUser : $("#reportedUser").text(),
 					reportcontent : $("#reportcontent").val()
 					};
 			
@@ -63,6 +67,12 @@
 				}
 				
 			})
+			
+			//input DOM과 같이 value 속성에 값이 적용되는 DOM은 val() 함수를 사용하고
+			//div와 같이 <div></div> 사이에 text가 값이 적용되는 DOM은 text()함수를 사용합니다.
+
+
+
 			
 			$('#reportPostViewModal').modal("hide");
 		};
