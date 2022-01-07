@@ -222,7 +222,7 @@ public class DietController {
 		int startNum;
 		int endNum;
 		
-	
+		System.out.println(page);
 		int size=list2.size();
 			
 		if(page!=1) {
