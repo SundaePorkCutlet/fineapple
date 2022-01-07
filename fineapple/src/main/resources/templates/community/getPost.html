@@ -27,7 +27,7 @@
 		       	<div th:text="${map.board.user.userId}" ></div>
 		       	</div>
 		        <div class="card-toolbar">
-		            <button type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${data.user.userId}" class="btn btn-sm btn-light" th:onClick="fcReportPost(1,this.id)">
+		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
 		            <button type="button" class="btn btn-sm btn-light"  th:onClick="fcAddBattleView()" >
@@ -43,7 +43,7 @@
         <div class="card-body py-5" th:text="${map.board.content}">
     	</div>
 	    <div class="card-footer">
-	    <button  class="btn btn-primary btn-hover-rise me-5" id ="postLikeCount" type="button"  th:text="${map.board.postLikeCount}" th:onclick="javascript:fnUpdatePostLike()"></button>		
+	    <button  class="btn btn-primary btn-hover-rise me-5" id ="postLikeCount" type="button"  th:text="${map.board.postLikeCount}" th:onClick="javascript:fnUpdatePostLike()"></button>		
 	    </div>
 	    <div class="separator border-5 my-10"></div>
 		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>

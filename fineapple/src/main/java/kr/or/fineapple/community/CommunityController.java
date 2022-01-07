@@ -61,6 +61,7 @@ public class CommunityController {
 		return "community/getPost.html";
 	}
 	
+	
 	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
 	@GetMapping(value = "getBoard")
 	public String getPostList(Model model) {
@@ -256,7 +257,7 @@ public class CommunityController {
 		System.out.println(report);
 		
 		
-		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy MM dd HH mm"));
+		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		
 		model.addAttribute("time", time);
 		
