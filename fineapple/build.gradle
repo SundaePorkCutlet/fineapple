@@ -34,8 +34,8 @@ dependencies {
    implementation 'org.mybatis:mybatis-typehandlers-jsr310:1.0.2'
    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-
-
+   implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.14'
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.2'
 }
 
 test {
@@ -43,7 +43,6 @@ test {
 }
 
 compileJava.options.encoding = 'EUC-KR'
-
 tasks.withType(JavaCompile){
    options.encoding = 'EUC-KR'
 }

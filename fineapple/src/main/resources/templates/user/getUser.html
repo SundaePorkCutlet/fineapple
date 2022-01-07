@@ -28,8 +28,9 @@
 	<tr>
 		<th scope="row"><b>닉네임</b></th>
 		<td th:text="${session.user.userName}"></td>
-		<th scope="row"><b>최근 로그인 내역</b></th>
-		<td th:text="${session.user.regDate}"></td>	
+		<th><b>성별</b></th>
+		<td th:if="${session.user.gender} == male">남</td>
+		<td th:unless="${session.user.gender} == male">여</td>
 	</tr>
 	<tr>
 		<th scope="row"><b>이메일</b></th>
@@ -58,11 +59,7 @@
 		<th scope="row"><b>몸무게</b></th>
 		<td th:text="${session.user.weight}"></td>
 	</tr>
-	<tr>
-		<th><b>성별</b></th>
-		<td th:if="${session.user.gender} == male">남</td>
-		<td th:unless="${session.user.gender} == male">여</td>
-	</tr>
+
 	
 </table>
 </div>

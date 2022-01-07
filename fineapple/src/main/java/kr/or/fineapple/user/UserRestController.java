@@ -1,6 +1,7 @@
 package kr.or.fineapple.user;
 
 import java.io.File;
+import java.net.Authenticator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.service.user.UserService;
+
 
 @RestController
 @RequestMapping("/user/*")
@@ -132,7 +137,7 @@ public class UserRestController {
 		
 		if(user.getPassword().equals(userDB.getPassword())) {
 			if(userDB.getUserLeaveStt() == 0) {
-				//session.setAttribute("user",userDB);
+				session.setAttribute("user",userDB);
 				System.out.println("stt == 0");
 				session.setAttribute("user", userDB);
 				System.out.println("user : "+user);
@@ -147,24 +152,35 @@ public class UserRestController {
 		return "redirect:/";		
 	}
 	
-	
-	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
-	public String sendMail(@RequestParam("userId") String userId) throws Exception {
-		int rannum = (int)((Math.random() * (99999-1000 + 1)) + 1000);
+	@RequestMapping(value="/sendMail")
+	public String SendMail(@RequestBody User user) {
+		JavaMailSender javaMailSender = new JavaMailSenderImpl();
+		SimpleMailMessage message =  new SimpleMailMessage();
 		
-		String from = "dkssud3537@naver.com";
-		String to = userId;
-		String title = "fineapple에 가입에 필요한 인증번호입니다.";
-		String content = "[인증번호]" + rannum + "입니다. <br/> 인증번호 확인란에 기입해주십시오.";
-		String num="";
+		System.out.println("email 전송 시작");
 		
-
-
-		
-		
-		return "";
+		Random random  = new Random();
+		String key ="";
+		//JavaMailSender javaMailSender = new JavaMail
+		System.out.println(user.getUserId());
+		message.setTo(user.getUserId());
+		System.out.println(message);
+		for(int i =0; i<3;i++) {
+			int index=random.nextInt(25)+65; 
+			key+=(char)index;
+		}
+		int numIndex=random.nextInt(9999)+1000; 
+		key+=numIndex;
+		System.out.println("여기까지 왔니");
+		message.setSubject("인증번호 입력을 위한 메일 전송");
+		message.setText("인증 번호 : "+key);
+		System.out.println("마지막 메세지: " + message);
+		javaMailSender.send(message);
+        return key;
 		
 	}
+	
+	
 	
 }
 	
