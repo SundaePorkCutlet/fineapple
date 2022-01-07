@@ -20,6 +20,8 @@ public interface DietService {
 		
 	public DietServ getDietService(String userId)throws Exception;
 	
+	public int updateDietServiceNo(DietServ diet)throws Exception;
+	
 	public List getFoodList(Search search)throws Exception;
 	
 	public JSONArray getFoodAPIlist(Search search)throws Exception;

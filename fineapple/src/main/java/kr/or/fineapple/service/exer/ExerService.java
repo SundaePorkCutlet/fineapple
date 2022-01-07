@@ -18,6 +18,8 @@ public interface ExerService {
 	
 	public int updateUserService(ExerServ service)throws Exception;
 	
+	public int updateExerServiceNo(ExerServ service)throws Exception;
+	
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
 		

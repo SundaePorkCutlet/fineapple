@@ -31,10 +31,20 @@ public class ExerServiceImpl implements ExerService {
 	
 			exerMapper.updateServiceTrgt(service);
 			exerMapper.updateBodyInfo(service);
-			
+			exerMapper.getUserService(service.getUserId());
+						
 			return exerMapper.addUserService(service);
 			
 	}
+	
+	@Override
+	public int updateExerServiceNo(ExerServ service) throws Exception {
+		
+		return 	exerMapper.updateExerServiceNo(service);
+		
+	}
+
+	
 	
 	@Override
 	public ExerServ getUserService(String userId) throws Exception {
@@ -250,6 +260,8 @@ public class ExerServiceImpl implements ExerService {
 		
 		
 	}
+
+
 
 	
 

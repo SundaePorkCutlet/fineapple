@@ -32,6 +32,7 @@ public interface ExerMapper {
        int updateBodyInfo(ExerServ service);
 
        
+       int updateExerServiceNo(ExerServ service);
        
        
        //일일 운동량 CRUD
@@ -55,6 +56,7 @@ public interface ExerMapper {
        int updateExer(Exer exer);
        
        int deleteExer(int exerNo);
+       
        
        
        

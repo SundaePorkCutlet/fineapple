@@ -8,31 +8,31 @@
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
-<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식품 등록</div>
+<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">식단 서비스 등록</div>
 
 <br><br>
 <form>
 <div align="center">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중 관리 목적</label>
-    <input name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+    <input th:text="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중</label>
-    <input name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input  th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 
         <label class="required fw-bold fs-6 mb-5">성별</label>
-
-      <div class="d-flex flex-column fv-row">
+		<div align="center">
+		      <div class="d-flex flex-column fv-row" align="center">
             <!--begin::Radio-->
             <div class="form-check form-check-custom form-check-solid mb-5">
                 <!--begin::Input-->
@@ -41,7 +41,7 @@
 
                 <!--begin::Label-->
                 <label class="form-check-label" for="kt_docs_formvalidation_radio_option_1">
-                    <div class="fw-bolder text-gray-800">남자</div>
+                    <div class="fw-bolder text-gray-800" align="center">남자</div>
                 </label>
                 <!--end::Label-->
             </div>
@@ -60,11 +60,12 @@
                 <!--end::Label-->
             </div>
             </div>
-            
+        	</div>
+        	    
 
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
-    <input name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >현재체지방율</label>
