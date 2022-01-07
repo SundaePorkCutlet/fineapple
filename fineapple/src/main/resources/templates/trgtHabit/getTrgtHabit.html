@@ -51,7 +51,7 @@
 											<!--begin::Stats-->
 											<div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">										
 												<a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${coffee.trgtHabitCateNo})|" th:value="${coffee.trgtHabitCateNo}" style="margin:0 auto">시작</a>
-												<a href="#" class="btn btn-active-dark" id="coffee_service_no" th:onclick="|fncEndTrgtHabit(${coffee.trgtHabitServiceNo},${coffee.trgtHabitCateNo})|" th:value="${coffee.trgtHabitServiceNo}" style="margin:0 auto">초기화</a>
+												<a href="#" class="btn btn-active-dark" id="coffee_service_no" th:onclick="|fncEndTrgtHabit(${coffee.trgtHabitServiceNo},${coffee.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="coffee_service_no" th:value="${coffee.trgtHabitServiceNo}"></span>초기화</a>
 											</div>
 											<!--end::Stats-->
 										</div>
@@ -88,7 +88,7 @@
 											<!--begin::Stats-->
 											<div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
 												<a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${alcohol.trgtHabitCateNo})|" th:value="${alcohol.trgtHabitCateNo}" style="margin:0 auto">시작</a>
-												<a href="#" class="btn btn-active-dark" id="alcohol_service_no" th:onclick="|fncEndTrgtHabit(${alcohol.trgtHabitServiceNo},${alcohol.trgtHabitCateNo})|" th:value="${alcohol.trgtHabitServiceNo}" style="margin:0 auto">초기화</a>
+												<a href="#" class="btn btn-active-dark" id="alcohol_service_no" th:onclick="|fncEndTrgtHabit(${alcohol.trgtHabitServiceNo},${alcohol.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="alcohol_service_no" th:value="${alcohol.trgtHabitServiceNo}"></span>초기화</a>
 											</div>
 											<!--end::Stats-->
 										</div>
@@ -125,7 +125,7 @@
 											<!--begin::Stats-->
 											<div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
 												<a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${smoking.trgtHabitCateNo})|" th:value="${smoking.trgtHabitCateNo}" style="margin:0 auto">시작</a>
-												<a href="#" class="btn btn-active-dark" id="smoking_service_no" th:onclick="|fncEndTrgtHabit(${smoking.trgtHabitServiceNo},${smoking.trgtHabitCateNo})|" th:value="${smoking.trgtHabitServiceNo}" style="margin:0 auto">초기화</a>
+												<a href="#" class="btn btn-active-dark" id="smoking_service_no" th:onclick="|fncEndTrgtHabit(${smoking.trgtHabitServiceNo},${smoking.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="smoking_service_no" th:value="${smoking.trgtHabitServiceNo}"></span>초기화</a>
 											</div>
 											<!--end::Stats-->
 										</div>
@@ -269,16 +269,16 @@
 				
 				if(trgtHabit.trgtHabitCateNo == 1){
 					$("#coffee_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
-					$("#coffee_service_no").text(trgtHabit.trgtHabitServiceNo);
+					$("#coffee_service_no").val(trgtHabit.trgtHabitServiceNo);
 				}else if(trgtHabit.trgtHabitCateNo == 2){
 					$("#alcohol_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
-					$("#alcohol_service_no").text(trgtHabit.trgtHabitServiceNo);
+					$("#alcohol_service_no").val(trgtHabit.trgtHabitServiceNo);
 				}else if(trgtHabit.trgtHabitCateNo == 3){
 					$("#smoking_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
-					$("#smoking_service_no").text(trgtHabit.trgtHabitServiceNo);
+					$("#smoking_service_no").val(trgtHabit.trgtHabitServiceNo);
 				}else if(trgtHabit.trgtHabitCateNo == 4){
 					$("#userHabit_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
-					$("#userHabit_service_no").text(trgtHabit.trgtHabitServiceNo);
+					$("#userHabit_service_no").val(trgtHabit.trgtHabitServiceNo);
 				}
 			}
 		)};
@@ -303,13 +303,13 @@
 				
 				if(trgtHabitCateNo == 1){
 					$("#coffee_count").text("총 0일차");	//성공일수 0일로 초기화
-					$("#coffee_service_no").text(0);	//trgtHabitServiceNo 0번으로 초기화
+					$("#coffee_service_no").val(0);		//trgtHabitServiceNo 0번으로 초기화
 				}else if(trgtHabitCateNo == 2){
 					$("#alcohol_count").text("총 0일차");
-					$("#alcohol_service_no").text(0);
+					$("#alcohol_service_no").val(0);
 				}else if(trgtHabitCateNo == 3){
 					$("#smoking_count").text("총 0일차");
-					$("#smoking_service_no").text(0);
+					$("#smoking_service_no").val(0);
 				}else if(trgtHabitCateNo == 4){
 					$("#userHabit_count").text("총 0일차");
 					$("#userHabit_service_no").text(0);

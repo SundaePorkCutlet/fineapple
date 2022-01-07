@@ -88,7 +88,7 @@
 													    <label for="bodyFat" class="fs-6 fw-bold text-gray-400">체지방률(선택)</label>
 													</div>
 													<div class="col-md-7">
-													    <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : '${userBodyInfo[0].bodyFat}'"/>
+													    <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}|"/>
 													</div>
 													<div class="col-md-2">
 													    <a href="#" id="bodyFat_bttn" class="btn btn-primary">입력</a>
@@ -99,7 +99,7 @@
 													    <label for="bodyMuscle" class="fs-6 fw-bold text-gray-400">골격근량(선택)</label>
 													</div>
 													<div class="col-md-7">
-													    <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : '${userBodyInfo[0].bodyMuscle}'"/>
+													    <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}|"/>
 													</div>
 													<div class="col-md-2">
 													    <a href="#" id="bodyMuscle_bttn" class="btn btn-primary">입력</a>
@@ -128,134 +128,10 @@
 		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
 		<script th:inline="javascript">
 		
-		/* ///////////////////Date Range Picker/////////////////// */
-		
-		var start = moment().subtract(6, "days");
-		var end = moment();
-		
-		function convertDateFormat(date) {
-		    var year = date.getFullYear();
-		    var month = date.getMonth() + 1;
-		    month = month >= 10 ? month : '0' + month;
-		    var day = date.getDate();
-		    day = day >= 10 ? day : '0' + day;
-		    return [year, month, day].join('-');
-		}
-
-		function cb(start, end) {
-		    $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " ~ " + end.format("MMMM D, YYYY"));
-		}
-
-		$(function() {
-			
-			/* ///////////////////Date Picker/////////////////// */
-			
-			$("#kt_daterangepicker_3").daterangepicker({
-		        singleDatePicker: true,
-		        showDropdowns: true,
-		        changeYear: false,
-		        maxDate: new Date(),
-		        locale: {
-		        	format: "YYYY-MM-DD",
-		        	separator: "-",
-		        	applyLabel: "선택",
-		        	cancelLabel: "취소"
-		        }
-		    }, function(start, end, label) {
-		    	var startDate = start.toJSON().substring(0,10);
-		    	var endDate = end.toJSON().substring(0,10);
-		    	console.log(startDate , endDate);
-
-		    	$.ajax({
-	        		url: "/diary/json/getUserBodyInfo",
-	        		type: "POST",
-	        		data: JSON.stringify({userId : [[${session.user.userId}]],
-										startDate : endDate,
-										endDate : endDate}
-	        							),
-	        		contentType: "application/json"
-	        	}).done(function(userBodyInfo){
-	        		console.log(userBodyInfo);
-	        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
-	        		
-	        		if(userBodyInfo[0].bodyFat != null){
-	        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
-	        		}
-	        		if(userBodyInfo[0].bodyMuscle != null){
-	        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
-	        		}
-	        		
-	        	})
-		       
-		    });
-			
-			
-			/* ///////////////////Date Range Picker/////////////////// */
-		
-			$("#kt_daterangepicker_4").daterangepicker({
-			    startDate: start,
-			    endDate: end,
-			    ranges: {
-			    "일주일": [moment().subtract(6, "days"), moment()],
-			    "이번달": [moment().startOf("month"), moment().endOf("month")],
-			    "지난달": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-			    },
-				locale: {
-		        	format: "YYYY-MM-DD",
-		        	separator: "-",
-		        	applyLabel: "선택",
-		        	cancelLabel: "취소"
-		        }
-			}, cb);
-
-			cb(start, end);
-			
-			
-			/* ///////////////////신체 변화 정보 입력/////////////////// */
-			
-			$("#weight_bttn").on("click", function(){
-				
-				var date = $("#kt_daterangepicker_3").val();
-				console.log(date);
-				
-				$.ajax({
-					url: "/diary/json/updateUserBodyInfo",
-					type: "POST",
-					data: JSON.stringify({userId : [[${session.user.userId}]],
-										date : date,
-										weight : $("#weight").val()}
-										),
-					contentType: "application/json"
-				}).done(function(){
-					$.ajax({
-						url: "/diary/json/getUserBodyInfo",
-						type: "POST",
-						data: JSON.stringify({userId : [[${session.user.userId}]],
-											startDate : date,
-											endDate : date}
-											),
-						contentType: "application/json"
-					}).done(function(userBodyInfo){
-		        		console.log(userBodyInfo);
-		        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
-		        		
-		        		if(userBodyInfo[0].bodyFat != null){
-		        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
-		        		}
-		        		if(userBodyInfo[0].bodyMuscle != null){
-		        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
-		        		}
-		        		
-		        	})
-				})
-			})
-			
-		});
-		
-		/* ///////////////////ChartJS Start/////////////////// */
 		
 		$(function() {
 			
+			/* ///////////////////ChartJS Start/////////////////// */
 			var ctx = document.getElementById('kt_chartjs_2');
 			
 			// Define colors
@@ -346,9 +222,320 @@
 
 			myChart.update();
 
-			});
+			/* ///////////////////Date Range Picker/////////////////// */
+			
+			$("#kt_daterangepicker_4").daterangepicker({
+				
+			    startDate: start,
+			    endDate: end,
+			    ranges: {
+			    "일주일": [moment().subtract(6, "days"), moment()],
+			    "이번달": [moment().startOf("month"), moment().endOf("month")],
+			    "지난달": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+			    },
+				locale: {
+		        	format: "YYYY-MM-DD",
+		        	separator: "-",
+		        	applyLabel: "선택",
+		        	cancelLabel: "취소"
+		        }
+			}, function(start, end){
+				
+				//기존 차트 초기화
+				myChart.destroy();
+				
+				var startDate = start.toJSON().substring(0,10);
+		    	var endDate = end.toJSON().substring(0,10);
+		    	console.log(startDate , endDate);
 
-		/* ///////////////////ChartJS End/////////////////// */
+		    	$.ajax({
+	        		url: "/diary/json/getUserBodyInfo",
+	        		type: "POST",
+	        		data: JSON.stringify({userId : [[${session.user.userId}]],
+										startDate : startDate,
+										endDate : endDate}
+	        							),
+	        		contentType: "application/json"
+	        	}).done(function(userBodyInfo){
+	        		console.log(userBodyInfo);
+	        		
+	        		var ctx = document.getElementById('kt_chartjs_2');
+	    			
+	    			// Define colors
+	    			var primaryColor = KTUtil.getCssVariableValue('--bs-primary');
+	    			var dangerColor = KTUtil.getCssVariableValue('--bs-danger');
+	    			var successColor = KTUtil.getCssVariableValue('--bs-success');
+	    			
+	    			// Define fonts
+	    			var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+	    	
+	    			// Chart labels & Datasets
+	    			/*<![CDATA[*/
+	 
+	    			console.log(userBodyInfo);
+	    			/*]]*/
+	    			const labels = [];
+	    			const weights = [];
+	    			const bodyFats = [];
+	    			const bodyMuscles = [];
+	    			
+	    			const data = {
+	    					labels: labels,
+	    					datasets: [{
+	    						label: "체중",
+	    				    	data: []
+	    			    		},{
+	    			    		label: "체지방률",
+	    			    		data: []
+	    			    		},{
+	    			    		label: "골격근량",
+	    			    		data: []
+	    			    	}]
+	    			};
+	    	
+	    			// Chart config
+	    			const config = {
+	    			    type: 'line',
+	    			    data: data,
+	    			    options: {
+	    			        plugins: {
+	    			            title: {
+	    			                display: false,
+	    			            }
+	    			        },
+	    			        responsive: true,
+	    			    },
+	    			    defaults:{
+	    			        global: {
+	    			            defaultFont: fontFamily
+	    			        }
+	    			    }
+	    			};
+	    			
+	    			// 차트 디스플레이
+	    			var myChart = new Chart(ctx, config);
+	    			
+	        		var dataset = config.data.datasets;
+	    			
+	    			for(var i=0; i<userBodyInfo.length; i++){
+	    				
+	    				config.data.labels[i] = userBodyInfo[i].date;
+	    				
+	    				if(userBodyInfo[i].weight != null){
+	    					dataset[0].data[i] = userBodyInfo[i].weight;
+	    					if(dataset[0].borderColor == null){
+	    						dataset[0].borderColor = primaryColor;
+	    						dataset[0].backgroundColor = primaryColor;
+	    					}
+	    				}
+	    				if(userBodyInfo[i].bodyFat != null) {
+	    					dataset[1].data[i] = userBodyInfo[i].bodyFat;
+	    					if(dataset[1].borderColor == null){
+	    						dataset[1].borderColor = dangerColor;
+	    						dataset[1].backgroundColor = dangerColor;
+	    					}
+	    				}
+	    				if(userBodyInfo[i].bodyMuscle != null){
+	    					dataset[2].data[i] = userBodyInfo[i].bodyMuscle;
+	    					if(dataset[2].borderColor == null){
+	    						dataset[2].borderColor = successColor;
+	    						dataset[2].backgroundColor = successColor;
+	    					}
+	    				}
+	    			}
+
+	    			console.log(config.data.datasets);
+	    			console.log(config.data);
+
+	    			myChart.update();
+	        	});
+	        		
+	        /* ///////////////////ChartJS End/////////////////// */	
+	        
+			
+	        
+		    /* ///////////////////신체 변화 정보 입력/////////////////// */
+			
+				$("#weight_bttn").on("click", function(){
+					
+					var date = $("#kt_daterangepicker_3").val();
+					console.log(date);
+					
+					$.ajax({
+						url: "/diary/json/updateUserBodyInfo",
+						type: "POST",
+						data: JSON.stringify({userId : [[${session.user.userId}]],
+											date : date,
+											weight : $("#weight").val()}
+											),
+						contentType: "application/json"
+					}).done(function(){
+						$.ajax({
+							url: "/diary/json/getUserBodyInfo",
+							type: "POST",
+							data: JSON.stringify({userId : [[${session.user.userId}]],
+												startDate : date,
+												endDate : date}
+												),
+							contentType: "application/json"
+						}).done(function(userBodyInfo){
+			        		console.log(userBodyInfo);
+			        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
+			        		
+			        		if(userBodyInfo[0].bodyFat != null){
+			        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+			        		}
+			        		if(userBodyInfo[0].bodyMuscle != null){
+			        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+			        		}
+			        		
+			        	})
+					})
+				})
+			
+				$("#bodyFat_bttn").on("click", function(){
+					
+					var date = $("#kt_daterangepicker_3").val();
+					console.log(date);
+					
+					$.ajax({
+						url: "/diary/json/updateUserBodyInfo",
+						type: "POST",
+						data: JSON.stringify({userId : [[${session.user.userId}]],
+											date : date,
+											bodyFat : $("#bodyFat").val()}
+											),
+						contentType: "application/json"
+					}).done(function(){
+						$.ajax({
+							url: "/diary/json/getUserBodyInfo",
+							type: "POST",
+							data: JSON.stringify({userId : [[${session.user.userId}]],
+												startDate : date,
+												endDate : date}
+												),
+							contentType: "application/json"
+						}).done(function(userBodyInfo){
+			        		console.log(userBodyInfo);
+			        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
+			        		
+			        		if(userBodyInfo[0].bodyFat != null){
+			        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+			        		}
+			        		if(userBodyInfo[0].bodyMuscle != null){
+			        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+			        		}
+			        		
+			        	})
+					})
+				})
+			
+				$("#bodyMuscle_bttn").on("click", function(){
+					
+					var date = $("#kt_daterangepicker_3").val();
+					console.log(date);
+					
+					$.ajax({
+						url: "/diary/json/updateUserBodyInfo",
+						type: "POST",
+						data: JSON.stringify({userId : [[${session.user.userId}]],
+											date : date,
+											bodyMuscle : $("#bodyMuscle").val()}
+											),
+						contentType: "application/json"
+					}).done(function(){
+						$.ajax({
+							url: "/diary/json/getUserBodyInfo",
+							type: "POST",
+							data: JSON.stringify({userId : [[${session.user.userId}]],
+												startDate : date,
+												endDate : date}
+												),
+							contentType: "application/json"
+						}).done(function(userBodyInfo){
+			        		console.log(userBodyInfo);
+			        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
+			        		
+			        		if(userBodyInfo[0].bodyFat != null){
+			        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+			        		}
+			        		if(userBodyInfo[0].bodyMuscle != null){
+			        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+			        		}
+			        		
+			        	})
+					})
+				})
+				
+			})
+		    
+		});
+		
+		
+		$(function() {
+			
+			/* ///////////////////Date Picker/////////////////// */
+			
+			$("#kt_daterangepicker_3").daterangepicker({
+		        singleDatePicker: true,
+		        showDropdowns: true,
+		        changeYear: false,
+		        maxDate: new Date(),
+		        locale: {
+		        	format: "YYYY-MM-DD",
+		        	separator: "-",
+		        	applyLabel: "선택",
+		        	cancelLabel: "취소"
+		        }
+		    }, function(start, end, label) {
+		    	var startDate = start.toJSON().substring(0,10);
+		    	var endDate = end.toJSON().substring(0,10);
+		    	console.log(startDate , endDate);
+
+		    	$.ajax({
+	        		url: "/diary/json/getUserBodyInfo",
+	        		type: "POST",
+	        		data: JSON.stringify({userId : [[${session.user.userId}]],
+										startDate : endDate,
+										endDate : endDate}
+	        							),
+	        		contentType: "application/json"
+	        	}).done(function(userBodyInfo){
+	        		console.log(userBodyInfo);
+	        		$("#weight").attr("placeholder", userBodyInfo[0].weight);
+	        		
+	        		if(userBodyInfo[0].bodyFat != null){
+	        			$("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+	        		}
+	        		if(userBodyInfo[0].bodyMuscle != null){
+	        			$("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+	        		}
+	        		
+	        	})
+		       
+		    });
+			
+	    /* ///////////////////Date Picker End/////////////////// */
+			
+		});
+		
+		/* ///////////////////Date Range Picker/////////////////// */
+		
+		var start = moment().subtract(6, "days");
+		var end = moment();
+		
+		function convertDateFormat(date) {
+		    var year = date.getFullYear();
+		    var month = date.getMonth() + 1;
+		    month = month >= 10 ? month : '0' + month;
+		    var day = date.getDate();
+		    day = day >= 10 ? day : '0' + day;
+		    return [year, month, day].join('-');
+		};
+
+		function cb(start, end) {
+		    $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " ~ " + end.format("MMMM D, YYYY"));
+		};
 	
 </script>
 
