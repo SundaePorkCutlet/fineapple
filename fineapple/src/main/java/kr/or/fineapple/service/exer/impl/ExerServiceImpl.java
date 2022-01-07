@@ -113,12 +113,19 @@ public class ExerServiceImpl implements ExerService {
 		return exerMapper.getRoutine(routineNo);
 	}
 
+	
 	@Override
 	public int updateRoutine(Routine routine) {
 		
 		return exerMapper.updateRoutine(routine);
 	}
 
+	@Override
+	public int updateRoutineName(Routine routine) throws Exception {
+		
+		return exerMapper.updateRoutineName(routine);
+	}	
+	
 	@Override
 	public int deleteRoutine(int routineNo) {
 		
@@ -236,7 +243,14 @@ public class ExerServiceImpl implements ExerService {
 		return exerMapper.sumBurnningKcal(userServiceNo);
 	}
 
-	
+	@Override
+	public void deleteBurnningRecord(int burnningRecordNo) throws Exception {
+		
+		exerMapper.deleteBurnningRecord(burnningRecordNo);
+		
+		
+	}
+
 	
 
 

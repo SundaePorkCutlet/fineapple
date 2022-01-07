@@ -43,7 +43,7 @@ public interface ExerMapper {
        
        Double sumBurnningKcal(int userServiceNo);
        
-       
+       void deleteBurnningRecord(int burnningRecordNo);
        
        //¿îµ¿CRUD
        int addExer(Exer exer);
@@ -64,6 +64,8 @@ public interface ExerMapper {
        Routine getRoutine(int routineNo);
       
        int updateRoutine(Routine routine);
+       
+       int updateRoutineName(Routine routine);
        
        int deleteRoutine(int routineNo);
        

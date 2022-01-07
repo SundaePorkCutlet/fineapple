@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude = "routineTime")
+@ToString
 public class Routine {
 
 	int routineInfoNo;
@@ -21,9 +21,7 @@ public class Routine {
 	String routineTime;
 	Exer exer;
 	String userId;
-	String hour;
-	String min;
-	String sec;
+	
 	String anExerTime;
 	Double anExerKcal;
 	
@@ -32,26 +30,6 @@ public class Routine {
 		
 	}
 
-
-	public String getRoutineTime() {
-		return routineTime;
-	}
-
-
-	public void setRoutineTime(String hour, String min, String sec) {
-		
-		this.routineTime = hour + min + sec;
-		
-		
-		/*if(routineTime !=null) {
-			// JSON ==> Domain Object  Binding을 위해 추가된 부분
-			//this.setRoutineTime( routineTime.split(":")[0]
-													+":"+ routineTime.split(":")[1]
-													+ ":" +routineTime.split(":")[2] );
-		}
-		
-		*/
-	}
 
 
 	

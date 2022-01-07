@@ -1,16 +1,24 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
-<!-- 공통 header -->
-<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
 
-   <!--begin::Body-->
-   <body id="kt_body" class="aside-enabled">
-      <!-- 공통 SideBar -->
-      <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+</head>
+<body>
 
+	<div id="getRoutine" class="modal fade" role="dialog" th:fragment ="getRoutine">		
+   <div  class="modal-dialog" style="height:1300px;">
+    <div class="modal-content">
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+      <h1 class="modal-title" align="center" th:text=${routine.routineName}></h1>
+     <div class="modal-header">
+    
 
-
+	
 <script type="text/javascript">
 function fncUpdateProduct(){
 	
@@ -36,7 +44,27 @@ $(function() {
 });
 
 </script>
+	</div>
 	
+	<div class="modal-body"style="height:500px;">
+				
+
+		<div class="scroll h-400px px-5">
+  
+  
+  <table class="table table-rounded table-flush">
+  		<thead>
+        <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
+       <th align="center" class="min-w-30px"><input type="checkbox" id="checkedAll" name="cartAllCheck"    onclick='CheckAll();'>      
+            <th align="left"  class="min-w-30px">번호</th>         
+            <th align="center" class="min-w-100px">운동명</th>         
+            <th align="center"  class="min-w-60px">각 운동별 시간</th>        
+            <th align="center"  class="min-w-60px">소모한 칼로리</th>        
+          </tr>
+        </thead>
+        
+        
+<!--   
 <div class="container show-grid">
 		<div class="row">
 			
@@ -52,16 +80,14 @@ $(function() {
 			<br><br><br>
 			<div style="text-align:right;">
 			
-			<!--Manager로 로그인 시에만 출력  -->
-			<a th:href="@{../exer/getRoutine?routineNo=}+${routine.routineNo}" >수정하기</a>
-			<a th:href="@{../exer/deleteRoutine?routineNo=}+${routine.routineNo}" >삭제하기</a>
+			Manager로 로그인 시에만 출력 
 			
-			</div>
+	     	</div>
 			
 			<br><br>
-			<div data-text-content="true" style="font-size:16px;" class="">  
+			<div data-text-content="true" style="font-size:16px;" class="">   -->
    		 
-   		 <table class="table table-hover table-striped" >			
+   		 <!-- <table class="table table-hover table-striped" >			
   		<thead>
           <tr>
             <th style="	background-color: rgba(51, 132, 86, 0.62);" align="center">번호</th>         
@@ -72,35 +98,53 @@ $(function() {
         </thead>
         
 	
-      <tbody>
-	<tr th:each="data,i: ${list}">
+      <tbody> -->
+      <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
+	<tr th:each="data, i : ${list}">
+		<td><input type="checkbox" class="checkedfavItem" name="favCheck" th:attr="data-routineInfoNo=${data.routineInfoNo},data-routineNo=${routineNo},data-routineName=${routineName}" onclick='Chk();'></td>
+		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td  th:attr="data-routineNo=${data.routineNo}" th:text="${data.exerName}"class="routineInfoName"  style="cursor:pointer; text-align: left;"></td>
+		<td th:text="${data.anExerTime}"></td>
+		<td th:text="|${data.anExerKcal}Kcal|" style="cursor:pointer; text-align: left;"></td>
+	</tr>
+</tbody>
+
+
+	<!-- <tr th:each="data,i: ${list}">
 		
 		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;"></td>
-		<!-- <td th:text="${data.exerName}" style="cursor:pointer; text-align: left;"></td>
-	 -->	
+		<td th:text="${data.exerName}" style="cursor:pointer; text-align: left;"></td>
+		
 		<td> 
 		<a  th:href="@{/exer/getExer(exerNo=${data.exerNo})}" th:text="${data.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
 		<td th:text="${data.anExerTime}" style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.anExerKcal}" style="cursor:pointer; text-align: left;"></td>
 	</tr>
-	</tbody>
+	</tbody> -->
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
 
 	</table>
 	
-	<div align="center">
-
+	
+			<div align="center">
 			<span data-text-content="true"style="font-weight: bold; font-size: 23px; color: rgb(255, 102, 178);"class="" >운동 총 소요시간 
 			<span data-text-content="true" style="font-size:30px;" class=""  th:text=${routine.routineTime}>			
 			</span>		
-			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</span>
+			</div>
+			
+			<div align="center">
 			<span  data-text-content="true" style="font-weight: bold; font-size: 23px; color: rgb(255, 102, 178);" class="" >총 소모 칼로리 			
 			<span data-text-content="true" style="font-size:30px;" class=""  th:text=${routine.routineKcal}>	
 			</span>  
 	  		</span>
-			</span>
+			
 		</div>
-	<br><br>
+		
+		
+	</div>
+	
+	<!-- <br><br>
 	
 	  		
 	  		  	  		  
@@ -119,9 +163,21 @@ $(function() {
 			</div>
 
    <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+    -->
    
    
-   
+</div>
+
+
+     <div class="modal-footer">
+     				<div align="center"><button type="button" class="btn btn-success">일일운동량에 추가</button></div>
+		<button th:if="${menu}!=0" type="button" class="btn btn-primary">루틴삭제</button>
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">닫기</button>
+     </div>
+    </div>
+   </div>
+  </div>		
+	<div id="mmodalHolder" ></div>
 
 </body>
 </html>

@@ -27,26 +27,46 @@ function fncGetUserList(currentPage) {
 	var routineNo =  $("#routineNo:checked").attr("data-routineNo");
 	
 	
+	if($("#anExerTime").val() == null ||$("#anExerTime").val().length < 1 ){
+		 
+		 alert("운동시간을 입력하셔야 합니다.");
+		 
+			return;
+		 
+	 }
+	 
+	
  $("form").attr("method" , "POST").attr("action" , "/exer/addRoutineInfo?exerNo="+exerNo + "&exerLv=" +$(".exerLv").val() 
 		                                                              + "&anExerKcal=" + $("#anExerKcal").html()
 		                                                              + "&anExerTime=" + $("#anExerTime").val() 
 		                                                              + "&routineNo=" + routineNo).submit();
    
- 
+ let self_ = self;
+ setTimeout(function(){
  if (confirm("등록되었습니다! 확인하시겠어요?")) {
-	 $.ajax({
-			url: "/exer/getRoutineList?menu="+0,
-			success:function(data){
 				$('#mmodal').modal("hide");
+	 $.ajax({
+			url: "/exer/getRoutineList?menu=0",
+			success:function(data){
+				
+				//alert(data)
+				console.log()
+				
+				
 				$("#mmodalHolder").html(data);
-				$("#routineList").modal("show");			
+				$("#getRoutineList").modal("show");			
 				
 			}  
 			  
 		  });
+	 
+	 
 } else {
+	alert(data)
 	$('#mmodal').modal("hide");
-}	
+}
+ 
+ },500)
 }
 
 $(function() {
@@ -75,7 +95,7 @@ $(function() {
 	 
 	  if(exerLv == "강"){
 		  
-		anExerKcal = exerKcal*parseInt(anExerTime) + 30;
+		anExerKcal = Math.round((exerKcal*parseInt(anExerTime) + 30)*100)/100.0;
 		
 		//alert(anExerKcal)
 		
@@ -83,13 +103,13 @@ $(function() {
 		
 	 }if(exerLv == "중"){
 		 
-		 anExerKcal = exerKcal*parseInt(anExerTime) + 20; 
+		 anExerKcal = Math.round((exerKcal*parseInt(anExerTime) + 20)*100)/100.0; 
 		 
 		//alert(anExerKcal)
 		 
 	 } if(exerLv == "약"){
 		 
-		 anExerKcal = exerKcal*parseInt(anExerTime) + 10;
+		 anExerKcal = Math.round((exerKcal*parseInt(anExerTime) + 10)*100)/100.0;
 		 
 		// alert(anExerKcal)
 	 } 
@@ -115,7 +135,7 @@ $(function() {
      </div>
         <div class="modal-body" style="height:500px;">
 
-<form >
+<form target="iframe1">
 
 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 <div class="row">
@@ -204,5 +224,7 @@ $(function() {
   
   </script>
   		</div>
+  		
+  		 <div id="mmodalHolder" ></div>
 </body>
 </html>

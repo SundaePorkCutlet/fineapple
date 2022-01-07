@@ -484,6 +484,7 @@ public class DietController {
 
 		System.out.println(IntakeNo);
 		dietService.deleteIntakeRecord(IntakeNo);
+		
 		int radio = 0;
 		User user = (User) request.getSession(true).getAttribute("user");
 

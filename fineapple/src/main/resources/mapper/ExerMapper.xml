@@ -111,6 +111,12 @@
 	
 	</insert>
 	
+	<delete id="deleteBurnningRecord" parameterType="Integer">
+	DELETE FROM BURNNING_RECORD
+	WHERE BURNNING_RECORD_NO = #{value}
+	
+	</delete>
+	
 	
 	<select id="getBurnningRecordList" parameterType="Integer" resultMap="BurnningRecordMap">
 	SELECT * 
@@ -150,7 +156,7 @@
  	<insert id="addExer"  parameterType="Exer">
 	INSERT
 	INTO EXER (EXER_NO, EXER_CATE, EXER_LV, EXER_NAME, EXER_KCAL, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LINK)
-	VALUES(10,
+	VALUES(seq_exer_exer_no.NEXTVAL,
     #{exerCate:INTEGER},
     #{exerLv:VARCHAR},
 	#{exerName:VARCHAR},
@@ -240,6 +246,12 @@
      WHERE ROUTINE_NO = #{routineNo:INTEGER}
    	</update>
    	
+   	
+	 <update id="updateRoutineName"  parameterType="Routine">
+     UPDATE ROUTINE
+     SET ROUTINE_NAME  = #{routineName:VARCHAR}
+     WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	</update>
    	
 
 	<select	id="getRoutine"	parameterType="Integer"  resultMap="routineMap">
@@ -339,7 +351,7 @@
 	
 <select id="sumIntakeKcal" resultType="double">
 <!-- 해당일자 섭취 칼로리 총합 -->
- SELECT SUM(user_food_intake)
+ SELECT SUM(food_kcal)
 FROM intake_record
 WHERE user_id = #{userId:VARCHAR}
 AND TRUNC(intake_record_date) = TRUNC(SYSDATE)
