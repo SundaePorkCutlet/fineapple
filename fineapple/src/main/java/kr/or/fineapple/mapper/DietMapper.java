@@ -19,6 +19,8 @@ public interface DietMapper {
 
        int insertDietService(DietServ diet);
        
+       int updateDietServiceNo(DietServ diet);
+       
        DietServ getDietService(String userId);
        
        int insertIntakeRecord(IntakeRecord record);

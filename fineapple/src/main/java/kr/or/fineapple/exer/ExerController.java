@@ -30,6 +30,7 @@ import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
+import kr.or.fineapple.service.user.UserService;
 
 
 @Controller
@@ -40,6 +41,11 @@ public class ExerController {
 	@Qualifier("ExerServiceImpl")
 	private ExerService exerService;
 
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	
 	public ExerController() {
 	}
 
@@ -87,7 +93,7 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 @PostMapping("addUserService")
 public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 							HttpServletRequest request,
-							Model model) throws Exception{
+							Model model,HttpSession session) throws Exception{
 	
 	System.out.println("post:addUserService");
 	
@@ -104,12 +110,34 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	}else {
 		
 		exerService.updateUserService(serv);
+		
+		
 	}
 			
 	serv = exerService.getUserService(userId);
+
+	
+	System.out.println("11111111111111111111111" + serv);
+	System.out.println(serv.getUserServiceNo());
+	serv.setExerServiceNo(serv.getUserServiceNo());
+	
+
+	exerService.updateExerServiceNo(serv);
+	
 	model.addAttribute("exerServ",serv);
 	model.addAttribute("user",user);
 	
+	
+	System.out.println("s111111111111111111111111111111" + userId);
+	
+	
+	user = userService.getUser(userId);
+	
+	
+	System.out.println("session 담긴 유저" + user);
+	
+	
+	session.setAttribute("user",user);
 	
 
 	return "exer/getUserService.html";
@@ -123,6 +151,8 @@ public String getUserService(Model model, HttpServletRequest request) {
 	
 	return "exer/getUserService.html";
 }
+
+
 
 
 
@@ -668,13 +698,12 @@ System.out.println(daily);
 List<BurnningRecord> list = new ArrayList<BurnningRecord>();
 
 list= exerService.getBurnningRecordList(exerServ.getUserServiceNo());
+System.out.println(list);
 
 Double userExerBurnning =  exerService.sumBurnningKcal(exerServ.getUserServiceNo());
-
-
-
-
+System.out.println(userExerBurnning);
 Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
+System.out.println(sumIntakeKcal);
 
 if(sumIntakeKcal == null) {
 	

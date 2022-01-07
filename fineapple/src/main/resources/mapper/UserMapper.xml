@@ -106,6 +106,7 @@ HEIGHT)
 	a.user_img,
 	a.user_leave_stt,
 	a.strd_wtr_intake,
+	a.trgt_weight,
 	a.service_trgt,
 	b.weight,
 	b.height

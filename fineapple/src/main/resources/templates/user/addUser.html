@@ -56,6 +56,11 @@
 <div class="mb-10" style="max-width:300px;" th:if="${session.user == null}">
     <label for="exampleFormControlInput1" >비밀번호</label>
     <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요."required/>
+    <br>
+    <label for="exampleFormControlInput1" >비밀번호 확인</label>
+    <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
+    <p> <span align="center" id = "changePassword" name ="changePassword"></span>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >몸무게</label>
@@ -68,19 +73,19 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >키</label>
-    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="170"required/>
+    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170"required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="20" required/>
+    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
-    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="57" required/>
+    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >프로필사진</label>
-    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="57" />
+    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="ex)57" />
 </div>
  <div  data-text-content="true" style="max-width:300px;">
      <label for="exampleFormControlInput1" >목표설정</label>
@@ -92,8 +97,8 @@
   </div>
 
 <br>
-		    <button class="btn btn-success" id="submit" style="max-width:100px;">회원가입</button>
-			<button class="btn btn-info" style="max-width:100px;" >이전</button>
+          <button class="btn btn-success" id="submit" style="max-width:100px;">회원가입</button>
+         <button class="btn btn-info" style="max-width:100px;" >이전</button>
 
 </div>
 <br>
@@ -111,6 +116,25 @@
       });
    });
    
+  $(function(){
+     $("#checkPassword").keyup(function(){
+     var password= $("#password").val();
+     var checkPassword = $("#checkPassword").val();
+    
+      console.log(checkPassword);
+        if(password == checkPassword){
+           $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
+           $("#changePassword").attr('color', '#31B404');
+
+        }
+        else if(password != checkPassword){
+           $("#changePassword").html("<div>비밀번호가 일치하지 않습니다.</div>");
+           $("#changePassword").attr('color', '#FF0000');
+        }
+     })
+        
+  })
+  
    $(function(){
       $("#userId").on("keyup",function(){
          console.log("올라갔닝")
@@ -212,33 +236,34 @@
       }
    
    $(function(){
-	      $("#sendMail").on("click",function(){
-	    	  
-	          var userId = $("#userId").val();
-	          var data ={
-	        	  userId:userId
-	          };
-	          if(userId == ""){
-	             alert("메일주소가 입력되지 않았습니다.");
-	          }else{
-	        	 alert("ajax입짱")
-	        	 alert("userId:" + userId);
-	         	 $.ajax({
-	         		type : "POST",
-	         		url : "/user/sendMail",
-	         		data : JSON.stringify(data),
-	         		accept : "application/json",
-	         		contentType : "application/json"
-	         	 }).done(function(data){
-	         		 alert("인증번호 전송 완료");
-	         		 isCertifidation = true;
-	         	 })
-	         	 
-	  
-	          }
+         $("#sendMail").on("click",function(){
+            
+             var userId = $("#userId").val();
+             var data ={
+                userId:userId
+             };
+             if(userId == ""){
+                alert("메일주소가 입력되지 않았습니다.");
+             }else{
+               alert("ajax입짱")
+               alert("userId:" + userId);
+                $.ajax({
+                  type : "POST",
+                  url : "/user/sendMail",
+                  data : JSON.stringify(data),
+                  accept : "application/json",
+                  contentType : "application/json"
+                }).done(function(data){
+                   alert("인증번호 전송 완료");
+                   isCertifidation = true;
+                })
+                
+     
+             }
 
-	       })
+          })
    })
+   
 
    
 </script>

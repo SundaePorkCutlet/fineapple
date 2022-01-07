@@ -4,12 +4,13 @@
 <!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
-	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+   <!--begin::Body-->
+   <body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
+<<<<<<< HEAD
 				<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Container-->
 						<div id="kt_content_container" class="container-fluid">
@@ -118,9 +119,120 @@
 						</div>
 						<!--end::Container-->
 					</div>
+=======
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                  <!--begin::Container-->
+                  <div id="kt_content_container" class="container-fluid">
+                     <!--begin::Row-->
+                     <div class="row gy-5 g-xl-10">
+                        <!--begin::Col-->
+                        <div class="col-xl-6 mb-xl-10">
+                           <!--begin::Tables widget 2-->
+                           <div class="card h-md-100">
+                              <!--begin::Header-->
+                              <div class="card-header py-5">
+                                 <!--begin::Title-->
+                                 <h3 class="card-title align-items-start flex-column">
+                                    <span class="card-label fw-bolder text-dark">신체 변화 추이 조회</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">니의 신체 변화 추이를 주간/월간으로 확인하세요!</span>
+                                 </h3>
+                                 <!--end::Title-->
+                              </div>
+                              <!--end::Header-->
+                              <!--begin::Body-->
+                              <div class="card-body pt-2">
+                                 <!--begin::Tab Content-->
+                                 <div class="tab-content">
+                                    <canvas id="kt_chartjs_2" class="mh-400px"></canvas>
+                                 </div>
+                                 <div class="tab-content" style="padding-top:2rem">
+                                    <span class="fs-6 fw-bold text-gray-400">기간 선택</span>
+                                    <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_4"/>
+                                 </div>
+                                 <!--end::Tab Content-->
+                              </div>
+                              <!--end: Card Body-->
+                           </div>
+                           <!--end::ables widget 2-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-xl-6 mb-5 mb-xl-10">
+                           <!--begin::Chart widget 4-->
+                           <div class="card card-flush overflow-hidden h-md-100">
+                              <!--begin::Header-->
+                              <div class="card-header py-5">
+                                 <!--begin::Title-->
+                                 <h3 class="card-title align-items-start flex-column">
+                                    <span class="card-label fw-bolder text-dark">체중/체지방률(선택)/골격근량(선택) 기록</span>
+                                    <span class="text-gray-400 mt-1 fw-bold fs-6">매일 매일 변화하는 자신의 신체 변화 정보를 기록하세요!</span>
+                                 </h3>
+                                 <!--end::Title-->
+                              </div>
+                              <!--end::Header-->
+                              <!--begin::Card body-->
+                              <!-- begin::일자입력 Form -->
+                              <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+                                 <div class="px-9 mb-5">
+                                    <span class="fs-6 fw-bold text-gray-400">일자 선택</span>
+                                     <input class="form-control form-control-solid" placeholder="일자를 선택하세요" id="kt_daterangepicker_3"/>
+                                 </div>
+                              </div>
+                              <!-- end::일자입력 Form -->
+                              <!--begin::신체정보 입력 Form-->
+                              <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+                                 <form class="form px-9 mb-5">
+                                    <div class="row" style="padding-bottom:1rem">
+                                       <div class="col-md-3">
+                                           <label for="weight" class="fs-6 fw-bold text-gray-400">체중</label>
+                                       </div>
+                                       <div class="col-md-7">
+                                           <input type="text" id="weight" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].weight}"/>
+                                       </div>
+                                       <div class="col-md-2">
+                                           <a href="#" id="weight_bttn" class="btn btn-primary">입력</a>
+                                       </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom:1rem">
+                                       <div class="col-md-3">
+                                           <label for="bodyFat" class="fs-6 fw-bold text-gray-400">체지방률(선택)</label>
+                                       </div>
+                                       <div class="col-md-7">
+                                           <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}|"/>
+                                       </div>
+                                       <div class="col-md-2">
+                                           <a href="#" id="bodyFat_bttn" class="btn btn-primary">입력</a>
+                                       </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom:1rem">
+                                       <div class="col-md-3">
+                                           <label for="bodyMuscle" class="fs-6 fw-bold text-gray-400">골격근량(선택)</label>
+                                       </div>
+                                       <div class="col-md-7">
+                                           <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}|"/>
+                                       </div>
+                                       <div class="col-md-2">
+                                           <a href="#" id="bodyMuscle_bttn" class="btn btn-primary">입력</a>
+                                       </div>
+                                    </div>
+                                 </form>
+                                 <!--end::신체정보 입력 Form-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Chart widget 4-->
+                        </div>
+                        <!--end::Col-->
+                     </div>
+                     <!--end::Row-->
+                  </div>
+                  <!--end::Container-->
+               </div>
+>>>>>>> refs/remotes/origin/master
 
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+<<<<<<< HEAD
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
@@ -187,41 +299,380 @@
 			
 			// 차트 디스플레이
 			var myChart = new Chart(ctx, config);
+=======
+      <!-- 공통 하단 footer -->
+      <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// -->       
+         
+      <!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
+      <script th:inline="javascript">
+      
+      
+      $(function() {
+         
+         /* ///////////////////ChartJS Start/////////////////// */
+         var ctx = document.getElementById('kt_chartjs_2');
+         
+         // Define colors
+         var primaryColor = KTUtil.getCssVariableValue('--bs-primary');
+         var dangerColor = KTUtil.getCssVariableValue('--bs-danger');
+         var successColor = KTUtil.getCssVariableValue('--bs-success');
+         
+         // Define fonts
+         var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+   
+         // Chart labels & Datasets
+         /*<![CDATA[*/
+          var userBodyInfo = [[${userBodyInfo}]];
+         console.log(userBodyInfo);
+         /*]]*/
+         const labels = [];
+         const weights = [];
+         const bodyFats = [];
+         const bodyMuscles = [];
+         
+         const data = {
+               labels: labels,
+               datasets: [{
+                  label: "체중",
+                   data: []
+                   },{
+                   label: "체지방률",
+                   data: []
+                   },{
+                   label: "골격근량",
+                   data: []
+                }]
+         };
+   
+         // Chart config
+         const config = {
+             type: 'line',
+             data: data,
+             options: {
+                 plugins: {
+                     title: {
+                         display: false,
+                     }
+                 },
+                 responsive: true,
+             },
+             defaults:{
+                 global: {
+                     defaultFont: fontFamily
+                 }
+             }
+         };
+         
+         // 차트 디스플레이
+         var myChart = new Chart(ctx, config);
 
-			var dataset = config.data.datasets;
-			
-			for(var i=0; i<userBodyInfo.length; i++){
-				
-				config.data.labels[i] = userBodyInfo[i].date;
-				
-				if(userBodyInfo[i].weight != null){
-					dataset[0].data[i] = userBodyInfo[i].weight;
-					if(dataset[0].borderColor == null){
-						dataset[0].borderColor = primaryColor;
-						dataset[0].backgroundColor = primaryColor;
-					}
-				}
-				if(userBodyInfo[i].bodyFat != null) {
-					dataset[1].data[i] = userBodyInfo[i].bodyFat;
-					if(dataset[1].borderColor == null){
-						dataset[1].borderColor = dangerColor;
-						dataset[1].backgroundColor = dangerColor;
-					}
-				}
-				if(userBodyInfo[i].bodyMuscle != null){
-					dataset[2].data[i] = userBodyInfo[i].bodyMuscle;
-					if(dataset[2].borderColor == null){
-						dataset[2].borderColor = successColor;
-						dataset[2].backgroundColor = successColor;
-					}
-				}
-			}
+         var dataset = config.data.datasets;
+         
+         for(var i=0; i<userBodyInfo.length; i++){
+            
+            config.data.labels[i] = userBodyInfo[i].date;
+            
+            if(userBodyInfo[i].weight != null){
+               dataset[0].data[i] = userBodyInfo[i].weight;
+               if(dataset[0].borderColor == null){
+                  dataset[0].borderColor = primaryColor;
+                  dataset[0].backgroundColor = primaryColor;
+               }
+            }
+            if(userBodyInfo[i].bodyFat != null) {
+               dataset[1].data[i] = userBodyInfo[i].bodyFat;
+               if(dataset[1].borderColor == null){
+                  dataset[1].borderColor = dangerColor;
+                  dataset[1].backgroundColor = dangerColor;
+               }
+            }
+            if(userBodyInfo[i].bodyMuscle != null){
+               dataset[2].data[i] = userBodyInfo[i].bodyMuscle;
+               if(dataset[2].borderColor == null){
+                  dataset[2].borderColor = successColor;
+                  dataset[2].backgroundColor = successColor;
+               }
+            }
+         }
 
-			console.log(config.data.datasets);
-			console.log(config.data);
+         console.log(config.data.datasets);
+         console.log(config.data);
 
-			myChart.update();
+         myChart.update();
 
+         /* ///////////////////Date Range Picker/////////////////// */
+         
+         $("#kt_daterangepicker_4").daterangepicker({
+            
+             startDate: start,
+             endDate: end,
+             ranges: {
+             "일주일": [moment().subtract(6, "days"), moment()],
+             "이번달": [moment().startOf("month"), moment().endOf("month")],
+             "지난달": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+             },
+            locale: {
+                 format: "YYYY-MM-DD",
+                 separator: "-",
+                 applyLabel: "선택",
+                 cancelLabel: "취소"
+              }
+         }, function(start, end){
+            
+            //기존 차트 초기화
+            myChart.destroy();
+            
+            var startDate = start.toJSON().substring(0,10);
+             var endDate = end.toJSON().substring(0,10);
+             console.log(startDate , endDate);
+>>>>>>> refs/remotes/origin/master
+
+             $.ajax({
+                 url: "/diary/json/getUserBodyInfo",
+                 type: "POST",
+                 data: JSON.stringify({userId : [[${session.user.userId}]],
+                              startDate : startDate,
+                              endDate : endDate}
+                                ),
+                 contentType: "application/json"
+              }).done(function(userBodyInfo){
+                 console.log(userBodyInfo);
+                 
+                 var ctx = document.getElementById('kt_chartjs_2');
+                
+                // Define colors
+                var primaryColor = KTUtil.getCssVariableValue('--bs-primary');
+                var dangerColor = KTUtil.getCssVariableValue('--bs-danger');
+                var successColor = KTUtil.getCssVariableValue('--bs-success');
+                
+                // Define fonts
+                var fontFamily = KTUtil.getCssVariableValue('--bs-font-sans-serif');
+          
+                // Chart labels & Datasets
+                /*<![CDATA[*/
+    
+                console.log(userBodyInfo);
+                /*]]*/
+                const labels = [];
+                const weights = [];
+                const bodyFats = [];
+                const bodyMuscles = [];
+                
+                const data = {
+                      labels: labels,
+                      datasets: [{
+                         label: "체중",
+                          data: []
+                          },{
+                          label: "체지방률",
+                          data: []
+                          },{
+                          label: "골격근량",
+                          data: []
+                       }]
+                };
+          
+                // Chart config
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        plugins: {
+                            title: {
+                                display: false,
+                            }
+                        },
+                        responsive: true,
+                    },
+                    defaults:{
+                        global: {
+                            defaultFont: fontFamily
+                        }
+                    }
+                };
+                
+                // 차트 디스플레이
+                var myChart = new Chart(ctx, config);
+                
+                 var dataset = config.data.datasets;
+                
+                for(var i=0; i<userBodyInfo.length; i++){
+                   
+                   config.data.labels[i] = userBodyInfo[i].date;
+                   
+                   if(userBodyInfo[i].weight != null){
+                      dataset[0].data[i] = userBodyInfo[i].weight;
+                      if(dataset[0].borderColor == null){
+                         dataset[0].borderColor = primaryColor;
+                         dataset[0].backgroundColor = primaryColor;
+                      }
+                   }
+                   if(userBodyInfo[i].bodyFat != null) {
+                      dataset[1].data[i] = userBodyInfo[i].bodyFat;
+                      if(dataset[1].borderColor == null){
+                         dataset[1].borderColor = dangerColor;
+                         dataset[1].backgroundColor = dangerColor;
+                      }
+                   }
+                   if(userBodyInfo[i].bodyMuscle != null){
+                      dataset[2].data[i] = userBodyInfo[i].bodyMuscle;
+                      if(dataset[2].borderColor == null){
+                         dataset[2].borderColor = successColor;
+                         dataset[2].backgroundColor = successColor;
+                      }
+                   }
+                }
+
+                console.log(config.data.datasets);
+                console.log(config.data);
+
+                myChart.update();
+              });
+                 
+           /* ///////////////////ChartJS End/////////////////// */   
+           
+         
+           
+          /* ///////////////////신체 변화 정보 입력/////////////////// */
+         
+            $("#weight_bttn").on("click", function(){
+               
+               var date = $("#kt_daterangepicker_3").val();
+               console.log(date);
+               
+               $.ajax({
+                  url: "/diary/json/updateUserBodyInfo",
+                  type: "POST",
+                  data: JSON.stringify({userId : [[${session.user.userId}]],
+                                 date : date,
+                                 weight : $("#weight").val()}
+                                 ),
+                  contentType: "application/json"
+               }).done(function(){
+                  $.ajax({
+                     url: "/diary/json/getUserBodyInfo",
+                     type: "POST",
+                     data: JSON.stringify({userId : [[${session.user.userId}]],
+                                    startDate : date,
+                                    endDate : date}
+                                    ),
+                     contentType: "application/json"
+                  }).done(function(userBodyInfo){
+                       console.log(userBodyInfo);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       
+                       if(userBodyInfo[0].bodyFat != null){
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                       }
+                       if(userBodyInfo[0].bodyMuscle != null){
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                       }
+                       
+                    })
+               })
+            })
+         
+            $("#bodyFat_bttn").on("click", function(){
+               
+               var date = $("#kt_daterangepicker_3").val();
+               console.log(date);
+               
+               $.ajax({
+                  url: "/diary/json/updateUserBodyInfo",
+                  type: "POST",
+                  data: JSON.stringify({userId : [[${session.user.userId}]],
+                                 date : date,
+                                 bodyFat : $("#bodyFat").val()}
+                                 ),
+                  contentType: "application/json"
+               }).done(function(){
+                  $.ajax({
+                     url: "/diary/json/getUserBodyInfo",
+                     type: "POST",
+                     data: JSON.stringify({userId : [[${session.user.userId}]],
+                                    startDate : date,
+                                    endDate : date}
+                                    ),
+                     contentType: "application/json"
+                  }).done(function(userBodyInfo){
+                       console.log(userBodyInfo);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       
+                       if(userBodyInfo[0].bodyFat != null){
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                       }
+                       if(userBodyInfo[0].bodyMuscle != null){
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                       }
+                       
+                    })
+               })
+            })
+         
+            $("#bodyMuscle_bttn").on("click", function(){
+               
+               var date = $("#kt_daterangepicker_3").val();
+               console.log(date);
+               
+               $.ajax({
+                  url: "/diary/json/updateUserBodyInfo",
+                  type: "POST",
+                  data: JSON.stringify({userId : [[${session.user.userId}]],
+                                 date : date,
+                                 bodyMuscle : $("#bodyMuscle").val()}
+                                 ),
+                  contentType: "application/json"
+               }).done(function(){
+                  $.ajax({
+                     url: "/diary/json/getUserBodyInfo",
+                     type: "POST",
+                     data: JSON.stringify({userId : [[${session.user.userId}]],
+                                    startDate : date,
+                                    endDate : date}
+                                    ),
+                     contentType: "application/json"
+                  }).done(function(userBodyInfo){
+                       console.log(userBodyInfo);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       
+                       if(userBodyInfo[0].bodyFat != null){
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                       }
+                       if(userBodyInfo[0].bodyMuscle != null){
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                       }
+                       
+                    })
+               })
+            })
+            
+         })
+          
+      });
+      
+      
+      $(function() {
+         
+         /* ///////////////////Date Picker/////////////////// */
+         
+         $("#kt_daterangepicker_3").daterangepicker({
+              singleDatePicker: true,
+              showDropdowns: true,
+              changeYear: false,
+              maxDate: new Date(),
+              locale: {
+                 format: "YYYY-MM-DD",
+                 separator: "-",
+                 applyLabel: "선택",
+                 cancelLabel: "취소"
+              }
+          }, function(start, end, label) {
+             var startDate = start.toJSON().substring(0,10);
+             var endDate = end.toJSON().substring(0,10);
+             console.log(startDate , endDate);
+
+<<<<<<< HEAD
 			/* ///////////////////Date Range Picker/////////////////// */
 			
 			$("#kt_daterangepicker_4").daterangepicker({
@@ -247,7 +698,50 @@
 				var startDate = start.toJSON().substring(0,10);
 		    	var endDate = end.toJSON().substring(0,10);
 		    	console.log(startDate , endDate);
+=======
+             $.ajax({
+                 url: "/diary/json/getUserBodyInfo",
+                 type: "POST",
+                 data: JSON.stringify({userId : [[${session.user.userId}]],
+                              startDate : endDate,
+                              endDate : endDate}
+                                ),
+                 contentType: "application/json"
+              }).done(function(userBodyInfo){
+                 console.log(userBodyInfo);
+                 $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                 
+                 if(userBodyInfo[0].bodyFat != null){
+                    $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                 }
+                 if(userBodyInfo[0].bodyMuscle != null){
+                    $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                 }
+                 
+              })
+             
+          });
+         
+       /* ///////////////////Date Picker End/////////////////// */
+         
+      });
+      
+      /* ///////////////////Date Range Picker/////////////////// */
+      
+      var start = moment().subtract(6, "days");
+      var end = moment();
+      
+      function convertDateFormat(date) {
+          var year = date.getFullYear();
+          var month = date.getMonth() + 1;
+          month = month >= 10 ? month : '0' + month;
+          var day = date.getDate();
+          day = day >= 10 ? day : '0' + day;
+          return [year, month, day].join('-');
+      };
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
 		    	$.ajax({
 	        		url: "/diary/json/getUserBodyInfo",
 	        		type: "POST",
@@ -537,9 +1031,15 @@
 		    $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " ~ " + end.format("MMMM D, YYYY"));
 		};
 	
+=======
+      function cb(start, end) {
+          $("#kt_daterangepicker_4").html(start.format("MMMM D, YYYY") + " ~ " + end.format("MMMM D, YYYY"));
+      };
+   
+>>>>>>> refs/remotes/origin/master
 </script>
 
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
-	</body>
-	<!--end::Body-->
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// -->    
+   </body>
+   <!--end::Body-->
 </html>

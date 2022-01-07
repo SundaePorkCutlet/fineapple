@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -51,12 +52,13 @@ public class DietController {
 
 		if ((User) request.getSession(true).getAttribute("user") != null) {
 			User user = (User) request.getSession(true).getAttribute("user");
+			user = userService.getUser(user.getUserId());
 			System.out.println(user);
 
 			DietServ serv = dietService.getDietService(user.getUserId());
 			System.out.println(serv);
 			if (serv != null) {
-				if (serv.getUserServiceNo() != 0) {
+				if (user.getDietServiceNo() != 0) {
 					   Double  dailyIntakeKcal   = 0.0;
 					   Double   totaldailyIntakeKcal = 0.0;
 
@@ -102,6 +104,46 @@ public class DietController {
 					model.addAttribute("dietServ", serv);
 					return "diet/getDietService.html";
 				} else {
+					System.out.println("설마여기?");
+					  Double  dailyIntakeKcal   = 0.0;
+					   Double   totaldailyIntakeKcal = 0.0;
+
+					
+					 if(user.getGender().equals("male")) {
+					      
+					     
+					     dailyIntakeKcal   = 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+					      
+					      
+					   } else {
+					      
+					    dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+					      
+					      
+					   }
+					   
+					   System.out.println(dailyIntakeKcal);
+					   
+					   if(user.getServiceTrgt().equals("체중증량")) {
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+					      
+					   } if (user.getServiceTrgt().equals("체중유지")){
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+					      
+					   } else {
+					      
+					      totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+					      
+					   }
+
+					model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
+					
+					
+					model.addAttribute("user", user);
+					
+					
 					return "diet/addDietService.html";
 				}
 			} else {
@@ -145,14 +187,15 @@ public class DietController {
 			}
 
 		} else {
-
+			
+			System.out.println("그럼여기?");
 			return "user/login";
 		}
 
 	}
 
 	@PostMapping("addDietService")
-	public String addDietService(@ModelAttribute("DietServ") DietServ serv, HttpServletRequest request, Model model)
+	public String addDietService(@ModelAttribute("DietServ") DietServ serv, HttpServletRequest request, Model model,HttpSession session)
 			throws Exception {
 		System.out.println("post:addDietService");
 		System.out.println(serv);
@@ -168,8 +211,19 @@ public class DietController {
 		}
 
 		serv = dietService.getDietService(userId);
+		dietService.updateDietServiceNo(serv);
+		
 		model.addAttribute("dietServ", serv);
 		model.addAttribute("user", user);
+		
+		
+		user = userService.getUser(userId);
+
+		session.setAttribute("user",user);
+
+		
+		
+		
 
 		return "diet/getDietService.html";
 	}
@@ -189,6 +243,7 @@ public class DietController {
 
 		DietServ serv = dietService.getDietService(user.getUserId());
 
+		
 		model.addAttribute("user", user);
 		model.addAttribute("dietServ", serv);
 

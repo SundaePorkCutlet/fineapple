@@ -4,13 +4,14 @@
 <!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
 
-	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+   <!--begin::Body-->
+   <body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+      <th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
 
+<<<<<<< HEAD
 					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Container-->
 						<div id="kt_content_container" class="container-fluid" data-select2-id="select2-data-kt_content_container">
@@ -218,13 +219,223 @@
 						</div>
 						<!--end::Container-->
 					</div>
+=======
+               <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                  <!--begin::Container-->
+                  <div id="kt_content_container" class="container-fluid" data-select2-id="select2-data-kt_content_container">
+                     <!--begin::Toolbar-->
+                     <div class="d-flex flex-wrap flex-stack mb-6" data-select2-id="select2-data-166-b8vn">
+                        <!--begin::Title-->
+                        <h3 class="fw-bolder my-2">나의 습관 관리 & 물 마시기</h3>
+                        <!--end::Title-->
+                     </div>
+                     <!--end::Toolbar-->
+                     <!--begin::Row-->
+                     <div class="row g-6 g-xl-9">
+                        <!--begin::Col-->
+                        <div class="col-sm-6 col-xl-3">
+                           <!--begin::Card-->
+                           <div class="card h-100">
+                              <!--begin::Card header-->
+                              <div class="card-header flex-nowrap border-0 pt-9">
+                                 <!--begin::Card title-->
+                                 <div class="card-title m-0">
+                                    <!--begin::Icon-->
+                                    <div class="symbol symbol-55px w-30px bg-light me-5">
+                                       <i class="fas fa-coffee fs-2x"></i>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="fs-4 fw-bold text-gray-600 m-0">커피 끊기</div>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Card title-->
+                              </div>
+                              <!--end::Card header-->
+                              <!--begin::Card body-->
+                              <div class="card-body d-flex flex-column px-9 pt-6 pb-8 text-center">
+                                 <!--begin::Heading-->
+                                 <div class="fs-2tx fw-bolder mb-3" id="coffee_count" th:text="|총 ${coffee.trgtHabitSuccDayCount}일차|"></div>
+                                 <!--end::Heading-->
+                                 <!--begin::Stats-->
+                                 <div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">                              
+                                    <a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${coffee.trgtHabitCateNo})|" th:value="${coffee.trgtHabitCateNo}" style="margin:0 auto">시작</a>
+                                    <a href="#" class="btn btn-active-dark" id="coffee_service_no" th:onclick="|fncEndTrgtHabit(${coffee.trgtHabitServiceNo},${coffee.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="coffee_service_no" th:value="${coffee.trgtHabitServiceNo}"></span>초기화</a>
+                                 </div>
+                                 <!--end::Stats-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Card-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-sm-6 col-xl-3">
+                           <!--begin::Card-->
+                           <div class="card h-100">
+                              <!--begin::Card header-->
+                              <div class="card-header flex-nowrap border-0 pt-9">
+                                 <!--begin::Card title-->
+                                 <div class="card-title m-0">
+                                    <!--begin::Icon-->
+                                    <div class="symbol symbol-55px w-30px bg-light me-5">
+                                       <i class="fas fa-beer fs-2x"></i>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="fs-4 fw-bold text-gray-600 m-0">금주</div>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Card title-->
+                              </div>
+                              <!--end::Card header-->
+                              <!--begin::Card body-->
+                              <div class="card-body d-flex flex-column px-9 pt-6 pb-8 text-center">
+                                 <!--begin::Heading-->
+                                 <div class="fs-2tx fw-bolder mb-3" id="alcohol_count" th:text="|총 ${alcohol.trgtHabitSuccDayCount}일차|"></div>
+                                 <!--end::Heading-->
+                                 <!--begin::Stats-->
+                                 <div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
+                                    <a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${alcohol.trgtHabitCateNo})|" th:value="${alcohol.trgtHabitCateNo}" style="margin:0 auto">시작</a>
+                                    <a href="#" class="btn btn-active-dark" id="alcohol_service_no" th:onclick="|fncEndTrgtHabit(${alcohol.trgtHabitServiceNo},${alcohol.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="alcohol_service_no" th:value="${alcohol.trgtHabitServiceNo}"></span>초기화</a>
+                                 </div>
+                                 <!--end::Stats-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Card-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-sm-6 col-xl-3">
+                           <!--begin::Card-->
+                           <div class="card h-100">
+                              <!--begin::Card header-->
+                              <div class="card-header flex-nowrap border-0 pt-9">
+                                 <!--begin::Card title-->
+                                 <div class="card-title m-0">
+                                    <!--begin::Icon-->
+                                    <div class="symbol symbol-55px w-30px bg-light me-5">
+                                       <i class="fas fa-smoking fs-2x"></i>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="fs-4 fw-bold text-gray-600 m-0">금연</div>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Card title-->
+                              </div>
+                              <!--end::Card header-->
+                              <!--begin::Card body-->
+                              <div class="card-body d-flex flex-column px-9 pt-6 pb-8 text-center">
+                                 <!--begin::Heading-->
+                                 <div class="fs-2tx fw-bolder mb-3" id="smoking_count" th:text="|총 ${smoking.trgtHabitSuccDayCount}일차|"></div>
+                                 <!--end::Heading-->
+                                 <!--begin::Stats-->
+                                 <div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
+                                    <a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${smoking.trgtHabitCateNo})|" th:value="${smoking.trgtHabitCateNo}" style="margin:0 auto">시작</a>
+                                    <a href="#" class="btn btn-active-dark" id="smoking_service_no" th:onclick="|fncEndTrgtHabit(${smoking.trgtHabitServiceNo},${smoking.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="smoking_service_no" th:value="${smoking.trgtHabitServiceNo}"></span>초기화</a>
+                                 </div>
+                                 <!--end::Stats-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Card-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-sm-6 col-xl-3">
+                           <!--begin::Card-->
+                           <div class="card h-100">
+                              <!--begin::Card header-->
+                              <div class="card-header flex-nowrap border-0 pt-9">
+                                 <!--begin::Card title-->
+                                 <div class="card-title m-0">
+                                    <!--begin::Icon-->
+                                    <div class="symbol symbol-55px w-30px bg-light me-5">
+                                       <i class="fas fa-lock fs-2x"></i>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <input type="text" class="form-control" id="trgtHabitCateName" th:value="${userHabit.trgtHabitCateName}" readonly/>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Card title-->
+                              </div>
+                              <!--end::Card header-->
+                              <!--begin::Card body-->
+                              <div class="card-body d-flex flex-column px-9 pt-6 pb-8 text-center">
+                                 <!--begin::Heading-->
+                                 <div class="fs-2tx fw-bolder mb-3" id="userHabit_count" th:text="|총 ${userHabit.trgtHabitSuccDayCount}일차|"></div>
+                                 <!--end::Heading-->
+                                 <!--begin::Stats-->
+                                 <div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
+                                    <a href="#" class="btn btn-active-primary" th:onclick="|fncAddTrgtHabit(${userHabit.trgtHabitCateNo})|" th:value="${userHabit.trgtHabitCateNo}" style="margin:0 auto">시작</a>
+                                    <a href="#" class="btn btn-active-dark" th:onclick="|fncEndTrgtHabit($(userHabit_service_no).text(), ${userHabit.trgtHabitCateNo})|" style="margin:0 auto"><span hidden="hidden" id="userHabit_service_no" th:text="${userHabit.trgtHabitServiceNo}"></span>초기화</a>
+                                 </div>
+                                 <!--end::Stats-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Card-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-sm-6 col-xl-3">
+                           <!--begin::Card-->
+                           <div class="card h-100">
+                              <!--begin::Card header-->
+                              <div class="card-header flex-nowrap border-0 pt-9">
+                                 <!--begin::Card title-->
+                                 <div class="card-title m-0">
+                                    <!--begin::Icon-->
+                                    <div class="symbol symbol-55px w-30px bg-light me-5">
+                                       <i class="fas fa-glass-whiskey fs-2x"></i>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Title-->
+                                    <div class="fs-4 fw-bold text-gray-600 m-0" th:text="|물 마시기|"></div>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Card title-->
+                              </div>
+                              <!--end::Card header-->
+                              <!--begin::Card body-->
+                              <div class="card-body d-flex flex-column px-9 pt-6 pb-8 text-center">
+                                 <p class="fs-6 text-gray-400 fw-bold ms-1" th:text="|${session.user.userName}님의 일일 권장 수분 섭취량은 ${session.user.strdWtrIntake}L입니다.|"></p>
+                                 <!--begin::Heading-->
+                                 <div class="fs-2tx fw-bolder mb-3"><span id="user_wtr_intake" th:text="${userWtrIntake}"></span>L</div>
+                                 <!--end::Heading-->
+                                 <!--begin::Stats-->
+                                 <div class="d-flex align-items-center flex-wrap mb-5 mt-auto fs-6">
+                                    <a href="#" class="btn btn-active-primary" id="wtr_plus" th:onclick="|fncUpdateWtrIntake(0.25)|" style="margin:0 auto">마시기</a>
+                                    <a href="#" class="btn btn-active-dark" id="wtr_minus" th:onclick="|fncUpdateWtrIntake(-0.25)|" style="margin:0 auto">취소</a>
+                                 </div>
+                                 <!--end::Stats-->
+                              </div>
+                              <!--end::Card body-->
+                           </div>
+                           <!--end::Card-->
+                        </div>
+                        <!--end::Col-->
+                     </div>
+                     <!--end::Row-->
+                     <!--begin::Pagination-->
+                     <div class="d-flex flex-stack flex-wrap pt-10">
+                     </div>
+                     <!--end::Pagination-->
+                  </div>
+                  <!--end::Container-->
+               </div>
+>>>>>>> refs/remotes/origin/master
 
 
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
-		<!-- 공통 하단 footer -->
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+      <!-- 공통 하단 footer -->
+      <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+<<<<<<< HEAD
 		<script th:inline="javascript">
 		
 		$(function(){
@@ -317,37 +528,131 @@
 				}
 			}
 		)};
+=======
+      <script th:inline="javascript">
+      
+      $(function(){
+         
+         $("#trgtHabitCateName").on("click", function(){
+            $("input").attr("readonly",false);
+         });   
+            
+      });
+         
+      function fncAddTrgtHabit(trgtHabitCateNo){
+      
+         var trgtHabitCateNo = trgtHabitCateNo;
+      
+         if(trgtHabitCateNo == 1){
+            var trgtHabitCateName = "커피";
+         }else if(trgtHabitCateNo == 2){
+            var trgtHabitCateName = "금주";
+         }else if(trgtHabitCateNo == 3){
+            var trgtHabitCateName = "금연";
+         }else if(trgtHabitCateNo == 4){
+            var trgtHabitCateName = $("input[type=text]").val();
+            if (trgtHabitCateName == "" ){
+               alert("등록할 습관명을 입력하세요!");
+               return;
+            }
+         } 
+         //목표 습관 도전 시작
+         /*<![CDATA[*/
+         console.log(trgtHabitCateNo);
+         console.log(trgtHabitCateName);
+         var data = {userId : [[${session.user.userId}]],
+                  trgtHabitCateNo: trgtHabitCateNo,
+                  trgtHabitCateName: trgtHabitCateName};
+         /*]]*/   
+         $.ajax({
+            url: "/trgtHabit/json/addTrgtHabit",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json"
+         }).done(function(trgtHabit){
+            
+            if(trgtHabit.trgtHabitCateNo == 1){
+               $("#coffee_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
+               $("#coffee_service_no").val(trgtHabit.trgtHabitServiceNo);
+            }else if(trgtHabit.trgtHabitCateNo == 2){
+               $("#alcohol_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
+               $("#alcohol_service_no").val(trgtHabit.trgtHabitServiceNo);
+            }else if(trgtHabit.trgtHabitCateNo == 3){
+               $("#smoking_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
+               $("#smoking_service_no").val(trgtHabit.trgtHabitServiceNo);
+            }else if(trgtHabit.trgtHabitCateNo == 4){
+               $("#userHabit_count").text("총 "+trgtHabit.trgtHabitSuccDayCount+"일차");
+               $("#userHabit_service_no").val(trgtHabit.trgtHabitServiceNo);
+            }
+         }
+      )};
+      
+      function fncEndTrgtHabit(trgtHabitServiceNo, trgtHabitCateNo){
+         
+         var trgtHabitServiceNo = trgtHabitServiceNo;
+         var trgtHabitCateNo = trgtHabitCateNo;
+         
+         //목표 습관 도전 일수 초기화
+         /*<![CDATA[*/
+         console.log(trgtHabitServiceNo);
+         console.log(trgtHabitCateNo);
+         var data = {trgtHabitServiceNo : trgtHabitServiceNo};
+         /*]]*/   
+         $.ajax({
+            url: "/trgtHabit/json/endTrgtHabit",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json"
+         }).done(function(){
+            
+            if(trgtHabitCateNo == 1){
+               $("#coffee_count").text("총 0일차");   //성공일수 0일로 초기화
+               $("#coffee_service_no").val(0);      //trgtHabitServiceNo 0번으로 초기화
+            }else if(trgtHabitCateNo == 2){
+               $("#alcohol_count").text("총 0일차");
+               $("#alcohol_service_no").val(0);
+            }else if(trgtHabitCateNo == 3){
+               $("#smoking_count").text("총 0일차");
+               $("#smoking_service_no").val(0);
+            }else if(trgtHabitCateNo == 4){
+               $("#userHabit_count").text("총 0일차");
+               $("#userHabit_service_no").text(0);
+               $("input[type=text]").val("사용자정의");
+            }
+         }
+      )};
+>>>>>>> refs/remotes/origin/master
 
-		function fncUpdateWtrIntake(userInput){
+      function fncUpdateWtrIntake(userInput){
 
-			/*<![CDATA[*/
-			var userWtrIntake = $("#user_wtr_intake").text();
-			var userIntake = parseFloat(userInput)+parseFloat(userWtrIntake);
-			/*]]*/	
-			
-			if(userIntake < 0.0){
-				alert("현재 마신 물이 0.0L 입니다!");
-				return;
-			}else if(userIntake > 5.0){
-				alert("일일 5L 이상의 수분 섭취는 위험해요!")
-				return;
-			}
-			
-			$.ajax({
-				url: "/trgtHabit/json/updateWtrIntake",
-				type: "POST",
-				data: JSON.stringify({userId : [[${session.user.userId}]],
-									userWtrIntake :  userIntake}
-									),
-				contentType: "application/json"
-			}).done(function(userWtrIntake){
-				console.log(userWtrIntake);
-				$("#user_wtr_intake").text(userWtrIntake);
-			}
-		)};
-		</script>
+         /*<![CDATA[*/
+         var userWtrIntake = $("#user_wtr_intake").text();
+         var userIntake = parseFloat(userInput)+parseFloat(userWtrIntake);
+         /*]]*/   
+         
+         if(userIntake < 0.0){
+            alert("현재 마신 물이 0.0L 입니다!");
+            return;
+         }else if(userIntake > 5.0){
+            alert("일일 5L 이상의 수분 섭취는 위험해요!")
+            return;
+         }
+         
+         $.ajax({
+            url: "/trgtHabit/json/updateWtrIntake",
+            type: "POST",
+            data: JSON.stringify({userId : [[${session.user.userId}]],
+                           userWtrIntake :  userIntake}
+                           ),
+            contentType: "application/json"
+         }).done(function(userWtrIntake){
+            console.log(userWtrIntake);
+            $("#user_wtr_intake").text(userWtrIntake);
+         }
+      )};
+      </script>
 
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
-	</body>
-	<!--end::Body-->
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// -->    
+   </body>
+   <!--end::Body-->
 </html>
