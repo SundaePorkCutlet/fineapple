@@ -90,6 +90,10 @@
 	<result property="alarmTime" column="alarm_time"/>
 	</resultMap>
 	
+	<resultMap type="report" id="reportMap">
+	
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -442,7 +446,7 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<insert id="addReport" parameterType="report">
+	<!-- <insert id="addReport" parameterType="report">
 	INSERT
 	INTO
 	report_and_like 	
@@ -474,13 +478,13 @@
 	null,
 	null,
 	</if>
-	<!-- #{reportTrgt.postNo}, -->
+	#{reportTrgt.postNo},
 	#{reportCate},
 	#{reportCntnt},
 	#{reportStt},
 	SYSDATE
 	)
-	</insert>
+	</insert> -->
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
@@ -538,7 +542,49 @@
 	</select>
 	
 	
+	<insert id="addReport" parameterType="report">
+	INSERT
+	INTO
+	report_and_like
+	(
+	REPORT_NO,
+	USER_ID, 
+	REPORTED_USER_ID, 
+	RERPORT_TRGT,
+	REPORT_CATE, 
+	REPORT_WHY,
+	report_date
+	)
+	VALUES
+	(
+	seq_report_and_like_no.NEXTVAL,
+	#{user.userId},
+	#{reportedUser.userId},
+	#{trgtNo},
+	#{reportCate},
+	#{reportCntnt},
+	SYSDATE
+	)
+	</insert>
 	
+	<select id="getReportList" parameterType="report">
+	SELECT
+	*
+	FROM
+	report_and_like
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	report_stt = 0
+	</trim>
+	
+	
+	</select>
+	
+	<update id="updateReportStt" parameterType="report">
+	UPDATE
+	FROM
+	<trim prefix="SET" suffixOverrides=",">
+	</trim>
+	</update>
 	
 	
 	

@@ -1,6 +1,7 @@
 package kr.or.fineapple.community;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -145,7 +145,25 @@ public class CommunityRestController {
 		
 		report.setReportedUser(reportedUser);
 		
-		//report.setReportDate();
+		report.setReportCate(reportCate);
+		
+		report.setReportCntnt(reportcontent);
+		
+		report.setTrgtNo(Integer.parseInt(TrgtNo));
+		
+		
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분");
+		 
+		 
+		//report.setReportDate(LocalDate.parse(time, formatter));
+		
+		
+		System.out.println(report);
+		
+		communityService.addReport(report);
+		
+		
+		
 		
 		
 	}
