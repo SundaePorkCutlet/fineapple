@@ -115,7 +115,7 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List getUserSearchList(Search search) {
+	public List<User> getUserSearchList(Search search) {
 		return communityMapper.getUserSearchList(search);
 	}
 	

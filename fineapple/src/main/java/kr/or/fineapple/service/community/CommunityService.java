@@ -39,5 +39,5 @@ public interface CommunityService {
 	
 	public List getAlarmList();
 	
-	public List getUserSearchList(Search search);
+	public List<User> getUserSearchList(Search search);
 }

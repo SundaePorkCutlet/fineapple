@@ -26,18 +26,14 @@
 											<!--begin::Search-->
 											<div id="kt_modal_users_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline" data-kt-search="true">
 												<!--begin::Form-->
-												<form data-kt-search-element="form" class="w-100 position-relative mb-5" autocomplete="off">
+												
+													<button type="submit" style="display:none;"></button>
 													<!--begin::Hidden input(Added to disable form autocomplete)-->
 													<input type="hidden">
 													<!--end::Hidden input-->
 													<!--begin::Icon-->
 													<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-													<span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-														</svg>
-													</span>
+													
 													<!--end::Svg Icon-->
 													<!--end::Icon-->
 													<!--begin::Input-->
@@ -60,11 +56,22 @@
 														<!--end::Svg Icon-->
 													</span>
 													<!--end::Reset-->
-												</form>
+												
 												<!--end::Form-->
 
 											</div>
 											<!--end::Search-->
+											<table id = "userSeacrhTable" class="table table-hover table-rounded table-striped border gy-7 gs-7">
+											
+												<thead>
+													<th>아이디</th>
+													<th>닉네임</th>
+													<th>비고</th>
+												</thead>
+												<tbody>
+												
+												</tbody>
+											</table>
 										</div>
 										<!--end::Modal body-->
 									</div>
@@ -77,7 +84,9 @@
 		
 		function fnSearchUser(){
 			
-			var data = {searchKeyword : $("#searchKeyword").val()}
+			$('#userSeacrhTable > tbody').empty();
+			
+			var data = {"searchKeyword" : $("#searchKeyword").val()}
 			
 			$.ajax({
 				
@@ -88,14 +97,48 @@
 				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
 				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 					console.log("성공" + data);
-					
+					//for(i = 0 ; i < data.length ; i++){data[i].userId}
+					$(data).each(function(){
+						alert(this.userId + " " + this.userName + " ");
+						var appendUser = 
+							"" + 
+							"<tr class=\"fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200\" onclick=\"javascript:fnGetUser('"+
+							this.userId + 
+							"')\">" +
+							"<td>" +
+							this.userId +
+							"</td>" +
+							"<td>" +
+							this.userName + 
+							"</td>" +
+							"<td>" +
+							"전송하기" +
+							"</td>" +
+							"</tr>" +
+							"";
+							console.log(appendUser)
+							$("#userSeacrhTable").append(appendUser);
+						});
+				},
+				complete:function(userId){
+					console.log("호출끝");
+				},
+				error : function(error) {
+			        alert("Error!");
+			    }
 				
-					
-				}
 				
 			});
 			
 		};
+		
+		
+		function fnGetUser(){
+			console.log("fnGetUser" + "앙기모띄~");
+			
+			
+			
+		}
 		</script>
 		
 		

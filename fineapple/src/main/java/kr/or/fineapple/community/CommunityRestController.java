@@ -10,6 +10,7 @@ import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -196,6 +197,16 @@ public class CommunityRestController {
 	@PostMapping(value = "getUserSerach")
 	public List getUserSerach(@RequestBody Search search) {
 		
+		System.out.println("getUserSerach" + "거침");
+		
+		//System.out.println(getClass().getEnclosingMethod().getName() + "거침"); //==> 이거 주석풀면 null애러 발생
+		
+		List<User> list = communityService.getUserSearchList(search);
+		
+			
+		for (User user : list) {
+			System.out.println(user);
+		}
 		
 		return communityService.getUserSearchList(search);
 	}

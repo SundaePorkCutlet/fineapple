@@ -607,7 +607,7 @@
 	</trim>
 	</update>
 	
-	<select id="getUserSearchList" parameterType="serach">
+	<select id="getUserSearchList" parameterType="search" resultMap="userSelectMap">
 	SELECT
 	*
 	FROM
