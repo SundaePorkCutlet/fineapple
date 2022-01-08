@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -37,4 +38,6 @@ public interface CommunityService {
 	public Group checkGroupName(String groupName);
 	
 	public List getAlarmList();
+	
+	public List getUserSearchList(Search search);
 }

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -193,8 +194,10 @@ public class CommunityRestController {
 	
 	
 	@PostMapping(value = "getUserSerach")
-	public List getUserSerach() {
-		return null;
+	public List getUserSerach(@RequestBody Search search) {
+		
+		
+		return communityService.getUserSearchList(search);
 	}
 	
 

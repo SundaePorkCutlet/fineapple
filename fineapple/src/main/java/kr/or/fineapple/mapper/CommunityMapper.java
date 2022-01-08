@@ -1,12 +1,12 @@
 package kr.or.fineapple.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -67,6 +67,6 @@ public interface CommunityMapper {
 	
 	public List getAlarmList();
 	
-
+	public List getUserSearchList(Search search);
 	
 }

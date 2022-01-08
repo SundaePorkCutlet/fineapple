@@ -607,6 +607,16 @@
 	</trim>
 	</update>
 	
+	<select id="getUserSearchList" parameterType="serach">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	user_name = #{searchKeyword}
+	</where>
+	</select>
+	
 	
 	
 	
