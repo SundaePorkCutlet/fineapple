@@ -33,7 +33,7 @@
                         <div class="row mb-5 mt-5 pt-5">
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-5 fw-bold mb-2">나의 목표 칼로리</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="first-name"/>
+                                <input type="text" class="form-control form-control-solid" placeholder="" name="goal_kcal" id="goal_kcal"/>
                             </div>
                         </div>
                         <div class="row mb-5">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="modal-footer flex-center">
                     <button type="reset" class="btn btn-light me-3 btn-hover-scale" data-bs-dismiss="modal">닫기</button>
-                    <button type="submit" id="btn_submit" class="btn btn-primary btn-hover-scale">
+                    <button type="button" id="btn_submit" class="btn btn-primary btn-hover-scale" onclick="formSubmit();">
                         <span class="indicator-label">신청</span>
                         <span class="indicator-progress">
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -141,19 +141,29 @@
 
 
     <script>
-        Inputmask({
-            "mask": "9",
-            "repeat": 10,
-            "greedy": false
-        }).mask("#kt_inputmask_4");
-
-        $(document).ready(function () {
-            console.log("ok..");
-            $("#battle_range").daterangepicker();
+        $(document).ready(function(){
+            Inputmask({
+                "mask": "9",
+                "repeat": 10,
+                "greedy": false
+            }).mask("#goal_kcal");
         });
+
+        function formSubmit(){
+            Swal.fire({
+                text: "신청되었습니다",
+                icon: "success",
+                buttonsStyling: !1,
+                confirmButtonText: "닫기",
+                customClass: {confirmButton: "btn btn-primary"}
+            }).then((function (target) {
+                target.isConfirmed && $("#addBattleViewModal").modal("hide");
+            }))
+        }
     </script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+    <!-- TODO 2022-01-10 모달에서 script src 하면 sidemenu menu-accordion가 먹통이되는 현상 -->
     <script src="/assets/plugins/global/plugins.bundle.js"></script>
     <script src="/assets/js/scripts.bundle.js"></script>
 </div>
