@@ -5,26 +5,10 @@
 <!--<th:block th:replace="/layout/fragments/header.html :: header"></th:block>-->
 <body>
 <div id="addBattleViewModal" class="modal profile-img-boxfade" role="dialog" th:fragment="addBattleView">
-    <style>
-        .profile-img-box .profile {
-            width: 100px;
-            height: 100px;
-            border-radius: 70%;
-            margin-right: auto;
-        }
-
-        .battle-font {
-            margin: auto;
-            text-align: center;
-            font-size: 22px;
-            font-weight: 500 !important;
-            opacity: 0.6;
-        }
-    </style>
     <div class="modal-dialog modal-dialog-centered mw-400px">
         <div class="modal-content">
-            <form class="form" action="#" id="kt_modal_new_address_form">
-                <div class="modal-header pt-2 pb-2" id="kt_modal_new_address_header">
+            <form class="form" id="addForm">
+                <div class="modal-header pt-2 pb-2">
                     <h2>승부 신청</h2>
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
@@ -36,7 +20,7 @@
                     </div>
                 </div>
                 <div class="modal-body py-10 px-lg-17">
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+                    <div class="scroll-y me-n7 pe-7">
                         <div class="row mb-5 mt-5">
                             <div class="d-flex flex-center flex-column py-5">
                                 <div class="symbol symbol-100px symbol-circle mb-7">
@@ -81,10 +65,10 @@
                     </div>
                 </div>
                 <div class="modal-footer flex-center">
-                    <button type="reset" id="kt_modal_new_address_cancel" class="btn btn-light me-3">닫기</button>
-                    <button type="submit" id="kt_modal_new_address_submit" class="btn btn-primary">
+                    <button type="reset" class="btn btn-light me-3 btn-hover-scale" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" id="btn_submit" class="btn btn-primary btn-hover-scale">
                         <span class="indicator-label">신청</span>
-                        <span class="indicator-progress">기다려주세요..
+                        <span class="indicator-progress">
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
