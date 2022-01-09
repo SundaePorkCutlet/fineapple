@@ -67,6 +67,8 @@ public interface ExerService {
 	
 	public Map<String ,Object> getRoutineInfoList(int routineNo)throws Exception;
 	
+	public Routine  getRoutineInfo(int routineInfoNo)throws Exception;
+	
 	public int deleteRoutineInfo(int routineInfoNo)throws Exception;
 	
 	public int updateRoutineInfo(Routine routine)throws Exception;

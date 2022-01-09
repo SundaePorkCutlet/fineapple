@@ -193,8 +193,8 @@
 	</where>
 	</if>
 	ORDER BY exer_No ) inner_table
-	WHERE ROWNUM &lt;= 10)
-	WHERE row_seq BETWEEN 1 AND 10
+	WHERE ROWNUM &lt;= 15)
+	WHERE row_seq BETWEEN 1 AND 15
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
@@ -317,6 +317,15 @@
 			WHERE  ROUTINE_NO= #{VALUE}
 			ORDER BY ROUTINE_INFO_NO desc
 	</select>
+	
+	
+	<select	id="getRoutineInfo"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT *		
+			FROM   ROUTINE_INFO 
+			WHERE  ROUTINE_INFO_NO= #{VALUE}
+	</select>
+	
+	
 	 
 	 	
 	 	

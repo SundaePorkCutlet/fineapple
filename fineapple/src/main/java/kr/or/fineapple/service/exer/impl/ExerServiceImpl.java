@@ -166,6 +166,9 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int deleteRoutineInfo(int routineInfoNo) {
 
+		
+		
+		
 		return exerMapper.deleteRoutineInfo(routineInfoNo);
 	}
 	
@@ -187,6 +190,13 @@ public class ExerServiceImpl implements ExerService {
 		
 		return map;
 	}
+	
+	@Override
+	public Routine getRoutineInfo(int routineInfoNo) throws Exception {
+	
+		return exerMapper.getRoutineInfo(routineInfoNo);
+	}
+	
 	
 
 	@Override

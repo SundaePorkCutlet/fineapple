@@ -31,17 +31,114 @@ $(function() {
 	
 	$( "button.btn.btn-primary").on("click" , function() {
 		
- 		history.go(-1);
- 		
-	});	
+
+	var routine_arr = [];
+    var routineNo = $("input[name=favCheck]:checked").attr("data-routineNo");
+    var routineName = $("input[name=favCheck]:checked").attr("data-routineName");
+
+    $("input[name=favCheck]:checked").each(function () {
+    	
+    	
+        var routineInfoNo = $(this).attr("data-routineInfoNo");
+       
+        
+		//alert("삭제할 루틴 번호" + routineInfoNo)
 		
-	 $( "#plusKcal"  ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
-			fncUpdateProduct();
-		});
+		
+        routine_arr.push(routineNo);
+
+
+    } )
+    
+    if(routine_arr == 0){
+    	
+		alert('삭제하실 운동을 선택해 주세요!')
+		
+	}
+    
+    	//alert("111111111111111"+routine_arr.length)
+    	
+    if (routine_arr.length != 0) {
+       
+    	//alert("22222222222222"+ routine_arr)
+    	
+    	
+    	
+      var routineInfoNo = $("input[name=favCheck]:checked").attr("data-routineInfoNo");
+    	
+    	
+    	$('#getRoutine').modal("hide");
+    	
+   	 $.ajax({
+   			url: "../exer/deleteRoutineInfo?routineInfoNo="+routineInfoNo+"&routineName="+routineName+"&routineNo="+routineNo,
+   			success:function(data){
+   				
+   				console.log(data)
+   				
+   				$("#mmodalHolder").html(data);
+   				$("#getRoutine").modal("show");			
+   				
+   			}  
+   			  
+   		  });
+        
+        
+            }
+
+        });
+    
+	});
 	
-});
+$(function () {
+    //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+    //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
+    $("button.btn.btn-success").on("click", function () {
+        //Debug..
+        //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+
+
+        var routine_arr = [];
+        $("input[name=favCheck]:checked").each(function () {
+
+
+        var routineInfoNo = $("input[name=favCheck]:checked").attr("data-routineInfoNo");
+        	    
+            
+            alert(routineInfoNo)
+            
+            routine_arr.push(routineInfoNo);
+
+
+        })
+        
+        if(routine_arr == 0){
+			alert('선택한 운동이 없습니다!')
+			
+		}
+        
+
+
+        if (routine_arr.length != 0) {
+        	
+            console.log(routine_arr);
+            
+            var routineInfoNo = $("input[name=favCheck]:checked").attr("data-routineInfoNo");
+            
+            
+            self.location="../exer/routineInfoAddBurnningRecord?routineInfoNo="+routineInfoNo;
+            
+
+                }
+
+            });
+
+
+        }
+    );    
+    
+
+
+
 
 </script>
 	</div>
@@ -101,7 +198,7 @@ $(function() {
       <tbody> -->
       <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-		<td><input type="checkbox" class="checkedfavItem" name="favCheck" th:attr="data-routineInfoNo=${data.routineInfoNo},data-routineNo=${routineNo},data-routineName=${routineName}" onclick='Chk();'></td>
+		<td><input type="checkbox" class="checkedfavItem" name="favCheck" id="routineInfoNo"th:attr="data-routineInfoNo=${data.routineInfoNo},data-routineNo=${routineNo},data-routineName=${routineName}"></td>
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td  th:attr="data-routineNo=${data.routineNo}" th:text="${data.exerName}"class="routineInfoName"  style="cursor:pointer; text-align: left;"></td>
 		<td th:text="${data.anExerTime}"></td>
