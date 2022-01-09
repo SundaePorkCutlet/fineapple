@@ -25,11 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import oracle.net.aso.m;
 
 @Controller
 @RequestMapping("/community/*")
@@ -288,16 +290,67 @@ public class CommunityController {
 		return "community/addBattleView :: addBattleView";
 	}
 	
-	
+	@PostMapping(value = "getUserDetail")
+	public String getUserDetail(Model model, HttpServletRequest request) {
 		
+		Search search = new Search();
+		
+		//search.setSearchCondition(Integer.parseInt(request.getParameter("searchCondition")));
+		search.setSearchKeyword(request.getParameter("userId"));
+		
+		System.out.println(search);
+		
+		User user =  communityService.getUserSearch(search);
+		
+		model.addAttribute("user", user);
+
+		
+		return "community/getUserDetail.html";
+	}
 	
+	
+	
+	
+	
+	@PostMapping(value = "addGroupToUserInter")
+	public String addGroupToUserInter(HttpServletRequest request, Model model, @RequestBody String str) {
+		
+		
+		
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setCaptainStt(1);
+		
+		groupUser.setGroupStt(4);
+		
+		List<Group> list = communityService.addGroupToUserInter(groupUser);
+		
+		for (Group group : list) {
+			System.out.println(group);
+		}
+		
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		User intetUser = new User();
+		
+		intetUser.setUserId(jsonObject.get("userId").toString());
+		
+		System.out.println(intetUser);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("user", intetUser);
+		return "community/addGroupToUserInter :: addGroupToUserInter";
+	}
 	
 
-
-
-	
-	
-	
 	
 	
 }

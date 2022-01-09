@@ -10,7 +10,6 @@ import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +27,8 @@ import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+
+
 
 
 
@@ -60,6 +61,7 @@ public class CommunityRestController {
 		return board;
 	}
 	
+
 	@RequestMapping(value = "addCmnt", method = RequestMethod.POST)
 	public Map addCmnt(@RequestBody String postNoStr, HttpServletRequest request, Model model) throws JsonMappingException, JsonProcessingException {
 		
@@ -199,6 +201,8 @@ public class CommunityRestController {
 		
 		System.out.println("getUserSerach" + "거침");
 		
+		System.out.println(search);
+		
 		//System.out.println(getClass().getEnclosingMethod().getName() + "거침"); //==> 이거 주석풀면 null애러 발생
 		
 		List<User> list = communityService.getUserSearchList(search);
@@ -211,6 +215,30 @@ public class CommunityRestController {
 		return communityService.getUserSearchList(search);
 	}
 	
+	
+	@PostMapping(value = "addGroupToUserInter")
+	public void AddGroupToUserInter(@RequestBody Group group, @RequestBody String str) {
+		
+		System.out.println(str + "앙기무띄~");
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setGroup(group);
+		
+		User interUser = new User();
+		
+		interUser.setUserId(jsonObject.get("interUserId").toString());
+		
+		groupUser.setUser(interUser);
+		
+		groupUser.setGroupStt(1);
+		
+		System.out.println("앙 배불띄~" + group);
+		
+		
+	}
 
 	
 }

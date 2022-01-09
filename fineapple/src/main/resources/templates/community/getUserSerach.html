@@ -10,7 +10,7 @@
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
  
- <div class="modal-content">
+ 									<div class="modal-content">
 										<!--begin::Modal header-->
 										<div class="modal-header pb-0 border-0 justify-content-end">
 										</div>
@@ -26,10 +26,11 @@
 											<!--begin::Search-->
 											<div id="kt_modal_users_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline" data-kt-search="true">
 												<!--begin::Form-->
+												<form id="formUser" action="/community/getUserDetail" method="post">
 												
 													<button type="submit" style="display:none;"></button>
 													<!--begin::Hidden input(Added to disable form autocomplete)-->
-													<input type="hidden">
+													<input type="hidden" id = "userId"  name ="userId" value="d">
 													<!--end::Hidden input-->
 													<!--begin::Icon-->
 													<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -37,7 +38,23 @@
 													<!--end::Svg Icon-->
 													<!--end::Icon-->
 													<!--begin::Input-->
-													<input id = "searchKeyword" type="text" class="form-control form-control-lg form-control-solid px-15" name="search"  placeholder="검색할 단어를 입력해주세요." data-kt-search-element="input" th:onkeypress="javascript:if(event.keyCode==13) {fnSearchUser()}">
+
+													<div style="float: left; width: 70%;">
+														<input id = "searchKeyword"   type="text" class="form-control form-control-solid" placeholder="검색할 단어를 입력해주세요"/>
+													</div> 
+													<div  style="float: left; width: 20%;">
+													<select id ="searchCondition" class="form-select form-select-solid" data-control="select2" data-placeholder="검색조건을 선택" name = "searchCondition">
+												   		<option value="1">회원 ID</option>
+												    	<option value="2">회원 명</option>
+													</select>
+													</div>
+													<div  style="float: left; width: 10%;">
+													<button  type="button" class="btn btn-secondary" th:onClick ="javascript:fnSearchUser()" >검색하기</button>
+													</div>
+													<!-- <input id = "searchKeyword" type="text" class="form-control form-control-lg form-control-solid px-15" name="searchKeyword"  placeholder="검색할 단어를 입력해주세요." data-kt-search-element="input"> -->
+													<!-- th:onkeypress="javascript:if(event.keyCode==13) {fnSearchUser()}" -->
+												
+
 													<!--end::Input-->
 													<!--begin::Spinner-->
 													<span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
@@ -56,7 +73,7 @@
 														<!--end::Svg Icon-->
 													</span>
 													<!--end::Reset-->
-												
+												</form>
 												<!--end::Form-->
 
 											</div>
@@ -73,6 +90,7 @@
 												</tbody>
 											</table>
 										</div>
+											
 										<!--end::Modal body-->
 									</div>
  
@@ -82,11 +100,21 @@
 		
 		<script type="text/javascript">
 		
+		$('input[type="text"]').keydown(function() {
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+			  };
+		}); // form 태그 엔터 막기
+		
+		
 		function fnSearchUser(){
 			
 			$('#userSeacrhTable > tbody').empty();
 			
-			var data = {"searchKeyword" : $("#searchKeyword").val()}
+			var data = {"searchKeyword" : $("#searchKeyword").val(),
+						"searchCondition" : $("#searchCondition").val()};
+			
+			console.log(JSON.stringify(data) + "ddddddddddd");
 			
 			$.ajax({
 				
@@ -115,13 +143,19 @@
 							"전송하기" +
 							"</td>" +
 							"</tr>" +
-							"";
+							"" + 
+							"<input type=\"hidden\" " + 
+							"name = \"searchKeyword\""+
+							" value = "+ 
+							"\"" +
+							this.userId +
+							"\"/>";
 							console.log(appendUser)
 							$("#userSeacrhTable").append(appendUser);
 						});
 				},
 				complete:function(userId){
-					console.log("호출끝끝");
+					console.log("호출끝");
 				},
 				error : function(error) {
 			        alert("Error!");
@@ -133,8 +167,18 @@
 		};
 		
 		
-		function fnGetUser(){
-			console.log("fnGetUser" + "앙기모띄~");
+		function fnGetUser(userId){
+			console.log("fnGetUser" + "앙기모띄~" + userId);
+			console.log(userId);
+			$("#userId").val(userId);
+			
+			console.log($("#userId").val());
+			
+			$("#formUser").submit();
+			
+			
+			
+			
 			
 			
 			

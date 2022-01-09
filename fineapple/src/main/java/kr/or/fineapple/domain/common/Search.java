@@ -38,7 +38,9 @@ public class Search {
 			return searchCondition;
 		}
 		public void setSearchCondition(int searchCondition) {
+			System.out.println("setSearchCondition Àü");
 			this.searchCondition = searchCondition;
+			System.out.println("setSearchCondition ÈÄ");
 		}
 		
 		public String getSearchKeyword() {

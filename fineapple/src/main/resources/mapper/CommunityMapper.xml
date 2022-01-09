@@ -56,7 +56,7 @@
 	
 	<resultMap id = "userSelectMap"	type = "user">
 		<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
-		<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
+		<result property="userName" column = "user_name" jdbcType = "VARCHAR" />
 		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
 		<result	property="userImg"	column="user_img"	jdbcType="VARCHAR"/>
 		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
@@ -613,8 +613,49 @@
 	FROM
 	users
 	<where>
+	<if test="searchCondition == 1">
+	user_id = #{searchKeyword}
+	</if>
+	<if test="searchCondition == 2">
 	user_name = #{searchKeyword}
+	</if>
+	
 	</where>
+	</select>
+	
+	
+	<select id="getUserSearch" parameterType="search" resultMap="userSelectMap">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	user_id = #{searchKeyword}
+	</where>
+	</select>
+	
+	
+	<select id="addGroupToUserInter" parameterType="groupUser" resultMap="groupMap">
+
+		SELECT
+		g.*
+		FROM
+		groups g,
+		group_user gu
+		<where>
+		gu.user_id = #{user.userId}
+		AND
+		gu.captain_stt = #{captainStt}
+		AND
+		gu.group_stt = #{groupStt}
+		AND
+		gu.group_no = g.group_no
+		</where>
+		
+		
+		
+		
+
 	</select>
 	
 	

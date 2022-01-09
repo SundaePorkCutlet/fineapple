@@ -97,4 +97,27 @@ public class BoardTest {
 		report.setReportCntnt("이 게시글이 매우 이상해요!");
 		communityService.addReport(report);	
 	}
+	
+	
+	
+	//@Test
+	public void addGroupToUserInter() {
+		User user = new User();
+		
+		user.setUserId("aaa123@naver.com");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setCaptainStt(1);
+		
+		groupUser.setGroupStt(4);
+		
+		List<Group> list = communityService.addGroupToUserInter(groupUser);
+		
+		for (Group group : list) {
+			System.out.println(group);
+		}
+	}
 }

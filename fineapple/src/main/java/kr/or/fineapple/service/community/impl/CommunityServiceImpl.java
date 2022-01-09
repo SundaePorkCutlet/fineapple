@@ -118,6 +118,22 @@ public class CommunityServiceImpl implements CommunityService {
 	public List<User> getUserSearchList(Search search) {
 		return communityMapper.getUserSearchList(search);
 	}
+
+	@Override
+	public List<Group> addGroupToUserInter(GroupUser groupUser) {
+		// TODO Auto-generated method stub
+		return communityMapper.addGroupToUserInter(groupUser);
+	}
+
+	@Override
+	public User getUserSearch(Search search) {
+		// TODO Auto-generated method stub
+		return communityMapper.getUserSearch(search);
+	}
+	
+	
+	
+	
 	
 	
 	

@@ -40,4 +40,11 @@ public interface CommunityService {
 	public List getAlarmList();
 	
 	public List<User> getUserSearchList(Search search);
+	
+	public User getUserSearch(Search search); 
+	
+	public List<Group> addGroupToUserInter(GroupUser groupUser);
+	
+	
+		
 }
