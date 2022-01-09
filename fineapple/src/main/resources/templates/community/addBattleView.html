@@ -6,18 +6,18 @@
 <body>
 <div id="addBattleViewModal" class="modal profile-img-boxfade" role="dialog" th:fragment="addBattleView">
     <style>
-        .profile-img-box .profile{
+        .profile-img-box .profile {
             width: 100px;
             height: 100px;
             border-radius: 70%;
             margin-right: auto;
         }
 
-        .battle-font{
+        .battle-font {
             margin: auto;
             text-align: center;
             font-size: 22px;
-            font-weight: 500!important;
+            font-weight: 500 !important;
             opacity: 0.6;
         }
     </style>
@@ -25,7 +25,7 @@
         <div class="modal-content">
             <form class="form" action="#" id="kt_modal_new_address_form">
                 <div class="modal-header pt-2 pb-2" id="kt_modal_new_address_header">
-                    <h2>승부 요청</h2>
+                    <h2>승부 신청</h2>
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -38,20 +38,12 @@
                 <div class="modal-body py-10 px-lg-17">
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
                         <div class="row mb-5 mt-5">
-                            <div class="col-5">
-                                <div class="profile-img-box text-center">
+                            <div class="d-flex flex-center flex-column py-5">
+                                <div class="symbol symbol-100px symbol-circle mb-7">
                                     <img src="../assets/profile/aaa.jpg" class="profile"/>
-                                    차민우
                                 </div>
-                            </div>
-                            <div class="col-2 battle-font">
-                                VS
-                            </div>
-                            <div class="col-5">
-                                <div class="profile-img-box text-center">
-                                    <img src="../assets/profile/aaa.jpg" class="profile"/>
-                                    홍준호
-                                </div>
+                                <span class="fs-3 text-gray-800 fw-bolder mb-3">홍진호</span>
+                                <span class="text-gray-400 fw-bolder mb-3">jinho@kakao.com</span>
                             </div>
                         </div>
                         <div class="row mb-5 mt-5 pt-5">
@@ -64,7 +56,7 @@
                             <div class="col-md-12 fv-row">
                                 <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                     <span>분류</span>
-<!--                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Your payment statements may very based on selected country"></i>-->
+                                    <!--                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Your payment statements may very based on selected country"></i>-->
                                 </label>
                                 <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
                                     <option value="1">칼로리 소모</option>
@@ -78,7 +70,12 @@
                                     <span>기간</span>
                                     <!--                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Your payment statements may very based on selected country"></i>-->
                                 </label>
-                                <input class="form-control form-control-solid" placeholder="Pick date rage" id="battle_range"/>
+                                <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
+                                    <th:block th:each="num : ${#numbers.sequence(1,100)}">
+                                        <option th:value="${num}" th:text="${num}+일"></option>
+                                    </th:block>
+                                </select>
+                                <!--                                <input class="form-control form-control-solid" placeholder="Pick date rage" id="battle_range"/>-->
                             </div>
                         </div>
                     </div>
@@ -86,7 +83,7 @@
                 <div class="modal-footer flex-center">
                     <button type="reset" id="kt_modal_new_address_cancel" class="btn btn-light me-3">닫기</button>
                     <button type="submit" id="kt_modal_new_address_submit" class="btn btn-primary">
-                        <span class="indicator-label">요청</span>
+                        <span class="indicator-label">신청</span>
                         <span class="indicator-progress">기다려주세요..
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
