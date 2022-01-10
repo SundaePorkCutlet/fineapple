@@ -135,7 +135,14 @@
 	AND USER_SERVICE_NO = #{value}
 	</select>
 	
-	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getBurnningRecordListForDiary" resultMap="BurnningRecordMap">
+	SELECT * 
+	FROM (SELECT br.* , e.exer_name a
+	        FROM  BURNNING_RECORD br LEFT JOIN EXER e ON br.exer_no = e.exer_no)
+	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD')  = TO_CHAR(#{date},'YYYYMMDD')
+	AND USER_SERVICE_NO = #{userServiceNo}
+	</select>	
 	
 	<update id="updateBurnningRecord" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD 

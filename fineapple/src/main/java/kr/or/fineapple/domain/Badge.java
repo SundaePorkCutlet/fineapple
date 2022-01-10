@@ -22,8 +22,8 @@ public class Badge {
 	int wtrBadgeCount;
 	int bttlBadgeCount;
 	////¹îÁö È¹µæ½ÃÀÇ ±â·Ï
-	double dailyIntakeKcal;
-	double dailyBurnningKcal;
+	Double dailyIntakeKcal;
+	Double dailyBurnningKcal;
 	double userWtrIntake;
 	
 }

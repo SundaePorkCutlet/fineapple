@@ -66,6 +66,8 @@ public interface DietService {
 	public JSONArray getrcpList(Search search);
 	
 	public Recipe getRcp(String rcpCd);
+
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo);
 	
 	
 

@@ -135,6 +135,13 @@
 	 AND USER_SERVICE_NO = #{userServiceNo}
 	</select>
 	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getIntakeRecordListForDiary" resultMap="IntakeRecordMap">
+	SELECT * FROM INTAKE_RECORD 
+	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(#{date},'YYYYMMDD')
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
 	<update id="updateIntakeRecord" parameterType="IntakeRecord">
 	UPDATE INTAKE_RECORD SET
 	USER_FOOD_INTAKE =#{userFoodIntake:DOUBLE}
