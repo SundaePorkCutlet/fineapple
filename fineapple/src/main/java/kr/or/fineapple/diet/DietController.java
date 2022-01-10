@@ -457,7 +457,6 @@ public class DietController {
 
 		return "diet/addFood.html";
 	}
-
 	@GetMapping("getaddDailyIntakeMeal")
 	public String getaddDailyIntakeMeal(Model model, @RequestParam("checkarray") String foodCd,
 			HttpServletRequest request) throws Exception {

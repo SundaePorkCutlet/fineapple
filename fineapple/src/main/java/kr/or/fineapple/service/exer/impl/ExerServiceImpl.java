@@ -58,7 +58,7 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int updateUserService(ExerServ service) throws Exception {
 		
-		exerMapper.updateServiceTrgt(service);
+		//exerMapper.updateServiceTrgt(service);
 		exerMapper.updateBodyInfo(service);
 		
 		return exerMapper.updateUserService(service);
@@ -69,7 +69,7 @@ public class ExerServiceImpl implements ExerService {
 
 	
 	@Override
-	public Map<String ,Object> getExerList(Search search) throws Exception {
+	public Map<String, Object> getExerList(Search search) throws Exception {
 		
 		System.out.println("getExerListService");
 		

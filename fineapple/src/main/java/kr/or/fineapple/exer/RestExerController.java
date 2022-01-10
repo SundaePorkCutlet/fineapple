@@ -32,23 +32,20 @@ public Map<String,Object> getExerList( @RequestBody Search search, Model model) 
 	
 	System.out.println("rest:postGetExerList");
 
-	    search.setPageSize(30);
-		//search.setSearchCondition(0);
-		
-
-		System.out.println(search);
-		
-		
-		int page = 1; 
-		
-		if(search.getCurrentPage()>0) {
-			page = search.getCurrentPage();
-		};
-		
-		
-		search.setStartNum(page + 1);   //1   16
-		search.setEndNum(page + 14);    //15  30
-			  
+	/*
+	 * search.setPageSize(30); //search.setSearchCondition(0);
+	 * 
+	 * 
+	 * System.out.println(search);
+	 * 
+	 * 
+	 * int page = 1;
+	 * 
+	 * if(search.getCurrentPage()>0) { page = search.getCurrentPage(); };
+	 * 
+	 * 
+	 * search.setStartNum(page + 1); //1 16 search.setEndNum(page + 14); //15 30
+	 */			  
 		/*
 		 * int pageSize = 3; int pageUnit = 5;
 		 * 

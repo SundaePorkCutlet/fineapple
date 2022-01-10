@@ -199,9 +199,9 @@
 	</if>
 	</where>
 	</if>
-	ORDER BY exer_No ) inner_table
-	WHERE ROWNUM &lt;= 15)
-	WHERE row_seq BETWEEN 1 AND 15
+	ORDER BY exer_No ) inner_table)
+	<!-- WHERE ROWNUM &lt;= 15)
+	WHERE row_seq BETWEEN 1 AND 15 -->
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>

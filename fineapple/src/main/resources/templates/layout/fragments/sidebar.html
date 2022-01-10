@@ -415,7 +415,7 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5 my-1">
-                                        <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" ></a>
+                                        <a th:if = "${session.user != null}"><img src="../assets/img/shoes.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:getRoutineList()|" ></a>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                          <a th:if="${session.user != null}" ><img src="../assets/img/4444.png" style ="height: 50px; width: 50px;" th:onclick="|javascript:getFavMealList()|"></a>
@@ -582,7 +582,7 @@
                         };
                     
                         function getRoutineList() {
-
+							
                             $.ajax({
                                 url: "../exer/getRoutineList",
                                 success: function (data) {
@@ -603,7 +603,7 @@
                         popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
                     }
                    
-                    window.onload = function(){
+                /*     window.onload = function(){
                     	
                     var session =$("#kt_header").attr("data-session");
                     if(session==null){
@@ -620,7 +620,7 @@
                     	
                     }
                     
-
+ */
                 </script>
 </th:block>
 </html>
