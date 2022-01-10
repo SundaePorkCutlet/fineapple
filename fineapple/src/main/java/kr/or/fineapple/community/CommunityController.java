@@ -279,7 +279,17 @@ public class CommunityController {
 		
 		return "community/addBattleView :: addBattleView";
 	}
-	
+
+	@GetMapping("getBattleList")
+	public String getBattleList(){
+		return "community/getBattleList.html";
+	}
+
+	@GetMapping("getBattleView")
+	public String getBattleView(){
+		return "community/getBattleView.html";
+	}
+
 	@PostMapping(value = "getUserDetail")
 	public String getUserDetail(Model model, HttpServletRequest request) {
 		
