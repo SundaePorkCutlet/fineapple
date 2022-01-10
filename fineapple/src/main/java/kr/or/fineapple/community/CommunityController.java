@@ -31,7 +31,6 @@ import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
-import oracle.net.aso.m;
 
 @Controller
 @RequestMapping("/community/*")
@@ -361,6 +360,35 @@ public class CommunityController {
 		
 		return "community/getGroupToUserInter.html";
 	}
+	
+	
+	
+	
+	@GetMapping(value = "getReportList")
+	public String getReportList(){
+		
+		
+		
+		return "community/getReportList.html";
+	}
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

@@ -20,7 +20,7 @@ public class Report {
 	private String reportCntnt;
 	private int reportStt;
 	private LocalDate reportDate;
-	private int TrgtNo;
+	private int trgtNo;
 	
 
 }

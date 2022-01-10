@@ -138,35 +138,35 @@ function fnUpdatePostLike(){
 }); */
 /* https://minchoi0912.tistory.com/66 */
 /* $(function(){ */
-function fnUpdatePostLike(){
-	var data = {postNo : $("#postNo").val(),
-			postLikeCount : $("#postLikeCount").text(),
-			postLikeStt : $("#postNo").attr("data-postLikeStt")
-	       };
-	console.log(data);
-	$.ajax({
-		url: "/community/json/updatePostLike",
-		type: "POST",
-		dataType: 'json',
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		
-		/* data: {
-			postLikeCount : $(".likeStt").text(),
-			postLikeStt : $("#postNo").attr("data-postLikeStt")
-		}, */
-		success : (function(data){
+	function fnUpdatePostLike(){
+		var data = {postNo : $("#postNo").val(),
+				postLikeCount : $("#postLikeCount").text(),
+				postLikeStt : $("#postNo").attr("data-postLikeStt")
+		       };
+		console.log(data);
+		$.ajax({
+			url: "/community/json/updatePostLike",
+			type: "POST",
+			dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify(data),
+			
+			/* data: {
+				postLikeCount : $(".likeStt").text(),
+				postLikeStt : $("#postNo").attr("data-postLikeStt")
+			}, */
+			success : (function(data){
+				console.log(data)
+				$("#postLikeCount").text(data.postLikeCount);
+				$("#postNo").attr("data-postLikeStt", data.postLikeStt);
+			}) 
+			
+		})/* .done(function(data){
 			console.log(data)
-			$("#postLikeCount").text(data.postLikeCount);
+			$(".likeStt").text(data.postLikeCount);
 			$("#postNo").attr("data-postLikeStt", data.postLikeStt);
-		}) 
-		
-	})/* .done(function(data){
-		console.log(data)
-		$(".likeStt").text(data.postLikeCount);
-		$("#postNo").attr("data-postLikeStt", data.postLikeStt);
-	}) */
-};
+		}) */
+	};
 /* }); */
 </script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	

@@ -578,25 +578,41 @@
 	<insert id="addReport" parameterType="report">
 	INSERT
 	INTO
-	report_and_like
+	report_and_like 	
 	(
-	REPORT_NO,
-	USER_ID, 
-	REPORTED_USER_ID, 
-	RERPORT_TRGT,
-	REPORT_CATE, 
-	REPORT_WHY,
-	report_date
+	report_no,
+	user_id,
+	reported_user_id,
+	post_no,
+	cmnt_no,
+	REPORT_CATE,
+	report_why,
+	report_stt,
+	report_date,
+	like_stt 
 	)
 	VALUES
 	(
 	seq_report_and_like_no.NEXTVAL,
 	#{user.userId},
 	#{reportedUser.userId},
+	<if test='reportCate == 1'>
 	#{trgtNo},
+	null,
+	</if>
+	<if test='reportCate == 2'>
+	null,
+	#{trgtNo},
+	</if>
+	<if test='reportCate == 3'>
+	null,
+	null,
+	</if>
 	#{reportCate},
 	#{reportCntnt},
-	SYSDATE
+	#{reportStt},
+	SYSDATE,
+	null
 	)
 	</insert>
 	
@@ -728,6 +744,36 @@
 	mtm_qna_cate = #{value}
 	</trim>
 	</select>
+	
+
+	
+	<delete id="delGroupUserInter" parameterType="hashmap">
+		DELETE
+		FROM
+		group_user
+		<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+			user_id = #{user.userId}
+			AND
+			group_no = #{groupNo}
+		</trim>
+	</delete>
+	
+	
+	
+	<update id="updateGroupUserInter" parameterType="hashmap">
+		UPDATE group_user
+		<trim prefix="SET" suffixOverrides=",">
+			group_stt = #{groupStt},
+			captain_stt = #{captainStt}
+		</trim>
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			user_id = #{user.userId} AND group_no = #{groupNo}
+		</trim>
+	</update>
+	
+	
+	
+	
 	
 	
 </mapper>
