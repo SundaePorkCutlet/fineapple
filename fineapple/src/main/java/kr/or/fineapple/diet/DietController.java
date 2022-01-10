@@ -26,8 +26,10 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.service.community.CommunityService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -42,6 +44,10 @@ public class DietController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("communityServiceImpl")
+	private CommunityService communityService;
 
 	@GetMapping("addDietService")
 	public String addDietServiceget(HttpServletRequest request, Model model) throws Exception {
@@ -597,8 +603,10 @@ public class DietController {
 
 	@GetMapping("FavMealItemAddIntakeRecord")
 	public String favMealItemAddIntakeRecord(Model model, @RequestParam("checkarray") String favMealItemNo,
+											@RequestParam("meal")String meal,
 											HttpServletRequest request) throws Exception {
 
+		System.out.println(meal);
 		String[] arr = favMealItemNo.split(",");
 		User user = (User) request.getSession(true).getAttribute("user");
 		for (int i = 0; arr.length > i; i++) {
@@ -622,7 +630,7 @@ public class DietController {
 
 			record.setUserId(user.getUserId());
 			record.setUserFoodIntake(fav.getIntake());
-			record.setMeal("간식");
+			record.setMeal(meal);
 
 			dietService.addIntakeRecord(record);
 
@@ -680,6 +688,9 @@ public class DietController {
 	@PostMapping("updateFavMeal")
 	public String updateFavMeal(Model model,@RequestParam("favMealNo")String favMealNo,
 								@RequestParam("favMealName")String favMealName) throws Exception {
+		
+		System.out.println("+++오냐고");
+		
 		FavMeal fav = new FavMeal();
 		int no = Integer.parseInt(favMealNo);
 		
@@ -692,5 +703,63 @@ public class DietController {
 		return "redirect:../diet/getFavMealList?menu=0";
 	}
 	
+	@RequestMapping("getRcpList")
+	public String getRcpList(Model model,@RequestParam(value="page",defaultValue = "1")int page
+								,@ModelAttribute("search") Search search) {
+		
+		
+		search.setStartNum((page-1)*20+1);
+		search.setEndNum(page*20);
+		
+		System.out.println(search);
+		List<Recipe> list2 = new ArrayList<Recipe>();
+		
+		list2 = dietService.getrcpList(search);
+		
+		System.out.println(list2);
+		model.addAttribute("list",list2);
+		model.addAttribute("search",search);
+		
+		
+		return "diet/getRcpList.html";
+	}
+	
+	@RequestMapping("getRcp")
+	public String getRcp(Model model,@RequestParam("rcpName")String rcpName,
+								@ModelAttribute("search") Search search) {
+		
+		
+		System.out.println(rcpName);
+		
+		String name = rcpName.replaceAll(" ", "_");
+		Recipe rcp = new Recipe();
+		rcp = dietService.getRcp(name);
+		
+		
+		System.out.println(rcp);
+		model.addAttribute("rcp",rcp);
+		
+		
+		return "diet/getRcp.html";
+	}
+	
+	
+
+	@GetMapping("getAlarm")
+	public String getAlarm(Model model,HttpServletRequest
+			 request) throws Exception {
+
+		User user = (User)request.getSession(true).getAttribute("user");
+		//List list = new ArrayList();
+		List list = communityService.getAlarmList(user);
+		
+		System.out.println(list);
+		model.addAttribute("list",list);
+		int count = list.size();
+		model.addAttribute("count",count);
+		
+		
+		return "diet/alarm :: getalarm";
+	}
 	
 }

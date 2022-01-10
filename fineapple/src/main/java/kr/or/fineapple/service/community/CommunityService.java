@@ -38,8 +38,6 @@ public interface CommunityService {
 	
 	public Group checkGroupName(String groupName);
 	
-	public List getAlarmList();
-	
 	public List<User> getUserSearchList(Search search);
 	
 	public User getUserSearch(Search search); 
@@ -50,4 +48,5 @@ public interface CommunityService {
 	
 	public List<MtmQna> getFaqList(int cate);
 		
+	public List getAlarmList(User user);
 }

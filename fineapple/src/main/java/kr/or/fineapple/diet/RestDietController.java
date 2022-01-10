@@ -29,7 +29,9 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.Food;
+import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.service.community.CommunityService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -45,7 +47,9 @@ public class RestDietController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
-	
+	@Autowired
+	@Qualifier("communityServiceImpl")
+	private CommunityService communityService;
 	
 	public RestDietController() {
 		// TODO Auto-generated constructor stub
@@ -162,6 +166,23 @@ public class RestDietController {
 
 		return map;
 
+	}
+	
+	@GetMapping("getAlarmCount")
+	public int getAlarmCount(HttpServletRequest
+			 request) throws Exception {
+		int count=0;	
+		if((User)request.getSession(true).getAttribute("user")!=null) {
+		User user = (User)request.getSession(true).getAttribute("user");
+		List list = new ArrayList();
+		list = communityService.getAlarmList(user);
+		
+		count = list.size();
+		}else{
+		count = 0;
+		}
+		System.out.println(count);
+		return count;
 	}
 	
 

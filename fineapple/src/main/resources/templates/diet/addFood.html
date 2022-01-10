@@ -4,6 +4,9 @@
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
+
+
+
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
@@ -15,11 +18,11 @@
 <div align="center">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">식품명</label>
-    <input name="foodName" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+    <input name="foodName" id="foodName" maxlength="20" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">1회제공량</label>
-    <input name="servingSize" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input name="servingSize" id="servingSize"  max="9999" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">1회제공량당칼로리</label>
@@ -27,23 +30,23 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >1회제공량당탄수화물</label>
-    <input name="foodCarb" type="number" step="0.1"   class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input name="foodCarb" type="number" step="0.1"  maxlength="4" class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >1회제공량당단백질</label>
-    <input name="foodProtein" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input name="foodProtein" type="number" step="0.1" maxlength="4" class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >1회제공량당지방</label>
-    <input name="foodFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input name="foodFat" type="number" step="0.1" maxlength="4" class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >1회제공량당나트륨</label>
-    <input name="foodSodium" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input name="foodSodium" type="number" step="0.1" maxlength="4" class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >1회제공량당당류</label>
-    <input name="foodSugar" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input name="foodSugar" type="number"step="0.1" maxlength="4" class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 
 
@@ -55,6 +58,8 @@
 	<th:block th:replace="layout/fragments/footer.html :: footer">
 
 	</th:block>
+	<script src="assets/plugins/global/plugins.bundle.js"></script>
+	
 <script>
 $(function() {
 
@@ -64,7 +69,25 @@ $(function() {
 		
 });
 });	
+
+// $('input').maxlength({
+//     alwaysShow: true,
+//     threshold: 20,
+//     warningClass: "badge badge-primary",
+//     limitReachedClass: "badge badge-success"
+// });
+
+
+$('#foodName').maxlength({
+    alwaysShow: true,
+    threshold: 20,
+    warningClass: "badge badge-primary",
+    limitReachedClass: "badge badge-success"
+});
+
+
 </script>	
+
 	
 	
 	
