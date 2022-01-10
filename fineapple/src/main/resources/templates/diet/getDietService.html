@@ -15,21 +15,21 @@
 <div align="center">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중 관리 목적</label>
-    <input th:text="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+    <input readonly th:value="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중</label>
-    <input th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input readonly th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
        <span style=font-weight:bold;font-size:16px;>kg</span>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input  th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input  readonly th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
       <span style=font-weight:bold;font-size:16px;>cm</span>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input  th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  readonly th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
       <span style=font-weight:bold;font-size:16px;>세</span>
 </div>
 
@@ -39,7 +39,7 @@
             <!--begin::Radio-->
             <div class="form-check form-check-custom form-check-solid mb-5">
                 <!--begin::Input-->
-                <input class="form-check-input me-3" name="radio_input" type="radio" value="0" id="kt_docs_formvalidation_radio_option_1" />
+                <input th:checked="${user.gender}==male" readonly class="form-check-input me-3" name="radio_input" type="radio" value="0" id="kt_docs_formvalidation_radio_option_1" />
                 <!--end::Input-->
 
                 <!--begin::Label-->
@@ -53,7 +53,7 @@
             <!--begin::Radio-->
             <div class="form-check form-check-custom form-check-solid mb-5">
                 <!--begin::Input-->
-                <input class="form-check-input me-3" name="radio_input" type="radio" value="1" id="kt_docs_formvalidation_radio_option_2" />
+                <input readonly th:checked="${user.gender}==femail" class="form-check-input me-3" name="radio_input" type="radio" value="1" id="kt_docs_formvalidation_radio_option_2" />
                 <!--end::Input-->
 
                 <!--begin::Label-->
@@ -68,26 +68,26 @@
 
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
-    <input  th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input readonly th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
        <span style=font-weight:bold;font-size:16px;>kg</span>  
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >현재체지방율</label>
-    <input  th:value="${dietServ.bodyFat}" name="bodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input readonly th:value="${dietServ.bodyFat}" name="bodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체지방율</label>
-    <input  th:value="${dietServ.trgtBodyFat}" name="trgtBodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input readonly th:value="${dietServ.trgtBodyFat}" name="trgtBodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >하루목표칼로리섭취량</label>
-    <input  th:value="${dietServ.dailyTrgtIntakeKcal}" name="dailyTrgtIntakeKcal" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input readonly th:value="${dietServ.dailyTrgtIntakeKcal}" name="dailyTrgtIntakeKcal" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
 <span>현재 회원님의 적정 섭취 칼로리는<span th:text="${dailyIntakeKcal}"></span> Kcal 입니다.</span>
 </div>
 
 
 
-		<button class="btn btn-success" style="max-width:100px;">등록</button>
+		<button class="btn btn-success" style="max-width:100px;">수정</button>
 			<button class="btn btn-info" style="max-width:100px;" >이전</button>
 
 </div>
@@ -100,7 +100,7 @@ $(function() {
 
 	 
 	 $("button.btn.btn-success").on("click" , function() {
-		 $("form").attr("method" , "POST").attr("action" , "/diet/addDietService").submit();
+		 $("form").attr("method" , "get").attr("action" , "/diet/updateDietService").submit();
 		
 });
 });	

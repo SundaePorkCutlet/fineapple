@@ -162,22 +162,23 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 
 }
 </script>
-<div align="left">
+<div align="center">
 <div class="container show-grid" align="center" style="width: 450px; padding:0px; margin: 0px;" >
 
 <br>
-<ins>
-<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">로그인</div>
-</ins>
+
+<h1 class="fs-2tx fw-bolder mb-8">
+<span class="d-inline-block position-relative ms-2">
+<span class="d-inline-block mb-2">Login</span>
+<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
+</span></h1>
 <br>
 <form id="loginform">
+    <input type="text" id="userId" name="userId" class="form-control form-control-solid" placeholder="UserId"/>
 
-<div align="center">
-<input type="text" id = "userId" name = "userId" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이메일" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
-</div>
 <br>
-<div align="center">
-<input type="password" id = "password"  name = "password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="비밀번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required>
+<div class="mb-10">
+    <input type="password" class="form-control form-control-solid" placeholder="Password" id="password"  name="password"/>
 </div>
 </form>
 <br>
@@ -189,13 +190,27 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 <input type = "button" value ="Join" id="join"  data-text-content="true" style="font-size: 17px; color: rgb(64, 64, 64); text-align: center; line-height: 2.5em; border:none ; padding:0; background-color: rgba(224, 224, 224, 0.71);  width: 300px; height: 40px;">
 </div>
 <br>
-<div align="center">
-<input type="button" id ="getUserList" name="getUserList" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "아이디 찾기" th:onClick="|location.href='@{../user/getUserList}'|">
-</div>
+<a th:onClick="|location.href='@{../user/getUserList}'|" class="btn btn-lg btn-flex btn-link btn-color-success" id="getUserList" name="getUserList">Find Id
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+													<span class="svg-icon ms-2 svg-icon-3">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
+															<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon--></a>
+
 <br>
-<div align="center">
-<input type="button" id ="findPassword" name="findPassword" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "비밀번호를 까먹으셨나요?" th:onClick="|location.href='@{../user/findPassword}'|">
-</div>
+<a th:onClick="|location.href='@{../user/findPassword}'|" class="btn btn-lg btn-flex btn-link btn-color-success" id ="findPassword" name="findPassword" >Change Password
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+													<span class="svg-icon ms-2 svg-icon-3">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
+															<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon--></a>
+
 <div align = "center">
 <br>
 

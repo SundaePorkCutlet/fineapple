@@ -145,6 +145,22 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getFaqList(cate);
 	}
+
+	@Override
+	public void delGroupUserInter(HashMap map, int intetStt) {
+
+		
+		if (intetStt == 1) {
+			communityMapper.updateGroupUserInter(map);
+		}
+		
+		else if (intetStt == 2) {
+			communityMapper.delGroupUserInter(map);
+		}
+		
+	}
+	
+	
 	
 	
 	

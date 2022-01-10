@@ -65,6 +65,7 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 	
 		ExerServ serv = exerService.getUserService(user.getUserId());
 		
+		
 		System.out.println(serv);
 		
 		if(serv!=null) {
@@ -104,11 +105,19 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
+	System.out.println("user: " + user);
+	
+	
+	
 	if(user.getExerServiceNo()==0) {
 		
-	exerService.addUserService(serv);
+		exerService.addUserService(serv);
+		
+		System.out.println("°¡°¡¤¿°¡°¡°¡°¡°¡°½°¼°¼¤Ã¤Á°Å¤Á°Å¤Á°Å¤Á°Å¤Á°Å¤Á°Å¤Á¤Ã°¼");
 	
 	}else {
+		
+		System.out.println("skskskskksskksks");
 		
 		exerService.updateUserService(serv);
 		
@@ -120,8 +129,10 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	
 	System.out.println("11111111111111111111111" + serv);
 	System.out.println(serv.getUserServiceNo());
-	serv.setExerServiceNo(serv.getUserServiceNo());
 	
+	
+	serv.setExerServiceNo(serv.getUserServiceNo());
+	serv.setServiceTrgt(serv.getServiceTrgt());
 
 	exerService.updateExerServiceNo(serv);
 	
@@ -160,7 +171,7 @@ public String getUserService(Model model, HttpServletRequest request) {
 
 
 
-@GetMapping("updateUserService")
+@GetMapping("updateUserServiceView")
 public String updateUserService(Model model, HttpServletRequest request) throws Exception {
 	System.out.println("get:updateUserService");
 	
@@ -168,15 +179,17 @@ public String updateUserService(Model model, HttpServletRequest request) throws 
 	System.out.println(user);
 
 	ExerServ serv = exerService.getUserService(user.getUserId());
+	exerService.updateUserService(serv);
 	
 	
 	model.addAttribute("user",user);
 	model.addAttribute("exerServ",serv);
 	
 	return "exer/updateUserService.html";
-		
-	
+
 }
+
+
 	
 
 
@@ -185,18 +198,16 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 	
 	  System.out.println("getExerList");
  
-	    search.setPageSize(30);
-		//search.setSearchCondition(0);
-		
-
-		System.out.println(search);
-		int page = 1; 
-		if(search.getCurrentPage()>0) {
-			page = search.getCurrentPage();
-		};
-		search.setStartNum(1);
-		search.setEndNum(14);
-			  
+		/*
+		 * search.setPageSize(30); search.setSearchCondition(0); if
+		 * (search.searchKeyword == "") { search.setSearchKeyword("»ø·¯µå"); }
+		 * 
+		 * System.out.println(search); int page = 1; if(search.getCurrentPage()>0) {
+		 * page = search.getCurrentPage(); }; search.setStartNum((page-1)*50 +1);
+		 * search.setEndNum(page*50);
+		 */
+	 
+	  
 		/*
 		 * int pageSize = 3; int pageUnit = 5;
 		 * 
@@ -204,10 +215,8 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 		 * 
 		 * search.setPageSize(pageSize);
 		 */
-	
 		
 	  Map<String, Object> map = exerService.getExerList(search);
-	  
 	  
 		/*
 		 * Page resultPage = new Page( search.getCurrentPage(),
@@ -216,7 +225,7 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 		 * 
 		 * System.out.println(resultPage);
 		 */  
-	  	
+	  
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
@@ -725,7 +734,16 @@ User user =(User)request.getSession(true).getAttribute("user");
 
 exerServ = exerService.getUserService(user.getUserId());
 
+
+
 Double daily = exerServ.getDailyTrgtBurnningKcal();
+
+if(daily == 0) {
+	
+	daily = 0.0;
+	
+}
+
 
 System.out.println(daily);
 

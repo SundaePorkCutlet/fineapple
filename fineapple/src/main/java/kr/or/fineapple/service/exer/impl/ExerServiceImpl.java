@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.exer.impl;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int updateUserService(ExerServ service) throws Exception {
 		
-		exerMapper.updateServiceTrgt(service);
+		//exerMapper.updateServiceTrgt(service);
 		exerMapper.updateBodyInfo(service);
 		
 		return exerMapper.updateUserService(service);
@@ -69,7 +70,7 @@ public class ExerServiceImpl implements ExerService {
 
 	
 	@Override
-	public Map<String ,Object> getExerList(Search search) throws Exception {
+	public Map<String, Object> getExerList(Search search) throws Exception {
 		
 		System.out.println("getExerListService");
 		
@@ -278,10 +279,10 @@ public class ExerServiceImpl implements ExerService {
 
 	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
 	@Override
-	public List<Object> getBurnningRecordListForDiary(String userId, int userServiceNo) {
+	public List<Object> getBurnningRecordListForDiary(LocalDate date, int userServiceNo) {
 		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
 		Map<String, Object> map = new HashMap<>();
-		map.put("userId", userId);
+		map.put("date", date);
 		map.put("userServiceNo", userServiceNo);
 		return exerMapper.getBurnningRecordListForDiary(map);
 	}

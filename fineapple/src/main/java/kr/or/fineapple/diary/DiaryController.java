@@ -106,16 +106,18 @@ public class DiaryController {
 		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
-			List intakeRecordList = dietService.getIntakeRecordListForDiary(userId, diet.getUserServiceNo());
+			List intakeRecordList = dietService.getIntakeRecordListForDiary(date, diet.getUserServiceNo());
 			mav.addObject("intakeRecordList", intakeRecordList);
+			System.out.println(intakeRecordList);
 		}
 
 		//getBurnningRecordList
 		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
 		ExerServ exer = exerService.getUserService(userId);
 		if(exer != null) {
-			List burnningRecordList = exerService.getBurnningRecordListForDiary(userId, exer.getUserServiceNo());
+			List burnningRecordList = exerService.getBurnningRecordListForDiary(date, exer.getUserServiceNo());
 			mav.addObject("burnningRecordList", burnningRecordList);
+			System.out.println(burnningRecordList);
 		}
 		
 		////이주의 획득 뱃지 갯수 조회
@@ -131,6 +133,12 @@ public class DiaryController {
 		mav.addObject("badgeCount", badgeCount);
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
+		
+		
+		System.out.println(date);
+		System.out.println(trgtHabitList);
+		System.out.println(userEventList);
+		System.out.println(badgeCount);
 
 		return mav;
 	}

@@ -122,12 +122,17 @@ public class BoardTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void testFQL() {
 		List<MtmQna> list = communityService.getFaqList(4);
 		System.out.println(list);
 		for (MtmQna mtmQna : list) {
 			System.out.println(mtmQna);
 		}
+	}
+	
+	@Test
+	public void testGroupInter() {
+		
 	}
 }

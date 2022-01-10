@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.diet;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public interface DietService {
 	
 	public Recipe getRcp(String rcpCd);
 
-	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo);
+	public List<Object> getIntakeRecordListForDiary(LocalDate date, int userServiceNo);
 	
 	
 
