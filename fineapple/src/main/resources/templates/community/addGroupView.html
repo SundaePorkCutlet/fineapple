@@ -1,124 +1,116 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <meta charset="utf-8">
-<!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<body>
+<div id="reportPostViewModal" class="modal fade" role="dialog"  th:fragment ="reportPostView">
+	<div  class="modal-dialog " style="height:1300px;">
+		<div class="modal-content">
+			<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            	<span class="svg-icon svg-icon-2x"></span>
+            </div>
+            <h1 class="modal-title" align="center">소그롭 생성하기</h1>
+			<div class="modal-header">
+			</div>
+			<div class="modal-body" style="height:500px;">
+				<div class="d-flex flex-column mb-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+					<!--begin::Label-->
+					<input id="chekcFlag" th:value="0" type="hidden">
+					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
+						<span class="required">소그룹 명</span>
+						<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Specify a target name for future usage and reference" aria-label="Specify a target name for future usage and reference"></i>
+					</label>
+					<!--end::Label-->
+					<input id = "groupName" type="text" class="form-control form-control-solid" placeholder="소그룹명을 입력해주세요" name="target_title">
+					<span>
+						<button type="button" id="kt_modal_new_target_submit" class="btn btn-primary" th:onclick="javascript:fcCheckGroupName()">
+							<span class="indicator-label">중복체크</span>
+						</button>
+					</span>
+				</div>		
+											
+				<div class="d-flex flex-column mb-8">
+					<label class="fs-6 fw-bold mb-2">소그룹 소개글</label>
+					<textarea  id = "groupIntro" class="form-control form-control-solid" rows="3" name="target_details" placeholder="소그룹 소개글을 입력해주세요."></textarea>
+				</div>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fnSumbitGroup()">소그룹 생성</button>
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
+				
+			</div>
+		</div>
+	</div>
+	<script>
+		function fcCheckGroupName(){
+			var data = {groupName : $("#groupName").val()};
+			
+			$.ajax({
+				url: "/community/json/checkGroupName", //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json", // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					console.log("성공");
+					console.log(data);
+					if(data == '0'){
+						alert("이미 존재하는 소그룹 명입니다.");
+						$("#chekcFlag").val(0);
+					}
+					else if(data == '1'){
+						alert("사용가능한 소그룹 명입니다.");
+						$("#chekcFlag").val(1);
+					}
+					else{
+						alert("알수 없는 오류 입니다.");
+					}
+					
 
-	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
-<!--begin::Form-->
-<form id="kt_docs_formvalidation_text" class="form" action="#" autocomplete="off">
-    <!--begin::Input group-->
-    <div class="fv-row mb-10">
-        <!--begin::Label-->
-        <label class="required fw-bold fs-6 mb-2">Text Input</label>
-        <!--end::Label-->
+					
+				}
+				
+			});
+				
+		
+		};
+		
+		function fnSumbitGroup(){
+			if($("#chekcFlag").val() == '0'){
+				alert("소그룹명을 다시 확인 해주세요.");
+			}
+			
+			if($("#chekcFlag").val() == '1'){
+				
+				var data = {groupName : $("#groupName").val(), groupIntro : $("#groupIntro").val()};
+				$.ajax({
+					url: "/community/json/addGroup", //url : 요청 Url
+					type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+					dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+					data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+					contentType: "application/json", // 서버에 보내는 데이터의 타입이다.
+					success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+						console.log("성공");
+						console.log(data);
+						
 
-        <!--begin::Input-->
-        <input type="text" name="text_input" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" value="" />
-        <!--end::Input-->
-    </div>
-    <!--end::Input group-->
-
-    <!--begin::Actions-->
-    <button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary">
-        <span class="indicator-label">
-            Validation Form
-        </span>
-        <span class="indicator-progress">
-            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-        </span>
-    </button>
-    <!--end::Actions-->
-    <label class="form-label">Textarea example</label>
-	<textarea class="form-control" id="kt_docs_maxlength_textarea" maxlength="400" placeholder="" rows="6"></textarea>
-	<span class="fs-6 text-muted">Bootstrap maxlength supports textarea as well as inputs</span>
-	
-</form>
-<!--end::Form-->
-    
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
-<script type="text/javascript">
-//Define form element
-const form = document.getElementById('kt_docs_formvalidation_text');
-
-// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-var validator = FormValidation.formValidation(
-    form,
-    {
-        fields: {
-            'text_input': {
-                validators: {
-                    notEmpty: {
-                        message: 'Text input is required'
-                    }
-                }
-            },
-        },
-
-        plugins: {
-            trigger: new FormValidation.plugins.Trigger(),
-            bootstrap: new FormValidation.plugins.Bootstrap5({
-                rowSelector: '.fv-row',
-                eleInvalidClass: '',
-                eleValidClass: ''
-            })
-        }
-    }
-);
-
-// Submit button handler
-const submitButton = document.getElementById('kt_docs_formvalidation_text_submit');
-submitButton.addEventListener('click', function (e) {
-    // Prevent default button action
-    e.preventDefault();
-
-    // Validate form before submit
-    if (validator) {
-        validator.validate().then(function (status) {
-            console.log('validated!');
-
-            if (status == 'Valid') {
-                // Show loading indication
-                submitButton.setAttribute('data-kt-indicator', 'on');
-
-                // Disable button to avoid multiple click
-                submitButton.disabled = true;
-
-                // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                setTimeout(function () {
-                    // Remove loading indication
-                    submitButton.removeAttribute('data-kt-indicator');
-
-                    // Enable button
-                    submitButton.disabled = false;
-
-                    // Show popup confirmation
-                    Swal.fire({
-                        text: "사용해도 좋은 소그룹명 입니다!",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "닫기",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
-
-                    //form.submit(); // Submit form
-                }, 2000);
-            }
-        });
-    }
-});
-
-$('#kt_docs_maxlength_textarea').maxlength({
-    warningClass: "badge badge-primary",
-    limitReachedClass: "badge badge-success"
-});
-
-</script>
-	</body>
-	<!--end::Body-->
+						
+					}
+					
+					
+				});
+				
+				$("#reportPostViewModal").modal("hide");
+				
+				
+			}
+			
+			
+		};
+		
+		
+	</script>
+</div>
+</body>
 </html>

@@ -19,5 +19,5 @@ public class MtmQna {
 	private String mtmQnaCntnt;
 	private LocalDate mtmAnswrCntntDate;
 	private String mtmAnswrCntnt;
-	private Boolean mtmAnswrStt;
+	private int mtmAnswrStt;
 }
