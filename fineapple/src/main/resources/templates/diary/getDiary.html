@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
@@ -372,29 +372,63 @@
 				/* if(event == "keyEventTitle"){
 					
 				}else  */if(event == "dailyIntakeKcal"){
+					console.log(event);
 					
 				}else if(event == "dailyBurnningKcal"){
 					
 				}else if(event == "dietBadgeCount"){
-					
 					return {
 						html: "<div><i class='bi bi-trophy-fill text-success fs-5'></i></div>"
 					}
-					
 				}else if(event == "exerBadgeCount"){
-					
+					return {
+						html: "<div><i class='bi bi-trophy-fill text-info fs-5'></i></div>"
+					}
 				}else if(event == "wtrBadgeCount"){
-					
+					return {
+						html: "<div><i class='bi bi-trophy-fill text-primary fs-5'></i></div>"
+					}
 				}else if(event == "bttlBadgeCount"){
+					return {
+						html: "<div><i class='bi bi-trophy-fill text-muted fs-5'></i></div>"
+					}
+				}else if(event == "커피시작"){
+					return {
+						html: "<div><i class='fas fa-coffee text-success fs-3'></i></div>"
+					}
+				}else if(event == "금주시작"){
+					return {
+						html: "<div><i class='fas fa-beer text-success fs-3'></i></div>"
+					}
+				}else if(event == "금연시작"){
+					return {
+						html: "<div><i class='fas fa-smoking text-success fs-3'></i></div>"
+					}
+				}else if(event == "커피초기화"){
+					return {
+						html: "<div><i class='fas fa-coffee text-danger fs-3'></i></div>"
+					}
 					
-				}else if(event == "커피"){
+				}else if(event == "금주초기화"){
+					return {
+						html: "<div><i class='fas fa-beer text-danger fs-3'></i></div>"
+					}
 					
-				}else if(event == "금주"){
-					
-				}else if(event == "금연"){
-					
+				}else if(event == "금연초기화"){
+					return {
+						html: "<div><i class='fas fa-smoking text-danger fs-3'></i></div>"
+					}
 				}else{//사용자 정의 목표 습관인 경우
-					
+					console.log(event);
+					if(event.slice(-2) == "시작"){
+						return {
+							html: "<div><i class='fas fa-lock text-success fs-3'></i></div>"
+						}
+					}else if(event.slice(-3) == "초기화"){
+						return {
+							html: "<div><i class='fas fa-lock text-danger fs-3'></i></div>"
+						}
+					}
 				}		
 					
 			},
@@ -439,7 +473,8 @@
 					title: "dietBadgeCount",
 					start: badgeList[i].badgeDate,
 					extendedProps: {
-						title: badgeList[i].dietBadgeCount
+						title: badgeList[i].dietBadgeCount,
+						color: "transparent"
 					}
 				})
 			}
@@ -448,7 +483,8 @@
 					title: "exerBadgeCount",
 					start: badgeList[i].badgeDate,
 					extendedProps: {
-						title: badgeList[i].exerBadgeCount
+						title: badgeList[i].exerBadgeCount,
+						color: "transparent"
 					}
 				})
 			}
@@ -457,7 +493,8 @@
 					title: "wtrBadgeCount",
 					start: badgeList[i].badgeDate,
 					extendedProps: {
-						title: badgeList[i].wtrBadgeCount
+						title: badgeList[i].wtrBadgeCount,
+						color: "transparent"
 					}
 				})
 			}
@@ -466,7 +503,8 @@
 					title: "bttlBadgeCount",
 					start: badgeList[i].badgeDate,
 					extendedProps: {
-						title: badgeList[i].bttlBadgeCount
+						title: badgeList[i].bttlBadgeCount,
+						color: "transparent"
 					}
 				})
 			}
@@ -490,28 +528,31 @@
 			//목표를 해당 월에 시작했을 경우
 			if(trgtHabitList[i].trgtHabitStartDate >= firstDay){
 				calendar.addEvent({
-					title: trgtHabitList[i].trgtHabitCateName,
-					start: trgtHabitList[i].trgtHabitStartDate
+					title: trgtHabitList[i].trgtHabitCateName+"시작",
+					start: trgtHabitList[i].trgtHabitStartDate,
+					color: "transparent"
 				})
+				//해당 월에 초기화 된 날
 				if(trgtHabitList[i].trgtHabitInitDate != null){
 					calendar.addEvent({
-						title: trgtHabitList[i].trgtHabitCateName,
-						start: trgtHabitList[i].trgtHabitInitDate
+						title: trgtHabitList[i].trgtHabitCateName+"초기화",
+						start: trgtHabitList[i].trgtHabitInitDate,
+						color: "transparent"
 					})
 				}
 			//목표를 해당 월 이전에 시작했을 경우	
 			}else{
+				//해당 월에 초기화 된 날
 				if(trgtHabitList[i].trgtHabitInitDate != null){
 					calendar.addEvent({
-						title: trgtHabitList[i].trgtHabitCateName,
-						start: trgtHabitList[i].trgtHabitInitDate
+						title: trgtHabitList[i].trgtHabitCateName+"초기화",
+						start: trgtHabitList[i].trgtHabitInitDate,
+						color: "transparent"
 					})
 				}
 			}
-
 		}//습관 관리 정보 end
 		
-
 		calendar.render();
 
 		$(function(){
