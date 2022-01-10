@@ -498,6 +498,17 @@ public class DietServiceImpl implements DietService{
 	public FavMeal getFavMealItem(int favMealInfoNo) {
 		return dietMapper.getFavMealItem(favMealInfoNo);
 	}
+
+
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
+	@Override
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo) {
+		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("userServiceNo", userServiceNo);
+		return dietMapper.getIntakeRecordListForDiary(map);
+	}
 	
 	
 	

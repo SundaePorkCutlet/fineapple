@@ -62,6 +62,9 @@ public interface DietService {
 	
 	public FavMeal getFavMealItem(int favMealInfoNo);
 	
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo);
+	
 	
 
 }

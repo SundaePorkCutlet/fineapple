@@ -27,8 +27,6 @@ import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.User;
-import kr.or.fineapple.domain.common.Page;
-import kr.or.fineapple.domain.common.Pagination;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
