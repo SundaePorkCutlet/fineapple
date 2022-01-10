@@ -14,12 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -280,13 +275,31 @@ public class CommunityController {
 		return "community/addBattleView :: addBattleView";
 	}
 
+	// 승부 받은 리스트
+	@GetMapping("getBattleReceiveList")
+	public String getBattleReceiveList(){
+		return "community/getBattleReceiveList.html";
+	}
+
+	// 승부 보낸 리스트
+	@GetMapping("getBattleRequestList")
+	public String getBattleRequestList(){
+		return "community/getBattleRequestList.html";
+	}
+
 	@GetMapping("getBattleList")
 	public String getBattleList(){
 		return "community/getBattleList.html";
 	}
 
-	@GetMapping("getBattleView")
-	public String getBattleView(){
+	@GetMapping("getBattleView/{no}")
+	public String getBattleView(
+			@PathVariable(value="no") int no,
+			Model model
+		){
+
+		// get
+		// model
 		return "community/getBattleView.html";
 	}
 

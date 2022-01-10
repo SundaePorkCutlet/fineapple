@@ -1,3 +1,36 @@
+.battle-lose{
+    color:#c6443e;
+    background-color:#e2b6b3;
+    font-size: 14px;
+    border: 1px dashed #e8e5dd;
+    box-shadow: none;
+    border-bottom: 0;
+    border-radius: 0.475rem 0.475rem 0 0;
+    font-weight: 800;
+}
+
+.battle-win{
+    color:#1a78ae;
+    background-color: #a3cfec;
+    font-size: 14px;
+    border: 1px dashed #e8e5dd;
+    box-shadow: none;
+    border-bottom: 0;
+    border-radius: 0.475rem 0.475rem 0 0;
+    font-weight: 800;
+}
+
+.battle-progress{
+    color: #000;
+    background: lightgray;
+    font-size: 14px;
+    border: 1px dashed #e8e5dd;
+    box-shadow: none;
+    border-bottom: 0;
+    border-radius: 0.475rem 0.475rem 0 0;
+    font-weight: 800;
+}
+
 #kt_header .header-brand p.logo-typo{
     z-index: 10;
     font-weight: bold;
