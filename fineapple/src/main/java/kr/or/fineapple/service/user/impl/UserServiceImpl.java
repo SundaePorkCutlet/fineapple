@@ -51,6 +51,13 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.checkDuplication(user);
 	}
+	
+	
+
+	@Override
+	public String checkPassword(User user) throws Exception {
+		return userMapper.checkPassword(user);
+	}
 
 	@Override
 	public List<Object> getUserList(User user) throws Exception {
@@ -64,6 +71,12 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.checkDuplication(user.getUserId());
 	}
+
+	@Override
+	public void changePassword(User user) throws Exception {
+		userMapper.changePassword(user);
+	}
+
 
 
 	
