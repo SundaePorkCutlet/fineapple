@@ -11,32 +11,32 @@
 	<div class="input-group">
     <span class="input-group-text">댓글입력</span>
     <textarea id = "content"class="form-control" aria-label="With textarea" name = "cmntcontent"></textarea>
-    <button class="btn btn-info" th:onclick="javascript:fnAddCmnt()"> 댓글작성</button>
+    <button type="button" class="btn btn-info" th:onclick="javascript:fnAddCmnt()"> 댓글작성</button>
 	</div>
 	</div>
 	</div>
 </form>
 <script>
-function fnAddCmnt(){
-	var data = {
-			postNo : $("#postNo").val(),
-			cmntContent : $("#content").val()
-			};
-	console.log(data)
-	$.ajax({
-		url: "/community/json/addCmnt",
-		type: "POST",
-		dataType: 'json',
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success : (function(data){
-			console.log(data)
-			$("#postNo").attr("data-cmntList", data.list);
-			
-		})
-	})
+	function fnAddCmnt(){
+		var data = {
+				postNo : $("#postNo").val(),
+				cmntContent : $("#content").val()
+				};
+		console.log(data)
+		$.ajax({
+			url: "/community/json/addCmnt",
+			type: "POST",
+			dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify(data),
+			success : (function(data){
+				console.log(data)
+				//$("#postNo").attr("data-cmntList", data.list);
 				
-}; 
+			})
+		})
+					
+	}; 
 
 
 

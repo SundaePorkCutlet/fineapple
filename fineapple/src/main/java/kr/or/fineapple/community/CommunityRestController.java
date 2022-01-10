@@ -130,6 +130,9 @@ public class CommunityRestController {
 		
 		report.setTrgtNo(Integer.parseInt(TrgtNo));
 		
+		report.setReportStt(1);
+		
+		
 		
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분");
 		 

@@ -366,6 +366,9 @@ public class CommunityController {
 	
 	@GetMapping(value = "getReportList")
 	public String getReportList(){
+		
+		
+		
 		return "community/getReportList.html";
 	}
 	 

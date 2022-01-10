@@ -34,19 +34,25 @@
 										<div class="card-body pt-5" id="kt_chat_contacts_body">
 											<!--begin::List-->
 											<div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="5px" style="max-height: 696px;">
+												
+												
+												
+											<th:block th:each="num: ${#numbers.sequence(1,8)}">
 												<!--begin::User-->
 												<div class="d-flex flex-stack py-4">
 													<!--begin::Details-->
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-45px symbol-circle">
-															<span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">M</span>
+															<span th:if="${numStat.even}" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">회</span>
+															<span th:if="${numStat.odd}" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">게</span>
+															
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
 														<div class="ms-5">
-															<a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">Melody Macy</a>
-															<div class="fw-bold text-muted">melody@altbox.com</div>
+															<a  href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">회원신고</a>
+															<div class="fw-bold text-muted">해당 회원의 사진이 너무 이상합니다 </div>
 														</div>
 														<!--end::Details-->
 													</div>
@@ -58,6 +64,10 @@
 													<!--end::Lat seen-->
 												</div>
 												<!--end::User-->
+											</th:block>	
+
+											
+
 												
 												
 												
