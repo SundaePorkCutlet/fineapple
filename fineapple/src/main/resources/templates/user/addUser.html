@@ -3,6 +3,19 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<style>
+    form .mb-10 label{
+        text-align: left;
+        display: block;
+    }
+    form .input-with-btn input{
+        margin-right: 10px;
+    }
+
+    form .input-with-btn button{
+        white-space: nowrap;
+    }
+</style>
 
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
@@ -11,99 +24,103 @@
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
 
-<ins>
-<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">회원가입</div>
-</ins>
+
+<form method="POST" enctype="multipart/form-data" >
+<div align="center">
+<div class="text-light-success bg-success" style ="font-size:20px; max-width : 750px;" align="center" data-text-content="true"  >회원가입</div>
+
 <br>
 
 <div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원가입은 무료이며</div>
 <div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">기능별 추가 기입사항은 기능 활성화시 요구됩니다.</div>
 <br>
 <ins>
+</ins>
+<br>
 <div align="center" data-text-content="true" style="max-width:300px;" class="mb-10">
   <label for="exampleFormControlInput1" >정보입력</label>
 </div>
-</ins>
-<form method="POST" enctype="multipart/form-data" >
-<br>
+<div class="mb-10" style="max-width:300px;" th:if="${session.user != null }">
+    <label for="exampleFormControlInput1" class="required form-label">이메일</label>
+    <input name="userId" type="text" id ="userId" class="form-control form-control-solid" th:value = "${session.user.userId}"  required/>
+   <p> <span align="center" id = "change" name ="change"></span>
+   <input type="button" id="sendMail" name ="sendMail" >인증번호 전송</p>
+</div>
+<div class="mb-10" style="max-width:300px;" th:if="${session.user == null }">
+            <label for="userId" class="required form-label">이메일</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." required/>
+                <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
+            </div>
+        </div>
+                <span align="center" id = "change" name ="change"></span>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label" th:if ="${session.user == null}">인증번호</label>
+   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">이름(닉네임)</label>
+    <input name="userName" id="userName" type="text" class="form-control form-control-solid" placeholder="ex)파인이"required/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >휴대폰번호</label>
+    <input name="cellphone" id="cellphone" type="text" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
+</div>
+<div class="mb-10" style="max-width:300px;" th:if="${session.user == null}">
+    <label for="exampleFormControlInput1" >비밀번호</label>
+    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요."required/>
+    <br>
+    <label for="exampleFormControlInput1" >비밀번호 확인</label>
+    <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
+    <p> <span align="center" id = "changePassword" name ="changePassword"></span>
+    
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >몸무게</label>
+    <input name="weight" id="weight" type="text" class="form-control form-control-solid" placeholder="ex)60"required/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >성별</label>
+   <span><input name="gender" id="male" type="radio" checked = "checked" value ="male"  />남</span>
+   <span><input name="gender" id="female" type="radio" value ="female" />여</span>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >키</label>
+    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170"required/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >나이</label>
+    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" required/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >목표체중</label>
+    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >프로필사진</label>
+    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="ex)57" />
+</div>
+ <div  data-text-content="true" style="max-width:300px;">
+     <label for="exampleFormControlInput1" >목표설정</label>
+         <select  class="form-select form-select-solid" data-control="select 1" name="serviceTrgt" id="serviceTrgt">
+         <option value ="체중감량">체중감량</option>
+         <option value ="체중유지">체중유지</option>
+         <option value ="체중증량">체중증량</option>         
+         </select>
+  </div>
 
-<div class="mb-10" style="max-width:300px" th:if="${session.user.userId != null }" align="center">
-<label for="exampleFormControlInput1">이메일</label>
-<input name="userId" id ="userId" th:value = "${session.user.userId}" type ="text" class="form-control form-control-solid"/>
-</div>
-<div class="mb-10" style="max-width:300px" th:if="${session.user.userId == null }" align="center" >
-<label for="exampleFormControlInput1">이메일</label>
-<p><input name="userId" id ="userId"  type ="text" class="form-control form-control-solid" placeholder ="이메일 형식으로 입력해주세요."/>
-<a type="button" id="sendMail" name ="sendMail" th:value ="text" class="btn btn-warning btn-hover-rotate-start">인증번호받기</a></p>
-<span align="center" id = "change" name ="change"></span>
-</div>
 <br>
-<div style="max-width:300px" class="mb-10" >
-<label for="exampleFormControlInput1" align ="center">인증번호</label>
-<p align = "center"> <input type = "text" id = "returnMail" name="returnMail" placeholder ="인증번호를 입력해주세요." class = "form-control form-control-solid"><a type = "button" th:value = "text">인증번호확인</a></p>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >이름(닉네임)</div>
-<div align="center">
-<input id = "userName" name = "userName" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">휴대폰번호(숫자만 입력)</div>
-<div align="center">
-<input id="cellphone" name="cellphone" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="휴대폰번호" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
-</div>
-<br>
-<div align="center" th:if="${session.user.userId == null}">
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">비밀번호</div>
-<input id ="password" name = "password" type="password" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="비밀번호 입력" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" required>
-</div>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">프로필사진</div>
-<br>
-<p align = "center">
-<input type="file" id="userImg1" name = "userImg1" ></p>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">몸무게</div>
-<div align="center">
-<input name = "weight" id = "weight" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="kg" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">성별</div>
-<div align = "center">
-<span><input class = "gender" id="male" type = "radio" name = "gender" value ="male" checked = "checked" style = "font-size : 20px;">남</span>
-<span><input class = "gender" id="female" type = "radio" name = "gender" value ="female" style = "font-size : 20px;">여</span>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">키</div>
-<div align="center">
-<input id = "height" name="height" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="cm" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);"required>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">나이</div>
-<div align="center">
-<input id = "age" name="age" type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="세" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" required>
-</div>
-<br>
-<div align="center" data-text-content="true" style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" class="">목표체중</div>
-<div align="center">
-<input id="trgtWeight" name="trgtWeight" placeholder="목표체중">
-</div>
-<br>
-<div align = "center">
-<span style="font-weight : bold; font-size: 15px; color: rgb(41, 96, 47);" >약관동의</span>
-<span><input class = "agreement" id = "agree" type = "radio" name = "agreement" checked = "checked" style = "font-size : 20px;" value = "agree">약관동의</span>
-<span><input class = "agreement" id = "disagree"type = "radio" name = "agreement" style = "font-size : 20px;" value = "disagree">비동의</span>
-<span><input type = "button" class="agreement-button" id = "agreementbt"  placeholder = "약관동의서" ></span>
-</div>
-<br>
-<div align = "center">
-<input class = "addUser" type = "submit" placeholder = "회원가입" style = "background-color : rgb(21, 119, 210) ; color : white; border : none;border-radius: 10px; padding: 7px 50px">
+          <button class="btn btn-success" id="submit" style="max-width:100px;">회원가입</button>
+         <button class="btn btn-info" style="max-width:100px;" >이전</button>
+
 </div>
 <br>
 </form>
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
       <!-- 공통 하단 footer -->
-      <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
 
@@ -113,6 +130,26 @@
       });
    });
    
+  $(function(){
+	  $("#checkPassword").keyup(function(){
+	  var password= $("#password").val();
+	  var checkPassword = $("#checkPassword").val();
+	 
+		console.log(checkPassword);
+		  if(password == checkPassword){
+			  $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
+			  $("#changePassword").attr('color', '#31B404');
+
+		  }
+		  else if(password != checkPassword){
+			  $("#changePassword").html("<div>비밀번호가 일치하지 않습니다.</div>");
+			  $("#changePassword").attr('color', '#FF0000');
+		  }
+	  })
+		  
+  })
+  
+  
    $(function(){
       $("#userId").on("keyup",function(){
          console.log("올라갔닝")
@@ -152,7 +189,7 @@
    });
    
    $(function(){
-      $("input.addUser").on("click",function(){
+      $("#submit").on("click",function(){
          fncAddUser();
       });
    });
@@ -212,34 +249,55 @@
       console.log("fncAddUser끝");
 
       }
+
+
+   $(function(){
+
+	      $("#sendMail").on("click",function(){
+	    	  
+	          var userId = $("#userId").val();
+	          var data ={
+	        	  userId:userId
+	          };
+	          if(userId == ""){
+	             alert("메일주소가 입력되지 않았습니다.");
+	          }else{
+	        	 alert("userId:" + userId);
+	         	 $.ajax({
+	         		type : "POST",
+	         		url : "/user/sendMail",
+	         		data : JSON.stringify(data),
+	         		accept : "application/json",
+	         		contentType : "application/json"
+	         	 }).done(function(data){
+	         		 alert("인증번호를 확인해주세요.");
+	         		 isCertifidation = true;
+	         		 var key = data;
+	         		   $("#compare").on("keyup",function(){
+	         			   console.log("인증번호 올라갔닝")
+	         			   var compare = $("#compare").val();
+	         			   console.log(compare)
+	         			   if(compare == key){
+	         				   $("#compareEmail").html("<p>인증성공!</p>")
+	         				   $("#compareEmail").css('color','green');
+	         				   isCertification=true;
+	         			   }else{
+	         				   $("#compareEmail").html("<p>인증실패!</p>")
+	         				   	$("#compareEmail").css('color','red');
+	         				   isCertification=false;
+	         			   }
+	         		   })
+	         	 })
+	         	 
+	  
+	          }
+
+          })
+   })
    
-   function sendMail(){
-      $("#sendMail").on("click",function(){
-         var userId = $("#userId").val()
-         
-         if(userId == ""){
-            alert("메일주소가 입력되지 않았습니다.");
-            
-         }else{
-            
-           userId = 
-           $.ajax({
-              type : "POST",
-              url : "/sendMail",
-              data : {
-                 userId : userId
-              },
-              dataType : 'json'
-           });
-           alert("인증번호가 전송되었습니다.");
-           isCertification = true;
-            
-         }
-         
-         
-      })
+
       
-   }
+
    
 </script>
 

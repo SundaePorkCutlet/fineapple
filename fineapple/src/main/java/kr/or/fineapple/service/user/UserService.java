@@ -21,6 +21,8 @@ public interface UserService {
 	
 	public String kakaoLogin(User user) throws Exception;
 	
-	//public String sendMail(String sendMail) throws Exception;
+	public String checkPassword(User user) throws Exception;
+	
+	public void changePassword(User user) throws Exception;
 
 }

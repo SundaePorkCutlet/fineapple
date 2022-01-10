@@ -27,8 +27,17 @@ public class DiaryServiceImpl implements DiaryService {
 		map.put("userId", userEvent.getUserId());
 		map.put("eventDate", userEvent.getEventDate());
 		////사용자 이벤트가 4개 이하일 경우에만 등록 진행(하루 5개 등록 가능)
-		if(diaryMapper.getUserEventCount(map) <= 4) {
-			diaryMapper.addUserEvent(userEvent);			
+		int eventCount = diaryMapper.getUserEventCount(map);
+		if(eventCount <= 4) {
+			//첫번째 이벤트일 경우 대표이벤트로 등록
+			if(eventCount == 0) {
+				userEvent.setKeyEventStt(0);
+				diaryMapper.addUserEvent(userEvent);
+			} else {
+			//1개 이상의 등록한 이벤트가 존재할 경우 일반 이벤트로 등록	
+			userEvent.setKeyEventStt(1);
+			diaryMapper.addUserEvent(userEvent);
+			}
 		}
 	}
 

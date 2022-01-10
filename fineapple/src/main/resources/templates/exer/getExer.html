@@ -168,15 +168,15 @@ function count(type)  {
 			
 			<br><br>
 			<div data-text-content="true" style="font-size:16px;" class="">  
-   		  	<span th:if="${exer.exerVideoName == 'null'}" >
+   		  <!-- 	<span th:if="${exer.exerVideoName == 'null'}" > -->
 			<iframe width="100%" height="500"
-					src="https://www.youtube.com/embed/0YRDWKWmnwc?autoplay=1"
+					th:src=${exer.exerLink}
 					frameborder="0" ></iframe>
-			</span>
+		<!-- 	</span>
    		    <span th:unless="${exer.exerVideoName == 'null'}"> 
    		    <video th:src="@{/assets/video/} + ${exer.exerVideoName}" type="video/mp4" controls style="width: 1000px; height: 450px; text-align:right;"> 영상 재생 불가</video>
    			</span>
-   			</div>
+   		 -->	</div>
 			<br><br>
    		  	
    		  	<div align="center">	  	
@@ -203,7 +203,7 @@ function count(type)  {
    		  <!-- 	 <img src="../assets/img/plus.png" style="width: 100px; width: 50px; font-size:20px; " id="plusKcal"> -->
    		  <!-- 	<input type='button'onclick='count("plus")' value='+'/>
 			<input type='button'onclick='count("minus")'value='-'/> -->
-			<input type="text" id="sporttime" name="txtsptime" value="10" onclick="sportsTime();" onkeydown="this.value=this.value.replace(/[^0-9]/g,'')" onkeyup="sportsTime();this.value=this.value.replace(/[^0-9]/g,'');" class="ipt5" style="width:80px" placeholder="">
+			<input type="text" id="sporttime" name="txtsptime" value="10" readonly onclick="sportsTime();" onkeydown="this.value=this.value.replace(/[^0-9]/g,'')" onkeyup="sportsTime();this.value=this.value.replace(/[^0-9]/g,'');" class="ipt5" style="width:80px" placeholder="">
 		<!-- 	<div id='result'>0</div> -->
 		
 	<div class="input-group w-md-300px"

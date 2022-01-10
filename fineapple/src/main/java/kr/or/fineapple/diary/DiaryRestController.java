@@ -109,8 +109,8 @@ public class DiaryRestController {
 		return map;
 	}
 	
-	@RequestMapping(value="json/addUserBodyInfo", method=RequestMethod.POST)
-	public void addUserBodyInfo(@RequestBody UserEvent userEvent) {
+	@RequestMapping(value="json/addUserEvent", method=RequestMethod.POST)
+	public void addUserEvent(@RequestBody UserEvent userEvent) {
 		diaryService.addUserEvent(userEvent);
 	}
 	
@@ -143,13 +143,18 @@ public class DiaryRestController {
 	
 	@RequestMapping(value="json/getUserBodyInfo", method=RequestMethod.POST)
 	public List<Object> getUserBodyInfoList(@RequestBody ViewDuration viewDuration) {
+		System.out.println("/diary/json/getUserBodyInfo");
 		////사용자 신체 변화 정보 조회를 위한 parameter
 		//viewDuration 내 userId, startDate, endDate
 		return diaryService.getUserBodyInfoList(viewDuration);
 	}
 	
 	@RequestMapping(value="json/updateUserBodyInfo", method=RequestMethod.POST)
-	public void updateUserBodyInfo(UserBodyInfo userBodyInfo) {
+	public void updateUserBodyInfo(@RequestBody UserBodyInfo userBodyInfo) {
+		System.out.println("/diary/json/updateUserBodyInfo");
+		System.out.println(userBodyInfo);
+		////사용자 신체 정보 업데이트를 위한 parameter
+		//userBodyInfo 중 userId, date, 수정 원하는 값
 		diaryService.updateUserBodyInfo(userBodyInfo);
 	}
 	

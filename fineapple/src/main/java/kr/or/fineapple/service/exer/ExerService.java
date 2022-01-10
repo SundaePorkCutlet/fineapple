@@ -18,6 +18,8 @@ public interface ExerService {
 	
 	public int updateUserService(ExerServ service)throws Exception;
 	
+	public int updateExerServiceNo(ExerServ service)throws Exception;
+	
 	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
 		
@@ -40,6 +42,10 @@ public interface ExerService {
 	
 	public Double sumBurnningKcal(int userServiceNo)throws Exception;
 	
+	public void deleteBurnningRecord(int burnningRecordNo)throws Exception;
+	
+	
+	
 	
 	
 	public int addRoutine(Routine routine)throws Exception;
@@ -47,6 +53,8 @@ public interface ExerService {
 	public Routine getRoutine(int routineNo)throws Exception;
 	
 	public int updateRoutine(Routine routine)throws Exception;
+	
+	public int updateRoutineName(Routine routine)throws Exception;
 	
 	public int deleteRoutine(int routineNo)throws Exception;
 	
@@ -58,6 +66,8 @@ public interface ExerService {
 	public int addRoutineInfo(Routine routine)throws Exception;
 	
 	public Map<String ,Object> getRoutineInfoList(int routineNo)throws Exception;
+	
+	public Routine  getRoutineInfo(int routineInfoNo)throws Exception;
 	
 	public int deleteRoutineInfo(int routineInfoNo)throws Exception;
 	
@@ -79,6 +89,8 @@ public interface ExerService {
 	public int searchExerPlace()throws Exception;
 	
 	
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
+	public List<Object> getBurnningRecordListForDiary(String userId, int userServiceNo);
 	
 	
 	

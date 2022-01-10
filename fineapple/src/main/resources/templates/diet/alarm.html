@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+	<div id="getalarm" class="modal fade" role="dialog" th:fragment ="getalarm">		
+   <div  class="modal-dialog " style="height:1300px;">
+    <div class="modal-content">
+        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+      <h1 class="modal-title" align="center">김철수님의 알림함</h1>
+  
+        <div class="modal-body" style="height:500px;">
+		
+		
+		
+<table class="table">
+    <thead>
+        <tr class="fw-bolder fs-6 text-gray-800">
+            <th class="min-w-40px">번호</th>
+            <th>알람종류</th>
+            <th class="min-w-100px">알람내용</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="data, i : ${list}">
+            <td th:text="${i.count}" ></td>
+            <td >
+            <span th:if="${data.alarmTitle}==게시글" class="badge badge-light-primary">게시글</span>
+            <span th:if="${data.alarmTitle}==승부" class="badge badge-light-danger">승부</span>
+            <span th:if="${data.alarmTitle}==팔로우" class="badge badge-light-success">팔로우</span>
+            <span th:if="${data.alarmTitle}==블랙리스트" class="badge badge-light-dark">블랙리스트</span>
+            <span th:if="${data.alarmTitle}==일대일문의" class="badge badge-light-warning">일대일문의</span>
+            <span th:if="${data.alarmTitle}==소그룹" class="badge badge-light-info">소그룹</span>
+            </td>
+            <td th:text ="${data.alarmCntnt}"></td>
+            <td th:text= "${data.alarmTime}"></td>
+        </tr>
+      
+        </tbody>
+        </table>
+        </div>
+        <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
+     </div>
+     </div>
+     </div>
+     </div>
+     
+        
+        
+</body>
+</html>

@@ -1,15 +1,22 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
-<!-- 공통 header -->
-<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
 
-   <!--begin::Body-->
-   <body id="kt_body" class="aside-enabled">
-      <!-- 공통 SideBar -->
-      <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+</head>
+<body>
 
-
+	<div id="getRoutineList" class="modal fade" role="dialog" th:fragment ="getRoutineList">		
+   <div  class="modal-dialog" style=" height:1300px;">
+    <div class="modal-content">
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+      <h1 class="modal-title" align="center">루틴리스트</h1>
+     <div class="modal-header">
+    
 
 <script type="text/javascript">
 function fncGetUserList(currentPage) {
@@ -25,17 +32,179 @@ $(function() {
 	 
 	 $(".routineName").on("click" , function() {
 		 
+		// alert("루틴 이름 찍는다잉")
+		 
+		 
+		 $("#getRoutineList").modal("hide");	
 	
 		 
-		   $(opener.location).attr("href","/exer/getRoutine?routineNo="+$(this).attr("data-routineNo"));
-		   
-			/* open.parent.location.href="/exer/getRoutine?routineNo="+$(this).attr("data-routineNo");			
-			 */window.close();
+		//alert($(this).attr("data-routineNo"))
+			 
+		  $.ajax({
+				url: "/exer/getRoutine?routineNo="+$(this).attr("data-routineNo"),
+				success:function(data){
+					$("#mmodalHolder").html(data);
+					$("#getRoutine").modal("show");			
+					
+				}  
+				  
+		 
 });
 });
 
-</script>
+		
+		
+
+	}
+); 	 
+
+function addRoutine() {
 	
+	var userInput = prompt("루틴명을 입력해주세요(6자 이내)");
+	
+	
+	 
+	  $.ajax({
+			url: "/exer/addRoutine?routineName="+userInput,
+			type : 'post',
+			success:function(data){
+				$("#getRoutineList").modal("hide");	
+				$("#mmodalHolder").html(data);
+				$("#getRoutineList").modal("show");			
+				
+			}  
+			  
+		  });
+	
+	
+
+}
+
+$(function() {
+	 $( "button.btn.btn-primary" ).on("click" , function() {
+	
+		 var routine_arr = [];
+		 var routineNo = $("input[name=chek]:checked").attr("data-routineNo");
+		 
+		  //routine_arr.push(routineNo);
+		  
+		/*   $("input[name=favCheck]:checked").each(function () {
+		    	
+		    	
+		       // var routineInfoNo = $(this).attr("data-routineInfoNo");
+		       
+		        
+				//alert("삭제할 루틴 번호" + routineInfoNo)
+				
+				
+		        routine_arr.push(routineNo);
+
+
+		    } ) */
+		    
+		   /*  if(routine_arr == 0){
+		    	
+				alert('삭제하실 루틴을 선택해 주세요!')
+				
+			} */
+		  
+		 
+		/*   if (routine_arr.length != 0) {
+		   */
+		 //alert(routineNo)
+		 
+		 $("#getRoutineList").modal("hide");
+		  $.ajax({
+				url: "/exer/deleteRoutine?routineNo="+routineNo,
+				type : 'post',
+				success:function(data){
+						
+					$("#mmodalHolder").html(data);
+					$("#getRoutineList").modal("show");				
+					
+				}  
+				  
+			  });
+		
+		  /* } */
+		  
+		}		 
+		)}
+	)
+
+$(function() {
+	 $( "button.btn.btn-warning" ).on("click" , function() {
+		 
+	 var userInput = prompt("바꾸시려는 루틴명을 입력해주세요");
+	
+	 var routine_arr = [];
+	 var routineNo = $("input[name=chek]:checked").attr("data-routineNo");
+	 var routineTime = $("#routineTime").attr("data-routineTime");
+	 /* 
+	 $("input[name=favCheck]:checked").each(function () {
+	    	
+	    	
+	       // var routineInfoNo = $(this).attr("data-routineInfoNo");
+	       
+	        
+			//alert("삭제할 루틴 번호" + routineInfoNo)
+			
+			
+	        routine_arr.push(routineNo);
+
+
+	    } )
+	    
+	    if(routine_arr == 0){
+	    	
+			alert('수정하실 루틴을 선택해 주세요!')
+			
+		}
+	  
+	 
+	  if (routine_arr.length != 0) {
+		   */
+	  
+	 
+		 
+	 $("#getRoutineList").modal("hide");
+	  $.ajax({
+			url: "/exer/updateRoutine?routineName="+userInput+"&routineNo="+routineNo + "&routineTime="+routineTime,
+			type : 'post',
+			success:function(data){
+				console.log(data)
+				$("#mmodalHolder").html(data);
+				$("#getRoutineList").modal("show");				
+				
+			}  
+			  
+		  });
+	
+	  /* } */
+	 });
+});	
+	
+
+
+</script>
+			 </div>
+			 
+     <div class="modal-body"style="height:500px;">
+     
+     <div class="scroll h-400px px-5">
+     
+			
+			<table class="table table-rounded table-flush">
+  		<thead>
+        <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >	
+        	<td>	
+            <th align="left">번호</th>         
+            <th align="center">루틴명</th>         
+            <th align="center">루틴시간</th>        
+          </tr>
+        </thead>
+        
+ <!--        	
 <table style="width:400px; position:absolute; top:38px; left:100px; " class="table table-hover table-striped" >			
   		<thead>
           <tr>
@@ -44,9 +213,20 @@ $(function() {
             <th style="	background-color: rgba(51, 255, 255, 0.62);"  align="center">루틴명</th>         
             <th style="	background-color: rgba(51, 255, 255, 0.62);" align="center">루틴시간</th>         
           </tr>
-        </thead>
-        
-       <tbody>
+        </thead> -->
+        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
+        <tr th:if="${not #strings.isEmpty(data.routineName)}"  th:each="data, i : ${list}">
+	    <td th:if="${not #strings.isEmpty(data.routineName)}"><input th:attr="data-routineNo=${data.routineNo}" type="radio" class="updateName" name="chek"></td>     	 
+		<td th:if="${not #strings.isEmpty(data.routineName)}" th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
+		<td	th:attr="data-routineNo=${data.routineNo},data-routineName=${data.routineName}"  th:if="${not #strings.isEmpty(data.routineName)}"  class="routineName"  style="cursor:pointer; text-align: left;">
+		<a href="#" th:text="${data.routineName}"></a></td>
+		<td th:if="${not #strings.isEmpty(data.routineName)}"th:text="${data.routineTime}" id="routineTime" th:attr="data-routineTime=${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
+			<td></td>
+		
+	</tr>
+</tbody>
+
+      <!--  <tbody>
 	<tr th:each="data, i : ${list}">
 		<td></td>
 		<td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
@@ -54,23 +234,37 @@ $(function() {
 		<td th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
 		
 	</tr>
-</tbody>
+</tbody> -->
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
 
 	</table>
 	
-	         <button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp; 
-	<!-- 	<div style="position:absolute; top:0px;left:20px"><button type="button" class="btn btn-success">일일운동량 등록</button></div>
+	 <!--         <button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">루틴등록</button>&nbsp; 
+	 --><!-- 	<div style="position:absolute; top:0px;left:20px"><button type="button" class="btn btn-success">일일운동량 등록</button></div>
 			<div style="position:absolute; top:0px; left:197px; "><button type="button" class="btn btn-warning">루틴명수정</button></div>
 			<div style="position:absolute; top:0px; left:336px;"><button type="button" class="btn btn-danger" th:onClick="|location.href='@{../exer/addRoutine}'|">루틴생성</button></div>
 			<div style="position:absolute; top:0px;	left:460px; "><button type="button" class="btn btn-primary">루틴삭제</button></div>
 
 
 	 -->
+		</div>
 		
-   <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
-	</th:block>
+		
+ <!--   <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+	</th:block> -->
 	
+	 </div>
+     <div class="modal-footer">
+	<button th:if="${menu}!=0" type="button" class="btn btn-warning">루틴명수정</button>
+	<button th:if="${menu}!=0" type="button" class="btn btn-danger" th:onClick="|javascript:addRoutine()|">루틴생성</button>
+	<button th:if="${menu}!=0" type="button" class="btn btn-primary">루틴삭제</button>
+     <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
+     </div>
+    </div>
+   </div>
+  </div>		
+
+    <div id="mmodalHolder" ></div>
 	
 </body>
 </html>

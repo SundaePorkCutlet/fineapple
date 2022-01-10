@@ -8,6 +8,7 @@
 		<result property="serviceTrgt" 	column="SERVICE_TRGT" 		jdbcType="VARCHAR" />
 		<result property="userId" 	column="USER_ID" 		jdbcType="VARCHAR" />	
 		<result property="bodyMuscle" 				column="BODY_MUSCLE" 	jdbcType="DOUBLE" />	
+		<result property="exerServiceNo" 				column="exer_service_no" 	jdbcType="INTEGER" />	
 	</resultMap>
 	
 	
@@ -77,14 +78,22 @@
 	</insert>
 	
 	
-	
 	<update id="updateUserService" parameterType="ExerServ">
 	UPDATE USER_SERVICE SET 
 	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:DOUBLE},
 	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:DOUBLE}
 	WHERE USER_ID=#{userId:VARCHAR}
 	</update>
-
+	
+	
+	
+	<update id="updateExerServiceNo" parameterType="ExerServ">
+	UPDATE USERS 
+	SET EXER_SERVICE_NO=#{exerServiceNo:INTEGER}
+	WHERE USER_ID=#{userId:VARCHAR}
+	</update>
+ 
+ 
 	
 		
 	<select	id="getUserService"	 parameterType="String" resultType="ExerServ">
@@ -111,6 +120,12 @@
 	
 	</insert>
 	
+	<delete id="deleteBurnningRecord" parameterType="Integer">
+	DELETE FROM BURNNING_RECORD
+	WHERE BURNNING_RECORD_NO = #{value}
+	
+	</delete>
+	
 	
 	<select id="getBurnningRecordList" parameterType="Integer" resultMap="BurnningRecordMap">
 	SELECT * 
@@ -120,7 +135,14 @@
 	AND USER_SERVICE_NO = #{value}
 	</select>
 	
-	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getBurnningRecordListForDiary" resultMap="BurnningRecordMap">
+	SELECT * 
+	FROM (SELECT br.* , e.exer_name a
+	        FROM  BURNNING_RECORD br LEFT JOIN EXER e ON br.exer_no = e.exer_no)
+	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD')  = TO_CHAR(#{date},'YYYYMMDD')
+	AND USER_SERVICE_NO = #{userServiceNo}
+	</select>	
 	
 	<update id="updateBurnningRecord" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD 
@@ -150,7 +172,7 @@
  	<insert id="addExer"  parameterType="Exer">
 	INSERT
 	INTO EXER (EXER_NO, EXER_CATE, EXER_LV, EXER_NAME, EXER_KCAL, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LINK)
-	VALUES(10,
+	VALUES(seq_exer_exer_no.NEXTVAL,
     #{exerCate:INTEGER},
     #{exerLv:VARCHAR},
 	#{exerName:VARCHAR},
@@ -178,12 +200,31 @@
 	</where>
 	</if>
 	ORDER BY exer_No ) inner_table
-	WHERE ROWNUM &lt;= 10)
-	WHERE row_seq BETWEEN 1 AND 10
+	WHERE ROWNUM &lt;= 15)
+	WHERE row_seq BETWEEN 1 AND 15
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	 
+	 
+	 
+	  <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT exer_name , exer_cate , exer_kcal
+		        FROM exer
+			<if test="searchCondition != null">
+			<where>
+			<if test="searchCondition == 0 and searchKeyword !='' ">
+			exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			<if test="searchCondition == 1 and searchKeyword !='' ">
+			exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			</where>
+			</if> ) countTable						
+		</select>
+
+
 	 
 	<select	id="getExer"	parameterType="Integer"  resultMap="exerMap">
 			SELECT EXER_NO, EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK, EXER_CATE
@@ -241,6 +282,12 @@
    	</update>
    	
    	
+	 <update id="updateRoutineName"  parameterType="Routine">
+     UPDATE ROUTINE
+     SET ROUTINE_NAME  = #{routineName:VARCHAR}
+     WHERE ROUTINE_NO = #{routineNo:INTEGER}
+   	</update>
+   	
 
 	<select	id="getRoutine"	parameterType="Integer"  resultMap="routineMap">
 			SELECT routine_no, user_service_no, routine_name, routine_time , routine_kcal
@@ -296,6 +343,15 @@
 			WHERE  ROUTINE_NO= #{VALUE}
 			ORDER BY ROUTINE_INFO_NO desc
 	</select>
+	
+	
+	<select	id="getRoutineInfo"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT *		
+			FROM   ROUTINE_INFO 
+			WHERE  ROUTINE_INFO_NO= #{VALUE}
+	</select>
+	
+	
 	 
 	 	
 	 	
@@ -339,7 +395,7 @@
 	
 <select id="sumIntakeKcal" resultType="double">
 <!-- 해당일자 섭취 칼로리 총합 -->
- SELECT SUM(user_food_intake)
+ SELECT SUM(food_kcal)
 FROM intake_record
 WHERE user_id = #{userId:VARCHAR}
 AND TRUNC(intake_record_date) = TRUNC(SYSDATE)

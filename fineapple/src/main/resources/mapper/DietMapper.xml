@@ -76,6 +76,13 @@
 	
 	</insert>
 	
+	<update id="updateDietServiceNo" parameterType="DietServ">
+	UPDATE USERS 
+	SET Diet_SERVICE_NO=#{userServiceNo:INTEGER}
+	WHERE USER_ID=#{userId:VARCHAR}
+	</update>
+	
+	
 	<update id="updateDietService" parameterType="DietServ">
 	UPDATE USER_SERVICE SET 
 	DAILY_TRGT_INTAKE_KCAL=#{dailyTrgtIntakeKcal:DOUBLE},
@@ -87,7 +94,12 @@
 	</update>
 	
 	<select id="getDietService" parameterType="String" resultType="DietServ">
-	Select * FROM USER_SERVICE WHERE USER_ID=#{value}
+	SELECT *
+	FROM ( SELECT us.*, ui.body_fat
+			FROM   USER_SERVICE  us LEFT JOIN user_body_info ui ON us.user_id = ui.user_id
+		    WHERE  ui.user_id = #{value}
+			ORDER BY ROWNUM DESC  )
+	WHERE  ROWNUM = 1
 	</select>
 	
 	
@@ -120,6 +132,13 @@
 	<select id="getIntakeRecordList" parameterType="Integer" resultMap="IntakeRecordMap">
 	SELECT * FROM INTAKE_RECORD 
 	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getIntakeRecordListForDiary" resultMap="IntakeRecordMap">
+	SELECT * FROM INTAKE_RECORD 
+	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(#{date},'YYYYMMDD')
 	 AND USER_SERVICE_NO = #{userServiceNo}
 	</select>
 	

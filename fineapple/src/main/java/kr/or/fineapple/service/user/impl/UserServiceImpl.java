@@ -14,7 +14,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserMapper userMapper;
-
+	
+	
 	@Override
 	public void addUser(User user) throws Exception {
 		userMapper.addUser(user);
@@ -50,6 +51,13 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.checkDuplication(user);
 	}
+	
+	
+
+	@Override
+	public String checkPassword(User user) throws Exception {
+		return userMapper.checkPassword(user);
+	}
 
 	@Override
 	public List<Object> getUserList(User user) throws Exception {
@@ -63,20 +71,18 @@ public class UserServiceImpl implements UserService {
 		
 		return userMapper.checkDuplication(user.getUserId());
 	}
-	
-	
-	
+
+	@Override
+	public void changePassword(User user) throws Exception {
+		userMapper.changePassword(user);
+	}
+
+
+
 	
 	
 
-
-	/*
-	 * @Override public boolean checkDuplication(String userId) throws Exception {
-	 * boolean result=true; User user = userMapper.getUser(userId); if(user != null)
-	 * { return false; }
-	 * 
-	 * return result; }
-	 */
+	
 	
 	
 	

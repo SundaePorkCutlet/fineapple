@@ -28,8 +28,81 @@
 	});
 	
 	
+	var page = 1; // ajax로 날려 back단에서 select시 limit옵션을 걸기 위해
+	var temp = false; // 데이터가 없을때 계속적으로 ajax호출이 되는것을 방지하기 위해
+	var type = "type1";
+	
+	var lastScrollTop = 0;
+	
+	$(window).scroll(function () {
+		  console.log($(window).scrollTop());
+	      console.log($(document).height());
+	      console.log($(window).height());
+		
+		
+//	 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight)
+		if($(window).scrollTop()+1 >= $(document).height() - $(window).height()){
+	      console.log($(window).scrollTop());
+	      console.log($(document).height());
+	      console.log($(window).height());
+			
+			++page; 
+	      
+	        select_list();
+	    }
+	});
+	
+
+	function select_list() {
+		
+		alert("aaaaaaaaaaaaaaaa")
+		
+		console.log($("#searchKeyword").val());
+		
+		var searchKeyword = $("#searchKeyword").val();
+		var lastCount =  $("#count").attr("data-i");
+		
+		alert(lastCount)
+	$.ajax( 
+
+		{
+			url : "/exer/rest/getExerList",
+			type : 'post',
+			data:JSON.stringify({"currentPage":page, "searchKeyword":searchKeyword}),
+			dataType : "JSON" ,
+			contentType: "application/json; charset=utf-8",
+			success : function(data){
+				console.log(data.list)
+				if(data.list.length > 0 ){
+					$.each(data.list, function (idx, val){
+						
+						
+						
+						var html = '<table class="table table-hover table-striped" ><thead>	'
+			        	  	html+='<td>번호 : '+lastCount+'</td>'
+			            	html+='<a>운동명 : '+val.exerName+'</a>'
+			            	html+='<td>운동종류 : '+val.exerCate+'</td>'
+			            	html+='<td>소모칼로리(10분당) : '+val.exerKcal+'</td>'
+			            
+			            	
+			            	
+	            	$(".row").append(html);
+				});
+					
+				}else{
+				console.log("실패")
+	            	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
+					temp = true;
+				}
+			}
+			,error: function(xhr, status, error) { console.log(error); }
+		});
+	}
+
+	
+	
 	</script>			
-   <form>
+  
          
 <div class="container show-grid">
 		<div class="row">
@@ -44,7 +117,14 @@
 
 <!-- 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/> -->
 
-				<div align="right">
+				<div align="right"> 
+				
+			<!-- <div class="col-md-6 text-left">
+		    	<p class="text-primary">
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    	</p>
+		    </div> -->
+		    
 			    <form class="form-inline" name="detailForm">
 			    			
 				  	<div align="right" class="form-group">
@@ -61,8 +141,10 @@
 			<button data-text-content="true" class="btn btn-sm btn-primary">검색</button>
 			<br>
 			
-			<a href="#">이름순</a>
-			<a href="#">칼로리순</a>
+			 <!--  <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
+			  
+		<!-- 	<a href="#">이름순</a>
+			<a href="#">칼로리순</a> -->
 			</div>
 			</form>
 			</div>	
@@ -77,13 +159,15 @@
           </tr>
         </thead>
         
-	
+				
       <tbody>
-	<tr th:each="exer ,i: ${list}">
+      
+   <!--    <div class="container pt-1">
+       <div class="col-sm-6 col-md-4 p-1"  class="row"> -->
+	<tr class="col-sm-6 col-md-4 p-1" th:each="exer ,i: ${list}">
 		
-		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;"></td>
-		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>
-		
+		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;" id="count" data-i="${i.count}"></td>
+		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>		
 		<td> 
 		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
 		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td>
@@ -97,12 +181,13 @@
 
 			</div>
 			</div>
-			</div>		
+			</div>
+		
+			<!-- </div>	
+			</div> -->	
 
+ 
    <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
    
-   
-   
-
 </body>
 </html>

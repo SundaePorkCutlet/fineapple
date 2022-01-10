@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,8 +26,10 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.service.community.CommunityService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -41,6 +44,10 @@ public class DietController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("communityServiceImpl")
+	private CommunityService communityService;
 
 	@GetMapping("addDietService")
 	public String addDietServiceget(HttpServletRequest request, Model model) throws Exception {
@@ -49,33 +56,150 @@ public class DietController {
 
 		if ((User) request.getSession(true).getAttribute("user") != null) {
 			User user = (User) request.getSession(true).getAttribute("user");
+			user = userService.getUser(user.getUserId());
 			System.out.println(user);
 
 			DietServ serv = dietService.getDietService(user.getUserId());
 			System.out.println(serv);
 			if (serv != null) {
-				if (serv.getUserServiceNo() != 0) {
+				if (user.getDietServiceNo() != 0) {
+					   Double  dailyIntakeKcal   = 0.0;
+					   Double   totaldailyIntakeKcal = 0.0;
 
+					
+					 if(user.getGender().equals("male")) {
+					      
+					     
+					     dailyIntakeKcal   = 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+					      
+					      
+					   } else {
+					      
+					    dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+					      
+					      
+					   }
+					   
+					   System.out.println(dailyIntakeKcal);
+					   
+					   if(user.getServiceTrgt().equals("체중증량")) {
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+					      
+					   } if (user.getServiceTrgt().equals("체중유지")){
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+					      
+					   } else {
+					      
+					      totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+					      
+					   }
+
+					System.out.println(totaldailyIntakeKcal);
+					model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
+					
+					
+					
+					
+					
+					
 					model.addAttribute("user", user);
 					model.addAttribute("dietServ", serv);
 					return "diet/getDietService.html";
 				} else {
+					System.out.println("설마여기?");
+					  Double  dailyIntakeKcal   = 0.0;
+					   Double   totaldailyIntakeKcal = 0.0;
+
+					
+					 if(user.getGender().equals("male")) {
+					      
+					     
+					     dailyIntakeKcal   = 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+					      
+					      
+					   } else {
+					      
+					    dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+					      
+					      
+					   }
+					   
+					   System.out.println(dailyIntakeKcal);
+					   
+					   if(user.getServiceTrgt().equals("체중증량")) {
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+					      
+					   } if (user.getServiceTrgt().equals("체중유지")){
+					      
+					      totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+					      
+					   } else {
+					      
+					      totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+					      
+					   }
+
+					model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
+					
+					
+					model.addAttribute("user", user);
+					
+					
 					return "diet/addDietService.html";
 				}
 			} else {
+				   Double  dailyIntakeKcal   = 0.0;
+				   Double   totaldailyIntakeKcal = 0.0;
+
+				
+				 if(user.getGender().equals("male")) {
+				      
+				     
+				     dailyIntakeKcal   = 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+				      
+				      
+				   } else {
+				      
+				    dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+				      
+				      
+				   }
+				   
+				   System.out.println(dailyIntakeKcal);
+				   
+				   if(user.getServiceTrgt().equals("체중증량")) {
+				      
+				      totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+				      
+				   } if (user.getServiceTrgt().equals("체중유지")){
+				      
+				      totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+				      
+				   } else {
+				      
+				      totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+				      
+				   }
+
+				System.out.println(totaldailyIntakeKcal);
+				model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
 				model.addAttribute("user", user);
 				return "diet/addDietService.html";
 			}
 
 		} else {
-
+			
+			System.out.println("그럼여기?");
 			return "user/login";
 		}
 
 	}
 
 	@PostMapping("addDietService")
-	public String addDietService(@ModelAttribute("DietServ") DietServ serv, HttpServletRequest request, Model model)
+	public String addDietService(@ModelAttribute("DietServ") DietServ serv, HttpServletRequest request, Model model,HttpSession session)
 			throws Exception {
 		System.out.println("post:addDietService");
 		System.out.println(serv);
@@ -91,8 +215,19 @@ public class DietController {
 		}
 
 		serv = dietService.getDietService(userId);
+		dietService.updateDietServiceNo(serv);
+		
 		model.addAttribute("dietServ", serv);
 		model.addAttribute("user", user);
+		
+		
+		user = userService.getUser(userId);
+
+		session.setAttribute("user",user);
+
+		
+		
+		
 
 		return "diet/getDietService.html";
 	}
@@ -112,6 +247,7 @@ public class DietController {
 
 		DietServ serv = dietService.getDietService(user.getUserId());
 
+		
 		model.addAttribute("user", user);
 		model.addAttribute("dietServ", serv);
 
@@ -119,45 +255,60 @@ public class DietController {
 
 	}
 
-	@GetMapping("getFoodList")
-	public String getFoodList(Model model, @ModelAttribute("search") Search search, HttpServletRequest request)
+	@RequestMapping("getFoodList")
+	public String getFoodList(Model model, @ModelAttribute("search") Search search, HttpServletRequest request,
+								@RequestParam(value="page",defaultValue = "1")int page)
 			throws Exception {
 
+		
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
 		search1.setPageSize(30);
 		search1.setSearchCondition(0);
 		search1.setSearchKeyword(search.searchKeyword);
+		
+		
+		
+		
 
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		Map<String, Object> map3 = new HashMap<String, Object>();
 		Map<String, Object> map4 = new HashMap<String, Object>();
 		List list = new ArrayList();
 		List<Food> list2 = new ArrayList<Food>();
-		list = dietService.getFoodAPIlist(search);
 
 		list2 = dietService.getFoodList(search1);
-
-		list.addAll(list2);
-
-//		JSONArray array = new JSONArray();
-//		JSONArray array2 = new JSONArray();
-//		
-//		list2=dietService.getFoodList(search1);
-//		
-//		   for (Food userFood : list2) {
-//		        array2.add(userFood);
-//		    }
-//		array=dietService.getFoodAPIlist(search);
-//
-//		array.addAll(array2);
-//		
+		int startNum;
+		int endNum;
+		
+		System.out.println(page);
+		int size=list2.size();
+			
+		if(page!=1) {
+			startNum= (page-1)*50+1-size;  
+		}else {
+			startNum=1;
+		}
+			endNum = 50*page- size;
+	
+		search.setStartNum(startNum);
+		search.setEndNum(endNum);
+		list = dietService.getFoodAPIlist(search);
+			
+		if(page==1){
+			list.addAll(list2);		
+		}
+	
+		
+		
+		
 
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
-
 		return "diet/getFoodList.html";
 	}
+	
+
 
 	@GetMapping("getFood")
 	public String getFood(@RequestParam("foodCd") String foodCd, Model model) throws Exception {
@@ -181,7 +332,7 @@ public class DietController {
 		}
 
 		List list = new ArrayList();
-		String result = dietService.shoppingAPI(search.searchKeyword);
+		String result = dietService.shoppingAPI(search.searchKeyword,1,50);
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject) parser.parse(result);
 		System.out.println(obj);
@@ -392,6 +543,7 @@ public class DietController {
 
 		System.out.println(IntakeNo);
 		dietService.deleteIntakeRecord(IntakeNo);
+		
 		int radio = 0;
 		User user = (User) request.getSession(true).getAttribute("user");
 
@@ -451,8 +603,10 @@ public class DietController {
 
 	@GetMapping("FavMealItemAddIntakeRecord")
 	public String favMealItemAddIntakeRecord(Model model, @RequestParam("checkarray") String favMealItemNo,
+											@RequestParam("meal")String meal,
 											HttpServletRequest request) throws Exception {
 
+		System.out.println(meal);
 		String[] arr = favMealItemNo.split(",");
 		User user = (User) request.getSession(true).getAttribute("user");
 		for (int i = 0; arr.length > i; i++) {
@@ -476,7 +630,7 @@ public class DietController {
 
 			record.setUserId(user.getUserId());
 			record.setUserFoodIntake(fav.getIntake());
-			record.setMeal("간식");
+			record.setMeal(meal);
 
 			dietService.addIntakeRecord(record);
 
@@ -534,6 +688,9 @@ public class DietController {
 	@PostMapping("updateFavMeal")
 	public String updateFavMeal(Model model,@RequestParam("favMealNo")String favMealNo,
 								@RequestParam("favMealName")String favMealName) throws Exception {
+		
+		System.out.println("+++오냐고");
+		
 		FavMeal fav = new FavMeal();
 		int no = Integer.parseInt(favMealNo);
 		
@@ -546,5 +703,63 @@ public class DietController {
 		return "redirect:../diet/getFavMealList?menu=0";
 	}
 	
+	@RequestMapping("getRcpList")
+	public String getRcpList(Model model,@RequestParam(value="page",defaultValue = "1")int page
+								,@ModelAttribute("search") Search search) {
+		
+		
+		search.setStartNum((page-1)*20+1);
+		search.setEndNum(page*20);
+		
+		System.out.println(search);
+		List<Recipe> list2 = new ArrayList<Recipe>();
+		
+		list2 = dietService.getrcpList(search);
+		
+		System.out.println(list2);
+		model.addAttribute("list",list2);
+		model.addAttribute("search",search);
+		
+		
+		return "diet/getRcpList.html";
+	}
+	
+	@RequestMapping("getRcp")
+	public String getRcp(Model model,@RequestParam("rcpName")String rcpName,
+								@ModelAttribute("search") Search search) {
+		
+		
+		System.out.println(rcpName);
+		
+		String name = rcpName.replaceAll(" ", "_");
+		Recipe rcp = new Recipe();
+		rcp = dietService.getRcp(name);
+		
+		
+		System.out.println(rcp);
+		model.addAttribute("rcp",rcp);
+		
+		
+		return "diet/getRcp.html";
+	}
+	
+	
+
+	@GetMapping("getAlarm")
+	public String getAlarm(Model model,HttpServletRequest
+			 request) throws Exception {
+
+		User user = (User)request.getSession(true).getAttribute("user");
+		//List list = new ArrayList();
+		List list = communityService.getAlarmList(user);
+		
+		System.out.println(list);
+		model.addAttribute("list",list);
+		int count = list.size();
+		model.addAttribute("count",count);
+		
+		
+		return "diet/alarm :: getalarm";
+	}
 	
 }

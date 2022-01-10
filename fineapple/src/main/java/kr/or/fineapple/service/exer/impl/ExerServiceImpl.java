@@ -31,10 +31,20 @@ public class ExerServiceImpl implements ExerService {
 	
 			exerMapper.updateServiceTrgt(service);
 			exerMapper.updateBodyInfo(service);
-			
+			exerMapper.getUserService(service.getUserId());
+						
 			return exerMapper.addUserService(service);
 			
 	}
+	
+	@Override
+	public int updateExerServiceNo(ExerServ service) throws Exception {
+		
+		return 	exerMapper.updateExerServiceNo(service);
+		
+	}
+
+	
 	
 	@Override
 	public ExerServ getUserService(String userId) throws Exception {
@@ -59,15 +69,20 @@ public class ExerServiceImpl implements ExerService {
 
 	
 	@Override
-	public Map<String ,Object> getExerList(Search search) {
+	public Map<String ,Object> getExerList(Search search) throws Exception {
 		
 		System.out.println("getExerListService");
 		
 		List<Search> list = exerMapper.getExerList(search);
+		
+		//int totalCount = exerMapper.getTotalCount(search);
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
 		map.put("search", search);
+		//map.put("totalCount",new Integer(totalCount) );
 		
 		return map;
 		
@@ -113,12 +128,19 @@ public class ExerServiceImpl implements ExerService {
 		return exerMapper.getRoutine(routineNo);
 	}
 
+	
 	@Override
 	public int updateRoutine(Routine routine) {
 		
 		return exerMapper.updateRoutine(routine);
 	}
 
+	@Override
+	public int updateRoutineName(Routine routine) throws Exception {
+		
+		return exerMapper.updateRoutineName(routine);
+	}	
+	
 	@Override
 	public int deleteRoutine(int routineNo) {
 		
@@ -149,6 +171,9 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int deleteRoutineInfo(int routineInfoNo) {
 
+		
+		
+		
 		return exerMapper.deleteRoutineInfo(routineInfoNo);
 	}
 	
@@ -170,6 +195,13 @@ public class ExerServiceImpl implements ExerService {
 		
 		return map;
 	}
+	
+	@Override
+	public Routine getRoutineInfo(int routineInfoNo) throws Exception {
+	
+		return exerMapper.getRoutineInfo(routineInfoNo);
+	}
+	
 	
 
 	@Override
@@ -236,7 +268,26 @@ public class ExerServiceImpl implements ExerService {
 		return exerMapper.sumBurnningKcal(userServiceNo);
 	}
 
-	
+	@Override
+	public void deleteBurnningRecord(int burnningRecordNo) throws Exception {
+		
+		exerMapper.deleteBurnningRecord(burnningRecordNo);
+		
+		
+	}
+
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
+	@Override
+	public List<Object> getBurnningRecordListForDiary(String userId, int userServiceNo) {
+		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("userServiceNo", userServiceNo);
+		return exerMapper.getBurnningRecordListForDiary(map);
+	}
+
+
+
 	
 
 

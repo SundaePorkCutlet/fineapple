@@ -9,6 +9,7 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.common.Search;
 
 
@@ -20,6 +21,8 @@ public interface DietService {
 		
 	public DietServ getDietService(String userId)throws Exception;
 	
+	public int updateDietServiceNo(DietServ diet)throws Exception;
+	
 	public List getFoodList(Search search)throws Exception;
 	
 	public JSONArray getFoodAPIlist(Search search)throws Exception;
@@ -30,7 +33,7 @@ public interface DietService {
 	
 	public int deleteFavMeal(int favMealNo)throws Exception;
 	
-	public String shoppingAPI(String searchKeyword)throws Exception;
+	public String shoppingAPI(String searchKeyword,int startNum,int endNum)throws Exception;
 	
 	public Map<String,Object> getFavMealList(int dietServiceNo)throws Exception;
 	
@@ -59,6 +62,12 @@ public interface DietService {
 	public void deleteIntakeRecord(int IntakeRecordNo)throws Exception;
 	
 	public FavMeal getFavMealItem(int favMealInfoNo);
+	
+	public JSONArray getrcpList(Search search);
+	
+	public Recipe getRcp(String rcpCd);
+
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo);
 	
 	
 

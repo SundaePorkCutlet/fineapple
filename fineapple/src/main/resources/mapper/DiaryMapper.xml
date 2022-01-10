@@ -133,6 +133,7 @@
 	FROM user_body_info
 	WHERE user_id = #{userId:VARCHAR}
 		AND TRUNC(user_body_info_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	ORDER BY user_body_info_date
 	</select>
 	
 	<!-- UPDATE : 신체변화정보 사용자 기록 -->
@@ -170,7 +171,7 @@
 	FROM user_event
 	WHERE user_id = #{userId:VARCHAR}
 		AND key_event_stt = 0
-		AND TRUNC(badge_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+		AND TRUNC(user_event_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
 	</select>
 	
 </mapper>

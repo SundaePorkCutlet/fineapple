@@ -50,66 +50,85 @@ $(function() {
          <span data-text-content="true" style="font-weight: bold; font-size: 16px; text-decoration: none;" class=""> *필수입력 사항</span>
          </span>
         
-        
        
-         <div align="center">
-         <br><br>
-          <span style=" font-weight:bold;font-size:18px; " class="">*운동 관리 목적</span>
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="serviceTrgt" th:value="${user.serviceTrgt}"readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
+		 <div align="center">
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" class="required form-label">체중 관리 목적</label>
+		    <input th:text="${user.serviceTrgt}" name="serviceTrgt" type="text" style=font-weight:bold;font-size:16px; class="form-control form-control-solid" />
+		</div>
+		
+		   <div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" class="required form-label">체중</label>
+		    <input th:text="|${user.weight}kg|" name="weight" type="number" step="0.1" style=font-weight:bold;font-size:16px;  class="form-control form-control-solid" />		   
+		</div>
+		
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" class="required form-label">키</label>
+		    <input  th:text="|${user.height}cm|" name="height" type="number" step="0.1"  style=font-weight:bold;font-size:16px; class="form-control form-control-solid" />
+		</div>
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >나이</label>
+		    <input  th:text="|${user.age}세|" name="age" type="number" style=font-weight:bold;font-size:16px;  class="form-control form-control-solid" />		  
+		</div>
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >성별</label>
+		    <input  th:text="${user.gender}" name="age" type="text" style=font-weight:bold;font-size:16px;  class="form-control form-control-solid" />
+		      
+		</div>
+		
+		         
+		            <!--   <label class="required fw-bold fs-6 mb-5">성별</label>
+				<div align="center">
+				      <div class="d-flex flex-column fv-row" align="center">
+		            begin::Radio
+		            <div class="form-check form-check-custom form-check-solid mb-5">
+		                begin::Input
+		                <input class="form-check-input me-3" name="radio_input" type="radio" value="0" id="kt_docs_formvalidation_radio_option_1" />
+		                end::Input
+		
+		                begin::Label
+		                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_1">
+		                    <div class="fw-bolder text-gray-800" align="center">남자</div>
+		                </label>
+		                end::Label
+		            </div>
+		            end::Radio
+		
+		            begin::Radio
+		            <div class="form-check form-check-custom form-check-solid mb-5">
+		                begin::Input
+		                <input class="form-check-input me-3" name="radio_input" type="radio" value="1" id="kt_docs_formvalidation_radio_option_2" />
+		                end::Input
+		
+		                begin::Label
+		                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_2">
+		                    <div class="fw-bolder text-gray-800">여자</div>
+		                </label>
+		                end::Label
+		            </div>
+		            </div>
+		        	</div> -->
+		        	
+		        	<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >목표체중</label>
+		    <input  th:text="|${user.trgtWeight}kg|" style=font-weight:bold;font-size:16px; name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+		</div>
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >골격근량</label>
+		    <input  name="bodyMuscle" th:text="|${exerServ.bodyMuscle}%|" readonly  style=font-weight:bold;font-size:16px;  type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>		   
+		</div>
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >목표골격근량</label>
+		    <input  name="trgtBodyMuscle" th:text="|${exerServ.trgtBodyMuscle}%|" style=font-weight:bold;font-size:16px; readonly   type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>		 
+		</div>
+		<div class="mb-10" style="max-width:300px;">
+		    <label for="exampleFormControlInput1" >*하루 목표 소모칼로리</label>
+		    <input   name="dailyTrgtBurnningKcal"  th:text="|${exerServ.dailyTrgtBurnningKcal}Kcal|"style=font-weight:bold;font-size:16px; readonly  type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+		</div>
+		        	
+		        	
+		        	 	
  
-        
-         <br><br>
-         <span style=" font-weight:bold;font-size:18px; " class="">체중</span>
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="weight" th:value="${user.weight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-         <span style=font-weight:bold;font-size:16px;>kg</span>
-         <br><br>
-         
-         <span style=" font-weight:bold;font-size:18px; "  class="">키</span>
-    
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1" name="height" th:value="${user.height}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-         <span style=font-weight:bold;font-size:16px;>cm</span>
-         <br><br>
-         
-         
-         <span style=" font-weight:bold;font-size:18px; "  class="">나이</span>
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1" name="age" th:value="${user.age}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-         <span style=font-weight:bold;font-size:16px;>세</span>
-         <br><br>
-         
-         <span style="font-weight:bold;font-size:18px; "  class="">성별</span>      
-          &nbsp;&nbsp;&nbsp;
-         <input checked readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="0">남성&nbsp;&nbsp;&nbsp;&nbsp; 
-         <input readonly style="font-weight:bold; font-size:16px;" type="radio" name="gender" value="1">여성 
-         <br><br>
-         
-         <span style="font-weight:bold;font-size:18px; "  class="">목표체중</span>
- 		  &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="trgtWeight"  th:value="${user.trgtWeight}" readonly style="height:30px; width:100px; background-color: rgba(224, 224, 224, 0.43); text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(158, 158, 158);" class="">
-         <span style=font-weight:bold;font-size:16px;>kg</span>
-         <br><br>
-         
-         <span style="font-weight:bold;font-size:18px; "  class="">골격근량</span>
-         &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"  name="bodyMuscle" th:value="${exerServ.bodyMuscle}" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold; color: rgb(0, 0, 0);" class="">
-         <span style=font-weight:bold;font-size:16px;>%</span>
-         <br><br>
-         
-         <span style=" font-weight:bold;font-size:18px; "  class="">목표골격근량</span>    
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1" name="trgtBodyMuscle" th:value="${exerServ.trgtBodyMuscle}"  readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
-         <span style=font-weight:bold;font-size:16px;>%</span>
-         <br><br>
-         
-         <span style="font-weight:bold;font-size:18px; "  class="">*하루 목표 소모칼로리</span>
-          &nbsp;&nbsp;&nbsp;
-         <input type="number" step="0.1"   name="dailyTrgtBurnningKcal"  th:value="${exerServ.dailyTrgtBurnningKcal}" readonly style="height:30px; width:100px; text-align: center; line-height: 2.3em; font-size: 16px; font-weight: bold;  color: rgb(0, 0, 0);" class="">
-         <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;"></span>
-         <br><br><br>
-        </div>
        
          <div align="center">
          <button id="update" type="button" class="btn btn-primary" >수 &nbsp;정</button>

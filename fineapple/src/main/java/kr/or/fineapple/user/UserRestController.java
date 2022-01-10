@@ -1,6 +1,5 @@
 package kr.or.fineapple.user;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,19 +9,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.service.user.UserService;
+
 
 @RestController
 @RequestMapping("/user/*")
@@ -71,6 +70,19 @@ public class UserRestController {
 		
 	}
 	
+	@RequestMapping(value = "checkPassword/rest", method=RequestMethod.POST)
+	public String checkPassword(@RequestBody User user) throws Exception{
+		System.out.println("비밀번호 확인창 입장");
+		
+		user.setPassword(user.getPassword());
+		user.setUserId(user.getUserId());
+		
+		String result= userService.checkPassword(user);
+		
+		return result;
+	}
+	
+
 	@RequestMapping(value = "checkDuplication/kakao",method = RequestMethod.POST)
 	public Map<String,Object> kakaocheckDuplication(@RequestBody User user) throws Exception{
 		System.out.println("checkDuplicationKakao");
@@ -88,6 +100,8 @@ public class UserRestController {
 		return map;
 		
 	}
+	
+	
 	@RequestMapping(value="addUser/kakao", method= RequestMethod.POST)
 	public User addUserKaKao(@RequestBody User user) throws Exception {  
 		System.out.println("addUserRedirect");
@@ -132,7 +146,7 @@ public class UserRestController {
 		
 		if(user.getPassword().equals(userDB.getPassword())) {
 			if(userDB.getUserLeaveStt() == 0) {
-				//session.setAttribute("user",userDB);
+				session.setAttribute("user",userDB);
 				System.out.println("stt == 0");
 				session.setAttribute("user", userDB);
 				System.out.println("user : "+user);
@@ -147,24 +161,63 @@ public class UserRestController {
 		return "redirect:/";		
 	}
 	
+	@Autowired
+	public JavaMailSender emailSender;
 	
-	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
-	public String sendMail(@RequestParam("userId") String userId) throws Exception {
-		int rannum = (int)((Math.random() * (99999-1000 + 1)) + 1000);
+	@RequestMapping(value="/sendMail")
+	public String SendMail(@RequestBody User user, HttpSession session) {
+		SimpleMailMessage message =  new SimpleMailMessage();
 		
-		String from = "dkssud3537@naver.com";
-		String to = userId;
-		String title = "fineapple에 가입에 필요한 인증번호입니다.";
-		String content = "[인증번호]" + rannum + "입니다. <br/> 인증번호 확인란에 기입해주십시오.";
-		String num="";
+		System.out.println("email 전송 시작");
 		
-
-
+		Random random  = new Random();
+		String key ="";
 		
-		
-		return "";
+		System.out.println(user.getUserId());
+		message.setTo(user.getUserId());
+		System.out.println(message);
+		for(int i =0; i<3;i++) {
+			int index=random.nextInt(25)+65; 
+			key+=(char)index;
+		}
+		int numIndex=random.nextInt(9999)+1000; 
+		key+=numIndex;
+		System.out.println("여기까지 왔니");
+		message.setSubject("인증번호 입력을 위한 메일 전송");
+		message.setText("인증 번호 : "+key);
+		System.out.println("마지막 메세지: " + message);
+		emailSender.send(message);
+        return key;
 		
 	}
+	
+	@RequestMapping(value="changePassword", method=RequestMethod.POST)
+	public String changePassword(@RequestBody User user,HttpSession session) throws Exception{
+		System.out.println("changePassword 컨트롤러 들어왔나요");
+		
+	//	User userDB= userService.getUser(user.getUserId());
+		
+	//	System.out.println(userDB);
+		
+	//	String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		userService.changePassword(user);
+		
+		/*
+		 * userDB=userService.getUser(user.getUserId());
+		 * if(sessionId.equals(userDB.getUserId())) {
+		 * session.setAttribute("user",userDB); }
+		 */
+		System.out.println("끝?");
+		String changePassword =user.getPassword();
+	
+			session.invalidate();
+		
+		return changePassword;
+	}
+	
+
+	
 	
 }
 	

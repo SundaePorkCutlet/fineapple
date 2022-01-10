@@ -27,7 +27,14 @@ function fncGetUserList(currentPage) {
 	var exerNo = $("#exerNo").attr("data-exerNo");
 	//var routineNo =  $("#routineNo:checked").attr("data-routineNo");
 	
-	
+	 
+ if($("#anExerTime").val() == null ||$("#anExerTime").val().length < 1 ){
+		 
+		 alert("운동시간을 입력하셔야 합니다.");
+			return;
+		 
+	 }
+	 
  $("form").attr("method" , "POST").attr("action" , "/exer/addDailyBurnning?exerNo="+exerNo + "&exerLv=" +$(".exerLv").val() 
 		                                                              + "&anExerKcal=" + $("#anExerKcal").html()
 		                                                              + "&anExerTime=" + $("#anExerTime").val()  ).submit();
@@ -94,14 +101,14 @@ $(function() {
 		 
 		// alert(anExerKcal)
 	 } 
-	 
-	 
+		  
 	  $('label').html(anExerKcal); 
 	 	  
 	// alert(anExerKcal)
 	 
 	 }
-	
+	 
+	 
 
 </script>
 
@@ -131,9 +138,7 @@ $(function() {
             <th class="min-w-150px">소모 칼로리</th>         
           </tr>
         </thead>
-        
-<<<<<<< HEAD
-	
+
        <tbody>
 	<tr class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
 		<td th:text="${exer.exerName}" id="exerNo" th:attr="data-exerNo=${exer.exerNo}" style="cursor:pointer; text-align: left;"></td>

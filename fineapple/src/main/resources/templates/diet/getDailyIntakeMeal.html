@@ -8,7 +8,23 @@
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
-	
+<style>
+hr {
+    border: none;
+    border-top: 1px dotted black;
+    color: #eee;
+    background-color: #eee;
+    height: 1px;
+    width: 50%;
+}
+
+
+
+
+
+</style>
+
+
 	
 	<div class="container show-grid">
 		<div class="row">
@@ -31,9 +47,9 @@
 			</div>
 			<br><br>
 			<div align="center">
-			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">즐겨찾기등록</button>&nbsp;			
-			<button style="width:130px; height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
-			<button style="width:130px; height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">직접등록</button>	
+			<button style="height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-secondary">즐겨찾기등록</button>&nbsp;			
+			<button style=" height:30px; text-align: center; font-weight: bold;" type="button" class="btn btn-light">검색등록</button>&nbsp;			
+			<button style="height:30px; text-align: center; color:white; font-weight: bold;" type="button" class="btn btn-info">직접등록</button>	
 			</div>	
 			<br><br>
 			<div align="right"><button th:if="${radio}!=1" class="btn btn-danger" id="deleteview">섭취식품삭제</button>
@@ -46,20 +62,17 @@
         <div class="card-toolbar">
 			<br><br></div></div>
 			   <div class="card-body">
-<table class="table">
 
-    <tbody>
-        <tr th:each="data, i : ${list}">
-        	<td th:if="${radio}==1 and ${data.meal}==아침"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
-            <td th:if="${data.meal}==아침" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
-            <td th:if="${data.meal}==아침" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
-            <td class="aKcal" th:if="${data.meal}==아침" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
-            <td th:if="${data.meal}==아침" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
-            <td th:if="${data.meal}==아침" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
-            <td th:if="${data.meal}==아침" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
-        </tr>
-        </tbody>
-        </table>
+        <div th:each="data, i : ${list}" align="left">
+        	<span th:if="${radio}==1 and ${data.meal}==아침"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
+            <div  th:if="${data.meal}==아침" th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
+            <span th:if="${data.meal}==아침" th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
+            <span class="aKcal" th:if="${data.meal}==아침" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span th:if="${data.meal}==아침" th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
+            <span th:if="${data.meal}==아침" th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
+            <span th:if="${data.meal}==아침" th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
+			<div class="separator my-10" th:if="${data.meal}==아침"></div>  
+      </div>
 			</div>
 			  <div class="card-footer" id="a">
         Footer
@@ -76,20 +89,17 @@
         <div class="card-toolbar">
 			<br><br></div></div>
 			   <div class="card-body">
-<table class="table">
 
-    <tbody>
-        <tr th:each="data, i : ${list}">
-          <td th:if="${radio}==1 and ${data.meal}==점심"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
-            <td th:if="${data.meal}==점심" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
-            <td th:if="${data.meal}==점심" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
-            <td class="bKcal" th:if="${data.meal}==점심" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
-            <td th:if="${data.meal}==점심" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
-            <td th:if="${data.meal}==점심" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
-            <td th:if="${data.meal}==점심" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
-        </tr>
-        </tbody>
-        </table>
+      <div th:each="data, i : ${list}" align="left" th:if="${data.meal}==점심">
+        	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
+            <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
+            <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
+            <span class="aKcal" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
+            <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
+            <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
+        <div class="separator my-10" th:if="${data.meal}==점심"></div>
+        </div>
 			</div>
 			  <div class="card-footer" id="b">
         Footer
@@ -103,20 +113,17 @@
         <div class="card-toolbar">
 			<br><br></div></div>
 			   <div class="card-body">
-<table class="table">
 
-    <tbody>
-        <tr th:each="data, i : ${list}">
-             <td th:if="${radio}==1 and ${data.meal}==저녁"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
-              <td th:if="${data.meal}==저녁" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
-            <td th:if="${data.meal}==저녁" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
-            <td class="cKcal" th:if="${data.meal}==저녁" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
-            <td th:if="${data.meal}==저녁" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
-            <td th:if="${data.meal}==저녁" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
-            <td th:if="${data.meal}==저녁" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
-        </tr>
-        </tbody>
-        </table>
+<div th:each="data, i : ${list}" align="left" th:if="${data.meal}==저녁">
+        	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
+            <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
+            <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
+            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
+            <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
+            <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
+        <div class="separator my-10" th:if="${data.meal}==저녁"></div>
+        </div>
 			</div>
 			  <div class="card-footer" id="c">
         Footer
@@ -130,20 +137,18 @@
         <div class="card-toolbar">
 			<br><br></div></div>
 			   <div class="card-body">
-<table class="table">
 
-    <tbody>
-        <tr th:each="data, i : ${list}">
-             <td th:if="${radio}==1 and ${data.meal}==간식"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
-              <td th:if="${data.meal}==간식" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
-            <td th:if="${data.meal}==간식" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
-            <td class="dKcal" th:if="${data.meal}==간식" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
-            <td th:if="${data.meal}==간식" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
-            <td th:if="${data.meal}==간식" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
-            <td th:if="${data.meal}==간식" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
-        </tr>
-        </tbody>
-        </table>
+
+<div th:each="data, i : ${list}" align="left" th:if="${data.meal}==간식">
+        	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
+            <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
+            <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
+            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
+            <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
+            <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
+        <div class="separator my-10" th:if="${data.meal}==간식"></div>
+        </div>
 			</div>
 			  <div class="card-footer" id="d">
         Footer
@@ -157,20 +162,18 @@
         <div class="card-toolbar">
 			<br><br></div></div>
 			   <div class="card-body">
-<table class="table">
 
-    <tbody>
-        <tr th:each="data, i : ${list}">
-        	 <td th:if="${radio}==1 and ${data.meal}==야식"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></td> 
-            <td th:if="${data.meal}==야식" th:utext="|섭취음식명  :  <b>${data.food.foodName}<b>|"></td>
-            <td th:if="${data.meal}==야식" th:utext="|섭취량 : <b>${data.userFoodIntake}g<b>|"></td>
-            <td class="eKcal" th:if="${data.meal}==야식" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal<b>|"></td>
-            <td th:if="${data.meal}==야식" th:utext="|탄수화물 : <b>${data.food.foodCarb}g<b>|"></td>
-            <td th:if="${data.meal}==야식" th:utext="|단백질 : <b>${data.food.foodProtein}g<b>|"></td>
-            <td th:if="${data.meal}==야식" th:utext="|지방 : <b>${data.food.foodFat}g<b>|"></td>
-        </tr>
-        </tbody>
-        </table>
+
+<div th:each="data, i : ${list}" align="left" th:if="${data.meal}==야식">
+        	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
+            <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
+            <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
+            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
+            <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
+            <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
+        <div class="separator my-10" th:if="${data.meal}==야식"></div>
+        </div>
 			</div>
 			  <div class="card-footer" id="e">
         Footer
@@ -289,6 +292,7 @@ $(function() {
 		
 	});
 });	
+
 
 $(function() {
 	 $( "#delete" ).on("click" , function() {

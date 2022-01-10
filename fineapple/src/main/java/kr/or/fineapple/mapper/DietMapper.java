@@ -3,6 +3,7 @@ package kr.or.fineapple.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,8 @@ import kr.or.fineapple.domain.common.Search;
 public interface DietMapper {
 
        int insertDietService(DietServ diet);
+       
+       int updateDietServiceNo(DietServ diet);
        
        DietServ getDietService(String userId);
        
@@ -62,5 +65,8 @@ public interface DietMapper {
        Food getFood(String foodCd);
        
        void deleteIntakeRecord(int IntakeRecordNo);
+       
+       ////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
+       List<Object> getIntakeRecordListForDiary(Map map);
 }
 

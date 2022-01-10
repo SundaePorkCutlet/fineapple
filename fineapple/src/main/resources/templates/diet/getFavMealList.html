@@ -16,7 +16,8 @@
                 </div>
       <h1 class="modal-title" align="center">즐겨찾기리스트</h1>
      <div class="modal-header">
-    
+    			 </div>
+     <div class="modal-body"style="height:500px;">
 
 	
 	
@@ -56,14 +57,17 @@ function addFavMeal() {
 	var userInput = prompt("원하시는 즐겨찾는식단명을 입력해주세요");
 	
 	
+	if(userInput.length>10){
+		alert('10글자까지만 가능합니다')
+		
+	}else{
 	 
-	 
+				$("#favMealList").modal("hide");	
 	 
 	  $.ajax({
 			url: "/diet/addFavMeal?favMealName="+userInput,
 			type : 'post',
 			success:function(data){
-				$("#favMealList").modal("hide");	
 				$("#mmodalHolder").html(data);
 				$("#favMealList").modal("show");			
 				
@@ -71,7 +75,7 @@ function addFavMeal() {
 			  
 		  });
 	
-	
+	}
 
 }
 
@@ -85,7 +89,6 @@ $(function() {
 				url: "/diet/deleteFavMeal?favMealNo="+FavMealNo,
 				type : 'post',
 				success:function(data){
-						
 					$("#mmodalHolder").html(data);
 					$("#favMealList").modal("show");			
 					
@@ -104,15 +107,20 @@ $(function() {
 
 $(function() {
 	 $( "button.btn.btn-warning" ).on("click" , function() {
-	var userInput = prompt("원하시는 즐겨찾는식단명을 입력해주세요");
+	var userInput2 = prompt("원하시는 즐겨찾는식단명을 입력해주세요2");
+
 	
+
 	 var FavMealNo = $("input[name=chek]:checked").attr("data-favMealNo");
 	 
-	 
+		if(userInput2.length>10){
+			alert('10글자까지만 가능합니다')
+			
+		}else{
 	 
 	 $("#favMealList").modal("hide");
 	  $.ajax({
-			url: "/diet/updateFavMeal?favMealName="+userInput+"&favMealNo="+FavMealNo,
+			url: "/diet/updateFavMeal?favMealName="+userInput2+"&favMealNo="+FavMealNo,
 			type : 'post',
 			success:function(data){
 				console.log(data)
@@ -122,14 +130,13 @@ $(function() {
 			}  
 			  
 		  });
-	
+		}
 	
 	 });
 });	
 	
 </script>	
-			 </div>
-     <div class="modal-body"style="height:500px;">
+	
 	<table class="table table-rounded table-flush">
   		<thead>
         <tr class="fw-bold fs-7 text-info border-bottom border-gray-200 py-4" >		
@@ -142,7 +149,7 @@ $(function() {
 	
        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-	    	 <td ><input th:attr="data-favMealNo=${data.favMealNo}" type="radio" class="updateName" name="chek"></td> 
+	    	 <td th:if="${menu}!=0"  ><input th:attr="data-favMealNo=${data.favMealNo}" type="radio" class="updateName" name="chek"></td> 
 		<td th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
 		<td th:attr="data-favMealNo=${data.favMealNo},data-favMealName=${data.favMealName}" class="favMealName" style="cursor:pointer; text-align: left;"><a href="#"  th:text="${data.favMealName}"></a></td>
 		<td th:text="${data.totalKcal}" style="cursor:pointer; text-align: left;"></td>
@@ -169,6 +176,7 @@ $(function() {
   </div>		
 
     <div id="mmodalHolder" ></div>
+    <div id="mmodalHolder2" ></div>
 
 
 

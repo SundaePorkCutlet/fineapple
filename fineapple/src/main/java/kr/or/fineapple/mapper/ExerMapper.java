@@ -1,6 +1,7 @@
 package kr.or.fineapple.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,7 @@ public interface ExerMapper {
        int updateBodyInfo(ExerServ service);
 
        
+       int updateExerServiceNo(ExerServ service);
        
        
        //일일 운동량 CRUD
@@ -42,6 +44,8 @@ public interface ExerMapper {
        int updateBurnningRecord(BurnningRecord record);
        
        Double sumBurnningKcal(int userServiceNo);
+       
+       void deleteBurnningRecord(int burnningRecordNo);
        
        
        
@@ -56,6 +60,7 @@ public interface ExerMapper {
        
        int deleteExer(int exerNo);
        
+       int getTotalCount(Search search) throws Exception ;
        
        
        //루틴CRUD
@@ -64,6 +69,8 @@ public interface ExerMapper {
        Routine getRoutine(int routineNo);
       
        int updateRoutine(Routine routine);
+       
+       int updateRoutineName(Routine routine);
        
        int deleteRoutine(int routineNo);
        
@@ -91,5 +98,7 @@ public interface ExerMapper {
    
        User needDaliyIntakeKcal(String userId);
        
+       ////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
+       List<Object> getBurnningRecordListForDiary(Map map);
 
    }

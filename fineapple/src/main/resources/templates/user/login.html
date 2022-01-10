@@ -112,7 +112,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                               url :"/user/addUser/rest",
                               data :JSON.stringify({userId : user.userId,
                                     gender : user.gender,
-                                    password : user.password}),
+                                    password : "kakaopassword"}),
                               accept:"application/json",
                               contentType : "application/json",
                            }).done(function(user){
@@ -191,6 +191,10 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 <br>
 <div align="center">
 <input type="button" id ="getUserList" name="getUserList" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "아이디 찾기" th:onClick="|location.href='@{../user/getUserList}'|">
+</div>
+<br>
+<div align="center">
+<input type="button" id ="findPassword" name="findPassword" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "비밀번호를 까먹으셨나요?" th:onClick="|location.href='@{../user/findPassword}'|">
 </div>
 <div align = "center">
 <br>

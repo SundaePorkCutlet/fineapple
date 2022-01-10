@@ -39,8 +39,6 @@ public interface CommunityService {
 	
 	public Group checkGroupName(String groupName);
 	
-	public List getAlarmList();
-	
 	public List<User> getUserSearchList(Search search);
 	
 	public User getUserSearch(Search search); 
@@ -53,4 +51,5 @@ public interface CommunityService {
 	
 	public void delGroupUserInter(HashMap map, int intetStt);
 		
+	public List getAlarmList(User user);
 }

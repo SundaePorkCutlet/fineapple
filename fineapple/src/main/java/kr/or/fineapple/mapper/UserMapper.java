@@ -27,5 +27,10 @@ public interface UserMapper{
 		public List<Object> getUserList(User user) throws Exception;
 
 		public String checkDuplication(String userId);
+		
+		public String checkPassword(User user) throws Exception;
+		
+		public void changePassword(User user) throws Exception;
+		
 	}
 

@@ -67,7 +67,7 @@ public interface CommunityMapper {
 	
 	public void getReportList(Report report);
 	
-	public List getAlarmList();
+	public List getAlarmList(User user);
 	
 	public List<User> getUserSearchList(Search search);
 	

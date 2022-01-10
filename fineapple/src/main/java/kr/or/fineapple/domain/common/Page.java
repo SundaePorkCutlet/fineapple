@@ -3,13 +3,13 @@ package kr.or.fineapple.domain.common;
 
 public class Page {
 	///Field
-		private int currentPage;		// 현재페이지
-		private int totalCount;			// 총 게시물 수
-		private int pageUnit;			// 하단 페이지 번호 화면에 보여지는 수
-		private int pageSize;			// 한 페이지당 보여지는 게시물수
-		private int maxPage;			// 최대 페이지 번호(전체 페이지)
-		private int beginUnitPage;	//화면에 보여지는 페이지 번호의 최소수
-		private int endUnitPage;		//화면에 보여지는 페이지 번호의 최대수
+		 int currentPage;		// 현재페이지
+		 int totalCount;			// 총 게시물 수
+		 int pageUnit;			// 하단 페이지 번호 화면에 보여지는 수
+		 int pageSize;			// 한 페이지당 보여지는 게시물수
+		int maxPage;			// 최대 페이지 번호(전체 페이지)
+		int beginUnitPage;	//화면에 보여지는 페이지 번호의 최소수
+		 int endUnitPage;		//화면에 보여지는 페이지 번호의 최대수
 		
 		///Constructor
 		public Page() {

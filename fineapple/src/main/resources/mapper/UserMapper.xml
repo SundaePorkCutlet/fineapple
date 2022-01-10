@@ -48,7 +48,8 @@
 	BLC_ADD_WHY,
 	LAST_CON_TIME,
 	USER_STT_MSG,
-	TRGT_WEIGHT
+	TRGT_WEIGHT,
+	SERVICE_TRGT
 	)   
 	VALUES 
 	(
@@ -68,7 +69,8 @@
     #{blcAddWhy:VARCHAR},
     #{lastConTime:DATE},
     '상태메세지없음',
-    #{trgtWeight : VARCHAR}
+    #{trgtWeight : VARCHAR},
+    #{serviceTrgt : VARCHAR}
     )
 </insert>
 
@@ -104,6 +106,8 @@ HEIGHT)
 	a.user_img,
 	a.user_leave_stt,
 	a.strd_wtr_intake,
+	a.trgt_weight,
+	a.service_trgt,
 	b.weight,
 	b.height
 	from 
@@ -155,14 +159,26 @@ HEIGHT)
 	FROM users
 	WHERE user_id = #{userId:VARCHAR}
 </select>
- 
+
+<select id="checkPassword" parameterType="user" resultType="String">
+	SELECT count(*)
+	FROM users
+	WHERE password = #{password:VARCHAR} AND user_Id=#{userId:VARCHAR}
+</select>
+
 <select id ="getUserList" parameterType="user" resultMap="userSelectMap">
 	SELECT user_name, cellphone, user_id
 	FROM users
 	WHERE user_name=#{userName:VARCHAR} AND cellphone=#{cellphone:VARCHAR}
 </select>
 
-
+<update id="changePassword" parameterType="user" >
+	UPDATE users
+	<set>
+	password=#{password:VARCHAR}
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
 
 </mapper>
 
