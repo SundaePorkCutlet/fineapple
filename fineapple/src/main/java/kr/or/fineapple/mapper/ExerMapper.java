@@ -46,6 +46,8 @@ public interface ExerMapper {
        
        void deleteBurnningRecord(int burnningRecordNo);
        
+       
+       
        //운동CRUD
        int addExer(Exer exer);
        
@@ -57,7 +59,7 @@ public interface ExerMapper {
        
        int deleteExer(int exerNo);
        
-       
+       int getTotalCount(Search search) throws Exception ;
        
        
        //루틴CRUD

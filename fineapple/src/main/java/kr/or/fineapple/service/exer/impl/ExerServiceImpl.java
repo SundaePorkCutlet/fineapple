@@ -69,15 +69,20 @@ public class ExerServiceImpl implements ExerService {
 
 	
 	@Override
-	public Map<String ,Object> getExerList(Search search) {
+	public Map<String ,Object> getExerList(Search search) throws Exception {
 		
 		System.out.println("getExerListService");
 		
 		List<Search> list = exerMapper.getExerList(search);
+		
+		//int totalCount = exerMapper.getTotalCount(search);
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("list", list);
 		map.put("search", search);
+		//map.put("totalCount",new Integer(totalCount) );
 		
 		return map;
 		

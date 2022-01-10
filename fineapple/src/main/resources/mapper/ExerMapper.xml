@@ -200,6 +200,25 @@
 	</select>
 	 
 	 
+	 
+	  <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT exer_name , exer_cate , exer_kcal
+		        FROM exer
+			<if test="searchCondition != null">
+			<where>
+			<if test="searchCondition == 0 and searchKeyword !='' ">
+			exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			<if test="searchCondition == 1 and searchKeyword !='' ">
+			exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			</where>
+			</if> ) countTable						
+		</select>
+
+
+	 
 	<select	id="getExer"	parameterType="Integer"  resultMap="exerMap">
 			SELECT EXER_NO, EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK, EXER_CATE
 			FROM   EXER 

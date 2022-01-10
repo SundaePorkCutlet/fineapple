@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.fineapple.domain.BurnningRecord;
-import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
-import kr.or.fineapple.domain.FavMeal;
-import kr.or.fineapple.domain.Food;
-import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Page;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
 import kr.or.fineapple.service.user.UserService;
@@ -52,6 +50,7 @@ public class ExerController {
 	}
 
 
+	
 @GetMapping("addUserService")
 public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
@@ -151,6 +150,8 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 @GetMapping("getUserService")
 public String getUserService(Model model, HttpServletRequest request) {
 	
+	
+	
 	return "exer/getUserService.html";
 }
 
@@ -184,13 +185,44 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 	
 	  System.out.println("getExerList");
  
-	  
+	    search.setPageSize(30);
+		//search.setSearchCondition(0);
+		
+
+		System.out.println(search);
+		int page = 1; 
+		if(search.getCurrentPage()>0) {
+			page = search.getCurrentPage();
+		};
+		search.setStartNum(1);
+		search.setEndNum(14);
+			  
+		/*
+		 * int pageSize = 3; int pageUnit = 5;
+		 * 
+		 * if(search.getCurrentPage() ==0 ){ search.setCurrentPage(1); }
+		 * 
+		 * search.setPageSize(pageSize);
+		 */
+	
+		
 	  Map<String, Object> map = exerService.getExerList(search);
 	  
 	  
+		/*
+		 * Page resultPage = new Page( search.getCurrentPage(),
+		 * ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		 * 
+		 * 
+		 * System.out.println(resultPage);
+		 */  
+	  	
+	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-			  
+		//model.addAttribute("resultPage", resultPage);
+		
+		
 		
 	return "exer/getExerList.html";	
 	
@@ -551,7 +583,7 @@ if(b == 0) {
 	
 } else {
 
-	resultTime1 = a + ":" + "0"  + b + ":" + "00";
+	resultTime1 = a + ":" + b + ":" + "00";
 
 }
 
@@ -705,6 +737,7 @@ System.out.println(list);
 
 Double userExerBurnning =  exerService.sumBurnningKcal(exerServ.getUserServiceNo());
 System.out.println(userExerBurnning);
+
 Double sumIntakeKcal = exerService.sumIntakeKcal(user.getUserId());
 System.out.println(sumIntakeKcal);
 
@@ -760,9 +793,18 @@ if(user.getServiceTrgt().equals("체중증량")) {
 System.out.println(totaldailyIntakeKcal);
 
 
-Double remainKcal = (totaldailyIntakeKcal - sumIntakeKcal) ;
+
+if(userExerBurnning == null) {
+	
+	userExerBurnning  = 0.0;
+}
 
 
+Double remainKcal = 0.0 ;
+
+
+	remainKcal = totaldailyIntakeKcal - sumIntakeKcal + userExerBurnning;
+	
 
 remainKcal = Math.round(remainKcal*100)/100.0;
 
@@ -782,12 +824,12 @@ if(remainKcal >= 0) {
 	
 }
 
-if(userExerBurnning == null) {
-	
-	userExerBurnning  = 0.0;
-}
+
+
+
 
 List list1 = exerService.recommandExerList(Math.abs(remainKcal));
+
 
 
 model.addAttribute("list", list1);
