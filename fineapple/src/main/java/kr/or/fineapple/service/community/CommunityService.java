@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.community;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,5 +50,7 @@ public interface CommunityService {
 	public void addGroupToUserInter(GroupUser groupUser);
 	
 	public List<MtmQna> getFaqList(int cate);
+	
+	public void delGroupUserInter(HashMap map, int intetStt);
 		
 }

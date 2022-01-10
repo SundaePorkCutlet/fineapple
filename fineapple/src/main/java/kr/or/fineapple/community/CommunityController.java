@@ -373,5 +373,28 @@ public class CommunityController {
 	}
 	
 	
+	
+	
+	
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

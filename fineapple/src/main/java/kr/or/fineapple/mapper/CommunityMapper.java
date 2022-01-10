@@ -1,5 +1,6 @@
 package kr.or.fineapple.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -77,5 +78,9 @@ public interface CommunityMapper {
 	public void addGroupToUserInter(GroupUser groupUser);
 	
 	public List<MtmQna> getFaqList(int cate);
+	
+	public void delGroupUserInter(HashMap map);
+	
+	public void updateGroupUserInter(HashMap map);
 	
 }

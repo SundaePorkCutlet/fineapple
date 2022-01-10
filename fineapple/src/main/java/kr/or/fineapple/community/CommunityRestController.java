@@ -1,5 +1,6 @@
 package kr.or.fineapple.community;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -247,6 +248,33 @@ public class CommunityRestController {
 		
 		System.out.println("¾Ó ¹èºÒ¶ç~" + group);
 		
+		
+	}
+	
+	@PostMapping(value = "AcceptOrRejectGroupInter")
+	public void AcceptOrRejectGroupInter(@RequestBody String str, HttpServletRequest request) {
+		
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str); //{"interStt":1,"groupUserNoData":"1"}
+		
+		int intetStt = Integer.parseInt(jsonObject.get("interStt").toString());
+		
+		int groupNo = Integer.parseInt(jsonObject.get("groupUserNoData").toString());
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		HashMap map = new HashMap();
+		map.put("groupNo", groupNo);
+		map.put("captainStt", 2);
+		map.put("groupStt", 4);
+		map.put("user", user);
+		
+		communityService.delGroupUserInter(map, intetStt);
+		
+
 		
 	}
 

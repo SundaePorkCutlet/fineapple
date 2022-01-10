@@ -83,15 +83,14 @@
                                 </thead>
 
                                 <tbody>
-                                <tr th:each="data, i : ${list}">
+                                <tr th:each="data, i : ${list}" class= "${i.count}">
                                     <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.groupName}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.groupIntro}" style="cursor:pointer; text-align: left;"></td>
                                     <td>
-                                    <button class="btn btn-secondary">수락</button>
-									<button class="btn btn-light">거절</button>
+                                    <button th:id = "'interYes' + ${i.count}" th:onclick="javascript:fnAcceptOrRejectGroupInter(1, this.id)" th:attr="data-groupUserNo=${data.groupNo}"  class="btn btn-warning" >수락</button>
+									<button th:id = "'interNo' + ${i.count}" th:onclick="javascript:fnAcceptOrRejectGroupInter(2, this.id)" th:attr="data-groupUserNo=${data.groupNo}" class="btn btn-secondary" >거절</button>
                                     </td>
-
                                 </tr>
                                 </tbody>
 
@@ -109,11 +108,13 @@
 		<script type="text/javascript">
 		
 		
-		function fnAcceptOrRejectGroupInter(stt){
+		function fnAcceptOrRejectGroupInter(stt, id){
 			console.log("안녕");
-			var data = {"interStt" : stt};
+			var groupUserNoData = $('#'+ id).attr("data-groupUserNo");
+			var data = {"interStt" : stt,
+					    "groupUserNoData" : groupUserNoData};
 			$.ajax({
-				url: "/community/json/", //url : 요청 Url
+				url: "/community/json/AcceptOrRejectGroupInter", //url : 요청 Url
 				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
@@ -125,6 +126,8 @@
 				
 				
 			});
+			
+			$('#'+ id).remove();
 		};
 		
 /* 		 function fnRejectGroupInter(){

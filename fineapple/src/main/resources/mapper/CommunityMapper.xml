@@ -729,5 +729,35 @@
 	</trim>
 	</select>
 	
+
+	
+	<delete id="delGroupUserInter" parameterType="hashmap">
+		DELETE
+		FROM
+		group_user
+		<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+			user_id = #{user.userId}
+			AND
+			group_no = #{groupNo}
+		</trim>
+	</delete>
+	
+	
+	
+	<update id="updateGroupUserInter" parameterType="hashmap">
+		UPDATE group_user
+		<trim prefix="SET" suffixOverrides=",">
+			group_stt = #{groupStt},
+			captain_stt = #{captainStt}
+		</trim>
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			user_id = #{user.userId} AND group_no = #{groupNo}
+		</trim>
+	</update>
+	
+	
+	
+	
+	
 	
 </mapper>
