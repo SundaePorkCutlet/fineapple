@@ -9,6 +9,7 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.common.Search;
 
 
@@ -61,6 +62,12 @@ public interface DietService {
 	public void deleteIntakeRecord(int IntakeRecordNo)throws Exception;
 	
 	public FavMeal getFavMealItem(int favMealInfoNo);
+	
+	public JSONArray getrcpList(Search search);
+	
+	public Recipe getRcp(String rcpCd);
+
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo);
 	
 	
 

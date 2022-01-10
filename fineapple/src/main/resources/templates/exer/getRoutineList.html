@@ -32,7 +32,7 @@ $(function() {
 	 
 	 $(".routineName").on("click" , function() {
 		 
-		 alert("루틴 이름 찍는다잉")
+		// alert("루틴 이름 찍는다잉")
 		 
 		 
 		 $("#getRoutineList").modal("hide");	
@@ -83,9 +83,35 @@ function addRoutine() {
 $(function() {
 	 $( "button.btn.btn-primary" ).on("click" , function() {
 	
+		 var routine_arr = [];
 		 var routineNo = $("input[name=chek]:checked").attr("data-routineNo");
 		 
-		 alert(routineNo)
+		  //routine_arr.push(routineNo);
+		  
+		/*   $("input[name=favCheck]:checked").each(function () {
+		    	
+		    	
+		       // var routineInfoNo = $(this).attr("data-routineInfoNo");
+		       
+		        
+				//alert("삭제할 루틴 번호" + routineInfoNo)
+				
+				
+		        routine_arr.push(routineNo);
+
+
+		    } ) */
+		    
+		   /*  if(routine_arr == 0){
+		    	
+				alert('삭제하실 루틴을 선택해 주세요!')
+				
+			} */
+		  
+		 
+		/*   if (routine_arr.length != 0) {
+		   */
+		 //alert(routineNo)
 		 
 		 $("#getRoutineList").modal("hide");
 		  $.ajax({
@@ -100,7 +126,8 @@ $(function() {
 				  
 			  });
 		
-		
+		  /* } */
+		  
 		}		 
 		)}
 	)
@@ -108,10 +135,36 @@ $(function() {
 $(function() {
 	 $( "button.btn.btn-warning" ).on("click" , function() {
 		 
-	var userInput = prompt("바꾸시려는 루틴명을 입력해주세요");
+	 var userInput = prompt("바꾸시려는 루틴명을 입력해주세요");
 	
+	 var routine_arr = [];
 	 var routineNo = $("input[name=chek]:checked").attr("data-routineNo");
 	 var routineTime = $("#routineTime").attr("data-routineTime");
+	 /* 
+	 $("input[name=favCheck]:checked").each(function () {
+	    	
+	    	
+	       // var routineInfoNo = $(this).attr("data-routineInfoNo");
+	       
+	        
+			//alert("삭제할 루틴 번호" + routineInfoNo)
+			
+			
+	        routine_arr.push(routineNo);
+
+
+	    } )
+	    
+	    if(routine_arr == 0){
+	    	
+			alert('수정하실 루틴을 선택해 주세요!')
+			
+		}
+	  
+	 
+	  if (routine_arr.length != 0) {
+		   */
+	  
 	 
 		 
 	 $("#getRoutineList").modal("hide");
@@ -127,7 +180,7 @@ $(function() {
 			  
 		  });
 	
-	
+	  /* } */
 	 });
 });	
 	

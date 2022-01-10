@@ -56,7 +56,7 @@
 	
 	<resultMap id = "userSelectMap"	type = "user">
 		<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
-		<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
+		<result property="userName" column = "user_name" jdbcType = "VARCHAR" />
 		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
 		<result	property="userImg"	column="user_img"	jdbcType="VARCHAR"/>
 		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
@@ -88,6 +88,29 @@
 	<result property="alarmTitle" column="alarm_title"/>
 	<result property="alarmCntnt" column="alarm_cntnt"/>	
 	<result property="alarmTime" column="alarm_time"/>
+	</resultMap>
+	
+	<resultMap type="report" id="reportMap">
+	<result property="reportNo" column="report_no"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="reportedUser.userId" column="reported_user_id"/>
+	<result property="reportCate" column="report_cate"/>
+	<result property="reportCntnt" column="report_why"/>
+	<result property="reportStt" column="report_stt"/>
+	<result property="reportDate" column="report_date"/>
+	<result property="TrgtNo" column="rerport_trgt"/>
+	</resultMap>
+	
+	<resultMap type="mtmQna" id="mtmQnaMap">
+	<result property="mtmQnaNo" column="mtm_qna_no"/>
+	<result property="mtmCate" column="mtm_qna_cate"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="mtmQnaDate" column=""/>
+	<result property="mtmQnaTitle" column="mtm_qna_title"/>
+	<result property="mtmQnaCntnt" column="mtm_qna_cntnt"/>
+	<result property="mtmAnswrCntntDate" column="mtm_answer_cntnt_date"/>
+	<result property="mtmAnswrCntnt" column="mtm_answer_cntnt"/>
+	<result property="mtmAnswrStt" column="mtm_answer_stt"/>	
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -297,9 +320,11 @@
 	<!-- //////////////////////////////////////////////////////// -->
 	
 
-	<insert id="addGroup"  parameterType="group">
+	<insert id="addGroup" parameterType="group">
 
-	<!-- <selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER"> -->
+	<selectKey keyProperty="groupNo" keyColumn="group_no" resultType="int" order="AFTER">
+	SELECT seq_groups_groups_no.CURRVAL FROM dual
+	</selectKey>
 
 	INSERT
 	INTO
@@ -333,7 +358,7 @@
 	VALUES
 	(
 	seq_group_user_no.NEXTVAL,
-	#{groupNo},
+	#{group.groupNo},
 	#{user.userId},
 	#{captainStt},
 	#{groupStt}
@@ -368,6 +393,18 @@
 	<where>
 	group_no = #{groupNo}
 	</where>
+	</select>
+	
+	<select id="checkGroupName" parameterType="String" resultMap="groupMap">
+	SELECT
+	*
+	FROM
+	groups
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	group_name = #{value}
+			
+	</trim>
+	
 	</select>
 	
 	<!-- //////////////////////////////////////////////////////// -->
@@ -442,7 +479,7 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<insert id="addReport" parameterType="report">
+	<!-- <insert id="addReport" parameterType="report">
 	INSERT
 	INTO
 	report_and_like 	
@@ -474,13 +511,13 @@
 	null,
 	null,
 	</if>
-	<!-- #{reportTrgt.postNo}, -->
+	#{reportTrgt.postNo},
 	#{reportCate},
 	#{reportCntnt},
 	#{reportStt},
 	SYSDATE
 	)
-	</insert>
+	</insert> -->
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
@@ -538,9 +575,159 @@
 	</select>
 	
 	
+	<insert id="addReport" parameterType="report">
+	INSERT
+	INTO
+	report_and_like
+	(
+	REPORT_NO,
+	USER_ID, 
+	REPORTED_USER_ID, 
+	RERPORT_TRGT,
+	REPORT_CATE, 
+	REPORT_WHY,
+	report_date
+	)
+	VALUES
+	(
+	seq_report_and_like_no.NEXTVAL,
+	#{user.userId},
+	#{reportedUser.userId},
+	#{trgtNo},
+	#{reportCate},
+	#{reportCntnt},
+	SYSDATE
+	)
+	</insert>
+	
+	<select id="getReportList" parameterType="report">
+	SELECT
+	*
+	FROM
+	report_and_like
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	report_stt = 0
+	</trim>
 	
 	
+	</select>
 	
+	<update id="updateReportStt" parameterType="report">
+	UPDATE
+	FROM
+	<trim prefix="SET" suffixOverrides=",">
+	</trim>
+	</update>
+	
+	<select id="getUserSearchList" parameterType="search" resultMap="userSelectMap">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	<if test="searchCondition == 1">
+	user_id = #{searchKeyword}
+	</if>
+	<if test="searchCondition == 2">
+	user_name = #{searchKeyword}
+	</if>
+	
+	</where>
+	</select>
+	
+	
+	<select id="getUserSearch" parameterType="search" resultMap="userSelectMap">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	user_id = #{searchKeyword}
+	</where>
+	</select>
+	
+	
+	<select id="getGroupToUserInter" parameterType="groupUser" resultMap="groupMap">
+
+		SELECT
+		g.*
+		FROM
+		groups g,
+		group_user gu
+		<where>
+		gu.user_id = #{user.userId}
+		
+		<if test="captainStt == 0">
+		</if>
+		<if test="captainStt != 0">
+		AND
+		gu.captain_stt = #{captainStt}
+		</if>
+		AND
+		gu.group_stt = #{groupStt}
+		AND
+		gu.group_no = g.group_no
+		</where>
+
+	</select>
+	
+	<select id="getUserTGroupInter" parameterType="groupUser" resultMap="groupMap">
+
+		SELECT
+		g.*
+		FROM
+		groups g,
+		group_user gu
+		<where>
+		gu.user_id = #{user.userId}
+		
+		<if test="captainStt == 0">
+		</if>
+		<if test="captainStt != 0">
+		AND
+		gu.captain_stt = #{captainStt}
+		</if>
+		AND
+		gu.group_stt = #{groupStt}
+		AND
+		gu.group_no = g.group_no
+		</where>
+
+	</select>
+	
+	<insert id="addGroupToUserInter" parameterType="groupUser">
+		INSERT
+		INTO
+		group_user
+		(
+		group_user_no,
+		group_no,
+		user_id,
+		group_stt
+		)
+		VALUES
+		(
+		seq_group_user_no.NEXTVAL,
+		#{group.groupNo},
+		#{user.userId},
+		#{groupStt}
+	
+	)
+	</insert>
+	
+	<select id="getCaptain" parameterType="group" resultMap="userSelectMap">
+	
+	</select>
+	
+	<select id="getFaqList" parameterType="int" resultMap="mtmQnaMap">
+	SELECT
+	*
+	FROM
+	mtm_qna
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	mtm_qna_cate = #{value}
+	</trim>
+	</select>
 	
 	
 </mapper>

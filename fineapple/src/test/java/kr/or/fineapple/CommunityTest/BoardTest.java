@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
-import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 import lombok.extern.slf4j.Slf4j;
@@ -96,5 +96,38 @@ public class BoardTest {
 		//report.setReportTrgt(reportedBoard);
 		report.setReportCntnt("이 게시글이 매우 이상해요!");
 		communityService.addReport(report);	
+	}
+	
+	
+	
+	//@Test
+	public void addGroupToUserInter() {
+		User user = new User();
+		
+		user.setUserId("aaa123@naver.com");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		//groupUser.setCaptainStt(1);
+		
+		groupUser.setGroupStt(1);
+		
+		List<Group> list = communityService.getGroupToUserInter(groupUser);
+		
+		for (Group group : list) {
+			System.out.println(group);
+		}
+	}
+	
+	
+	@Test
+	public void testFQL() {
+		List<MtmQna> list = communityService.getFaqList(4);
+		System.out.println(list);
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
 	}
 }

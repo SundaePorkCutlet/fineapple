@@ -171,7 +171,7 @@
 	FROM user_event
 	WHERE user_id = #{userId:VARCHAR}
 		AND key_event_stt = 0
-		AND TRUNC(badge_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+		AND TRUNC(user_event_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
 	</select>
 	
 </mapper>

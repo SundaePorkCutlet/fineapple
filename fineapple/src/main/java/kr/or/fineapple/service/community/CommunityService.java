@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 
 public interface CommunityService {
@@ -32,7 +34,19 @@ public interface CommunityService {
 	
 	public void addReport(Report report);
 	
-	public void addGroup(Group group);
+	public void addGroup(Group group, GroupUser groupUser);
 	
-	public List getAlarmList();
+	public Group checkGroupName(String groupName);
+	
+	public List<User> getUserSearchList(Search search);
+	
+	public User getUserSearch(Search search); 
+	
+	public List<Group> getGroupToUserInter(GroupUser groupUser);
+	
+	public void addGroupToUserInter(GroupUser groupUser);
+	
+	public List<MtmQna> getFaqList(int cate);
+		
+	public List getAlarmList(User user);
 }

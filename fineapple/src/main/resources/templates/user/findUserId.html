@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
-		<th:block th:replace="/layout/fragments/sidebar.html :: sidebar"></th:block>
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
 <div class="container show-grid">
@@ -35,8 +35,8 @@
 <input type="button" id="getUserList" name="getUserList" value ="아이디찾기">
 </div>
 <div>
-
 </div>
+		<div id="loginModalHolder" style="width:200px;"></div>
 </form>
 <br>
 </div>
@@ -45,7 +45,8 @@
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+	
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script>
 	$(function(){
 		$("#getUserList").on("click",function(){
@@ -76,22 +77,33 @@
 				var result = "<p><h2>검색결과</h2></p>"
 				$("#appendList").append(result)
 					for(i = 0 ; i < JSONData.length ; i++){
-				var displayValue= "<br><p><h4> userId : " + JSONData[i].userId + "</h4></p>" ; 
+				var displayValue= "<br><p><h4> 아이디 : " + JSONData[i].userId + "</h4></p>" ; 
 				$("#appendList").append(displayValue);
 					}
-				var displayButton = "<form><p><input type = 'submit' value = '로그인' id = 'login' name ='login'><p></form>"
+				var displayButton = "<p><input type = 'submit' class ='new' value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
 				$("#appendList").append(displayButton);
 				
-				$(function(){
-					$("#login").on("click",function(){
-						$("form").attr("method","GET").attr("action","/user/login").submit();
-						
-					})
-				})
+				
 				})
 			}
 		});
 	});
+   
+
+	
+	 $(function () {
+        // console.log("공통 SIDE");
+         $("#appendList").on("click",".new",function () {
+        	 alert("function 입짱")
+             $.ajax({
+                 url: "/user/login",
+                 success: function (data) {
+                     $("#loginModalHolder").html(data);
+                     $("#loginModal").modal("show");
+                 }
+             });
+         });
+     });
 	
 	
 

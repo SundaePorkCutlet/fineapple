@@ -135,7 +135,14 @@
 	AND USER_SERVICE_NO = #{value}
 	</select>
 	
-	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getBurnningRecordListForDiary" resultMap="BurnningRecordMap">
+	SELECT * 
+	FROM (SELECT br.* , e.exer_name a
+	        FROM  BURNNING_RECORD br LEFT JOIN EXER e ON br.exer_no = e.exer_no)
+	WHERE TO_CHAR(BURNNING_RECORD_DATE,'YYYYMMDD')  = TO_CHAR(#{date},'YYYYMMDD')
+	AND USER_SERVICE_NO = #{userServiceNo}
+	</select>	
 	
 	<update id="updateBurnningRecord" parameterType="BurnningRecord">
 	UPDATE BURNNING_RECORD 
@@ -193,12 +200,31 @@
 	</where>
 	</if>
 	ORDER BY exer_No ) inner_table
-	WHERE ROWNUM &lt;= 10)
-	WHERE row_seq BETWEEN 1 AND 10
+	WHERE ROWNUM &lt;= 15)
+	WHERE row_seq BETWEEN 1 AND 15
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>
 	 
+	 
+	 
+	  <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT exer_name , exer_cate , exer_kcal
+		        FROM exer
+			<if test="searchCondition != null">
+			<where>
+			<if test="searchCondition == 0 and searchKeyword !='' ">
+			exer_name like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			<if test="searchCondition == 1 and searchKeyword !='' ">
+			exer_kcal like '%'||#{searchKeyword:VARCHAR}||'%'
+			</if>
+			</where>
+			</if> ) countTable						
+		</select>
+
+
 	 
 	<select	id="getExer"	parameterType="Integer"  resultMap="exerMap">
 			SELECT EXER_NO, EXER_NAME, EXER_VIDEO_NAME, EXER_VIDEO_TIME, EXER_LV, EXER_KCAL,EXER_LINK, EXER_CATE
@@ -317,6 +343,15 @@
 			WHERE  ROUTINE_NO= #{VALUE}
 			ORDER BY ROUTINE_INFO_NO desc
 	</select>
+	
+	
+	<select	id="getRoutineInfo"	parameterType="Integer"  resultMap="routineInfoMap">
+			SELECT *		
+			FROM   ROUTINE_INFO 
+			WHERE  ROUTINE_INFO_NO= #{VALUE}
+	</select>
+	
+	
 	 
 	 	
 	 	

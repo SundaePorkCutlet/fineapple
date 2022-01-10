@@ -1,0 +1,152 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+
+ 
+ 				<div class="tab-content">
+                    <!--begin::Tab panel-->
+                    <div id="kt_billing_months" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_billing_months">
+                        <!--begin::Table container-->
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            
+                            <!--begin::Follow-->
+							<a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->소그룹생성</a>
+							<!--end::Follow-->
+							
+							
+							
+							<!--begin::Follow-->
+							<a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->소그룹리스트</a>
+							<!--end::Follow-->
+							
+							
+							<!--begin::Follow-->
+							<a th:href="@{commiunty/getGroupToUserInter}" class="btn btn-sm btn-light" >
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->초대받은 리스트</a>
+							<!--end::Follow-->
+							
+							
+							<!--begin::Follow-->
+							<a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->초대보낸리스트</a>
+							<!--end::Follow-->
+	
+							
+							
+                            <table class="table table-row-bordered align-middle gy-4 gs-9">
+                                <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
+                                <tr>
+                                    <td class="min-w-60px">번호</td>
+                                    <td class="min-w-150px">소그룹 이름</td>
+                                    <td class="min-w-150px">소그룹 소개글</td>
+                                    <td class="min-w-150px">비고</td>
+                                   
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="data, i : ${list}">
+                                    <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.groupName}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.groupIntro}" style="cursor:pointer; text-align: left;"></td>
+                                    <td>
+                                    <button class="btn btn-secondary">수락</button>
+									<button class="btn btn-light">거절</button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+
+		<!-- 공통 하단 footer -->
+		<div id="mmodalHolder"></div>
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+		
+		<script type="text/javascript">
+		
+		
+		function fnAcceptOrRejectGroupInter(stt){
+			console.log("안녕");
+			var data = {"interStt" : stt};
+			$.ajax({
+				url: "/community/json/", //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					
+				}
+				
+				
+				
+			});
+		};
+		
+/* 		 function fnRejectGroupInter(){
+			console.log("바이");
+			var data = {"interStt" : 2};
+			$.ajax({
+				url: "/community/json/",   //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					
+				}
+				
+				
+				
+			});
+		}; */
+		
+		</script>
+
+	</body>
+	<!--end::Body-->
+</html>

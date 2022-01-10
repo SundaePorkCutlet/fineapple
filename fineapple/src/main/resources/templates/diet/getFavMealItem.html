@@ -48,6 +48,8 @@ $(function () {
         var fav_arr = [];
         var favNo = $("input[name=favCheck]:checked").attr("data-favMealNo");
         var favName = $("input[name=favCheck]:checked").attr("data-favMealName");
+        
+        
         $("input[name=favCheck]:checked").each(function () {
             var favItmNo = $(this).attr("data-favMealItemNo");
            
@@ -105,11 +107,14 @@ $(function () {
         var fav_arr = [];
         $("input[name=favCheck]:checked").each(function () {
             var favItmNo = $(this).attr("data-favMealItemNo");
-
+			
             fav_arr.push(favItmNo);
 
 
         })
+        
+      var meal =   $(".form-select option:selected").val();
+        
         if(fav_arr==0){
 			alert('선택한 상품이 없습니다!')
 			
@@ -119,7 +124,7 @@ $(function () {
 
         if (fav_arr.length != 0) {
             console.log(fav_arr);
-            self.location="../diet/FavMealItemAddIntakeRecord?checkarray="+fav_arr.join(",");
+            self.location="../diet/FavMealItemAddIntakeRecord?checkarray="+fav_arr.join(",")+"&meal="+meal;
             
 
                 }
@@ -213,6 +218,15 @@ function CheckAll() {
 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>			 -->
 
 	</table>
+	
+	<select name="meal" class="form-select" data-control="select2" data-placeholder="Select an option">
+    <option value="아침">아침</option>
+    <option value="점심">점심</option>
+    <option value="저녁">저녁</option>
+    <option value="간식">간식</option>
+    <option value="야식">야식</option>
+</select>
+	
 	
   
 </div>	

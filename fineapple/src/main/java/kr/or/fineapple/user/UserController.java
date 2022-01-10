@@ -42,6 +42,20 @@ public class UserController {
     	return "index/index.html";
     }
 	
+	@RequestMapping(value="checkPassword")
+	public String checkPassword() {
+		return "user/changeUserPassword.html";
+	}
+	@RequestMapping(value="findPassword")
+	public String findPassword() {
+		return "user/findPassword.html";
+	}
+	
+	@RequestMapping(value="faq")
+	public String faq() {
+		return "user/faq.html";
+	}
+	
 	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
 		System.out.println("redirect:/user/login.html:GET");

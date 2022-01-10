@@ -67,6 +67,8 @@ public interface ExerService {
 	
 	public Map<String ,Object> getRoutineInfoList(int routineNo)throws Exception;
 	
+	public Routine  getRoutineInfo(int routineInfoNo)throws Exception;
+	
 	public int deleteRoutineInfo(int routineInfoNo)throws Exception;
 	
 	public int updateRoutineInfo(Routine routine)throws Exception;
@@ -87,6 +89,8 @@ public interface ExerService {
 	public int searchExerPlace()throws Exception;
 	
 	
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
+	public List<Object> getBurnningRecordListForDiary(String userId, int userServiceNo);
 	
 	
 	

@@ -1,0 +1,233 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+
+ 
+ 									<div class="modal-content">
+										<!--begin::Modal header-->
+										<div class="modal-header pb-0 border-0 justify-content-end">
+										</div>
+										<!--begin::Modal header-->
+										<!--begin::Modal body-->
+										<div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+											<!--begin::Content-->
+											<div class="text-center mb-13">
+												<h1 class="mb-3">Search Users</h1>
+												<div class="text-muted fw-bold fs-5">검색할 회원을 입력하세요</div>
+											</div>
+											<!--end::Content-->
+											<!--begin::Search-->
+											<div id="kt_modal_users_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="inline" data-kt-search="true">
+												<!--begin::Form-->
+												<form id="formUser" action="/community/getUserDetail" method="post">
+												
+													<button type="submit" style="display:none;"></button>
+													<!--begin::Hidden input(Added to disable form autocomplete)-->
+													<input type="hidden" id = "userId"  name ="userId" value="d">
+													<!--end::Hidden input-->
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+													
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Input-->
+
+													<div style="float: left; width: 70%;">
+														<input id = "searchKeyword"   type="text" class="form-control form-control-solid" placeholder="검색할 단어를 입력해주세요"/>
+													</div> 
+													<div  style="float: left; width: 20%;">
+													<select id ="searchCondition" class="form-select form-select-solid" data-control="select2" data-placeholder="검색조건을 선택" name = "searchCondition">
+												   		<option value="1">회원 ID</option>
+												    	<option value="2">회원 명</option>
+													</select>
+													</div>
+													<div  style="float: left; width: 10%;">
+													<button  type="button" class="btn btn-secondary" th:onClick ="javascript:fnSearchUser()" >검색하기</button>
+													</div>
+													<!-- <input id = "searchKeyword" type="text" class="form-control form-control-lg form-control-solid px-15" name="searchKeyword"  placeholder="검색할 단어를 입력해주세요." data-kt-search-element="input"> -->
+													<!-- th:onkeypress="javascript:if(event.keyCode==13) {fnSearchUser()}" -->
+												
+
+													<!--end::Input-->
+													<!--begin::Spinner-->
+													<span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
+														<span class="spinner-border h-15px w-15px align-middle text-muted"></span>
+													</span>
+													<!--end::Spinner-->
+													<!--begin::Reset-->
+													<span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5 d-none" data-kt-search-element="clear">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+														<span class="svg-icon svg-icon-2 svg-icon-lg-1 me-0">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+																<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</span>
+													<!--end::Reset-->
+												</form>
+												<!--end::Form-->
+
+											</div>
+											<!--end::Search-->
+											<table id = "userSeacrhTable" class="table table-hover table-rounded table-striped border gy-7 gs-7">
+											
+												<thead>
+													<th>아이디</th>
+													<th>닉네임</th>
+													<th>비고</th>
+												</thead>
+												<tbody>
+												
+												</tbody>
+											</table>
+										</div>
+											
+										<!--end::Modal body-->
+									</div>
+ 
+ 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+		
+		<script type="text/javascript">
+		
+		$('input[type="text"]').keydown(function() {
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+			  };
+		}); // form 태그 엔터 막기
+		
+		
+		function fnSearchUser(){
+			
+			$('#userSeacrhTable > tbody').empty();
+			
+			var data = {"searchKeyword" : $("#searchKeyword").val(),
+						"searchCondition" : $("#searchCondition").val()};
+			
+			console.log(JSON.stringify(data) + "ddddddddddd");
+			
+			$.ajax({
+				
+				url: "/community/json/getUserSerach", //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data),  //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					console.log("성공" + data);
+					//for(i = 0 ; i < data.length ; i++){data[i].userId}
+					$(data).each(function(){
+						alert(this.userId + " " + this.userName + " ");
+						var appendUser = 
+							"" + 
+							"<tr class=\"fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200\" onclick=\"javascript:fnGetUser('"+
+							this.userId + 
+							"')\">" +
+							"<td>" +
+							this.userId +
+							"</td>" +
+							"<td>" +
+							this.userName + 
+							"</td>" +
+							"<td>" +
+							"전송하기" +
+							"</td>" +
+							"</tr>" +
+							"" + 
+							"<input type=\"hidden\" " + 
+							"name = \"searchKeyword\""+
+							" value = "+ 
+							"\"" +
+							this.userId +
+							"\"/>";
+							console.log(appendUser)
+							$("#userSeacrhTable").append(appendUser);
+						});
+				},
+				complete:function(userId){
+					console.log("호출끝");
+				},
+				error : function(error) {
+			        alert("Error!");
+			    }
+				
+				
+			});
+			
+		};
+		
+		
+		function fnGetUser(userId){
+			console.log("fnGetUser" + "앙기모띄~" + userId);
+			console.log(userId);
+			$("#userId").val(userId);
+			
+			console.log($("#userId").val());
+			
+			$("#formUser").submit();
+			
+			
+			
+			
+			
+			
+			
+		}
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	<!--end::Body-->
+</html>

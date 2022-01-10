@@ -25,11 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import oracle.net.aso.m;
 
 @Controller
 @RequestMapping("/community/*")
@@ -42,6 +44,23 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	
+	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
+	@GetMapping(value = "getBoard")
+	public String getPostList(Model model) {
+		
+		List<Board> list = communityService.getPostList();
+		
+		model.addAttribute("list", list);
+		
+		
+		return "community/getBoard.html";
+		
+	}
 	
 	@GetMapping(value = "getPost")
 	public String getViewTest(@ModelAttribute("board") Board board, Model model, HttpServletRequest request) {
@@ -62,28 +81,20 @@ public class CommunityController {
 	}
 	
 	
-	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
-	@GetMapping(value = "getBoard")
-	public String getPostList(Model model) {
-		
-		List<Board> list = communityService.getPostList();
-		
-		model.addAttribute("list", list);
-		
-		return "community/getBoard.html";
-		
-	}
+	
 	
 	@GetMapping(value = "addPostView")
 	public String addPostView() {
+		
+		System.out.println("addPostView 컨트롤러 거침");
+		
 		return "community/addPost.html";
 	}
+	
 	
 
 	@PostMapping(value = "addPost")
 	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request) {
-		
-		
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
 			
@@ -92,15 +103,29 @@ public class CommunityController {
 		return "redirect:/community/getBoard";
 	}
 	
-	@RequestMapping(value = "getMyGroupList", method = RequestMethod.GET)
-	public ModelAndView getMyGroupList() {
+	
+	///////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	@PostMapping(value = "addGroupView")
+	public String addGroupView() {
 		
-			GroupUser groupUser = new GroupUser();
-			User user = new User();
-			user.setUserId("bbb123@gmil.com");
-			groupUser.setUser(user);
-			groupUser.setGroupStt(2);
-			
+		System.out.println("addGroupView 컨트롤러 거침ㅁ");
+		
+		return "community/addGroupView :: reportPostView";
+	}
+	
+	
+	@RequestMapping(value = "getMyGroupList", method = RequestMethod.GET)
+	public ModelAndView getMyGroupList(HttpServletRequest request) {
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		groupUser.setGroupStt(4);
+		
 		List<Group> list =   communityService.getGroupInterGroup(groupUser);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("community/getMyGroupList.html");
@@ -108,33 +133,21 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-	@GetMapping(value = "addGroupView")
-	public String addGroupView() {
-		return "community/addGroupView.html";
-	}
 	
-	@GetMapping(value = "addReportView")
-	public String addReportView() {
-		return null;
-	}
-	
-	
-	
-	
-	
-	@PostMapping(value = "addGroup")
-	public String addGroup(@ModelAttribute("group") Group group) {
-		communityService.addGroup(group);
+	@GetMapping(value = "getUserSerach")
+	public String getUserList() {
 		
-		return "community/addGroup.html";
 		
+		
+		return "community/getUserSerach.html";
 	}
 	
-	@GetMapping(value="getAlarmList")
-	public List getAlarmList() {
 
-		return communityService.getAlarmList();
-	}
+//	@GetMapping(value="getAlarmList")
+//	public List getAlarmList() {
+//
+//		return communityService.getAlarmList();
+//	}
 	
 	
 //	@RequestMapping(value="reportPostView", method = RequestMethod.POST)
@@ -146,16 +159,8 @@ public class CommunityController {
 	
 	@PostMapping(value = "reportPostView")
 	public String reportPostView(HttpServletRequest request, Model model, @RequestBody String str) {
-		
-
-		
+			
 		System.out.println(str);
-		
-		
-		
-		
-		
-		
 		
 		System.out.println(request.getParameter("TrgtNo"));
 		
@@ -177,14 +182,7 @@ public class CommunityController {
 		
 		report.setTrgtNo(Integer.valueOf((String)jsonObject.get("TrgtNo")));
 		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		System.out.println("============================================");
 		
@@ -235,11 +233,11 @@ public class CommunityController {
 
 	  //request
 
-	    Enumeration en = request.getParameterNames();
+	    Enumeration en = request.getParameterNames(); //json인 경우에는 안뜬다.
 	       while(en.hasMoreElements()){
 	        String param = (String)en.nextElement();
 	        String value = request.getParameter(param);
-	        System.out.println(param+"-"+value);
+	        System.out.println(param+"-"+value +"request");
 	       }
 
 	     
@@ -249,7 +247,7 @@ public class CommunityController {
 	    Enumeration en1 = request.getSession(true).getAttributeNames();
 	    while(en1.hasMoreElements()){
 	     String param = (String)en1.nextElement();
-	     System.out.println(param+"-"+request.getSession(true).getAttribute(param));
+	     System.out.println(param+"-"+request.getSession(true).getAttribute(param) +"session");
 	    }
 		
 		
@@ -266,22 +264,103 @@ public class CommunityController {
 	    
 		
 		return "community/addReportView :: reportPostView";
+		
 	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "addBattleView", method = RequestMethod.POST)
 	public String addBattleView(Model model) {
 		
+		
 		System.out.println("addBattleView 거침");
 		
 		return "community/addBattleView :: addBattleView";
 	}
+	
+	@PostMapping(value = "getUserDetail")
+	public String getUserDetail(Model model, HttpServletRequest request) {
+		
+		Search search = new Search();
+		
+		//search.setSearchCondition(Integer.parseInt(request.getParameter("searchCondition")));
+		search.setSearchKeyword(request.getParameter("userId"));
+		
+		System.out.println(search);
+		
+		User user =  communityService.getUserSearch(search);
+		
+		model.addAttribute("user", user);
 
-
+		
+		return "community/getUserDetail.html";
+	}
 	
 	
 	
 	
+	
+	@PostMapping(value = "addGroupToUserInter")
+	public String addGroupToUserInter(HttpServletRequest request, Model model, @RequestBody String str) {
+		
+		
+		
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setCaptainStt(1);
+		
+		groupUser.setGroupStt(4);
+		
+		List<Group> list = communityService.getGroupToUserInter(groupUser);
+		
+		for (Group group : list) {
+			System.out.println(group);
+		}
+		
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		User intetUser = new User();
+		
+		intetUser.setUserId(jsonObject.get("userId").toString());
+		
+		System.out.println(intetUser);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("user", intetUser);
+		return "community/addGroupToUserInter :: addGroupToUserInter";
+	}
+	
+	
+	
+	@GetMapping(value = "getGroupToUserInter")
+	public String getGroupToUserInter(HttpServletRequest request, Model model) {
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setGroupStt(1);
+		
+		Group group = new Group();
+		
+		List<Group> list =  communityService.getGroupInterGroup(groupUser);
+		
+		model.addAttribute("list", list);
+		
+		return "community/getGroupToUserInter.html";
+	}
 	
 	
 }

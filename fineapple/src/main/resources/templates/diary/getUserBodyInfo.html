@@ -128,7 +128,6 @@
       <!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
       <script th:inline="javascript">
       
-      
       $(function() {
          
          /* ///////////////////ChartJS Start/////////////////// */
@@ -144,8 +143,8 @@
    
          // Chart labels & Datasets
          /*<![CDATA[*/
-          var userBodyInfo = [[${userBodyInfo}]];
-         console.log(userBodyInfo);
+         var userBodyInfo = [[${userBodyInfo}]];
+         //console.log(userBodyInfo);
          /*]]*/
          const labels = [];
          const weights = [];
@@ -217,8 +216,8 @@
             }
          }
 
-         console.log(config.data.datasets);
-         console.log(config.data);
+         //console.log(config.data.datasets);
+         //console.log(config.data);
 
          myChart.update();
 
@@ -245,8 +244,8 @@
             myChart.destroy();
             
             var startDate = start.toJSON().substring(0,10);
-             var endDate = end.toJSON().substring(0,10);
-             console.log(startDate , endDate);
+            var endDate = end.toJSON().substring(0,10);
+            //console.log(startDate , endDate);
 
              $.ajax({
                  url: "/diary/json/getUserBodyInfo",
@@ -315,7 +314,7 @@
                 // 차트 디스플레이
                 var myChart = new Chart(ctx, config);
                 
-                 var dataset = config.data.datasets;
+                var dataset = config.data.datasets;
                 
                 for(var i=0; i<userBodyInfo.length; i++){
                    
@@ -344,8 +343,8 @@
                    }
                 }
 
-                console.log(config.data.datasets);
-                console.log(config.data);
+                //console.log(config.data.datasets);
+                //console.log(config.data);
 
                 myChart.update();
               });

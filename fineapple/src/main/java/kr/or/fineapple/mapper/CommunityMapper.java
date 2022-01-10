@@ -1,16 +1,17 @@
 package kr.or.fineapple.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 
 @Mapper
@@ -49,6 +50,8 @@ public interface CommunityMapper {
 	
 	public Group getGroup(Group group);
 	
+	public Group checkGroupName(String groupName);
+	
 	public List<GroupUser> getGroupUserList(Group group);
 	
 	public List<Group> getMyGroupList(GroupUser groupUser);
@@ -59,6 +62,20 @@ public interface CommunityMapper {
 	
 	public void addReport(Report report);
 	
-	public List getAlarmList();
+	public void updateReportStt(Report report);
+	
+	public void getReportList(Report report);
+	
+	public List getAlarmList(User user);
+	
+	public List<User> getUserSearchList(Search search);
+	
+	public User getUserSearch(Search search); 
+	
+	public List<Group> getGroupToUserInter(GroupUser groupUser);
+	
+	public void addGroupToUserInter(GroupUser groupUser);
+	
+	public List<MtmQna> getFaqList(int cate);
 	
 }

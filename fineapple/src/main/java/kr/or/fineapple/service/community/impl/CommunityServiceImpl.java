@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
@@ -94,15 +96,66 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void addGroup(Group group) {
+	public void addGroup(Group group, GroupUser groupUser) {
 		communityMapper.addGroup(group);
+		System.out.println(group+"In service addGroup");
+		groupUser.setGroup(group);
+		communityMapper.addGroupUser(groupUser);
 	}
 
 	@Override
-	public List getAlarmList() {
+	public List getAlarmList(User user) {
 	
-		return communityMapper.getAlarmList();
+		return communityMapper.getAlarmList(user);
 	}
+
+	@Override
+	public Group checkGroupName(String groupName) {
+		// TODO Auto-generated method stub
+		return communityMapper.checkGroupName(groupName);
+	}
+
+	@Override
+	public List<User> getUserSearchList(Search search) {
+		return communityMapper.getUserSearchList(search);
+	}
+
+	@Override
+	public List<Group> getGroupToUserInter(GroupUser groupUser) {
+		// TODO Auto-generated method stub
+		return communityMapper.getGroupToUserInter(groupUser);
+	}
+
+	@Override
+	public User getUserSearch(Search search) {
+		// TODO Auto-generated method stub
+		return communityMapper.getUserSearch(search);
+	}
+
+	@Override
+	public void addGroupToUserInter(GroupUser groupUser) {
+		
+		communityMapper.addGroupToUserInter(groupUser);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<MtmQna> getFaqList(int cate) {
+		// TODO Auto-generated method stub
+		return communityMapper.getFaqList(cate);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 	
 	
 	

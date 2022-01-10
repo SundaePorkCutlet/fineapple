@@ -25,6 +25,7 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.mapper.DietMapper;
 import kr.or.fineapple.service.diet.DietService;
@@ -498,6 +499,246 @@ public class DietServiceImpl implements DietService{
 	public FavMeal getFavMealItem(int favMealInfoNo) {
 		return dietMapper.getFavMealItem(favMealInfoNo);
 	}
+
+
+
+	@Override
+	public JSONArray getrcpList(Search search) {
+			
+		
+		
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			JSONArray jsonArray = new JSONArray();
+
+			try {
+				RestTemplate resttemplate = new RestTemplate();
+
+				HttpHeaders header = new HttpHeaders();
+
+				HttpEntity<?> entity = new HttpEntity<>(header);
+
+				String baseUrl = "";
+								
+					baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/COOKRCP01/json/"+search.startNum+"/"+search.endNum+"/CHNG_DT=20000101";
+					
+					ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
+							Map.class);
+
+					map.put("statusCode", resultMap.getStatusCodeValue());
+					map.put("header", resultMap.getHeaders());
+					map.put("body", resultMap.getBody());
+
+						
+					LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("COOKRCP01");
+					
+					ArrayList is = (ArrayList) im.get("row");
+					System.out.println(is);
+					
+					for (int i = 0; is.size() > i; i++) {
+						LinkedHashMap aa = (LinkedHashMap) is.get(i);
+						
+					Recipe rcp = new Recipe();
+					String rcpPartsDtls = aa.get("RCP_PARTS_DTLS").toString();
+					String rcpCd = aa.get("RCP_SEQ").toString();
+					String rcpName = aa.get("RCP_NM").toString();
+					String rcpWay = aa.get("RCP_WAY2").toString();
+					String rcpPat = aa.get("RCP_PAT2").toString();
+					String rcpKcal = aa.get("INFO_ENG").toString(); 
+					String rcpMainImg = aa.get("ATT_FILE_NO_MAIN").toString();
+					String HASH_TAG = aa.get("HASH_TAG").toString();
+					
+					rcp.setRcpPartsDtls(rcpPartsDtls);
+					rcp.setRcpCd(rcpCd);
+					rcp.setRcpKcal(rcpKcal);
+					rcp.setRcpMainImg(rcpMainImg);
+					rcp.setRcpName(rcpName);
+					rcp.setRcpWay(rcpWay);
+					rcp.setRcpPat(rcpPat);
+					rcp.setHASH_TAG(HASH_TAG);
+					
+					jsonArray.add(rcp);
+					}
+					
+					
+			}catch (Exception e) {
+				map.put("statusCode", "999");
+				map.put("body", "excpetion오류");
+				System.out.println(e.toString());
+
+			}
+			
+			return jsonArray;
+		}
+
+
+
+	@Override
+	public Recipe getRcp(String rcpCd) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		JSONArray jsonArray = new JSONArray();
+		Recipe rcp = new Recipe();
+
+		try {
+			RestTemplate resttemplate = new RestTemplate();
+
+			HttpHeaders header = new HttpHeaders();
+
+			HttpEntity<?> entity = new HttpEntity<>(header);
+
+			String baseUrl = "";
+			System.out.println("+++++++"+rcpCd);
+							
+				baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/COOKRCP01/json/1/2/RCP_NM="+rcpCd;
+				System.out.println("---"+baseUrl);
+				ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
+						Map.class);
+
+				map.put("statusCode", resultMap.getStatusCodeValue());
+				map.put("header", resultMap.getHeaders());
+				map.put("body", resultMap.getBody());
+
+					
+				LinkedHashMap im = (LinkedHashMap) resultMap.getBody().get("COOKRCP01");
+				
+				ArrayList is = (ArrayList) im.get("row");
+				System.out.println(is);
+				
+					LinkedHashMap aa = (LinkedHashMap) is.get(0);
+					
+				String rcpPartsDtls = aa.get("RCP_PARTS_DTLS").toString();
+				String rcpName = aa.get("RCP_NM").toString();
+				String rcpWay = aa.get("RCP_WAY2").toString();
+				String rcpPat = aa.get("RCP_PAT2").toString();
+				String rcpKcal = aa.get("INFO_ENG").toString(); 
+				String rcpMainImg = aa.get("ATT_FILE_NO_MAIN").toString();
+				String HASH_TAG = aa.get("HASH_TAG").toString();
+				String manual01 = aa.get("MANUAL01").toString();
+				String manualImg01 = aa.get("MANUAL_IMG01").toString();
+				String manual02 = aa.get("MANUAL02").toString();
+				String manualImg02 = aa.get("MANUAL_IMG02").toString();
+				String manual03 = aa.get("MANUAL03").toString();
+				String manualImg03 = aa.get("MANUAL_IMG03").toString();
+				String manual04 = aa.get("MANUAL04").toString();
+				String manualImg04 = aa.get("MANUAL_IMG04").toString();
+				String manual05 = aa.get("MANUAL05").toString();
+				String manualImg05 = aa.get("MANUAL_IMG05").toString();
+				String manual06 = aa.get("MANUAL06").toString();
+				String manualImg06 = aa.get("MANUAL_IMG06").toString();
+				String manual07 = aa.get("MANUAL07").toString();
+				String manualImg07 = aa.get("MANUAL_IMG07").toString();
+				String manual08 = aa.get("MANUAL08").toString();
+				String manualImg08 = aa.get("MANUAL_IMG08").toString();
+				String manual09 = aa.get("MANUAL09").toString();
+				String manualImg09 = aa.get("MANUAL_IMG09").toString();
+				String manual10 = aa.get("MANUAL10").toString();
+				String manualImg10 = aa.get("MANUAL_IMG10").toString();
+				String manual11 = aa.get("MANUAL11").toString();
+				String manualImg11 = aa.get("MANUAL_IMG11").toString();
+				String manual12 = aa.get("MANUAL12").toString();
+				String manualImg12 = aa.get("MANUAL_IMG12").toString();
+				String manual13 = aa.get("MANUAL13").toString();
+				String manualImg13 = aa.get("MANUAL_IMG13").toString();
+				String manual14 = aa.get("MANUAL14").toString();
+				String manualImg14 = aa.get("MANUAL_IMG14").toString();
+				String manual15 = aa.get("MANUAL15").toString();
+				String manualImg15 = aa.get("MANUAL_IMG15").toString();
+				String manual16 = aa.get("MANUAL16").toString();
+				String manualImg16 = aa.get("MANUAL_IMG16").toString();
+				String manual17 = aa.get("MANUAL17").toString();
+				String manualImg17 = aa.get("MANUAL_IMG17").toString();
+				String manual18 = aa.get("MANUAL18").toString();
+				String manualImg18 = aa.get("MANUAL_IMG18").toString();
+				String manual19 = aa.get("MANUAL19").toString();
+				String manualImg19 = aa.get("MANUAL_IMG19").toString();
+				String manual20 = aa.get("MANUAL20").toString();
+				String manualImg20 = aa.get("MANUAL_IMG20").toString();
+				
+				
+				
+				
+				
+				rcp.setRcpPartsDtls(rcpPartsDtls);
+				rcp.setRcpCd(rcpCd);
+				rcp.setRcpKcal(rcpKcal);
+				rcp.setRcpMainImg(rcpMainImg);
+				rcp.setRcpName(rcpName);
+				rcp.setRcpWay(rcpWay);
+				rcp.setRcpPat(rcpPat);
+				rcp.setHASH_TAG(HASH_TAG);
+				rcp.setManual01(manual01);
+				rcp.setManual02(manual02);
+				rcp.setManual03(manual03);
+				rcp.setManual04(manual04);
+				rcp.setManual05(manual05);
+				rcp.setManual06(manual06);
+				rcp.setManual07(manual07);
+				rcp.setManual08(manual08);
+				rcp.setManual09(manual09);
+				rcp.setManual10(manual10);
+				rcp.setManual11(manual11);
+				rcp.setManual12(manual12);
+				rcp.setManual13(manual13);
+				rcp.setManual14(manual14);
+				rcp.setManual15(manual15);
+				rcp.setManual16(manual16);
+				rcp.setManual17(manual17);
+				rcp.setManual18(manual18);
+				rcp.setManual19(manual19);
+				rcp.setManual20(manual20);
+				rcp.setManualImg01(manualImg01);
+				rcp.setManualImg02(manualImg02);
+				rcp.setManualImg03(manualImg03);
+				rcp.setManualImg04(manualImg04);
+				rcp.setManualImg05(manualImg05);
+				rcp.setManualImg06(manualImg06);
+				rcp.setManualImg07(manualImg07);
+				rcp.setManualImg08(manualImg08);
+				rcp.setManualImg09(manualImg09);
+				rcp.setManualImg10(manualImg10);
+				rcp.setManualImg11(manualImg11);
+				rcp.setManualImg12(manualImg12);
+				rcp.setManualImg13(manualImg13);
+				rcp.setManualImg14(manualImg14);
+				rcp.setManualImg15(manualImg15);
+				rcp.setManualImg16(manualImg16);
+				rcp.setManualImg17(manualImg17);
+				rcp.setManualImg18(manualImg18);
+				rcp.setManualImg19(manualImg19);
+				rcp.setManualImg20(manualImg20);
+				
+				
+				
+				
+				
+				
+		}catch (Exception e) {
+			map.put("statusCode", "999");
+			map.put("body", "excpetion오류");
+			System.out.println(e.toString());
+
+		}
+		
+		return rcp;
+	}
+		
+		
+	
+	
+	
+	
+	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
+	@Override
+	public List<Object> getIntakeRecordListForDiary(String userId, int userServiceNo) {
+		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("userServiceNo", userServiceNo);
+		return dietMapper.getIntakeRecordListForDiary(map);
+	}
+}
 	
 	
 	
@@ -505,4 +746,4 @@ public class DietServiceImpl implements DietService{
 	
 
 	
-}
+
