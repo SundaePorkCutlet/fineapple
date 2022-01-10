@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 <style>
     form .mb-10 label{
         text-align: left;
@@ -27,8 +27,11 @@
 
 <form method="POST" enctype="multipart/form-data" >
 <div align="center">
-<div class="text-light-success bg-success" style ="font-size:20px; max-width : 750px;" align="center" data-text-content="true"  >회원가입</div>
-
+<h1 class="fs-2tx fw-bolder mb-8">
+											<span class="d-inline-block position-relative ms-2">
+												<span class="d-inline-block mb-2">JOIN</span>
+												<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
+											</span></h1>
 <br>
 
 <div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원가입은 무료이며</div>
@@ -99,7 +102,7 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >프로필사진</label>
-    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="ex)57" />
+    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" />
 </div>
  <div  data-text-content="true" style="max-width:300px;">
      <label for="exampleFormControlInput1" >목표설정</label>
@@ -120,7 +123,7 @@
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
       <!-- 공통 하단 footer -->
-<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
 

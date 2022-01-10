@@ -29,6 +29,7 @@ import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 import oracle.net.aso.m;
@@ -362,6 +363,23 @@ public class CommunityController {
 		return "community/getGroupToUserInter.html";
 	}
 	
+	@RequestMapping(value="faq/result")
+	public ModelAndView faqList() throws Exception{
+		List<MtmQna> list = communityService.getFaqList(4);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("community/faq.html");
+		mav.addObject("list",list);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="faq")
+	public String faq()throws Exception{
+		return "community/faq.html";
+	}
+	
+
 	
 }
 

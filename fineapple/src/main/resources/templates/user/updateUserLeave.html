@@ -2,51 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
-<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+<style>
+    form .mb-10 label{
+        text-align: left;
+        display: block;
+    }
+    form .input-with-btn input{
+        margin-right: 10px;
+    }
+
+    form .input-with-btn button{
+        white-space: nowrap;
+    }
+</style>
 
 	<!--begin::Body-->
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+<form method="POST" enctype="multipart/form-data" >
 
-<div class="container show-grid">
-		<div class="row">
-			
-			<div class="col-md-10">
+<div align="center">
+<h1 class="fs-2tx fw-bolder mb-8">
+<span class="d-inline-block position-relative ms-2">
+<span class="d-inline-block mb-2">회원 탈퇴</span>
+<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
+</span></h1>
+<br>
+
+<div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원탈퇴 후 모든 서비스 이용이 불가능합니다.</div>
 <br>
 <ins>
-<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">회원탈퇴</div>
 </ins>
 <br>
-<p align="center" style="font-size:15px">회원탈퇴 후 모든 서비스를 이용하실 수 없게 됩니다.</p>
-<br>
-<form>
-<div align="center">
-<p>
-<a style="font-weight : bold">아이디 : </a>
-<input type="text" id = "userId" name = "userId"  th:value="${session.user.userId}" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;border-style: solid; border-color: rgb(204, 204, 204);" readonly>
-</p>
+<div align="center" data-text-content="true" style="max-width:300px;" class="mb-10">
+  <label for="exampleFormControlInput1" >회원탈퇴</label>
 </div>
+<div class="mb-10" style="max-width:300px;">
+            <label for="userId" class="required form-label">이메일</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input  type="text" id="userId" name="userId" th:value="${session.user.userId}" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." readonly/>
+            </div>
+        </div>
+
 <br>
-<div align="center">
-<p>
-<a style="font-weight :bold">비밀번호 : </a>
-<input type="password" id = "password"  name = "password" data-min-width="60" data-min-height="30" data-text-content="true"  style="color: rgb(94, 94, 94); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);"  required>
-</p>
-</div>
+<div class="mb-10" style="max-width:300px;">
+            <label for="userId" class="required form-label">비밀번호</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input  type="password" id = "password"  name = "password" class="form-control form-control-solid" placeholder="비밀번호를 입력해주세요." required/>
+                            <button class="btn btn-primary" type="submit" data-kt-element="send" id="updateUserLeave" name="updateUserLeave">탈퇴하기</button>
+            
+            </div>
+        </div>
 <br>
-<div align="center">
-<input type="submit" value="탈퇴하기" id="updateUserLeave" name="updateUserLeave">
+
 </div>
 </form>
-</div>
-</div>
-</div>
+
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
-		<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script>
   	$(function(){
   		$("#updateUserLeave").on("click",function(){
