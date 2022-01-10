@@ -51,10 +51,7 @@ public class UserController {
 		return "user/findPassword.html";
 	}
 	
-	@RequestMapping(value="faq")
-	public String faq() {
-		return "user/faq.html";
-	}
+	
 	
 	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
