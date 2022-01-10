@@ -158,14 +158,26 @@ HEIGHT)
 	FROM users
 	WHERE user_id = #{userId:VARCHAR}
 </select>
- 
+
+<select id="checkPassword" parameterType="user" resultType="String">
+	SELECT count(*)
+	FROM users
+	WHERE password = #{password:VARCHAR} AND user_Id=#{userId:VARCHAR}
+</select>
+
 <select id ="getUserList" parameterType="user" resultMap="userSelectMap">
 	SELECT user_name, cellphone, user_id
 	FROM users
 	WHERE user_name=#{userName:VARCHAR} AND cellphone=#{cellphone:VARCHAR}
 </select>
 
-
+<update id="changePassword" parameterType="user" >
+	UPDATE users
+	<set>
+	password=#{password:VARCHAR}
+	</set>
+	WHERE user_id=#{userId:VARCHAR}
+</update>
 
 </mapper>
 

@@ -3,6 +3,19 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<style>
+    form .mb-10 label{
+        text-align: left;
+        display: block;
+    }
+    form .input-with-btn input{
+        margin-right: 10px;
+    }
+
+    form .input-with-btn button{
+        white-space: nowrap;
+    }
+</style>
 
    <!--begin::Body-->
    <body id="kt_body" class="aside-enabled">
@@ -11,9 +24,11 @@
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
 
-<ins>
-<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">회원가입</div>
-</ins>
+
+<form method="POST" enctype="multipart/form-data" >
+<div align="center">
+<div class="text-light-success bg-success" style ="font-size:20px; max-width : 750px;" align="center" data-text-content="true"  >회원가입</div>
+
 <br>
 
 <div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원가입은 무료이며</div>
@@ -21,10 +36,7 @@
 <br>
 <ins>
 </ins>
-<form method="POST" enctype="multipart/form-data" >
 <br>
-
-<div align="center">
 <div align="center" data-text-content="true" style="max-width:300px;" class="mb-10">
   <label for="exampleFormControlInput1" >정보입력</label>
 </div>
@@ -35,15 +47,17 @@
    <input type="button" id="sendMail" name ="sendMail" >인증번호 전송</p>
 </div>
 <div class="mb-10" style="max-width:300px;" th:if="${session.user == null }">
-    <label for="exampleFormControlInput1" class="required form-label">이메일</label>
-    <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." required/>
-   <p> <span align="center" id = "change" name ="change"></span>
-   <input type="button" id="sendMail" name ="sendMail" >인증번호 전송</p>
-</div>
-
+            <label for="userId" class="required form-label">이메일</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." required/>
+                <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
+            </div>
+        </div>
+                <span align="center" id = "change" name ="change"></span>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label" th:if ="${session.user == null}">인증번호</label>
-   <p> <input id="messageNum" type="number" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">이름(닉네임)</label>
@@ -56,6 +70,11 @@
 <div class="mb-10" style="max-width:300px;" th:if="${session.user == null}">
     <label for="exampleFormControlInput1" >비밀번호</label>
     <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요."required/>
+    <br>
+    <label for="exampleFormControlInput1" >비밀번호 확인</label>
+    <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
+    <p> <span align="center" id = "changePassword" name ="changePassword"></span>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >몸무게</label>
@@ -68,19 +87,19 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >키</label>
-    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="170"required/>
+    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170"required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="20" required/>
+    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
-    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="57" required/>
+    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >프로필사진</label>
-    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="57" />
+    <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" placeholder="ex)57" />
 </div>
  <div  data-text-content="true" style="max-width:300px;">
      <label for="exampleFormControlInput1" >목표설정</label>
@@ -111,6 +130,26 @@
       });
    });
    
+  $(function(){
+	  $("#checkPassword").keyup(function(){
+	  var password= $("#password").val();
+	  var checkPassword = $("#checkPassword").val();
+	 
+		console.log(checkPassword);
+		  if(password == checkPassword){
+			  $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
+			  $("#changePassword").attr('color', '#31B404');
+
+		  }
+		  else if(password != checkPassword){
+			  $("#changePassword").html("<div>비밀번호가 일치하지 않습니다.</div>");
+			  $("#changePassword").attr('color', '#FF0000');
+		  }
+	  })
+		  
+  })
+  
+  
    $(function(){
       $("#userId").on("keyup",function(){
          console.log("올라갔닝")
@@ -210,7 +249,8 @@
       console.log("fncAddUser끝");
 
       }
-   
+
+
    $(function(){
 	      $("#sendMail").on("click",function(){
 	    	  
@@ -221,7 +261,6 @@
 	          if(userId == ""){
 	             alert("메일주소가 입력되지 않았습니다.");
 	          }else{
-	        	 alert("ajax입짱")
 	        	 alert("userId:" + userId);
 	         	 $.ajax({
 	         		type : "POST",
@@ -230,8 +269,23 @@
 	         		accept : "application/json",
 	         		contentType : "application/json"
 	         	 }).done(function(data){
-	         		 alert("인증번호 전송 완료");
+	         		 alert("인증번호를 확인해주세요.");
 	         		 isCertifidation = true;
+	         		 var key = data;
+	         		   $("#compare").on("keyup",function(){
+	         			   console.log("인증번호 올라갔닝")
+	         			   var compare = $("#compare").val();
+	         			   console.log(compare)
+	         			   if(compare == key){
+	         				   $("#compareEmail").html("<p>인증성공!</p>")
+	         				   $("#compareEmail").css('color','green');
+	         				   isCertification=true;
+	         			   }else{
+	         				   $("#compareEmail").html("<p>인증실패!</p>")
+	         				   	$("#compareEmail").css('color','red');
+	         				   isCertification=false;
+	         			   }
+	         		   })
 	         	 })
 	         	 
 	  
@@ -239,6 +293,8 @@
 
 	       })
    })
+   
+      
 
    
 </script>

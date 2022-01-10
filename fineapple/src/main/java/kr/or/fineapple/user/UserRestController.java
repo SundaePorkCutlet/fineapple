@@ -76,6 +76,19 @@ public class UserRestController {
 		
 	}
 	
+	@RequestMapping(value = "checkPassword/rest", method=RequestMethod.POST)
+	public String checkPassword(@RequestBody User user) throws Exception{
+		System.out.println("비밀번호 확인창 입장");
+		
+		user.setPassword(user.getPassword());
+		user.setUserId(user.getUserId());
+		
+		String result= userService.checkPassword(user);
+		
+		return result;
+	}
+	
+
 	@RequestMapping(value = "checkDuplication/kakao",method = RequestMethod.POST)
 	public Map<String,Object> kakaocheckDuplication(@RequestBody User user) throws Exception{
 		System.out.println("checkDuplicationKakao");
@@ -93,6 +106,8 @@ public class UserRestController {
 		return map;
 		
 	}
+	
+	
 	@RequestMapping(value="addUser/kakao", method= RequestMethod.POST)
 	public User addUserKaKao(@RequestBody User user) throws Exception {  
 		System.out.println("addUserRedirect");
@@ -152,16 +167,18 @@ public class UserRestController {
 		return "redirect:/";		
 	}
 	
+	@Autowired
+	public JavaMailSender emailSender;
+	
 	@RequestMapping(value="/sendMail")
-	public String SendMail(@RequestBody User user) {
-		JavaMailSender javaMailSender = new JavaMailSenderImpl();
+	public String SendMail(@RequestBody User user, HttpSession session) {
 		SimpleMailMessage message =  new SimpleMailMessage();
 		
 		System.out.println("email 전송 시작");
 		
 		Random random  = new Random();
 		String key ="";
-		//JavaMailSender javaMailSender = new JavaMail
+		
 		System.out.println(user.getUserId());
 		message.setTo(user.getUserId());
 		System.out.println(message);
@@ -175,11 +192,37 @@ public class UserRestController {
 		message.setSubject("인증번호 입력을 위한 메일 전송");
 		message.setText("인증 번호 : "+key);
 		System.out.println("마지막 메세지: " + message);
-		javaMailSender.send(message);
+		emailSender.send(message);
         return key;
 		
 	}
 	
+	@RequestMapping(value="changePassword", method=RequestMethod.POST)
+	public String changePassword(@RequestBody User user,HttpSession session) throws Exception{
+		System.out.println("changePassword 컨트롤러 들어왔나요");
+		
+	//	User userDB= userService.getUser(user.getUserId());
+		
+	//	System.out.println(userDB);
+		
+	//	String sessionId = ((User)session.getAttribute("user")).getUserId();
+		
+		userService.changePassword(user);
+		
+		/*
+		 * userDB=userService.getUser(user.getUserId());
+		 * if(sessionId.equals(userDB.getUserId())) {
+		 * session.setAttribute("user",userDB); }
+		 */
+		System.out.println("끝?");
+		String changePassword =user.getPassword();
+	
+			session.invalidate();
+		
+		return changePassword;
+	}
+	
+
 	
 	
 }
