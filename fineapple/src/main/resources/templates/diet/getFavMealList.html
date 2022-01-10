@@ -33,15 +33,15 @@ $(function() {
 
 	 
 	 $(".favMealName").on("click" , function() {
-		 $("#favMealList").modal("hide");	
 		 
+				 $("#favMealList").modal("hide");	
 		 
 	  $.ajax({
 			url: "/diet/getFavMealItem?favMealNo="+$(this).attr("data-favMealNo")+"&favMealName="+$(this).attr("data-favMealName"),
 			success:function(data){
-				$("#mmodalHolder").html(data);
+				console.log(data)
+				$("#loginModalHolder").html(data);
 				$("#favMealItem").modal("show");			
-				
 			}  
 			  
 		  });
@@ -68,7 +68,7 @@ function addFavMeal() {
 			url: "/diet/addFavMeal?favMealName="+userInput,
 			type : 'post',
 			success:function(data){
-				$("#mmodalHolder").html(data);
+				$("#loginModalHolder").html(data);
 				$("#favMealList").modal("show");			
 				
 			}  
@@ -89,7 +89,7 @@ $(function() {
 				url: "/diet/deleteFavMeal?favMealNo="+FavMealNo,
 				type : 'post',
 				success:function(data){
-					$("#mmodalHolder").html(data);
+					$("#loginModalHolder").html(data);
 					$("#favMealList").modal("show");			
 					
 				}  
@@ -124,7 +124,7 @@ $(function() {
 			type : 'post',
 			success:function(data){
 				console.log(data)
-				$("#mmodalHolder").html(data);
+				$("#loginModalHolder").html(data);
 				$("#favMealList").modal("show");			
 				
 			}  
@@ -177,7 +177,7 @@ $(function() {
 
     <div id="mmodalHolder" ></div>
     <div id="mmodalHolder2" ></div>
-
+	
 
 
 

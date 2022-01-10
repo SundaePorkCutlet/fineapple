@@ -5,14 +5,14 @@
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
-  <!--  begin::Body -->
+
    <body id="kt_body" class="aside-enabled">
       <!-- 공통 SideBar -->
       <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
 
 
-<script type="text/javascript">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
 	
 	function fncGetUserList(currentPage) {
 		
@@ -102,9 +102,12 @@
 	}
  */
 	
+           $("#foo-table2").DataTable();
+       
+
 	
 	</script>			
-  
+
          
 <div class="container show-grid">
 		<div class="row">
@@ -114,12 +117,14 @@
 			<br>
 			<br>
 			
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >운동 리스트</div>
-			<br><br><br>
+<!-- 			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >운동 리스트</div> -->
+<!-- 			<br><br><br> -->
 
 			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/>
 
+
 				 <div align="right"> 
+
 				
 		<!-- 	 <div class="col-md-6 text-left">
 		    	<p class="text-primary">
@@ -128,30 +133,65 @@
 		    </div> 
 		     -->
 			    <form class="form-inline" name="detailForm">
-			    			
-				  	<div align="right" class="form-group">
-					<select class="form-control" name="searchCondition" style="width: 100px;">
-					<option value="0" th:selected= "${search.searchCondition}=='0'">이름순</option>
-					<option value="1" th:selected= "${search.searchCondition}=='1'">칼로리순</option>
 
-				</select>
+			    			
+<!-- 				  	<div align="right" class="form-group"> -->
+<!-- 					<select class="form-control" name="searchCondition" style="width: 100px;"> -->
+<!-- 					<option value="0" th:selected= "${search.searchCondition}=='0'">이름순</option> -->
+<!-- 					<option value="1" th:selected= "${search.searchCondition}=='1'">칼로리순</option> -->
+
+<!-- 				</select> -->
 				
 									  
-			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		
-			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }" name="searchKeyword">
+<!-- 			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		 -->
+<!-- 			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }" name="searchKeyword"> -->
 			
-			<button data-text-content="true" class="btn btn-sm btn-primary">검색</button>
-			<br>
+<!-- 			<button data-text-content="true" class="btn btn-sm btn-primary">검색</button> -->
+<!-- 			<br> -->
 			
 			<!--   <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
+
 			  
 			<!-- <a href="#">이름순</a>
 			<a href="#">칼로리순</a> -->
 			</div>
 			</form>
 			</div>	
+
 			
- 		<table class="table table-hover table-striped" >			
+<!--  		<table  id="foo-table" class="table table-bordered"> -->
+<!--   		<thead> -->
+<!--           <tr> -->
+<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">번호</th>          -->
+<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동명</th>          -->
+<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동종류</th>            -->
+<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">소모칼로리(10분당)</th>                        -->
+<!--           </tr> -->
+<!--         </thead> -->
+        
+				
+<!--       <tbody> -->
+      
+<!--    <!--    <div class="container pt-1"> -->
+<!--        <div class="col-sm-6 col-md-4 p-1"  class="row"> --> -->
+<!-- 	<tr class="col-sm-6 col-md-4 p-1" th:each="exer ,i: ${list}"> -->
+		
+<!-- 		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;" id="count" data-i="${i.count}"></td> -->
+<!-- 		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>		 -->
+<!-- 		<td>  -->
+<!-- 		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td> -->
+<!-- 		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td> -->
+<!-- 		<td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td> -->
+<!-- 	</tr> -->
+<!-- 	</tbody> -->
+<!-- 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		 -->
+
+<!-- 	</table> -->
+	
+	
+	
+	
+	<table  id="foo-table2" class="table table-bordered">
   		<thead>
           <tr>
             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">번호</th>         

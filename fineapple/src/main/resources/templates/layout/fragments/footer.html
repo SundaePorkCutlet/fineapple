@@ -6,30 +6,7 @@
 
 
 
-<style>
-.scrolltop2 {
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    position: fixed;
-    top: 60px;
-    right: 30px;
-    opacity:0.5;
-    
-    
-    
 
-}
-.button,i {
-    line-height: 1;
-    font-size: 3rem;
-    color: #eeb239;
- 
-}
-
-
-</style>
 
     <!--begin::Footer-->
     <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
@@ -69,48 +46,12 @@
         <!--end::Svg Icon-->
     </div>
     
-      <div th:if="${session.user}!=null" id="alarm_button" class="scrolltop2">
-        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-<button type="button"  class="btn btn-success">
-              <span id="count" th:attr="data-session=${session.user}" style="position:absolute;top: -5px;right: -25px;" class="badge badge-square badge-danger"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"></path>
-</svg>
 
-                
-              </button>
-    </div>
     
   
     
     <script>
-    $(function () {
-        $("#alarm_button").on("click", function () {
 
-            $.ajax({
-                url: "../diet/getAlarm",
-                success: function (data) {
-                	console.log(data)
-                    $("#ModalHolder").html(data);
-                    $("#getalarm").modal("show");
-                }
-            });
-        });
-    });
-    
-    
-    $(document).ready(function () {
-    	$.ajax({
-    		url: "/diet/rest/getAlarmCount",
-    		success:function(data){
-    			var Count = data;
-    			$("#count").text(Count);
-    			
-    		}
-    		
-    		
-    	});
-    })
     
     
 //     if($("#count").attr("data-session").length>0){
@@ -130,7 +71,7 @@
     
 //     }
     </script>
-                       <div id="ModalHolder"></div>
+                       <div id="dModalHolder"></div>
        
     
     
