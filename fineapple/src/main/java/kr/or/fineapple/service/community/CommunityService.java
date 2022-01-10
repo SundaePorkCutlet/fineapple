@@ -34,5 +34,5 @@ public interface CommunityService {
 	
 	public void addGroup(Group group);
 	
-	public List getAlarmList();
+	public List getAlarmList(User user);
 }

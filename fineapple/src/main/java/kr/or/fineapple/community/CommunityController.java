@@ -130,11 +130,11 @@ public class CommunityController {
 		
 	}
 	
-	@GetMapping(value="getAlarmList")
-	public List getAlarmList() {
-
-		return communityService.getAlarmList();
-	}
+//	@GetMapping(value="getAlarmList")
+//	public List getAlarmList() {
+//
+//		return communityService.getAlarmList();
+//	}
 	
 	
 //	@RequestMapping(value="reportPostView", method = RequestMethod.POST)

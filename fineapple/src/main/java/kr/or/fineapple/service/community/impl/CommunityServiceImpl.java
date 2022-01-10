@@ -99,9 +99,9 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List getAlarmList() {
+	public List getAlarmList(User user) {
 	
-		return communityMapper.getAlarmList();
+		return communityMapper.getAlarmList(user);
 	}
 	
 	

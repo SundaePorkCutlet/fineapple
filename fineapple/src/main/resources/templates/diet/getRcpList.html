@@ -12,8 +12,7 @@
 <form>
     <div class="container show-grid">
         <div class="row">
-
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <br>
                 <br>
 
@@ -63,29 +62,27 @@
                             <table class="table table-row-bordered align-middle gy-4 gs-9">
                                 <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
                                 <tr>
-                                    <td class="min-w-60px">번호</td>
-                                    <td class="min-w-150px">제조사</td>
+                                    <td class="min-w-80px">번호</td>
                                     <td class="min-w-200px">식품명</td>
+                                    <td class="min-w-80px">요리종류</td>
+                                    <td class="min-w-100px">태그</td>
+                                    <td class="min-w-100px">조리방법</td>
                                     <td class="min-w-100px">식품칼로리</td>
-                                    <td class="min-w-100px">식품탄수화물</td>
-                                    <td class="min-w-100px">식품단백질</td>
-                                    <td class="min-w-100px">식품지방</td>
-                                    <td class="min-w-150px">확인된정보</td>
+                                    <td class="min-w-100px">이미지</td>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr  th:each="data, i : ${list}">
+                                <tr th:each="data, i : ${list}">
                                     <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.makerName}" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;">
-                                        <a href="#" th:text="${data.foodName}"></a></td>
-                                    <td th:text="${data.foodKcal}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:attr="data-rcpName=${data.rcpName},data-rcpPartsDtls=${data.rcpPartsDtls}" class="foodName" style="cursor:pointer; text-align: left;">
+                                        <a href="#" th:text="${data.rcpName}"></a></td>
+                                    <td th:text="${data.rcpPat}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.HASH_TAG}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.rcpWay}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.rcpKcal}+Kcal" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
+                                    <td ><img th:src="${data.rcpMainImg}" class="foodFat" style="width:50%;height:30%;"></td>
                                     <td align="left">
-                                        <span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -121,89 +118,22 @@
 
 <script type="text/javascript">
 
-// var page = 1; // ajax로 날려 back단에서 select시 limit옵션을 걸기 위해
-// var temp = false; // 데이터가 없을때 계속적으로 ajax호출이 되는것을 방지하기 위해
-// var type = "type1"; // ajax로 날려 back단에서 확인할 type
-
-
-// // $(document).ready(function(){
-// // 	if(window.scrollY==0){
-// //         ++page; 
-// //         select_list();
-// // 	}
-	
-// // });
-
-// $(window).scroll(function () {
-
-	
-// 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight) {
-//         ++page; 
-//         select_list();
-//     }
-// });	
-
 function pagenation(cp) {
-//         document.getElementById("currentPage").value = currentPage;
-//         document.detailForm.submit();
-        $("form").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
+        $("form").attr("method", "post").attr("action", "/diet/getRcpList?page="+cp).submit();
 }
 
 
 
-// function select_list() {
-		
-//         //document.getElementById("currentPage").value = currentPage;
-//         //document.detailForm.submit();
-// //         $("form").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
-        
-        
-//         var searchCondition = $("option:selected").val();
-// 		var searchKeyword = $("#searchKeyword").val();
-//         $.ajax({
-//             url: "/diet/rest/addFoodList",
-//             type : "post",
-//             data:JSON.stringify({"page":page,"searchCondition":searchCondition, "searchKeyword":searchKeyword}),
-//             dataType : "JSON" ,
-//         	contentType: "application/json; charset=utf-8",
-//             success: function (data) {
-//             	if(data.length > 0 ){
-// 					$.each(data, function (idx, val){
-// 					console.log(val)
-// 					var html = '<td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>'
-//                     html+='<td th:text="'+val.makerName+'"style="cursor:pointer; text-align: left;"></td> <td th:attr="data-foodCd='+data.foodCd+'" class="foodName" style="cursor:pointer; text-align: left;">'
-//                     html+='<a href="#" th:text="'+data.foodName+'"></a></td><td th:text="'+data.foodKcal+'" class="foodKcal" style="cursor:pointer; text-align: left;"></td>'
-//                     html+='<td th:text="'+data.foodCarb+'" class="foodCarb" style="cursor:pointer; text-align: left;"></td><td th:text="'+data.foodProtein+'" class="foodProtein" style="cursor:pointer; text-align: left;"></td>'
-//                     html+='<td th:text="'+data.foodFat+'" class="foodFat" style="cursor:pointer; text-align: left;"></td><td align="left">'
-//                     html+='<span th:if="'+data.isAPI+'==1" class="badge badge-light-success fs-7 fw-bolder">Ok</span></td>'
-			 		
-//                     // 해당하는 만큼 li를 만들어서 #list 뒤에 붙임
-// // 					$(".container pt-1").append(data.list);
-				
-// 					$(".table-responsive").append(html);
-// 					});	
-// 					1
-//             	}else{
-//     				console.log("실패")
-//                     	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
-//     					temp = true;
-//     				}
-//     			}
-//     			,error: function(xhr, status, error) { alert(error); }
-//     		});
-//     	}
+
 
 
     function fncGetUserList(currentPage) {
-        //document.getElementById("currentPage").value = currentPage;
-        //document.detailForm.submit();
         $("form").attr("method", "POST").attr("action", "/diet/getFood").submit();
     }
 
     $(function () {
         $(".foodName").on("click", function () {
-            console.log('오내')
-            self.location = "/diet/getFood?foodCd=" + $(this).attr("data-foodCd");
+            self.location = "/diet/getRcp?rcpName=" + $(this).attr("data-rcpName")+"&rcpPart="+$(this).attr("data-rcpPartsDtls");
         });
     });
 
@@ -226,21 +156,6 @@ function pagenation(cp) {
     }
     
     
-    
-    
-
-
-    // $.ajax(
-    // 		{
-    // 			url : "/diet/getFoodList",
-    // 			type : 'get',
-    // 			data:JSON.stringify({"currentPage":page,"searchCondition":searchCondition,"searchKeyword":searchKeyword}),
-    // 			dataType : "JSON",
-    // 			contentType : "application/json; charset=utf-8",
-
-    // 			}
-    // 		});
-
 
 </script>
 </body>
