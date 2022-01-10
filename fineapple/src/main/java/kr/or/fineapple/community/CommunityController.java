@@ -330,7 +330,7 @@ public class CommunityController {
 		
 		groupUser.setGroupStt(4);
 		
-		List<Group> list = communityService.addGroupToUserInter(groupUser);
+		List<Group> list = communityService.getGroupToUserInter(groupUser);
 		
 		for (Group group : list) {
 			System.out.println(group);
@@ -350,7 +350,27 @@ public class CommunityController {
 		return "community/addGroupToUserInter :: addGroupToUserInter";
 	}
 	
-
+	
+	
+	@GetMapping(value = "getGroupToUserInter")
+	public String getGroupToUserInter(HttpServletRequest request, Model model) {
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser(user);
+		
+		groupUser.setGroupStt(1);
+		
+		Group group = new Group();
+		
+		List<Group> list =  communityService.getGroupInterGroup(groupUser);
+		
+		model.addAttribute("list", list);
+		
+		return "community/getGroupToUserInter.html";
+	}
 	
 	
 }

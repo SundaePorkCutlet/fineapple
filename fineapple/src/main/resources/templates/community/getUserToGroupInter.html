@@ -45,7 +45,7 @@
 							
 							
 							<!--begin::Follow-->
-							<a th:href="@{../community/getGroupToUserInter}" class="btn btn-sm btn-light" >
+							<a th:href="@{commiunty/getGroupToUserInter}" class="btn btn-sm btn-light" >
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 							<span class="svg-icon svg-icon-3">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -77,6 +77,7 @@
                                     <td class="min-w-60px">번호</td>
                                     <td class="min-w-150px">소그룹 이름</td>
                                     <td class="min-w-150px">소그룹 소개글</td>
+                                    <td class="min-w-150px">비고</td>
                                    
                                 </tr>
                                 </thead>
@@ -86,6 +87,11 @@
                                     <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.groupName}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.groupIntro}" style="cursor:pointer; text-align: left;"></td>
+                                    <td>
+                                    <button class="btn btn-secondary">수락</button>
+									<button class="btn btn-light">거절</button>
+                                    </td>
+
                                 </tr>
                                 </tbody>
 
@@ -117,7 +123,8 @@
 				}
 				
 			})
-		};</script>
+		};
+		</script>
 
 	</body>
 	<!--end::Body-->

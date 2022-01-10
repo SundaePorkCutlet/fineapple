@@ -11,6 +11,7 @@ import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 
 @Mapper
@@ -71,6 +72,10 @@ public interface CommunityMapper {
 	
 	public User getUserSearch(Search search); 
 	
-	public List<Group> addGroupToUserInter(GroupUser groupUser);
+	public List<Group> getGroupToUserInter(GroupUser groupUser);
+	
+	public void addGroupToUserInter(GroupUser groupUser);
+	
+	public List<MtmQna> getFaqList(int cate);
 	
 }

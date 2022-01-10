@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.community.Board;
-import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 import lombok.extern.slf4j.Slf4j;
@@ -110,14 +110,24 @@ public class BoardTest {
 		
 		groupUser.setUser(user);
 		
-		groupUser.setCaptainStt(1);
+		//groupUser.setCaptainStt(1);
 		
-		groupUser.setGroupStt(4);
+		groupUser.setGroupStt(1);
 		
-		List<Group> list = communityService.addGroupToUserInter(groupUser);
+		List<Group> list = communityService.getGroupToUserInter(groupUser);
 		
 		for (Group group : list) {
 			System.out.println(group);
+		}
+	}
+	
+	
+	@Test
+	public void testFQL() {
+		List<MtmQna> list = communityService.getFaqList(4);
+		System.out.println(list);
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
 		}
 	}
 }

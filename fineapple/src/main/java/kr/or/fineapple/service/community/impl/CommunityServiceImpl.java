@@ -13,6 +13,7 @@ import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
@@ -120,9 +121,9 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<Group> addGroupToUserInter(GroupUser groupUser) {
+	public List<Group> getGroupToUserInter(GroupUser groupUser) {
 		// TODO Auto-generated method stub
-		return communityMapper.addGroupToUserInter(groupUser);
+		return communityMapper.getGroupToUserInter(groupUser);
 	}
 
 	@Override
@@ -130,6 +131,21 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getUserSearch(search);
 	}
+
+	@Override
+	public void addGroupToUserInter(GroupUser groupUser) {
+		
+		communityMapper.addGroupToUserInter(groupUser);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<MtmQna> getFaqList(int cate) {
+		// TODO Auto-generated method stub
+		return communityMapper.getFaqList(cate);
+	}
+	
 	
 	
 	

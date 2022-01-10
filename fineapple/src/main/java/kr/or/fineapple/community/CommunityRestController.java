@@ -217,13 +217,17 @@ public class CommunityRestController {
 	
 	
 	@PostMapping(value = "addGroupToUserInter")
-	public void AddGroupToUserInter(@RequestBody Group group, @RequestBody String str) {
+	public void AddGroupToUserInter(@RequestBody String str) {
 		
 		System.out.println(str + "¾Ó±â¹«¶ç~");
 		
 		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
 		
 		GroupUser groupUser = new GroupUser();
+		
+		Group group = new Group();
+		
+		group.setGroupNo(Integer.parseInt(jsonObject.get("groupNo").toString()));
 		
 		groupUser.setGroup(group);
 		
@@ -234,6 +238,12 @@ public class CommunityRestController {
 		groupUser.setUser(interUser);
 		
 		groupUser.setGroupStt(1);
+		
+		System.out.println(groupUser);
+		
+		communityService.addGroupToUserInter(groupUser);
+		
+		
 		
 		System.out.println("¾Ó ¹èºÒ¶ç~" + group);
 		

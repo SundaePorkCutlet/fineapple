@@ -101,6 +101,18 @@
 	<result property="TrgtNo" column="rerport_trgt"/>
 	</resultMap>
 	
+	<resultMap type="mtmQna" id="mtmQnaMap">
+	<result property="mtmQnaNo" column="mtm_qna_no"/>
+	<result property="mtmCate" column="mtm_qna_cate"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="mtmQnaDate" column=""/>
+	<result property="mtmQnaTitle" column="mtm_qna_title"/>
+	<result property="mtmQnaCntnt" column="mtm_qna_cntnt"/>
+	<result property="mtmAnswrCntntDate" column="mtm_answer_cntnt_date"/>
+	<result property="mtmAnswrCntnt" column="mtm_answer_cntnt"/>
+	<result property="mtmAnswrStt" column="mtm_answer_stt"/>	
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -635,7 +647,7 @@
 	</select>
 	
 	
-	<select id="addGroupToUserInter" parameterType="groupUser" resultMap="groupMap">
+	<select id="getGroupToUserInter" parameterType="groupUser" resultMap="groupMap">
 
 		SELECT
 		g.*
@@ -644,21 +656,78 @@
 		group_user gu
 		<where>
 		gu.user_id = #{user.userId}
+		
+		<if test="captainStt == 0">
+		</if>
+		<if test="captainStt != 0">
 		AND
 		gu.captain_stt = #{captainStt}
+		</if>
 		AND
 		gu.group_stt = #{groupStt}
 		AND
 		gu.group_no = g.group_no
 		</where>
-		
-		
-		
-		
 
 	</select>
 	
+	<select id="getUserTGroupInter" parameterType="groupUser" resultMap="groupMap">
+
+		SELECT
+		g.*
+		FROM
+		groups g,
+		group_user gu
+		<where>
+		gu.user_id = #{user.userId}
+		
+		<if test="captainStt == 0">
+		</if>
+		<if test="captainStt != 0">
+		AND
+		gu.captain_stt = #{captainStt}
+		</if>
+		AND
+		gu.group_stt = #{groupStt}
+		AND
+		gu.group_no = g.group_no
+		</where>
+
+	</select>
 	
+	<insert id="addGroupToUserInter" parameterType="groupUser">
+		INSERT
+		INTO
+		group_user
+		(
+		group_user_no,
+		group_no,
+		user_id,
+		group_stt
+		)
+		VALUES
+		(
+		seq_group_user_no.NEXTVAL,
+		#{group.groupNo},
+		#{user.userId},
+		#{groupStt}
+	
+	)
+	</insert>
+	
+	<select id="getCaptain" parameterType="group" resultMap="userSelectMap">
+	
+	</select>
+	
+	<select id="getFaqList" parameterType="int" resultMap="mtmQnaMap">
+	SELECT
+	*
+	FROM
+	mtm_qna
+	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
+	mtm_qna_cate = #{value}
+	</trim>
+	</select>
 	
 	
 </mapper>
