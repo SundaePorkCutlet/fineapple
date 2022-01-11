@@ -57,7 +57,7 @@ public class DietController {
 		if ((User) request.getSession(true).getAttribute("user") != null) {
 			User user = (User) request.getSession(true).getAttribute("user");
 			user = userService.getUser(user.getUserId());
-			System.out.println(user);
+			System.out.println("++++++++"+user);
 
 			DietServ serv = dietService.getDietService(user.getUserId());
 			System.out.println(serv);
@@ -205,17 +205,14 @@ public class DietController {
 		System.out.println(serv);
 
 		User user = (User) request.getSession(true).getAttribute("user");
+		System.out.println(user);
+		
 		String userId = user.getUserId();
 		serv.setUserId(userId);
 
-		if (user.getDietServiceNo() == 0) {
-			dietService.addDietService(serv);
-		} else {
-			dietService.updateDietService(serv);
-		}
+		dietService.addDietService(serv);
+		
 
-		serv = dietService.getDietService(userId);
-		dietService.updateDietServiceNo(serv);
 		
 		model.addAttribute("dietServ", serv);
 		model.addAttribute("user", user);
@@ -250,6 +247,31 @@ public class DietController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("dietServ", serv);
+
+		return "diet/updateDietService.html";
+
+	}
+	
+	@PostMapping("updateDietService")
+	public String postupdateDietService(@ModelAttribute("DietServ") DietServ serv,Model model, HttpServletRequest request) throws Exception {
+		System.out.println("post:updateDietService");
+		System.out.println(serv);
+
+		User user = (User) request.getSession(true).getAttribute("user");
+		System.out.println(user);
+		
+		String userId = user.getUserId();
+		serv.setUserId(userId);
+
+
+		dietService.updateDietServiceNo(serv);
+		
+		model.addAttribute("dietServ", serv);
+		model.addAttribute("user", user);
+		
+		
+		user = userService.getUser(userId);
+
 
 		return "diet/updateDietService.html";
 
@@ -457,7 +479,6 @@ public class DietController {
 
 		return "diet/addFood.html";
 	}
-
 	@GetMapping("getaddDailyIntakeMeal")
 	public String getaddDailyIntakeMeal(Model model, @RequestParam("checkarray") String foodCd,
 			HttpServletRequest request) throws Exception {
@@ -760,6 +781,14 @@ public class DietController {
 		
 		
 		return "diet/alarm :: getalarm";
+	}
+	
+	@RequestMapping("deleteAlarm")
+	public String deleteAlarm(Model model,HttpServletRequest request) {
+		
+		
+		
+		return "redirect:../diet/getAlarm";
 	}
 	
 }

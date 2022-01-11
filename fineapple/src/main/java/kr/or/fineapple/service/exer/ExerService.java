@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.exer;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +91,7 @@ public interface ExerService {
 	
 	
 	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
-	public List<Object> getBurnningRecordListForDiary(String userId, int userServiceNo);
+	public List<Object> getBurnningRecordListForDiary(LocalDate date, int userServiceNo);
 	
 	
 	

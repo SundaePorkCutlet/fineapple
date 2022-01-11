@@ -42,17 +42,38 @@
             </td>
             <td th:text ="${data.alarmCntnt}"></td>
             <td th:text= "${data.alarmTime}"></td>
+            <td id="delete" th:attr="data-alarmNo=${data.alarmNo}" style="font-size:20px;">&#128465;</td>
         </tr>
       
         </tbody>
         </table>
         </div>
         <div class="modal-footer">
+     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">전부 삭제</button>
      <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
      </div>
      </div>
      </div>
      </div>
+     
+     <script>
+     $(function () {
+	        $("#delete").on("click", function () {
+				var alarmNo = $(this).attr("data-alarmNo");
+	        	
+	        	
+	            $.ajax({
+	                url: "../diet/deleteAlarm?alarmNo="+alarmNo,
+	                success: function (data) {
+	                	console.log(data)
+	                    $("#dModalHolder").html(data);
+	                    $("#getalarm").modal("show");
+	                }
+	            });
+	        });
+	    });
+	    
+     </script>
      
         
         

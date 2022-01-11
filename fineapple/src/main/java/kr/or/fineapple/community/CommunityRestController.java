@@ -220,6 +220,7 @@ public class CommunityRestController {
 	}
 	
 	
+	
 	@PostMapping(value = "addGroupToUserInter")
 	public void AddGroupToUserInter(@RequestBody String str) {
 		
