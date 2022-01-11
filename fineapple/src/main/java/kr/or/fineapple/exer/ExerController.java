@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +26,6 @@ import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
-import kr.or.fineapple.domain.common.Page;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.exer.ExerService;
 import kr.or.fineapple.service.user.UserService;
@@ -65,7 +63,6 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 	
 		ExerServ serv = exerService.getUserService(user.getUserId());
 		
-		
 		System.out.println(serv);
 		
 		if(serv!=null) {
@@ -77,8 +74,11 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 					return "exer/getUserService.html";
 					
 					}else {
+						
 						return "exer/addUserService.html";
+						
 						}
+				
 		}else {
 			model.addAttribute("user",user);
 			
@@ -91,6 +91,8 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 	}
 	
 }
+
+
     
 @PostMapping("addUserService")
 public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
@@ -105,34 +107,20 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
-	System.out.println("user: " + user);
-	
-	
-	
 	if(user.getExerServiceNo()==0) {
 		
-		exerService.addUserService(serv);
-		
-		System.out.println("가가ㅏ가가가가가갹갸갸ㅓㅑ거ㅑ거ㅑ거ㅑ거ㅑ거ㅑ거ㅑㅓ갸");
+	exerService.addUserService(serv);
 	
-	}else {
-		
-		System.out.println("skskskskksskksks");
-		
-		exerService.updateUserService(serv);
-		
-		
 	}
-			
+	
 	serv = exerService.getUserService(userId);
 
 	
-	System.out.println("11111111111111111111111" + serv);
+	System.out.println("내가 방금 입력한 서비스 활성화 자료" + serv);
+	
 	System.out.println(serv.getUserServiceNo());
-	
-	
 	serv.setExerServiceNo(serv.getUserServiceNo());
-	serv.setServiceTrgt(serv.getServiceTrgt());
+	
 
 	exerService.updateExerServiceNo(serv);
 	
@@ -140,7 +128,7 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	model.addAttribute("user",user);
 	
 	
-	System.out.println("s111111111111111111111111111111" + userId);
+	System.out.println("대상 id: " + userId);
 	
 	
 	user = userService.getUser(userId);
@@ -169,28 +157,56 @@ public String getUserService(Model model, HttpServletRequest request) {
 
 
 
-
-
-@GetMapping("updateUserServiceView")
-public String updateUserService(Model model, HttpServletRequest request) throws Exception {
+@GetMapping("updateUserService")
+public String getUpdateUserService(Model model, HttpServletRequest request) throws Exception {
+	
+	
 	System.out.println("get:updateUserService");
 	
 	User user =(User)request.getSession(true).getAttribute("user");
 	System.out.println(user);
 
 	ExerServ serv = exerService.getUserService(user.getUserId());
-	exerService.updateUserService(serv);
 	
 	
 	model.addAttribute("user",user);
 	model.addAttribute("exerServ",serv);
 	
 	return "exer/updateUserService.html";
+		
+	
+}
+	
 
+
+@PostMapping("updateUserService")
+public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Model model, HttpServletRequest request) throws Exception {
+	
+	
+	 System.out.println("post:updateUserService");
+	
+	
+	 System.out.println(serv);
+     User user =(User)request.getSession(true).getAttribute("user");
+     String userId = user.getUserId();
+ 	 serv.setUserId(userId);
+     
+ 	 exerService.updateUserService(serv);
+ 	 
+ 	 System.out.println("업데이트 된 후의 서비스활성화 정보:  "+serv);
+
+	model.addAttribute("exerServ",serv);	
+	model.addAttribute("user",user);
+	 
+	
+	
+	return "redirect:../exer/addUserService";
+		
+	
 }
 
 
-	
+
 
 
 @RequestMapping("getExerList")
@@ -198,16 +214,18 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 	
 	  System.out.println("getExerList");
  
-		/*
-		 * search.setPageSize(30); search.setSearchCondition(0); if
-		 * (search.searchKeyword == "") { search.setSearchKeyword("샐러드"); }
-		 * 
-		 * System.out.println(search); int page = 1; if(search.getCurrentPage()>0) {
-		 * page = search.getCurrentPage(); }; search.setStartNum((page-1)*50 +1);
-		 * search.setEndNum(page*50);
-		 */
-	 
-	  
+	    search.setPageSize(30);
+		//search.setSearchCondition(0);
+		
+
+		System.out.println(search);
+		int page = 1; 
+		if(search.getCurrentPage()>0) {
+			page = search.getCurrentPage();
+		};
+		search.setStartNum(1);
+		search.setEndNum(14);
+			  
 		/*
 		 * int pageSize = 3; int pageUnit = 5;
 		 * 
@@ -215,8 +233,10 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 		 * 
 		 * search.setPageSize(pageSize);
 		 */
+	
 		
 	  Map<String, Object> map = exerService.getExerList(search);
+	  
 	  
 		/*
 		 * Page resultPage = new Page( search.getCurrentPage(),
@@ -225,7 +245,7 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 		 * 
 		 * System.out.println(resultPage);
 		 */  
-	  
+	  	
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
@@ -286,6 +306,7 @@ public String getUpdateExer(@ModelAttribute("exer") Exer exer, Model model) thro
 
 
 private static String FILE_SERVER_PATH = "C:\\Users\\82105\\git\\fineapple\\fineapple\\src\\main\\resources\\templates\\assets\\video";
+
 
 @PostMapping("postUpdateExer")
 public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @RequestParam("exerFile") MultipartFile exerFile ) throws Exception {
@@ -734,16 +755,7 @@ User user =(User)request.getSession(true).getAttribute("user");
 
 exerServ = exerService.getUserService(user.getUserId());
 
-
-
 Double daily = exerServ.getDailyTrgtBurnningKcal();
-
-if(daily == 0) {
-	
-	daily = 0.0;
-	
-}
-
 
 System.out.println(daily);
 

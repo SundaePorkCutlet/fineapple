@@ -1,15 +1,20 @@
-<%@ page contentType="text/html; charset=utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 
-<!DOCTYPE html>
 
-<html lang="ko">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
-<head>
-   <meta charset="utf-8">
+
+   <body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+      <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+
     
      <!-- ### listPayment resources Start ### -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
+    
     <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>    
      
      <script type="text/javascript">
@@ -125,63 +130,19 @@
                { targets: 1,  width: 250 },
                { targets: 2,  width: 250 },
                { targets: 3,  width: 250 },
-               { targets: 4,  width: 100 },
-               { targets: 5,  width: 200 },
-               { targets: 6,  width: 80 },
-               { targets: 7,  width: 300 },
-               { targets: 8,  width: 80 },
-               { targets: 9,  width: 100 },
-               { targets: 10, width: 100 },
-               { targets: 11, width: 100 },
-               { targets: 12, width: 100 },
-               { targets: 13, width: 80 },
-               { targets: 14, width: 120 },
-               { targets: 15, width: 120 },
-               { targets: 16, width: 120 },
-               { targets: 17, width: 200 },
-               { targets: 18, width: 80 },
-               { targets: 19, width: 300 },
-               { targets: 20, width: 100 },
-               { targets: 21, width: 100 },
-               { targets: 22, width: 100 },
-               { targets: 23, width: 100 },
-               { targets: 24, width: 120 },
-               { targets: 25, width: 120 },
-               { targets: 26, width: 120 }
+              
             ],
             ajax : {
-                url :"/payment/rest/listPayment",
+                url :"/exer/rest/getExerList",
                 type :"POST",
                 dataSrc :''       
             },
             columns : [
-                {targets: 0, data: "paymentNo"},
-                {targets: 1, data: "paymentProduct"},
-                {targets: 2, data: "paymentSender"},
-                {targets: 3, data: "paymentReceiver"},
-                {targets: 4, data: "paymentProductPriceTotal"},
-                {targets: 5, data: "paymentRegTime"},
-                {targets: 6, data: "paymentCode"},
-                {targets: 7, data: "paymentReferenceNum"},
-                {targets: 8, data: "paymentReferenceFee"},
-                {targets: 9, data: "paymentMethod"},
-                {targets: 10, data: "paymentPriceTotal"},
-                {targets: 11, data: "paymentPricePay"},
-                {targets: 12, data: "paymentPriceFee"},
-                {targets: 13, data: "paymentMethodSecond"},
-                {targets: 14, data: "paymentPriceTotalSecond"},
-                {targets: 15, data: "paymentPricePaySecond"},
-                {targets: 16, data: "paymentPriceFeeSecond"},
-                {targets: 17, data: "paymentRefundRegTime"},
-                {targets: 18, data: "paymentRefundCode"},
-                {targets: 19, data: "paymentRefundReferenceNum"},
-                {targets: 20, data: "paymentRefundReferenceFee"},
-                {targets: 21, data: "paymentRefundPriceTotal"},
-                {targets: 22, data: "paymentRefundPricePay"},
-                {targets: 23, data: "paymentRefundPriceFee"},
-                {targets: 24, data: "paymentRefundPriceTotalSecond"},
-                {targets: 25, data: "paymentRefundPricePaySecond"},
-                {targets: 26, data: "paymentRefundPriceFeeSecond"}
+                {targets: 0, data: "exerNo"},
+                {targets: 1, data: "exerName"},
+                {targets: 2, data: "exerCate"},
+                {targets: 3, data: "exerKcal"},
+          
             ]
          
          });
@@ -276,33 +237,11 @@
             
             <thead>
                <tr>             
-                  <th>결제번호</th>
-                  <th>상품</th>
-                  <th>주는사람</th>
-                  <th>받는사람</th>
-                  <th>총 금액</th>
-                  <th>등록일자</th>
-                  <th>결제유형</th>
-                  <th>참조번호</th>
-                  <th>수수료율</th>
-                  <th>일반결제유형</th>
-                  <th>일반결제총금액</th>
-                  <th>일반결제실금액</th>
-                  <th>일반결제수수료</th>
-                  <th>포인트결제</th>
-                  <th>포인트결제총금액</th>
-                  <th>포인트결제실금액</th>
-                  <th>포인트결제수수료</th>
-                  <th>환불일자</th>
-                  <th>환불유형</th>
-                  <th>환불참조번호</th>
-                  <th>환불수수료율</th>
-                  <th>환불일반총금액</th>
-                  <th>환불일반실금액</th>
-                  <th>환불결제수수료</th>
-                  <th>환불포인트총금액</th>
-                  <th>환불포인트실금액</th>
-                  <th>환불포인트수수료</th>     
+                  <th>운동번호</th>
+                  <th>운동이름</th>
+                  <th>운동종류</th>
+                  <th>운동 소모 칼로리(10분당)</th>
+                
                </tr>
             </thead>
             
@@ -313,29 +252,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+         
                </tr>
             </tfoot>
             

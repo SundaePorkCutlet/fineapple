@@ -41,14 +41,17 @@
 </ins>
 <br>
 <div align="center" data-text-content="true" style="max-width:300px;" class="mb-10">
-  <label for="exampleFormControlInput1" >정보입력</label>
+  <label for="exampleFormControlInput1" >정보입력(* 필수)</label>
 </div>
+
 <div class="mb-10" style="max-width:300px;" th:if="${session.user != null }">
-    <label for="exampleFormControlInput1" class="required form-label">이메일</label>
-    <input name="userId" type="text" id ="userId" class="form-control form-control-solid" th:value = "${session.user.userId}"  required/>
-   <p> <span align="center" id = "change" name ="change"></span>
-   <input type="button" id="sendMail" name ="sendMail" >인증번호 전송</p>
-</div>
+            <label for="userId" class="required form-label">이메일</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" th:value = "${session.user.userId}" readonly/>
+                <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
+            </div>
+        </div>
+
 <div class="mb-10" style="max-width:300px;" th:if="${session.user == null }">
             <label for="userId" class="required form-label">이메일</label>
             <div class="d-flex flex-stack input-with-btn">
@@ -67,45 +70,45 @@
     <input name="userName" id="userName" type="text" class="form-control form-control-solid" placeholder="ex)파인이"required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >휴대폰번호</label>
+    <label for="exampleFormControlInput1" class="required form-label">휴대폰번호</label>
     <input name="cellphone" id="cellphone" type="text" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
 </div>
 <div class="mb-10" style="max-width:300px;" th:if="${session.user == null}">
-    <label for="exampleFormControlInput1" >비밀번호</label>
+    <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
     <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요."required/>
     <br>
-    <label for="exampleFormControlInput1" >비밀번호 확인</label>
+    <label for="exampleFormControlInput1" class="required form-label">비밀번호 확인</label>
     <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
     <p> <span align="center" id = "changePassword" name ="changePassword"></span>
     
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >몸무게</label>
+    <label for="exampleFormControlInput1" class="required form-label">몸무게</label>
     <input name="weight" id="weight" type="text" class="form-control form-control-solid" placeholder="ex)60"required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >성별</label>
-   <span><input name="gender" id="male" type="radio" checked = "checked" value ="male"  />남</span>
-   <span><input name="gender" id="female" type="radio" value ="female" />여</span>
+    <label for="exampleFormControlInput1" class="required form-label">성별</label>
+   <span><input name="gender" id="male" type="radio" checked = "checked" value ="male"  class="form-check-input"/>남</span>
+   <span><input name="gender" id="female" type="radio" value ="female" class="form-check-input"/>여</span>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >키</label>
+    <label for="exampleFormControlInput1" class="required form-label">키</label>
     <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170"required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >나이</label>
+    <label for="exampleFormControlInput1" class="required form-label">나이</label>
     <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >목표체중</label>
+    <label for="exampleFormControlInput1"class="required form-label" >목표체중</label>
     <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" >프로필사진</label>
+    <label for="exampleFormControlInput1" >프로필사진(선택)</label>
     <input id="userImg1" name="userImg1" type="file" class="form-control form-control-solid" />
 </div>
  <div  data-text-content="true" style="max-width:300px;">
-     <label for="exampleFormControlInput1" >목표설정</label>
+     <label for="exampleFormControlInput1"class="required form-label" >목표설정</label>
          <select  class="form-select form-select-solid" data-control="select 1" name="serviceTrgt" id="serviceTrgt">
          <option value ="체중감량">체중감량</option>
          <option value ="체중유지">체중유지</option>

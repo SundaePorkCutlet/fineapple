@@ -9,8 +9,21 @@
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+<style>
+    form .mb-10 label{
+        text-align: left;
+        display: block;
+    }
+    form .input-with-btn input{
+        margin-right: 10px;
+    }
 
+    form .input-with-btn button{
+        white-space: nowrap;
+    }
+</style>
 
+<div align="center">
 <div class="container show-grid">
 		<div class="row">
 			
@@ -27,14 +40,32 @@
 
 <br>
 <form>
-<div align="center">
-	<div align="center" data-text-content="true" style="font-weight:bold;font-size:18px ;color: rgb(41, 96, 47)" class="">이메일</div>
-	<input type = "text" id = "userId" name="userId" placeholder ="이메일을 입력해주세요." class = "userId">
+
+<div class="mb-10" style="max-width:300px;">
+            <label for="userId" class="required form-label">이메일</label>
+            <div class="d-flex flex-stack input-with-btn">
+                <input  type="text" id="userId" name="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." />
+                <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
+            </div>
+        </div>
+ <span align="center" id = "change" name ="change"></span>
+ 
+ <div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">인증번호</label>
+   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
 </div>
 <br>
-<div align = "center">
-	<div align="center" data-text-content="true" style="font-weight:bold;font-size:18px ;color: rgb(41, 96, 47)" class="">비밀번호</div>
-	<p align="center"><input type = "password" id = "password" name="password" placeholder ="비밀번호" class = "password"></p>
+<div th:if="${session.kakao == null}">
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
+    <input name="password" id="password" type="password"  placeholder ="비밀번호" class = "form-control form-control-solid"/>
+</div>
+</div>
+<div th:unless="${session.kakao == null}">
+<div class="mb-10" style="max-width:300px;">
+    <input name="password" id="password" type="hidden"  value="kakaopassword" class = "form-control form-control-solid"/>
+</div>
 </div>
 </form>
 <br>
@@ -44,7 +75,7 @@
 </div>
 </div>
 </div>
-
+</div>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
@@ -69,7 +100,49 @@
 		alert("환영합니다~")
 	})
 
+	 $(function(){
 
+	      $("#sendMail").on("click",function(){
+	    	  
+	          var userId = $("#userId").val();
+	          var data ={
+	        	  userId:userId
+	          };
+	          if(userId == ""){
+	             alert("메일주소가 입력되지 않았습니다.");
+	          }else{
+	        	// alert("userId:" + userId);
+	         	 $.ajax({
+	         		type : "POST",
+	         		url : "/user/sendMail",
+	         		data : JSON.stringify(data),
+	         		accept : "application/json",
+	         		contentType : "application/json"
+	         	 }).done(function(data){
+	         		 alert("인증번호를 확인해주세요.");
+	         		 isCertifidation = true;
+	         		 var key = data;
+	         		   $("#compare").on("keyup",function(){
+	         			   console.log("인증번호 올라갔닝")
+	         			   var compare = $("#compare").val();
+	         			   console.log(compare)
+	         			   if(compare == key){
+	         				   $("#compareEmail").html("<p>인증성공!</p>")
+	         				   $("#compareEmail").css('color','green');
+	         				   isCertification=true;
+	         			   }else{
+	         				   $("#compareEmail").html("<p>인증실패!</p>")
+	         				   	$("#compareEmail").css('color','red');
+	         				   isCertification=false;
+	         			   }
+	         		   })
+	         	 })
+	         	 
+	  
+	          }
+
+         })
+  })
 </script>
 
 	</body>

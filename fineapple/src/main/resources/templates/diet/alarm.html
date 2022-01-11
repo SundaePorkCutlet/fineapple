@@ -9,16 +9,17 @@
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 	<div id="getalarm" class="modal fade" role="dialog" th:fragment ="getalarm">		
-   <div  class="modal-dialog " style="height:1300px;">
+   <div  class="modal-dialog " >
     <div class="modal-content">
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
                 </div>
-      <h1 class="modal-title" align="center">김철수님의 알림함</h1>
+      <h1 class="modal-title" align="center"><span th:text="|${session.user.userName}님의 알림함|"></span></h1>
   
-        <div class="modal-body" style="height:500px;">
+        <div class="modal-body" style="max-height:500px;">
 		
 		
+	<div class="scroll h-400px px-5">
 		
 <table class="table">
     <thead>
@@ -47,6 +48,7 @@
       
         </tbody>
         </table>
+        </div>
         </div>
         <div class="modal-footer">
      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">전부 삭제</button>

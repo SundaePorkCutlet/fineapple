@@ -9,7 +9,7 @@
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
-
+<div align="center">
 <div class="container show-grid">
 		<div class="row">
 			
@@ -18,24 +18,29 @@
 <ins>
 <h1 class="fs-2tx fw-bolder mb-8">
 <span class="d-inline-block position-relative ms-2">
-<span class="d-inline-block mb-2">비밀번호 변경</span>
+<span class="d-inline-block mb-2">아이디 찾기</span>
 <span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
 </span></h1></ins>
 <br>
 <form method="POST">
-<div align="center">
 
-<p>이름(닉네임)</p>
-<p><input type="text" id = "userName" name = "userName" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="이름(닉네임)" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px;  border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
+
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">이름(닉네임)</label>
+    <input name="userName" id="userName" type="text" class="form-control form-control-solid" placeholder="ex)파인이"required/>
 </div>
 <br>
-<div align="center">
-<p>핸드폰번호</p>
-<p><input type="text" id = "cellphone"  name = "cellphone" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="번호만 입력하세요" style="color: rgb(94, 94, 94); border-top-left-radius: 0px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 0px; border-style: solid; border-color: rgb(204, 204, 204);" class="" required></p>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label">휴대폰번호</label>
+    <input name="cellphone" id="cellphone" type="text" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
 </div>
 <br>
 <div align="center" id="appendList">
+<<<<<<< HEAD
 <input type="button" id="getUserList" class="btn btn-warning" name="getUserList" value ="아이디찾기">
+=======
+<input type="button" id="getUserList" name="getUserList" class="btn btn-success" value ="아이디찾기">
+>>>>>>> refs/remotes/origin/master
 </div>
 <div>
 </div>
@@ -45,7 +50,7 @@
 </div>
 </div>
 </div>
-
+</div>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
 	
@@ -77,9 +82,10 @@
 					if(JSONData.length == 0){
 						alert("아이디가 없습니다.");
 					}
-				var result = "<p><h2>검색결과</h2></p>"
+				var result = "<br><p><h2>검색결과</h2></p>"
 				$("#appendList").append(result)
 					for(i = 0 ; i < JSONData.length ; i++){
+
 				//var displayValue= "<br><p><h4> 아이디 : " + JSONData[i].userId + "</h4></p>" ; 
 				
 				 var displayValue = "<div class=\"border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3\">"+
@@ -88,12 +94,16 @@
 				JSONData[i].userId+
 				"</div>"+
 				"</div>";
+
 				$("#appendList").append(displayValue);
 					}
-				
+
 				var displayButton = "<p><input type = 'submit' class=\"btn btn-secondary\" value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
 				
-				var displayButton = 
+				
+
+			
+
 				$("#appendList").append(displayButton);
 				
 				
@@ -106,8 +116,8 @@
 	
 	 $(function () {
         // console.log("공통 SIDE");
-         $("#appendList").on("click",".new",function () {
-        	 alert("function 입짱")
+         $("#appendList").on("click","#loginUserId",function () {
+        	
              $.ajax({
                  url: "/user/login",
                  success: function (data) {

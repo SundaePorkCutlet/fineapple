@@ -1,6 +1,8 @@
-
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+   <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>  -->
+   <!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>  -->
+
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
@@ -9,239 +11,220 @@
    <body id="kt_body" class="aside-enabled">
       <!-- 공통 SideBar -->
       <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+    
+     <!-- ### listPayment resources Start ### -->
+   <!--  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>   -->  
+<!--     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>    --> 
+  
+    <script type="text/javascript">
+              
+      $(document).ready(function(){ 
+      
+                        
+         var table = $("#myTable").DataTable({
+				
+             
+             
+          /*    "columnDefs": [{
+                 "defaultContent": "-",
+                 "targets": "_all"
+               }],  */
+               "language": {
+            	   "lengthMenu": "Show _MENU_",
+            	  },
+            	  "dom":
+            	   "<'row'" +
+            	   "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+            	   "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+            	   ">" +
 
+            	   "<'table-responsive'tr>" +
 
+            	   "<'row'" +
+            	   "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+            	   "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+            	   ">",
+           /*  footerCallback:function(){
+            	
+                alert('홍진호2') 
+                
+               var api = this.api(), data;
+               var result = 0; 
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
-	
-	function fncGetUserList(currentPage) {
-		
-		$("form").attr("method" , "GET").attr("action" , "/exer/getExerList").submit();
-	  	
-	}
-	$(function() {
-		 
-		 $( "button.btn.btn-sm.btn-primary" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-			fncGetUserList(1);
-		});
-	});
-	
-	/* 
-	var page = 1; // ajax로 날려 back단에서 select시 limit옵션을 걸기 위해
-	var temp = false; // 데이터가 없을때 계속적으로 ajax호출이 되는것을 방지하기 위해
-	var type = "type1";
-	
-	var lastScrollTop = 0;
-	
-	$(window).scroll(function () {
-		  console.log($(window).scrollTop());
-	      console.log($(document).height());
-	      console.log($(window).height());
-		
-		
-//	 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight)
-		if($(window).scrollTop()+1 >= $(document).height() - $(window).height()){
-	      console.log($(window).scrollTop());
-	      console.log($(document).height());
-	      console.log($(window).height());
-			
-			++page; 
-	      
-	        select_list();
-	    }
-	});
-	
+               api.column(4, {search:'applied'}).data().each(function(data,index){
+                   result += parseFloat(data);
+               });
+               $(api.column(4).footer()).html(result.toLocaleString());        
+            
+            },
 
-	function select_list() {
-		
-		alert("aaaaaaaaaaaaaaaa")
-		
-		console.log($("#searchKeyword").val());
-		
-		var searchKeyword = $("#searchKeyword").val();
-		var lastCount =  $("#count").attr("data-i");
-		
-		alert(lastCount)
-		
-	$.ajax( 
-
-		{
-			url : "/exer/rest/getExerList",
-			type : 'post',
-			data:JSON.stringify({"currentPage":page, "searchKeyword":searchKeyword}),
-			dataType : "JSON" ,
-			contentType: "application/json; charset=utf-8",
-			success : function(data){
-				console.log(data.list)
-				if(data.list.length > 0 ){
-					$.each(data.list, function (idx, val){
-						
-						
-						
-						var html = '<table class="table table-hover table-striped" ><thead>	'
-			        	  	html+='<td>번호 : '+lastCount+'</td>'
-			            	html+='<a>운동명 : '+val.exerName+'</a>'
-			            	html+='<td>운동종류 : '+val.exerCate+'</td>'
-			            	html+='<td>소모칼로리(10분당) : '+val.exerKcal+'</td>'
-			            
-			            	
-			            	
-	            	$(".row").append(html);
-				});
-					
-				}else{
-				console.log("실패")
-	            	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
-					temp = true;
-				}
-			}
-			,error: function(xhr, status, error) { console.log(error); }
-		});
-	}
- */
-	
-           $("#foo-table2").DataTable();
-       
-
-	
-	</script>			
-
+            columnDefs: [
+               { targets: 0,  width: 80 },
+               { targets: 1,  width: 250 },
+               { targets: 2,  width: 250 },
+               { targets: 3,  width: 250 },
+              
+            ],  */
+            
+            "ajax" : {
+                "url": "/exer/rest/getExerListJSON",
+                "type" : "POST",
+                "dataSrc": "",
+                "lengthMenu": "Show _MENU_",
+                
+            },
+           
+          //  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}"
+            columns : [
+                {"data" : "exerNo"
+                	/* "render": function ( data, type, row, meta ) {
+      	           	  
+                        data= '<a href="@{/exer/getExer(exerNo='+exerNo+'})}"></a>';
+                       
+                    }	 */
+                },
+                {"data" : "exerName"},     
+                {"data" : "exerCate"},
+                {"data" : "exerKcal"}
+          
+            ]
          
-<div class="container show-grid">
-		<div class="row">
-			
-			<br><br>
-			<div class="col-md-10">
-			<br>
-			<br>
-			
-<!-- 			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px;" class="" >운동 리스트</div> -->
-<!-- 			<br><br><br> -->
+         });
+         
+         /* Column별 검색기능 추가 */
+         $('#myTable_filter').prepend(
+               '<select id="select"></select>');
+         
+         $('#myTable > thead > tr').children().each(function (indexInArray, valueOfElement) { 
+            $('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
+         });
+            
+         $('.dataTables_filter input').unbind().bind('keyup', function () {
+              var colIndex = document.querySelector('#select').selectedIndex;
+              table.column(colIndex).search(this.value).draw();
+          });
+         
+         $.fn.dataTable.ext.search.push(
+              
+             function(settings, data, dataIndex){
+              
+                var min = Date.parse($('#fromDate').val());
+                  var max = Date.parse($('#toDate').val());
+                  
+                  var targetDate = Date.parse(data[6]);
+           
+                  if( (isNaN(min) && isNaN(max) ) || 
+                      (isNaN(min) && targetDate <= max )|| 
+                      ( min <= targetDate && isNaN(max) ) ||
+                      ( targetDate >= min && targetDate <= max) ){ 
+                          return true;
+                  }
+                  return false;
+             }
+          )
+          
+          $('#toDate, #fromDate').unbind().bind('keyup',function(){
+              table.draw();
+          })
 
-			<img src="../assets/img/dodbogi2.png" style ="height: 60px; width: 20px;"/>
+           
+      });
 
-
-				 <div align="right"> 
-
-				
-		<!-- 	 <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div> 
-		     -->
-			    <form class="form-inline" name="detailForm">
-
-			    			
-<!-- 				  	<div align="right" class="form-group"> -->
-<!-- 					<select class="form-control" name="searchCondition" style="width: 100px;"> -->
-<!-- 					<option value="0" th:selected= "${search.searchCondition}=='0'">이름순</option> -->
-<!-- 					<option value="1" th:selected= "${search.searchCondition}=='1'">칼로리순</option> -->
-
-<!-- 				</select> -->
-				
-									  
-<!-- 			<input type="text" data-min-width="60" data-min-height="30" data-text-content="true" placeholder="내용을 입력해주세요" style="color: rgb(94, 94, 94);"		 -->
-<!-- 			       th:value="${not #strings.isEmpty(search.searchKeyword) ? search.searchKeyword : '' }" name="searchKeyword"> -->
-			
-<!-- 			<button data-text-content="true" class="btn btn-sm btn-primary">검색</button> -->
-<!-- 			<br> -->
-			
-			<!--   <input type="hidden" id="currentPage" name="currentPage" value=""/> -->
-
-			  
-			<!-- <a href="#">이름순</a>
-			<a href="#">칼로리순</a> -->
-			</div>
-			</form>
-			</div>	
-
-			
-<!--  		<table  id="foo-table" class="table table-bordered"> -->
-<!--   		<thead> -->
-<!--           <tr> -->
-<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">번호</th>          -->
-<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동명</th>          -->
-<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동종류</th>            -->
-<!--             <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">소모칼로리(10분당)</th>                        -->
-<!--           </tr> -->
-<!--         </thead> -->
-        
-				
-<!--       <tbody> -->
       
-<!--    <!--    <div class="container pt-1"> -->
-<!--        <div class="col-sm-6 col-md-4 p-1"  class="row"> --> -->
-<!-- 	<tr class="col-sm-6 col-md-4 p-1" th:each="exer ,i: ${list}"> -->
-		
-<!-- 		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;" id="count" data-i="${i.count}"></td> -->
-<!-- 		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>		 -->
-<!-- 		<td>  -->
-<!-- 		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td> -->
-<!-- 		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td> -->
-<!-- 		<td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td> -->
-<!-- 	</tr> -->
-<!-- 	</tbody> -->
-<!-- 	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		 -->
 
-<!-- 	</table> -->
-	
-	
-	
-	
-	<table  id="foo-table2" class="table table-bordered">
-  		<thead>
-          <tr>
-            <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">번호</th>         
-            <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동명</th>         
-            <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">운동종류</th>           
-            <th style="	background-color: rgba(192, 192, 192, 0.62);" align="center">소모칼로리(10분당)</th>                       
-          </tr>
-        </thead>
-        
-				
-      <tbody>
+   </script>
+     <!-- ### listPayment resources End ### -->
+     
+     
+     <!-- 버튼 Start -->
+     <script type="text/javascript">     
+
       
-     <!--  <div class="container pt-1">
-       <div class="col-sm-6 col-md-4 p-1"  class="row"> -->
-	<tr class="col-sm-6 col-md-4 p-1" th:each="exer ,i: ${list}">
-		
-		<td th:text="${i.count}"  style="cursor:pointer; text-align: left;"></td>
-		<td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>		
-		<td> 
-		<a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
-		<td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td>
-		<td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td>
-	</tr>
-	</tbody>
-	<!-- 	<img th:src="${../assets/img/dodbogi.png}" style ="height: 60px; width: 20px;"/>	 -->		
+   </script>
+   <!-- 버튼 End -->        
 
-	</table>
-	
-	
-	<ul class="pagination pagination-circle">
-    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
-    <li class="page-item "><a href="#" class="page-link">1</a></li>
-    <li class="page-item active"><a href="#" class="page-link">2</a></li>
-    <li class="page-item "><a href="#" class="page-link">3</a></li>
-    <li class="page-item "><a href="#" class="page-link">4</a></li>
-    <li class="page-item "><a href="#" class="page-link">5</a></li>
-    <li class="page-item "><a href="#" class="page-link">6</a></li>
-    <li class="page-item next"><a href="#"  class="page-link"><i class="next"></i></a></li>
-</ul>
-
-			</div>
-			</div>
-			<!-- </div>
-		
-			</div>	-->
-			
-			</div> 	
-
- 
-   <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+   <style>
+       body > div.container-fluid{
+           margin-top: 20px;
+       }
+       
+       .form-horizontal .control-label{
+           text-align: left;
+       }
    
+   </style>   
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">   
+   <div class="col-xs-1">
+   </div>
+   <div class="col-xs-10">
+      <form role="form">
+         
+         <!-- 상단 Start -->
+         <div class="row">  
+            <h1 class="col-sm-2 mb-0">&nbsp;&nbsp;&nbsp;&nbsp;운동리스트</h1>           
+         </div>
+         <!-- 상단 End -->
+            
+         <hr class="divider-w mt-10 mb-20">
+         
+         <!-- 목록 Start -->            
+         <div class="row">
+      
+         <table id="myTable" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+            
+            <thead>
+                <tr class="fw-bolder fs-6 text-gray-800 px-7">          
+                  <th>번호</th>
+                  <th>운동이름</th>
+                  <th>운동종류</th>
+                  <th>운동 소모 칼로리(10분당)</th>
+                  <th class="text-end min-w-100px">상세정보 보기</th>
+               </tr>
+            </thead>
+	          <!--   <tbody>
+	      
+	      <div class="container pt-1">
+	       <div class="col-sm-6 col-md-4 p-1"  class="row">
+	   <tr class="col-sm-6 col-md-4 p-1" th:each="exer ,i: ${list}">
+	      
+	      <td th:text="${i.count}"  style="cursor:pointer; text-align: left;"></td>
+	      <td th:hidden="${exer.exerNo}"  style="cursor:pointer; text-align: left;"></td>      
+	      <td> 
+	      <a  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}" th:text="${exer.exerName}" style="cursor:pointer; text-align: left;" ></a></td>
+	      <td th:text="${exer.exerCate}" style="cursor:pointer; text-align: left;"></td>
+	      <td th:text="${exer.exerKcal}" style="cursor:pointer; text-align: left;"></td>
+	   </tr>
+	   </tbody> -->
+            
+            <tfoot>
+               <tr>
+				<!-- <td th:hidden="${exer.exerNo}" id="exerNo"  style="cursor:pointer; text-align: left;"></td>	
+                -->   <!-- 하단 합계 -->
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+         
+               </tr>
+            </tfoot>
+            
+         </table>      
+                  
+         </div>
+         <!-- 목록 End -->      
+   
+      </form>
+      </div>
+   <div class="col-xs-1">
+   </div>         
+</div>
+<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 </body>
-</html> 
+</html>

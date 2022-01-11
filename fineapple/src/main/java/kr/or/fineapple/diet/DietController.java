@@ -244,7 +244,41 @@ public class DietController {
 
 		DietServ serv = dietService.getDietService(user.getUserId());
 
+		 Double  dailyIntakeKcal   = 0.0;
+		   Double   totaldailyIntakeKcal = 0.0;
+
 		
+		 if(user.getGender().equals("male")) {
+		      
+		     
+		     dailyIntakeKcal   = 66 + (13.7 * user.getWeight() + 5 * user.getHeight() - 6.8 * user.getAge());
+		      
+		      
+		   } else {
+		      
+		    dailyIntakeKcal = 655 + (9.6 * user.getWeight() + 1.8 * user.getHeight() - 4.7 * user.getAge());
+		      
+		      
+		   }
+		   
+		   System.out.println(dailyIntakeKcal);
+		   
+		   if(user.getServiceTrgt().equals("체중증량")) {
+		      
+		      totaldailyIntakeKcal= dailyIntakeKcal * 1.55;
+		      
+		   } if (user.getServiceTrgt().equals("체중유지")){
+		      
+		      totaldailyIntakeKcal= dailyIntakeKcal * 1.375;
+		      
+		   } else {
+		      
+		      totaldailyIntakeKcal = dailyIntakeKcal * 1.2;
+		      
+		   }
+		
+		
+		model.addAttribute("totaldailyIntakeKcal",totaldailyIntakeKcal);
 		model.addAttribute("user", user);
 		model.addAttribute("dietServ", serv);
 
@@ -264,7 +298,7 @@ public class DietController {
 		serv.setUserId(userId);
 
 
-		dietService.updateDietServiceNo(serv);
+		dietService.updateDietService(serv);
 		
 		model.addAttribute("dietServ", serv);
 		model.addAttribute("user", user);
@@ -273,7 +307,7 @@ public class DietController {
 		user = userService.getUser(userId);
 
 
-		return "diet/updateDietService.html";
+		return "redirect:../diet/addDietService";
 
 	}
 
@@ -282,6 +316,14 @@ public class DietController {
 								@RequestParam(value="page",defaultValue = "1")int page)
 			throws Exception {
 
+		if ((User) request.getSession(true).getAttribute("user") == null) {
+			
+			return "redirect:../user/login";
+		}
+		
+		
+		
+		
 		
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
@@ -692,7 +734,7 @@ public class DietController {
 		
 		
 		
-		return "redirect:../diet/getFavMealList?menu=0";
+		return "redirect:../diet/getFavMealList?menu=1";
 	}
 	
 	@PostMapping("deleteFavMeal")
@@ -703,7 +745,7 @@ public class DietController {
 		
 		
 		
-		return "redirect:../diet/getFavMealList?menu=0";
+		return "redirect:../diet/getFavMealList?menu=1";
 	}
 	
 	@PostMapping("updateFavMeal")
@@ -721,7 +763,7 @@ public class DietController {
 		dietService.updateFavMealName(fav);
 		
 		
-		return "redirect:../diet/getFavMealList?menu=0";
+		return "redirect:../diet/getFavMealList?menu=1";
 	}
 	
 	@RequestMapping("getRcpList")

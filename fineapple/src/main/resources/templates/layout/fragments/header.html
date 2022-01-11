@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <meta charset="utf-8">
-
 <th:block th:fragment="header">
+<link rel="manifest" href="/manifest.json" />
+<link rel="apple-touch-icon" href="assets/img/logo2.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-title" content="FineApple" />   
     <!--begin::Head-->
     <head>
         <base href="">
@@ -21,6 +25,8 @@
         <link rel="shortcut icon" href="/assets/img/logo.png"/>
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"/> 
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/> 
         <!--end::Fonts-->
         <!--begin::Page Vendor Stylesheets(used by this page)-->
         <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
@@ -36,7 +42,8 @@
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+		<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>  
+		<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>  
     </head>
     <!--end::Head-->
 </th:block>

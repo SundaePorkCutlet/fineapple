@@ -56,6 +56,8 @@ public interface ExerMapper {
        
        List<Search> getExerList(Search search);
        
+       List<Exer> getExerListJSON();
+       
        int updateExer(Exer exer);
        
        int deleteExer(int exerNo);

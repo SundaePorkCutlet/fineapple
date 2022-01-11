@@ -13,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,43 @@ public class UserRestController {
 	
 	public UserRestController() {
 		System.out.println(this.getClass());
+	}
+	
+	@PostMapping(value="login/rest")
+	public String logincheck(@RequestBody User user, HttpSession session)throws Exception{
+		
+		System.out.println("login시도:rest" + user);
+		User userDB = userService.getUser(user.getUserId());
+		String result;
+		
+		
+		if(userDB == null) {
+			result="3";
+			return result;
+		}else {
+			System.out.println("userDB : "+userDB);
+		
+		if(user.getPassword().equals(userDB.getPassword())) {
+			if(userDB.getUserLeaveStt() == 0) {
+				session.setAttribute("user",userDB);
+				System.out.println("stt == 0");
+				result = "0";
+				return result ;
+			}
+			else if (userDB.getUserLeaveStt() == 1) {
+				System.out.println("Stt == 1");
+				result = "1";
+				return result;
+			}
+		}
+		else {
+			System.out.println("비밀번호 오류");
+			result = "2";
+			return result;
+			
+		}
+		}
+		return "redirect:/";	
 	}
 	
 	@RequestMapping(value="rest/getUserList",method=RequestMethod.POST)
@@ -141,7 +179,7 @@ public class UserRestController {
 		System.out.println("login시도:POST" + user);
 		User userDB = userService.getUser(user.getUserId());
 		
-		
+		System.out.println("login 컨트롤러 카카오 입장");
 		System.out.println("userDB : "+userDB);
 		
 		if(user.getPassword().equals(userDB.getPassword())) {
@@ -150,15 +188,20 @@ public class UserRestController {
 				System.out.println("stt == 0");
 				session.setAttribute("user", userDB);
 				System.out.println("user : "+user);
-				return "redirect:/";
+				System.out.println("탈퇴하지 않은 카카오 회원일때 ");
+				
+				return userDB.getUserLeaveStt() + "";
 			}
 			else if (userDB.getUserLeaveStt() == 1) {
 				System.out.println("Stt == 1");
-				
-				return "redirect:/user/restoreUser";
+				System.out.println("들어와");
+				String password = "kakaopassword";
+				session.setAttribute("kakao", password);
+				return userDB.getUserLeaveStt()+"";
 			}
 		}
-		return "redirect:/";		
+		System.out.println("마지막");
+			return "589";
 	}
 	
 	@Autowired

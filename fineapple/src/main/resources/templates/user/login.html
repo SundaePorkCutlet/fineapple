@@ -5,13 +5,13 @@
 </head>
 <body>
    <div id="loginModal" class="modal fade" role="dialog" th:fragment ="hong">      
-   <div  class="modal-dialog " style="width:470px; height:1300px;">
+   <div  class="modal-dialog " style="max-width:400px">
     <div class="modal-content">
       <h1 class="modal-title" align="center"></h1>
      <div class="modal-header">
      </div>
      
-        <div class="modal-body" style="height:500px; width:400px;">
+        <div class="modal-body" >
 <script src = "https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
@@ -35,7 +35,40 @@ $(function(){
          $("#password").focus();
          return;
       }
-      $("#loginform").attr("method","POST").attr("action","/user/login/redirect").submit();
+   //   $("#loginform").attr("method","POST").attr("action","/user/login/redirect").submit();
+   	var data={
+   			"userId":userId,
+   			"password":password
+   	}
+   	$.ajax({
+		url: "/user/login/rest", //url : 요청 Url
+		type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+		dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+		data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+		contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+			console.log("성공" + data);//2
+			//console.log("성공" + data.result);//undefined
+			if(data == 0){
+				self.location="/"
+			}else if(data == 1){
+				self.location="/user/restoreUser"
+			}else if(data == 2){
+				alert("비밀번호가 일치하지 않습니다.");
+				return;
+			}else if(data == 3){
+				alert("존재하는 ID가 아닙니다.");
+				return;
+			}
+		
+			
+			 //$("#loginModal").modal("hide");
+
+			
+		}
+		
+	})
+     
    });   
 
 
@@ -135,8 +168,13 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                            accept : "application/json",
                            contentType : "application/json"
                         }).done(function(data){
-                           console.log("kakaologin");
-                           window.location="/"
+                           if(data == 1 ){
+                        	   self.location="/user/restoreUser";
+                           }else if(data == 0){
+                        	   self.location="/";
+                           }else if(data == 589){
+                        	   alert("수상한 접근");
+                           }
                            
                         });
                      }
@@ -163,68 +201,72 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 }
 </script>
 <div align="center">
-<div class="container show-grid" align="center" style="width: 450px; padding:0px; margin: 0px;" >
+<div class="container show-grid" align="center" style="max-width:300px; padding:0px; margin: 0px;" >
 
 <br>
 
-<h1 class="fs-2tx fw-bolder mb-8">
-<span class="d-inline-block position-relative ms-2">
-<span class="d-inline-block mb-2">Login</span>
-<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
-</span></h1>
+<div class="text-center mb-10">
+									<!--begin::Title-->
+									<h1 class="text-dark mb-3">Sign In to FineApple</h1>
+									<!--end::Title-->
+									<!--begin::Link-->
+									<div class="text-gray-400 fw-bold fs-4">New Here? 
+									<a value ="Join" id="join" th:onClick="|location.href='@{../user/addUser}'|" class="link-primary fw-bolder">Create an Account</a></div>
+									<!--end::Link-->
+								</div>
 <br>
 <form id="loginform">
-    <input type="text" id="userId" name="userId" class="form-control form-control-solid" placeholder="UserId"/>
-
+<div class="fv-row mb-10 fv-plugins-icon-container">
+									<!--begin::Label-->
+									<div class="d-flex flex-stack mb-2">
+									<label class="form-label fs-6 fw-bolder text-dark">Email</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<a th:onClick="|location.href='@{../user/getUserList}'|" class="link-primary fs-6 fw-bolder">Forgot Email ?</a>
+									</div>
+									<input class="form-control form-control-lg form-control-solid" id="userId" name="userId" autocomplete="off">
+									<!--end::Input-->
+								<div class="fv-plugins-message-container invalid-feedback">
+								</div>
+								</div>
 <br>
-<div class="mb-10">
-    <input type="password" class="form-control form-control-solid" placeholder="Password" id="password"  name="password"/>
-</div>
+<div class="fv-row mb-10 fv-plugins-icon-container">
+									<!--begin::Wrapper-->
+									<div class="d-flex flex-stack mb-2">
+										<!--begin::Label-->
+										<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+										<!--end::Label-->
+										<!--begin::Link-->
+										<a th:onClick="|location.href='@{../user/findPassword}'|" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+										<!--end::Link-->
+									</div>
+									<!--end::Wrapper-->
+									<!--begin::Input-->
+									<input class="form-control form-control-lg form-control-solid" type="password" name="password" id="password" autocomplete="off">
+									<!--end::Input-->
+								<div class="fv-plugins-message-container invalid-feedback">
+								</div>
+								</div>
 </form>
-<br>
-<div align="center">
-<input type="button" id = "login" name="login" data-text-content="true" style="border : none; padding : 0; font-size: 17px; color: rgb(255, 255, 255); text-align: center; line-height: 2.5em; border-radius: 4px; background-color: rgba(241, 196, 15, 0.71);  width: 300px; height: 40px;" value = "Login">
-</div>
-<br>
-<div align="center">
-<input type = "button" value ="Join" id="join"  data-text-content="true" style="font-size: 17px; color: rgb(64, 64, 64); text-align: center; line-height: 2.5em; border:none ; padding:0; background-color: rgba(224, 224, 224, 0.71);  width: 300px; height: 40px;">
-</div>
-<br>
-<a th:onClick="|location.href='@{../user/getUserList}'|" class="btn btn-lg btn-flex btn-link btn-color-success" id="getUserList" name="getUserList">Find Id
-													<!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-													<span class="svg-icon ms-2 svg-icon-3">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-															<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-														</svg>
-													</span>
-													<!--end::Svg Icon--></a>
+<br><div class="text-center">
+									<!--begin::Submit button-->
+									<button type="button" id = "login" name="login" class="btn btn-lg btn-primary w-100 mb-5">
+										<span class="indicator-label">Continue</span>
+										<span class="indicator-progress">Please wait... 
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+									</button>
+									<!--end::Submit button-->
+									<!--begin::Separator-->
+									<div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
+									<a href= "javascript:kakaoLogin();"><img src = "../assets/img/kakao_login_medium_narrow.png"></a>
 
-<br>
-<a th:onClick="|location.href='@{../user/findPassword}'|" class="btn btn-lg btn-flex btn-link btn-color-success" id ="findPassword" name="findPassword" >Change Password
-													<!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-													<span class="svg-icon ms-2 svg-icon-3">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-															<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-														</svg>
-													</span>
-													<!--end::Svg Icon--></a>
+								</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-<div align = "center">
-<br>
-
-<a href= "javascript:kakaoLogin();"><img src = "../assets/img/kakao_login_medium_narrow.png"></a>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
- <div class="modal-footer" >
-     <button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
-     </div>
     </div>
  
   
