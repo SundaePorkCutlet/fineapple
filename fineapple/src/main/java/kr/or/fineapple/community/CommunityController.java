@@ -448,7 +448,11 @@ public class CommunityController {
 		
 		return "community/getReport.html";
 	}
-	 
+	
+	@PostMapping(value = "addBlackListView")
+	public String  blackListViewModal() {
+		return "community/blackListView :: addBlackListView";
+	}
 	
 	
 	
