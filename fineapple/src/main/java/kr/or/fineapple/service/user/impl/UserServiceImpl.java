@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserLeave(User user) throws Exception {
-		userMapper.updateUserLeave(user);
+	public void updateUserLeave(String userId) throws Exception {
+		userMapper.updateUserLeave(userId);
 	}
 
 	@Override

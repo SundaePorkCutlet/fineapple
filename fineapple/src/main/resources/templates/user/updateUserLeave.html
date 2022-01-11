@@ -38,42 +38,122 @@
 <ins>
 </ins>
 <br>
-<div align="center" data-text-content="true" style="max-width:300px;" class="mb-10">
-  <label for="exampleFormControlInput1" >회원탈퇴</label>
-</div>
+
 <div class="mb-10" style="max-width:300px;">
             <label for="userId" class="required form-label">이메일</label>
             <div class="d-flex flex-stack input-with-btn">
                 <input  type="text" id="userId" name="userId" th:value="${session.user.userId}" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." readonly/>
+                <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
             </div>
         </div>
-
+ <span align="center" id = "change" name ="change"></span>
 <br>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" class="required form-label" th:if ="${session.user == null}">인증번호</label>
+   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
+</div>
+
+
+<div th:if="${session.user.password.equals('kakaopassword')}">
+<div class="mb-10" style="max-width:300px;">
+       <div class="d-flex flex-stack input-with-btn">
+                <input  type="hidden" id = "password"  name = "password" value="kakaopassword" class="form-control form-control-solid" placeholder="비밀번호를 입력해주세요." required/>
+            
+            </div>
+</div>
+       
+</div>
+<div th:unless="${session.user.password.equals('kakaopassword')}">
 <div class="mb-10" style="max-width:300px;">
             <label for="userId" class="required form-label">비밀번호</label>
             <div class="d-flex flex-stack input-with-btn">
                 <input  type="password" id = "password"  name = "password" class="form-control form-control-solid" placeholder="비밀번호를 입력해주세요." required/>
-                            <button class="btn btn-primary" type="submit" data-kt-element="send" id="updateUserLeave" name="updateUserLeave">탈퇴하기</button>
             
             </div>
-        </div>
-<br>
+</div>
+       
+</div>
+ <button class="btn btn-primary" type="button" data-kt-element="send" id="updateUserLeave" name="updateUserLeave">탈퇴하기</button>
+
 
 </div>
 </form>
 
-
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
-<script>
-  	$(function(){
-  		$("#updateUserLeave").on("click",function(){
-  			$("form").attr("method","POST").attr("action","/user/updateUserLeaveResult").submit();
-  		});
+<script th:inline="javascript">
+	$(function(){
+			var comparedPassword = [[${session.user.password}]];
+			var userId=$("#userId").val()
+			console.log(comparedPassword);
+			$("#updateUserLeave").on("click",function(){
+				//alert("ㅇㅇ")
+			var password = $("#password").val()
+			console.log(password)
+				console.log("클릭이벤트 ")
+				//alert("dd")
+				if(password == comparedPassword){  		
+				//	alert("ff")
+				//	console.log("if문 진입")
+			  		$("form").attr("method","POST").attr("action","/user/updateUserLeaveResult").submit();
+			
+			 		}else {
+			 			
+					alert("비밀번호가 일치하지 않습니다");
+					alert(userId);
+					self.location="/user/updateUserLeave?userId="+userId
+				}
+			});
   		
-  	});
+  	
+	});
 
+	
+	 $(function(){
+
+	      $("#sendMail").on("click",function(){
+	    	  
+	          var userId = $("#userId").val();
+	          var data ={
+	        	  userId:userId
+	          };
+	          if(userId == ""){
+	             alert("메일주소가 입력되지 않았습니다.");
+	          }else{
+	        	// alert("userId:" + userId);
+	         	 $.ajax({
+	         		type : "POST",
+	         		url : "/user/sendMail",
+	         		data : JSON.stringify(data),
+	         		accept : "application/json",
+	         		contentType : "application/json"
+	         	 }).done(function(data){
+	         		 alert("인증번호를 확인해주세요.");
+	         		 isCertifidation = true;
+	         		 var key = data;
+	         		   $("#compare").on("keyup",function(){
+	         			   console.log("인증번호 올라갔닝")
+	         			   var compare = $("#compare").val();
+	         			   console.log(compare)
+	         			   if(compare == key){
+	         				   $("#compareEmail").html("<p>인증성공!</p>")
+	         				   $("#compareEmail").css('color','green');
+	         				   isCertification=true;
+	         			   }else{
+	         				   $("#compareEmail").html("<p>인증실패!</p>")
+	         				   	$("#compareEmail").css('color','red');
+	         				   isCertification=false;
+	         			   }
+	         		   })
+	         	 })
+	         	 
+	  
+	          }
+
+         })
+  })
 </script>
 	</body>
 	<!--end::Body-->

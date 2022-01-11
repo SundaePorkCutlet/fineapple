@@ -4,19 +4,19 @@ public class Search {
 	
 	
 	///Field
-		 int currentPage;
-		int searchCondition = 0;
-		String searchKeyword = "";
-		 int pageSize;
+		public int currentPage;
+		public int searchCondition = 0;
+		public String searchKeyword = "";
+		public int pageSize;
 		//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
 		//==> UserMapper.xml 의 
 		//==> <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 		//==> 참조
-		 int endRowNum;
-		 int startRowNum;
+		public int endRowNum;
+		public int startRowNum;
 		
-		int startNum;
-		int endNum;
+		public int startNum;
+		public int endNum;
 		
 		///Constructor
 		public Search() {
