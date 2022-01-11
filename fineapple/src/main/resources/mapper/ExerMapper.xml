@@ -182,6 +182,12 @@
     #{exerLink:VARCHAR})
 	</insert> 
 	
+	<select  id="getExerListJSON" resultMap="exerMap">
+	SELECT e.exer_no, e.exer_name, e.exer_cate, e.exer_kcal
+	FROM EXER e
+	ORDER BY exer_No
+	</select>
+	
 	 
 	 
 	<select  id="getExerList"  parameterType="hashMap"  resultMap="exerMap">

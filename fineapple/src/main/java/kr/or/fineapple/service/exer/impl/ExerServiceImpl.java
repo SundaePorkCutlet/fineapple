@@ -62,9 +62,19 @@ public class ExerServiceImpl implements ExerService {
 		//exerMapper.updateServiceTrgt(service);
 		exerMapper.updateBodyInfo(service);
 		
+
+		System.out.println("updateUserServiceImpl µé¾î¿È");
+		System.out.println(service);
+		
 		return exerMapper.updateUserService(service);
 		
 		
+	}
+	
+	@Override
+	public List<Exer> getExerListJSON() throws Exception {		
+		
+		return exerMapper.getExerListJSON();		
 	}
 	
 

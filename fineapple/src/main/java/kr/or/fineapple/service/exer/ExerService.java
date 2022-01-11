@@ -22,6 +22,8 @@ public interface ExerService {
 	public int updateExerServiceNo(ExerServ service)throws Exception;
 	
 	
+	public List<Exer> getExerListJSON() throws Exception;
+	
 	public Map<String ,Object> getExerList(Search search)throws Exception;
 		
 	public void addExer(Exer exer)throws Exception;

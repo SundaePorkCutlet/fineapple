@@ -27,17 +27,11 @@ $(function() {
       
 });
 });
-$(function() {
-	
-	$("#reset").on("click" , function() {
-		
-		$("form")[0].reset();
-});
-	
-});
+
+
 </script>   
    
-      <form>   
+       <form class="form-inline" name="detailForm">   
 <div class="container show-grid">
       <div class="row">
          
@@ -63,60 +57,38 @@ $(function() {
      <div align="center">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중 관리 목적</label>
-    <input th:value="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+    <input th:value="${user.serviceTrgt}" name="serviceTrgt" style=font-weight:bold; type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
 </div>
+
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중</label>
-    <input th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
-      <span style=font-weight:bold;font-size:16px;>kg</span>
+    <input th:value="${user.weight}" name="weight" type="number" style=font-weight:bold; step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
+      
+      
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input  th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
-     <span style=font-weight:bold;font-size:16px;>cm</span>
+    <input  th:value="${user.height}" name="height" type="number" style=font-weight:bold; step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
+     
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input  th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
-     <span style=font-weight:bold;font-size:16px;>세</span>
+    <input  th:value="${user.age}" name="age" type="number" style=font-weight:bold;   class="form-control form-control-solid" placeholder="ex)11.1"/>
+    
+</div>
+<div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >성별</label>
+    <input  th:value="${user.gender}" name="gender" type="text"  style=font-weight:bold;  class="form-control form-control-solid" />
+    
 </div>
 
-        <label class="required fw-bold fs-6 mb-5">성별</label>
-		<div align="center">
-		      <div class="d-flex flex-column fv-row" align="center">
-            <!--begin::Radio-->
-            <div class="form-check form-check-custom form-check-solid mb-5">
-                <!--begin::Input-->
-                <input class="form-check-input me-3" name="radio_input" type="radio" value="0" id="kt_docs_formvalidation_radio_option_1" />
-                <!--end::Input-->
-
-                <!--begin::Label-->
-                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_1">
-                    <div class="fw-bolder text-gray-800" align="center">남자</div>
-                </label>
-                <!--end::Label-->
-            </div>
-            <!--end::Radio-->
-
-            <!--begin::Radio-->
-            <div class="form-check form-check-custom form-check-solid mb-5">
-                <!--begin::Input-->
-                <input class="form-check-input me-3" name="radio_input" type="radio" value="1" id="kt_docs_formvalidation_radio_option_2" />
-                <!--end::Input-->
-
-                <!--begin::Label-->
-                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_2">
-                    <div class="fw-bolder text-gray-800">여자</div>
-                </label>
-                <!--end::Label-->
-            </div>
-            </div>
-        	</div>
+     
+       
      
 		     <div class="mb-10" style="max-width:300px;">
 		    <label for="exampleFormControlInput1" >목표체중</label>
-		    <input  th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)70kg"/>
-		         <span style=font-weight:bold;font-size:16px;>kg</span>
+		    <input  th:value="${user.trgtWeight}" name="trgtWeight" type="number"  style=font-weight:bold; step="0.1"  class="form-control form-control-solid" placeholder="ex)70kg"/>
+		      
 		</div>
 		<div class="mb-10" style="max-width:300px;">
 		    <label for="exampleFormControlInput1" >현재 골격근량</label>
@@ -129,7 +101,7 @@ $(function() {
 		<div class="mb-10" style="max-width:300px;">
 		    <label for="exampleFormControlInput1" >*하루 목표 소모칼로리</label>
 		    <input name="dailyTrgtBurnningKcal" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
-		      <span style=font-weight:bold;font-size:16px;>Kcal</span><span style="color:gray; font-size:8px;"></span>
+		      
 		</div>
 		     
 		         
@@ -138,9 +110,7 @@ $(function() {
          <button id="cancel" type="button" class="btn btn-primary" >취 &nbsp;소</button>
          </div>
          <br><br>
-         <div align="center">
-         <button id="reset" type="button" class="btn btn-primary" >초기화</button>
-         </div>
+       
          
          </div>
          </div>
