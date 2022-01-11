@@ -9,7 +9,7 @@
 <body>
 
 	<div id="favMealList" class="modal fade" role="dialog" th:fragment ="getFavMealList">		
-   <div  class="modal-dialog" style=" height:1300px;">
+   <div  class="modal-dialog" >
     <div class="modal-content">
     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
@@ -17,8 +17,9 @@
       <h1 class="modal-title" align="center">즐겨찾기리스트</h1>
      <div class="modal-header">
     			 </div>
-     <div class="modal-body"style="height:500px;">
+     <div class="modal-body"style="max-height:500px;">
 
+	<div class="scroll h-400px px-5">
 	
 	
 <script type="text/javascript">
@@ -65,7 +66,7 @@ function addFavMeal() {
 				$("#favMealList").modal("hide");	
 	 
 	  $.ajax({
-			url: "/diet/addFavMeal?favMealName="+userInput,
+			url: "/diet/addFavMeal?favMealName="+userInput+"&menu=1",
 			type : 'post',
 			success:function(data){
 				$("#loginModalHolder").html(data);
@@ -86,7 +87,7 @@ $(function() {
 		 
 		 $("#favMealList").modal("hide");
 		  $.ajax({
-				url: "/diet/deleteFavMeal?favMealNo="+FavMealNo,
+				url: "/diet/deleteFavMeal?favMealNo="+FavMealNo+"&menu=1",
 				type : 'post',
 				success:function(data){
 					$("#loginModalHolder").html(data);
@@ -120,7 +121,7 @@ $(function() {
 	 
 	 $("#favMealList").modal("hide");
 	  $.ajax({
-			url: "/diet/updateFavMeal?favMealName="+userInput2+"&favMealNo="+FavMealNo,
+			url: "/diet/updateFavMeal?favMealName="+userInput2+"&favMealNo="+FavMealNo+"&menu=1",
 			type : 'post',
 			success:function(data){
 				console.log(data)
@@ -161,7 +162,7 @@ $(function() {
 	</table>
 	
 
-
+</div>
 
 
      </div>
