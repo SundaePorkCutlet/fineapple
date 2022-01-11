@@ -10,13 +10,12 @@
 				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
 	            	<span class="svg-icon svg-icon-2x"></span>
 	            </div>
-	            <h1 class="modal-title" align="center">신고하기</h1>
+	            <h1 class="modal-title" align="center">블랙리스트 추가</h1>
 				<div class="modal-header">
 				</div>
 				<div class="modal-body" style="height:500px;">
 					<form id="kt_modal_new_target_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
 						<input id="reportCate" name="reportCate" th:value = "${report.reportCate}"  type="hidden">
-						<input id="TrgtNo" name="TrgtNo" th:value = "${report.TrgtNo}"   type="hidden">
 						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 							<span>신고 날짜 : </span>
 							<span id="time" th:value ="${time}" th:text="${time}"></span>
@@ -30,12 +29,12 @@
 							<span class="required">신고사유</span>
 						</label>
 						</div>
-						<input id = "reportcontent" type="text" name = "content" class="form-control form-control-solid" placeholder="신고 사유를 입력해주세요" >
+						<input id = "reportcontent" type="text" name = "content" class="form-control form-control-solid" placeholder="추가 사유를 입력해주세요" >
 					</form>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fnAddReport()">신고완료</button>
+					<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fnAddReport()">블랙리스트추가</button>
 					<button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
 				</div>
 			</div>
