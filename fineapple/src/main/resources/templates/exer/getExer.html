@@ -16,197 +16,197 @@
 <script type="text/javascript">
 
 $(function() {
-	
-	$( "button.btn.btn-primary").on("click" , function() {
-		
- 		history.go(-1);
- 		
-	});	
-	
-	 
-	
+   
+   $( "button.btn.btn-primary").on("click" , function() {
+      
+       history.go(-1);
+       
+   });   
+   
+    
+   
 });
 
 function count(type)  {
-	
-		
-	
-	 /*  // 결과를 표시할 element
-	  const resultElement = document.getElementById('result');
-	  
-	  // 현재 화면에 표시된 값
-	  let number = resultElement.innerText;
-	  
-	  // 더하기/빼기
-	  if(type === 'plus') {
-	    number = parseInt(number) + 10;
-	  }else if(type === 'minus')  {
+   
+      
+   
+    /*  // 결과를 표시할 element
+     const resultElement = document.getElementById('result');
+     
+     // 현재 화면에 표시된 값
+     let number = resultElement.innerText;
+     
+     // 더하기/빼기
+     if(type === 'plus') {
+       number = parseInt(number) + 10;
+     }else if(type === 'minus')  {
 
-	    number = parseInt(number) - 10;
-	  }
-	 
-	  
-	  // 결과 출력
-	  resultElement.innerText = number; */
-	}
-
-
-	function sports(selectCal){
-		var exerKcal = [[${exer.exerKcal}]]; 
-		console.log(exerKcal);
-		console.log($("#sporttime").val());
-		
-		
-		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
-	}
-
-	function sportsTime(){
-		var exerKcal = [[${exer.exerKcal}]]; 
-		console.log(exerKcal);
-		console.log($("#sporttime").val());
-		
-		
-		$("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
-		//document.getElementById('sportsCal').innerText = $("select[name=order]").val()*obj.query.value;
-	}
-
-	function choiceType(val,df_num){
-		if (val == "+"){
-			$("#sporttime").val(parseInt($("#sporttime").val())+parseInt(df_num));
-		}else{
-			var pinum=parseInt($("#sporttime").val())-parseInt(df_num);
-			if ( pinum <= 0 ){
-				pinum=df_num;
-			}
-			$("#sporttime").val(pinum);
-		}
-		sportsTime();
-	}
+       number = parseInt(number) - 10;
+     }
+    
+     
+     // 결과 출력
+     resultElement.innerText = number; */
+   }
 
 
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-		 $( "button.btn.btn-danger" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
-			
-			
-		
-			var exerNo = $("#exerNo").attr("data-exerNo");
-		
-			//alert(exerNo)
-		
-			
-			  $.ajax({
-					url: "/exer/addRoutineInfo?routineInfo="+exerNo,
-					success:function(data){
-						$("#mmodalHolder").html(data);
-						$("#mmodal").modal("show");			
-						
-					}  
-					  
-				  });
-			
-			
-			 
-		});
-	});	
+   function sports(selectCal){
+      var exerKcal = [[${exer.exerKcal}]]; 
+      console.log(exerKcal);
+      console.log($("#sporttime").val());
+      
+      
+      $("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
+   }
+
+   function sportsTime(){
+      var exerKcal = [[${exer.exerKcal}]]; 
+      console.log(exerKcal);
+      console.log($("#sporttime").val());
+      
+      
+      $("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
+      //document.getElementById('sportsCal').innerText = $("select[name=order]").val()*obj.query.value;
+   }
+
+   function choiceType(val,df_num){
+      if (val == "+"){
+         $("#sporttime").val(parseInt($("#sporttime").val())+parseInt(df_num));
+      }else{
+         var pinum=parseInt($("#sporttime").val())-parseInt(df_num);
+         if ( pinum <= 0 ){
+            pinum=df_num;
+         }
+         $("#sporttime").val(pinum);
+      }
+      sportsTime();
+   }
+
+
+   $(function() {
+      //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+      //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.   
+       $( "button.btn.btn-danger" ).on("click" , function() {
+         //Debug..
+         //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+         
+         
+      
+         var exerNo = $("#exerNo").attr("data-exerNo");
+      
+         //alert(exerNo)
+      
+         
+           $.ajax({
+               url: "/exer/addRoutineInfo?routineInfo="+exerNo,
+               success:function(data){
+                  $("#mmodalHolder").html(data);
+                  $("#mmodal").modal("show");         
+                  
+               }  
+                 
+              });
+         
+         
+          
+      });
+   });   
 
  
-	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-		 $( "button.btn.btn-success" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
-			
-			
-		
-			var exerNo = $("#exerNo").attr("data-exerNo");
-		
-		
-			
-			  $.ajax({
-				  
-					url: "/exer/addDailyBurnning?addDailyBurnning="+exerNo,
-					success:function(data){
-						$("#mmodalHolder").html(data);
-						$("#mmodal").modal("show");					
-						
-					}  
-					  
-				  });
-			
-			
-			 
-		});
-	});	 
+   $(function() {
+      //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+      //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.   
+       $( "button.btn.btn-success" ).on("click" , function() {
+         //Debug..
+         //alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+         
+         
+      
+         var exerNo = $("#exerNo").attr("data-exerNo");
+      
+      
+         
+           $.ajax({
+              
+               url: "/exer/addDailyBurnning?addDailyBurnning="+exerNo,
+               success:function(data){
+                  $("#mmodalHolder").html(data);
+                  $("#mmodal").modal("show");               
+                  
+               }  
+                 
+              });
+         
+         
+          
+      });
+   });    
 
 </script>   
-   			
+            
 <div class="container show-grid">
-		<div class="row">
-			
-			<div class="col-md-10">
-			<br>
-			<br>		
-			<div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 상세정보</div>
-			<br><br><br>
-			
-			<div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${exer.exerName}></div>
-			
-			
-			<br><br><br>
-			<div style="text-align:right;">
-			
-			<!--Manager로 로그인 시에만 출력  -->
-			<a th:href="@{../exer/getUpdateExer?exerNo=}+${exer.exerNo}" >수정하기</a>
-			<a th:href="@{../exer/deleteExer?exerNo=}+${exer.exerNo}" >삭제하기</a>
-			
-			</div>
-			
-			<br><br>
-			<div data-text-content="true" style="font-size:16px;" class="">  
-   		  <!-- 	<span th:if="${exer.exerVideoName == 'null'}" > -->
-			<iframe width="100%" height="500"
-					th:src=${exer.exerLink}
-					frameborder="0" ></iframe>
-		<!-- 	</span>
-   		    <span th:unless="${exer.exerVideoName == 'null'}"> 
-   		    <video th:src="@{/assets/video/} + ${exer.exerVideoName}" type="video/mp4" controls style="width: 1000px; height: 450px; text-align:right;"> 영상 재생 불가</video>
-   			</span>
-   		 -->	</div>
-			<br><br>
-   		  	
-   		  	<div align="center">	  	
-   		  	<img src="../assets/img/clock.png" style="width: 200px; width: 50px;"> &nbsp;
-			<span data-text-content="true" style="font-size:30px;"  class="" th:text=${exer.exerVideoTime} >			
-			</span>
-			
-		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<img src="../assets/img/level.png" style="width: 200px; width: 50px;"> &nbsp;
-			<span data-text-content="true" style="font-size:30px;" class="" th:text=${exer.exerLv}>			
-			</span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<img src="../assets/img/runningPerson.png" style="width: 200px; width: 50px;">&nbsp;
-			<span data-text-content="true" style="font-size:30px;" id="exerkcal" class="" th:value={exer.exerKcal} th:text=${exer.exerKcal}>	
-			</span> 
-			
-			<div hidden="" th:attr="data-exerNo=${exer.exerNo}" id="exerNo"> </div>
-   		  	</div>
-   		  	
-   		  	<br>
-   		  	
-   		  	 <div align="center"> 
-   		  	 
-   		  <!-- 	 <img src="../assets/img/plus.png" style="width: 100px; width: 50px; font-size:20px; " id="plusKcal"> -->
-   		  <!-- 	<input type='button'onclick='count("plus")' value='+'/>
-			<input type='button'onclick='count("minus")'value='-'/> -->
-			<input type="text" id="sporttime" name="txtsptime" value="10" readonly onclick="sportsTime();" onkeydown="this.value=this.value.replace(/[^0-9]/g,'')" onkeyup="sportsTime();this.value=this.value.replace(/[^0-9]/g,'');" class="ipt5" style="width:80px" placeholder="">
-		<!-- 	<div id='result'>0</div> -->
-		
-<!-- 	<div class="input-group w-md-300px"
+      <div class="row">
+         
+         <div class="col-md-10">
+         <br>
+         <br>      
+         <div align="center" data-text-content="true" style="font-weight: bold; font-size: 33px; color: rgb(41, 96, 47);" class="">운동 상세정보</div>
+         <br><br><br>
+         
+         <div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${exer.exerName}></div>
+         
+         
+         <br><br><br>
+         <div style="text-align:right;">
+         
+         <!--Manager로 로그인 시에만 출력  -->
+         <a th:href="@{../exer/getUpdateExer?exerNo=}+${exer.exerNo}" >수정하기</a>
+         <a th:href="@{../exer/deleteExer?exerNo=}+${exer.exerNo}" >삭제하기</a>
+         
+         </div>
+         
+         <br><br>
+         <div data-text-content="true" style="font-size:16px;" class="">  
+           <!--    <span th:if="${exer.exerVideoName == 'null'}" > -->
+         <iframe width="100%" height="500"
+               th:src=${exer.exerLink}
+               frameborder="0" ></iframe>
+      <!--    </span>
+             <span th:unless="${exer.exerVideoName == 'null'}"> 
+             <video th:src="@{/assets/video/} + ${exer.exerVideoName}" type="video/mp4" controls style="width: 1000px; height: 450px; text-align:right;"> 영상 재생 불가</video>
+            </span>
+          -->   </div>
+         <br><br>
+              
+              <div align="center">        
+              <img src="../assets/img/clock.png" style="width: 200px; width: 50px;"> &nbsp;
+         <span data-text-content="true" style="font-size:30px;"  class="" th:text=${exer.exerVideoTime} >         
+         </span>
+         
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <img src="../assets/img/level.png" style="width: 200px; width: 50px;"> &nbsp;
+         <span data-text-content="true" style="font-size:30px;" class="" th:text=${exer.exerLv}>         
+         </span>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <img src="../assets/img/runningPerson.png" style="width: 200px; width: 50px;">&nbsp;
+         <span data-text-content="true" style="font-size:30px;" id="exerkcal" class="" th:value=${exer.exerKcal} th:text=${exer.exerKcal}>   
+         </span>  (10분당 kcal 입니다)
+         
+         <div hidden="" th:attr="data-exerNo=${exer.exerNo}" id="exerNo"> </div>
+              </div>
+              
+              <br>
+              
+               <div align="center"> 
+               
+           <!--     <img src="../assets/img/plus.png" style="width: 100px; width: 50px; font-size:20px; " id="plusKcal"> -->
+           <!--    <input type='button'onclick='count("plus")' value='+'/>
+         <input type='button'onclick='count("minus")'value='-'/> -->
+         <input type="text" id="sporttime" name="txtsptime" value="10" readonly onclick="sportsTime();" onkeydown="this.value=this.value.replace(/[^0-9]/g,'')" onkeyup="sportsTime();this.value=this.value.replace(/[^0-9]/g,'');" class="ipt5" style="width:80px" placeholder="">
+      <!--    <div id='result'>0</div> -->
+      
+   <!-- <div class="input-group w-md-300px"
     data-kt-dialer="true"
     data-kt-dialer-min="1000"
     data-kt-dialer-max="50000"
@@ -228,45 +228,45 @@ function count(type)  {
         <i class="bi bi-plus fs-1"></i>
     </button>
     end::Increase control
-</div>
- -->
-		<span class="btns">
-		<a href="javascript:choiceType('+','10');">+</a>
-		<a href="javascript:choiceType('-','10');">-</a>
-		</span>
-   		  &nbsp;&nbsp;분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>Kcal</span>
-   		   	</div>
-   		  	
-   		  	<div align="left"><button type="button" class="btn btn-success" data-bs-toggle="modal" >일일운동량에 추가</button></div>
-			<div align="left"><button type="button" class="btn btn-danger" data-bs-toggle="modal" >루틴에 추가</button></div>
-	
-     		  	
-   		  
-			<br><br><br><br>
-			<div class="form-group">
-	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">이전</button>
-	  		</div>
-		</div>
-		<br/>
-		
- 	</div>
-			<br><br>
-			</div>
-			</div>
-			
-				<div id="mmodalHolder" style="width:200px;">
-			
-			</div>
-			
-			
+</div> -->
+
+      <span class="btns">
+      <a href="javascript:choiceType('+','10');">+</a>
+      <a href="javascript:choiceType('-','10');">-</a>
+      </span>
+           &nbsp;&nbsp;분당 칼로리: <span data-text-content="true" style="font-size:20px;" id="sportsKcal" class="" th:text=${exer.exerKcal}>kcal</span>
+               </div>
+              
+              <div align="left"><button type="button" class="btn btn-success" data-bs-toggle="modal" >일일운동량에 추가</button></div>
+         <div align="left"><button type="button" class="btn btn-danger" data-bs-toggle="modal" >루틴에 추가</button></div>
+   
+                
+           
+         <br><br><br><br>
+         <div class="form-group">
+           <div class="col-md-12 text-center ">
+              <button type="button" class="btn btn-primary">이전</button>
+           </div>
+      </div>
+      <br/>
+      
+    </div>
+         <br><br>
+         </div>
+         </div>
+         
+            <div id="mmodalHolder" style="width:200px;">
+         
+         </div>
+         
+         
    <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
    
    
    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>		
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>      
 
 </body>
 </html>

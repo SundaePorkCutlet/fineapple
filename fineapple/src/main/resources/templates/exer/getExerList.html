@@ -24,7 +24,7 @@
                         
          var table = $("#myTable").DataTable({
 				
-             
+        
              
           /*    "columnDefs": [{
                  "defaultContent": "-",
@@ -45,6 +45,8 @@
             	   "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
             	   "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
             	   ">",
+            	   searchDelay: 500,
+                   
            /*  footerCallback:function(){
             	
                 alert('홍진호2') 
@@ -72,28 +74,56 @@
                 "type" : "POST",
                 "dataSrc": "",
                 "lengthMenu": "Show _MENU_",
+                "rowId" : "exerNo",
                 
             },
            
           //  th:href="@{/exer/getExer(exerNo=${exer.exerNo})}"
-            columns : [
-                {"data" : "exerNo"
-                	/* "render": function ( data, type, row, meta ) {
-      	           	  
-                        data= '<a href="@{/exer/getExer(exerNo='+exerNo+'})}"></a>';
-                       
-                    }	 */
+            "columns" : [
+                {"data" : "exerNo"},
+                {"data" : "exerName",
+       				 "render": function(data, type, row, meta){
+       					 
+       					 console.log(data)
+       					 console.log(type)
+       					 console.log(row)
+       					 console.log(meta)
+       					 
+       					 
+       		            if(type === 'display'){
+       		                data = '<a href="../exer/getExer?exerNo=' + row.exerNo + '">' +data+ '</a>';
+       		            }
+
+       		            return data;
+       		         }
                 },
-                {"data" : "exerName"},     
                 {"data" : "exerCate"},
                 {"data" : "exerKcal"}
+               
           
             ]
+            /* columnDefs: [
+            	{
+                    targets: 0,
+                    data: exerNo,
+                    orderable: false,
+                    className: 'text-end',
+                    render: function (data) {
+                        return `
+                        <div class="menu-item px-3">
+                        <a href="@{/exer/getExer(exerNo='"data"'})}"" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
+                            Delete
+                        </a>
+                    </div>;
+                    }
+                },
+            	
+         ], */
          
          });
          
          /* Column별 검색기능 추가 */
-         $('#myTable_filter').prepend(
+        /*  $('#myTable_filter').prepend(
                '<select id="select"></select>');
          
          $('#myTable > thead > tr').children().each(function (indexInArray, valueOfElement) { 
@@ -126,7 +156,7 @@
           
           $('#toDate, #fromDate').unbind().bind('keyup',function(){
               table.draw();
-          })
+          }) */
 
            
       });
@@ -182,10 +212,10 @@
             <thead>
                 <tr class="fw-bolder fs-6 text-gray-800 px-7">          
                   <th>번호</th>
-                  <th>운동이름</th>
+                  <th class="min-w-100px" >운동이름</th>
                   <th>운동종류</th>
                   <th>운동 소모 칼로리(10분당)</th>
-                  <th class="text-end min-w-100px">상세정보 보기</th>
+               
                </tr>
             </thead>
 	          <!--   <tbody>
@@ -225,6 +255,6 @@
    <div class="col-xs-1">
    </div>         
 </div>
-<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 </body>
 </html>
