@@ -135,7 +135,7 @@ HEIGHT)
 	WHERE user_id=#{userId:VARCHAR}
 </update>
 
-<update id="updateUserLeave" parameterType="user">
+<update id="updateUserLeave" parameterType="String">
 	UPDATE users
 	<set>
 	user_id = #{userId:VARCHAR},

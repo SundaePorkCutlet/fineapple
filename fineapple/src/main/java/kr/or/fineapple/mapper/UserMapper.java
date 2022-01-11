@@ -18,7 +18,7 @@ public interface UserMapper{
 		
 		public void updateUser(User user) throws Exception;
 		
-		public void updateUserLeave(User user) throws Exception;
+		public void updateUserLeave(String userId) throws Exception;
 		
 		public void restoreUser(User user) throws Exception;
 		

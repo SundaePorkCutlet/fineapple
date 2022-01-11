@@ -64,7 +64,7 @@ public class UserController {
 		
 		System.out.println("login시도:POST" + user);
 		User userDB = userService.getUser(user.getUserId());
-		
+		String result;
 		
 		System.out.println("userDB : "+userDB);
 		
@@ -72,13 +72,20 @@ public class UserController {
 			if(userDB.getUserLeaveStt() == 0) {
 				session.setAttribute("user",userDB);
 				System.out.println("stt == 0");
-				return "redirect:/";
+				result = "0";
+				return result ;
 			}
 			else if (userDB.getUserLeaveStt() == 1) {
 				System.out.println("Stt == 1");
-				
-				return "redirect:/user/restoreUser";
+				result = "1";
+				return result;
 			}
+		}
+		else {
+			System.out.println("비밀번호 오류");
+			result = "2";
+			return result;
+			
 		}
 		return "redirect:/";		
 	}
@@ -207,13 +214,18 @@ public class UserController {
 		
 		User userDB=userService.getUser(user.getUserId());
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
-	
-		userDB =userService.getUser(user.getUserId());
+	    System.out.println("여기왔니");
+		
 		if(sessionId.equals(userDB.getUserId())) {
-		if(user.getPassword().equals(userDB.getPassword())) {
-			session.setAttribute("user",userDB);
-			userService.updateUserLeave(user);
-		}
+			System.out.println("첫번째 if문");
+				if(user.getPassword().equals(userDB.getPassword())) {
+					System.out.println("두번째 if문");
+
+					System.out.println("user: " + user);
+					userService.updateUserLeave(user.getUserId());
+					System.out.println("여기는");
+					
+				}
 		}
 		System.out.println("회원탈퇴..제발 ㅜ 으어어ㅓ");
 		return "redirect:/user/logout";
