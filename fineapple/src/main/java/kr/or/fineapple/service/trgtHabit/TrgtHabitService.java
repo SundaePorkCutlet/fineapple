@@ -23,4 +23,5 @@ public interface TrgtHabitService {
 	public double getWtrIntake(String userId, LocalDate date);	
 
 	public double updateWtrIntake(String userId, double userWtrIntake);
+
 }

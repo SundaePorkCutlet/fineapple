@@ -22,6 +22,7 @@ import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.diet.DietService;
@@ -53,7 +54,7 @@ public class DiaryController {
 		
 		System.out.println("/diary/getDiary : GET");
 		
-		////사용자에게 보여지는 첫 화면에 필요한 정보(대표 사용자 이벤트, 뱃지, 습관 정보)조회 위한 parameter 설정
+		////사용자에게 보여지는 첫 화면에 필요한 정보(대표 사용자 이벤트, 뱃지, 습관 정보, 서비스 목표 상세 정보)조회 위한 parameter 설정
 		//userId, 첫 화면이 사용자 접속일자에 해당하는 월이므로 이달 기간
 		String userId = ((User)session.getAttribute("user")).getUserId();
 		LocalDate startDate = YearMonth.now().atDay(1);
@@ -66,14 +67,17 @@ public class DiaryController {
 		List<Object> keyEventTitleList = diaryService.getKeyEventTitleList(viewDuration);
 		List<Object> badgeList = diaryService.getBadgeList(viewDuration);
 		List<Object> trgtHabitList = trgtHabitService.getTrgtHabitList(viewDuration);
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
 
 		System.out.println(keyEventTitleList);
 		System.out.println(badgeList);
 		System.out.println(trgtHabitList);
+		System.out.println(userServ);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("keyEventTitleList", keyEventTitleList);
 		mav.addObject("badgeList", badgeList);
+		mav.addObject("userServ", userServ);
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.setViewName("diary/getDiary.html");
 		
@@ -127,18 +131,22 @@ public class DiaryController {
 		viewDuration.setStartDate(startDate);
 		viewDuration.setEndDate(endDate);
 		Badge badgeCount = diaryService.getBadgeTotalCount(viewDuration);
+		
+		////회원의 식단 서비스/운동 서비스 목표 정보 조회
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
 
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.addObject("userEventList", userEventList);
 		mav.addObject("badgeCount", badgeCount);
+		mav.addObject("userServ", userServ);
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
-		
 		
 		System.out.println(date);
 		System.out.println(trgtHabitList);
 		System.out.println(userEventList);
 		System.out.println(badgeCount);
+		System.out.println(userServ);
 
 		return mav;
 	}

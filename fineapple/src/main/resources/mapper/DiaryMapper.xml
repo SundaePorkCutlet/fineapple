@@ -30,9 +30,22 @@
 		<result property="exerBadgeCount" column="EXER_BADGE_COUNT" jdbcType="INTEGER"/>
 		<result property="wtrBadgeCount" column="WTR_BADGE_COUNT" jdbcType="INTEGER"/>
 		<result property="bttlBadgeCount" column="BTTL_BADGE_COUNT" jdbcType="INTEGER"/>
-		<result property="dailyIntakeKcal" column="DAILY_BURNNING_KCAL" jdbcType="DOUBLE"/>
-		<result property="dailyBurnningKcal" column="DAILY_INTAKE_KCAL" jdbcType="DOUBLE"/>
+		<result property="dailyIntakeKcal" column="DAILY_INTAKE_KCAL" jdbcType="DOUBLE"/>
+		<result property="dailyBurnningKcal" column="DAILY_BURNNING_KCAL" jdbcType="DOUBLE"/>
 		<result property="userWtrIntake" column="USER_WTR_INTAKE" jdbcType="DOUBLE"/>
+	</resultMap>
+	
+	<resultMap id="UserServMap" type="UserServ">
+		<result property="userServiceNo" column="USER_SERVICE_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="trgtWeight" column="TRGT_WEIGHT" jdbcType="DOUBLE"/>
+		<result property="trgtBodyFat" column="TRGT_BODY_FAT" jdbcType="DOUBLE"/>
+		<result property="trgtBodyMuscle" column="TRGT_BODY_MUSCLE" jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeKcal" column="DAILY_TRGT_INTAKE_KCAL" jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeCarb" column="DAILY_TRGT_INTAKE_CARB" jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeProtein" column="DAILY_TRGT_INTAKE_PROTEIN" jdbcType="DOUBLE"/>
+		<result property="dailyTrgtIntakeFat" column="DAILY_TRGT_INTAKE_FAT" jdbcType="DOUBLE"/>
+		<result property="dailyTrgtBurnningKcal" column="DAILY_TRGT_BURNNING_KCAL" jdbcType="DOUBLE"/>
 	</resultMap>
 	
 	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
@@ -172,6 +185,13 @@
 	WHERE user_id = #{userId:VARCHAR}
 		AND key_event_stt = 0
 		AND TRUNC(user_event_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+	
+	<!-- SELECT ONE : 회원의 식단 서비스/운동 서비스 목표 정보 조회 -->
+	<select id="getUserServiceDetails" resultMap="UserServMap">
+	SELECT user_service_no, user_id, u.trgt_weight, us.trgt_body_fat, us.trgt_body_muscle, daily_trgt_intake_kcal, daily_trgt_burnning_kcal, daily_trgt_intake_carb, daily_trgt_intake_protein, daily_trgt_intake_fat
+	FROM users u JOIN user_service us USING(user_id)
+	WHERE user_id = #{userId:VARCHAR}
 	</select>
 	
 </mapper>

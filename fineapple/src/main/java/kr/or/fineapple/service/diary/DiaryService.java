@@ -5,6 +5,7 @@ import java.util.List;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 
 public interface DiaryService {
@@ -30,5 +31,7 @@ public interface DiaryService {
 	public Badge getBadgeTotalCount(ViewDuration viewDuration);
 	
 	public List<Object> getKeyEventTitleList(ViewDuration viewDuration);
+
+	public UserServ getUserServiceDetails(String userId);
 
 }

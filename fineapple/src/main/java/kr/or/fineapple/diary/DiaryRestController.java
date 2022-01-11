@@ -19,6 +19,7 @@ import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.MonthlyPaper;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.WeeklyPaper;
 import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
@@ -55,6 +56,8 @@ public class DiaryRestController {
 	public Map<String, Object> getDiary(@RequestBody ViewDuration viewDuration, @PathVariable int year, @PathVariable int month) {
 		//나중에..보안을 위해 ViewDuration에 사용자 본인임을 증명할수 잇는 값을 넣어줘야할거같음
 		
+		System.out.println("/diary/json/getDiary : POST");
+		
 		////해당 월의 시작일과 종료일 viewDuration에 세팅
 		LocalDate startDate = LocalDate.of(year, month, 1);
 		LocalDate endDate = startDate.plusDays(startDate.lengthOfMonth()-1);
@@ -69,12 +72,17 @@ public class DiaryRestController {
 		List<Object> trgtHabitList = trgtHabitService.getTrgtHabitList(viewDuration);
 		////해당 월의 대표 이벤트 제목 조회
 		//parameter : viewDuration 내 userId, startDate, endDate
-		List<Object> keyEventList = diaryService.getKeyEventTitleList(viewDuration);
+		List<Object> keyEventTitleList = diaryService.getKeyEventTitleList(viewDuration);
+		////사용자 식단/운동 서비스 이용시 목표 정보 조회
+		//parameter : userId
+		UserServ userServ = diaryService.getUserServiceDetails(viewDuration.getUserId());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("badgeList", badgeList);
+		map.put("userServ", userServ);
 		map.put("trgtHabitList", trgtHabitList);
-		map.put("keyEventList", keyEventList);
+		map.put("keyEventTitleList", keyEventTitleList);
+		map.put("firstDay", startDate);
 		
 		return map;
 	}

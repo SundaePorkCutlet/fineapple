@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 
 @Mapper
@@ -53,4 +54,8 @@ public interface DiaryMapper {
 	
 	////다이어리 화면 출력을 위한 기간 내 대표 이벤트 제목 리스트 조회
 	List<Object> getKeyEventTitleList(ViewDuration viewDuration);
+
+	////회원의 식단 서비스/운동 서비스 목표 정보 조회
+	UserServ getUserServiceDetails(String userId);
+
 }
