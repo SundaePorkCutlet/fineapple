@@ -16,10 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -365,11 +367,47 @@ public class CommunityController {
 	
 	
 	@GetMapping(value = "getReportList")
-	public String getReportList(){
+	public String getReportList(Model model){
 		
+		Report report = new Report();
 		
+		List<Report> list = communityService.getReportListAll(report);
+		
+		for (Report report2 : list) {
+			System.out.println(report2);
+		}
+		
+		model.addAttribute("list", list);
 		
 		return "community/getReportList.html";
+	}
+	
+	@GetMapping(value = "{getReport}")
+	public String getReport(@RequestParam(name = "reportNo", required = false)String str, @PathVariable(value = "getReport") String pathVariable, Model model, HttpServletRequest request) {
+		
+		System.out.println(pathVariable); //이건 학습용
+		
+		System.out.println(str);
+		
+		Report report = new Report();
+		
+		report.setReportNo(Integer.parseInt(str));
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		report = communityService.getReport(report ,user);
+		
+		
+	
+
+		
+		model.addAttribute("report", report);
+			
+		
+		
+		return "community/getReport.html";
 	}
 	 
 	

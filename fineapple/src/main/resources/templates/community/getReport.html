@@ -1,0 +1,160 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+	<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>	
+		
+										
+			<div class="card ">
+			
+				<div class="card-header card-header-stretch">
+					<h3 class="card-title">신고</h3>
+					<div class="card-toolbar">
+						<ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+							<li class="nav-item">
+								<a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">신고한 회원</a>
+							</li>
+							<li th:if="${report.reportCate} != 3" class="nav-item">
+								<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8" >신고당한 내용</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">신고당한 회원</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10">신고한 내용</a>
+							</li>
+						</ul>
+					</div>
+				</div> 
+				<div class="card-body">
+					<div class="tab-content" id="myTabContent">
+					
+					
+					
+					
+						<div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel" >
+							<div href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
+							<div class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
+								<div class="symbol symbol-150px">
+									<img class="symbol-label fs-2 fw-bold text-success" src="/assets/img/img2020042313175611810000.jpg"/>
+								</div>
+							</div>
+							<div class="fw-bold">
+								<span class="fs-6 text-gray-800 me-2" th:text = "${report.user.userName}"></span>
+								<span class="badge badge-light"th:text = "${report.user.userId}"></span>
+							</div>
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<div th:if = "${report.reportCate} !=3" class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+					
+					
+							<div class="card shadow-sm">
+							    <div class="card-header">
+							        <h3 th:if = "${report.reportCate} == 1" class="card-title" th:text = "${report.board.title}"></h3>
+							        <div class="card-toolbar">
+							            <button type="button" class="btn btn-sm btn-light">
+							                삭제하기
+							            </button>
+							        </div>
+							    </div>
+							    <div class="card-body">
+							       	<div th:if="${report.reportCate}==1">
+							       	<div th:text="${report.board.content}"></div>
+							       	</div>
+							       	<div th:if="${report.reportCate}==2">
+							       	<div th:text=${report.cmnt.cmntContent}></div>
+							       	</div>
+							    </div>
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+							<div class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
+								<div class="symbol symbol-150px">
+									<img class="symbol-label fs-2 fw-bold text-success" src="/assets/img/img2020042313175611810000.jpg"/>
+									
+								</div>
+								
+							</div>
+							<div class="fw-bold">
+								<span class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userName}"></span>
+								<span id = "reportedUserId" class="badge badge-light"th:text="${report.reportedUser.userId}"></span>
+							</div>
+							<div class="fw-bold">
+								<div class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userSttMsg}"></div>
+							</div>
+							<button  class="btn btn-light-dark"	 style="float: right;" th:onClick="javascript:fcAddBlackList">블랙리스트 추가</button>
+							
+						</div>
+						
+						
+						
+						<div class="tab-pane fade" id="kt_tab_pane_10" role="tabpanel">
+					
+					
+							<div class="card shadow-sm">
+							    <div class="card-body" th:text="${report.reportCntnt}">
+							        
+							    </div>
+							</div>
+						</div>
+
+
+
+					
+
+					
+
+					</div>
+				</div>
+				<div style="text-align: center;">
+				<a href="#" class="btn btn-light-danger" style="width: 40%;">처리완료</a>
+				</div>
+			</div>
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+		<div id="mmodalHolder"></div>
+		<script type="text/javascript">
+		
+		function fcAddBlackList(){
+			
+			
+			var reportedUserId = $("reportedUserId").text();
+
+			console.log(reportedUserId);
+			
+			var data = {"reportedUserId" : reportedUserId};
+			console.log(data);
+			$.ajax({
+				url: "/community/addBlackListView", //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					console.log("성공" + data);
+					
+					$("#mmodalHolder").html(data);
+		            $("#blackListViewModal").modal("show");
+					
+				}
+				
+			})
+		};
+		</script>
+	</body>
+</html>

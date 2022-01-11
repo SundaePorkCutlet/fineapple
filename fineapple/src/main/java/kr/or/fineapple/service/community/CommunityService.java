@@ -57,4 +57,10 @@ public interface CommunityService {
 	public void deleteAlarm(Alarm alarm);
 	
 	public void deleteAlarmAll(Alarm alarm);
+	
+	public List<Report> getReportListAll(Report report);
+	
+	public List<Report> getReportListNotDispose(Report report);
+	
+	public Report getReport(Report report, User user);
 }

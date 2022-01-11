@@ -172,6 +172,56 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		communityMapper.deleteAlarmAll(alarm);
 	}
+
+	@Override
+	public List<Report> getReportListAll(Report report) {
+		// TODO Auto-generated method stub
+		return communityMapper.getReportListAll(report);
+	}
+
+	@Override
+	public List<Report> getReportListNotDispose(Report report) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Report getReport(Report report, User user) {
+		
+		report = communityMapper.getReport(report);
+		
+		report.setUser(user);
+		
+		// TODO Auto-generated method stub
+		if (report.getReportCate().equals("1")) {
+			Board board = new Board();
+			board.setPostNo(report.getBoard().getPostNo());
+			board = communityMapper.getPostReport(board);
+			report.setBoard(board);
+			
+			
+		} else if (report.getReportCate().equals("2")) {
+			Cmnt cmnt = new Cmnt();
+			cmnt.setCmntNo(report.getCmnt().getCmntNo());
+			cmnt = communityMapper.getCmnt(cmnt);
+			report.setCmnt(cmnt);
+			
+		}
+		else {
+			System.out.println("せせせせせせせ");
+		}
+
+		
+		User reportedUser = new User();
+		
+		reportedUser = communityMapper.getReportedUser(report);
+		
+		report.setReportedUser(reportedUser);
+		
+		
+		System.out.println("辞嬢搾什"+report);
+		return report;
+	}
 	
 	
 	

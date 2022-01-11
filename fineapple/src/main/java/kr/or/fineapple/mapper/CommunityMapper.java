@@ -66,7 +66,7 @@ public interface CommunityMapper {
 	
 	public void updateReportStt(Report report);
 	
-	public void getReportList(Report report);
+	public List<Report> getReportListNotDispose(Report report);
 	
 	public List getAlarmList(User user);
 	
@@ -87,5 +87,15 @@ public interface CommunityMapper {
 	public void deleteAlarm(Alarm alarm);
 	
 	public void deleteAlarmAll(Alarm alarm);
+	
+	public List<Report> getReportListAll(Report report);
+	
+	public Report getReport(Report report);
+	
+	public Cmnt getCmnt(Cmnt cmnt);
+	
+	public User getReportedUser(Report report);
+	
+	public Board getPostReport(Board board);
 	
 }
