@@ -44,8 +44,10 @@
 								</div>
 							</div>
 							<div class="fw-bold">
-								<span class="fs-6 text-gray-800 me-2" th:text = "${report.user.userName}"></span>
-								<span class="badge badge-light"th:text = "${report.user.userId}"></span>
+								
+								<div style="font-size: 20px;" class="text-muted" th:text = "${report.user.userName}"></div>
+								
+								<div style="font-size: 20px;" class="text-muted" th:text = "${report.user.userId}"></div>
 							</div>
 							</div>
 						</div>
@@ -92,13 +94,13 @@
 								
 							</div>
 							<div class="fw-bold">
-								<span class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userName}"></span>
-								<span id = "reportedUserId" class="badge badge-light"th:text="${report.reportedUser.userId}"></span>
+								<span style="font-size: 20px;" class="text-muted" th:text="${report.reportedUser.userName}"></span>
+								<span id = "reportedUserId" style="font-size: 20px;" class="text-muted" th:text="${report.reportedUser.userId}"></span>
 							</div>
 							<div class="fw-bold">
-								<div class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userSttMsg}"></div>
+								<div style="font-size: 15px;" class="text-muted" th:text="${report.reportedUser.userSttMsg}"></div>
 							</div>
-							<button  class="btn btn-light-dark"	 style="float: right;" th:onClick="javascript:fcAddBlackList">블랙리스트 추가</button>
+							<button  class="btn btn-light-dark"	 style="float: right;" th:onClick="javascript:fcAddBlackList()">블랙리스트 추가</button>
 							
 						</div>
 						
@@ -133,14 +135,14 @@
 		function fcAddBlackList(){
 			
 			
-			var reportedUserId = $("reportedUserId").text();
+			var reportedUserId = $("#reportedUserId").text();
 
 			console.log(reportedUserId);
 			
 			var data = {"reportedUserId" : reportedUserId};
 			console.log(data);
 			$.ajax({
-				url: "/community/blackListView", //url : 요청 Url
+				url: "/community/addBlackListView", //url : 요청 Url
 				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 				dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map

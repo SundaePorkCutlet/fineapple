@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -279,6 +280,27 @@ public class CommunityRestController {
 		communityService.delGroupUserInter(map, intetStt);
 		
 
+		
+	}
+	
+	@PostMapping(value = "addBlackList")
+	public void addBlackList(@RequestBody String str) {
+		
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		BlackList blackList = new BlackList();
+		
+		User blakcUser = new User();
+		
+		blakcUser.setUserId(jsonObject.get("blackUserId").toString());
+		
+		blackList.setBlackUser(blakcUser);
+		
+		blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		
+		
 		
 	}
 

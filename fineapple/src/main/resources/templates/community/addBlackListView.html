@@ -15,45 +15,44 @@
 				</div>
 				<div class="modal-body" style="height:500px;">
 					<form id="kt_modal_new_target_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-						<input id="reportCate" name="reportCate" th:value = "${report.reportCate}"  type="hidden">
 						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span>신고 날짜 : </span>
-							<span id="time" th:value ="${time}" th:text="${time}"></span>
+							<span>추가 날짜 : </span>
+							<span id="time" th:text="${time}"></span>
 						</label>
 						<div>
-							<span>신고 회원 : </span>
-							<span id = "reportedUser" th:value ="${report.reportedUser.userId}" th:text="${report.reportedUser.userId}"></span>
+							<span>추가 회원 : </span>
+							<span id = "blackUserId" th:text = "${blackList.blackUser.userId}"></span>
 							</div>
 						<div>
 						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span class="required">신고사유</span>
+							<span  class="required">블랙리스트사유</span>
 						</label>
 						</div>
-						<input id = "reportcontent" type="text" name = "content" class="form-control form-control-solid" placeholder="추가 사유를 입력해주세요" >
+						<input id = "blackcontent" type="text" name = "content" class="form-control form-control-solid" placeholder="추가 사유를 입력해주세요" >
 					</form>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fnAddReport()">블랙리스트추가</button>
+					<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="javascript:fnAddBlackList()">블랙리스트추가</button>
 					<button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
 				</div>
 			</div>
 		</div>
 	
 		<script>
-		function fnAddReport(){
+		function fnAddBlackList(){
 			//$("form").attr("method", "POST").attr("action" , "/community/addReport").submit();
 			
 			data = {
-					reportCate : $("#reportCate").val(), 
-					TrgtNo : $("#TrgtNo").val(),
-					time : $("#time").text(),
-					reportedUser : $("#reportedUser").text(),
-					reportcontent : $("#reportcontent").val()
+					"blackUserId" : $("#blackUserId").text(), 
+					"blackcontent" : $("#blackcontent").val(),
+					"time" : $("#time").text()
+
 					};
+			console.log(data)
 			
 			$.ajax({
-				url: "/community/json/addReport", //url : 요청 Url
+				url: "/community/json/addBlackList", //url : 요청 Url
 				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
@@ -65,7 +64,7 @@
 					
 				}
 				
-			})
+			});
 			
 			//input DOM과 같이 value 속성에 값이 적용되는 DOM은 val() 함수를 사용하고
 			//div와 같이 <div></div> 사이에 text가 값이 적용되는 DOM은 text()함수를 사용합니다.
