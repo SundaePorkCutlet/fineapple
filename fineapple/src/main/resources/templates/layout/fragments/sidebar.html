@@ -36,29 +36,67 @@
                            </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
+                                         <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../diet/addDietService?menu=1}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">서비스활성화</span>
                                         </a>
+                                        </th:block>
+                                        
+                                           <th:block th:if="${session.user}==null">
+                                      <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                 
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">서비스활성화</span>
+                                        </a>
+                                        </th:block>
                                     </div>
                                     <div class="menu-item">
+                                    <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../diet/getFoodList}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">식품검색</span>
                                         </a>
+                                        </th:block>
+                                        
+                                       <th:block th:if="${session.user}==null">
+                                      <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                 
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">식품검색</span>
+                                        </a>
+                                        </th:block>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" th:href="@{../diet/getDailyIntakeMeal}">
+                                        <th:block th:if="${session.user}!=null">
+                                      <a class="menu-link" th:href="@{../diet/getDailyIntakeMeal}">
+                                 
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">일일섭취식단</span>
                                         </a>
+                                        </th:block>
+                                        
+                                         <th:block th:if="${session.user}==null">
+                                      <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                 
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">일일섭취식단</span>
+                                        </a>
+                                        </th:block>
                                     </div>
+                                  
                                     <div class="menu-item">
                                         <a class="menu-link" th:href="@{../diet/getRcpList}">
                                     <span class="menu-bullet">
@@ -553,7 +591,6 @@
                 </div>
                 <div id="loginModalHolder"></div>
                 <!--end::Header-->
-                
                 <script>
                     $(function () {
                         $("#logintwo").on("click", function () {
@@ -568,6 +605,19 @@
                             });
                         });
                     });
+                    
+					function nologin(){
+                    $.ajax({
+                        url: "../user/login",
+                        success: function (data) {
+                        	console.log(data)
+                            $("#loginModalHolder").html(data);
+                            $("#loginModal").modal("show");
+                        }
+                    });
+                    
+						}
+                    
                 
                        function getFavMealList() {
 
