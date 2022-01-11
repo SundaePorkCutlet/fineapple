@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Alarm;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -158,6 +159,18 @@ public class CommunityServiceImpl implements CommunityService {
 			communityMapper.delGroupUserInter(map);
 		}
 		
+	}
+
+	@Override
+	public void deleteAlarm(Alarm alarm) {
+		communityMapper.deleteAlarm(alarm);
+		
+	}
+
+	@Override
+	public void deleteAlarmAll(Alarm alarm) {
+		// TODO Auto-generated method stub
+		communityMapper.deleteAlarmAll(alarm);
 	}
 	
 	

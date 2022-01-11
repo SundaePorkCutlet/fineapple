@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Alarm;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -52,4 +53,8 @@ public interface CommunityService {
 	public void delGroupUserInter(HashMap map, int intetStt);
 		
 	public List getAlarmList(User user);
+	
+	public void deleteAlarm(Alarm alarm);
+	
+	public void deleteAlarmAll(Alarm alarm);
 }

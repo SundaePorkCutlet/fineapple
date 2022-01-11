@@ -559,6 +559,15 @@
 	</where>
 	</delete>
 	
+	<delete id="deleteAlarmAll" parameterType="alarm">
+	DELETE
+	FROM
+	alarm
+	<where>
+	user_id = #{userId}
+	</where>
+	</delete>
+	
 	<select id="getAlarmList" parameterType="user" resultMap="alarmMap">
 	SELECT
 	alarm_no,
