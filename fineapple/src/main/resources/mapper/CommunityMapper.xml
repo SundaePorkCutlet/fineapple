@@ -99,6 +99,8 @@
 	<result property="reportStt" column="report_stt"/>
 	<result property="reportDate" column="report_date"/>
 	<result property="TrgtNo" column="rerport_trgt"/>
+	<result property="board.postNo" column="post_no"/>
+	<result property="cmnt.cmntNo" column="cmnt_no"/>
 	</resultMap>
 	
 	<resultMap type="mtmQna" id="mtmQnaMap">
@@ -559,6 +561,15 @@
 	</where>
 	</delete>
 	
+	<delete id="deleteAlarmAll" parameterType="alarm">
+	DELETE
+	FROM
+	alarm
+	<where>
+	user_id = #{userId}
+	</where>
+	</delete>
+	
 	<select id="getAlarmList" parameterType="user" resultMap="alarmMap">
 	SELECT
 	alarm_no,
@@ -616,7 +627,7 @@
 	)
 	</insert>
 	
-	<select id="getReportList" parameterType="report">
+	<select id="getReportListNotDispose" parameterType="report">
 	SELECT
 	*
 	FROM
@@ -771,6 +782,58 @@
 		</trim>
 	</update>
 	
+	
+	<select id="getReportListAll" parameterType="report" resultMap="reportMap">
+		SELECT
+		*
+		FROM
+		report_and_like
+		<where>
+		report_cate IS NOT NULL
+		</where>
+	</select>
+	
+	
+	<select id="getReport" parameterType="report" resultMap="reportMap">
+		SELECT
+		*
+		FROM
+		report_and_like
+		<where>
+		report_no = #{reportNo}
+		</where>
+	</select>
+	
+	<select id="getCmnt" parameterType="cmnt" resultMap="cmntMap">
+		SELECT
+		*
+		FROM
+		comments
+		<where>
+		cmnt_no = #{cmntNo}
+		</where>
+	</select>
+	
+	<select id="getReportedUser" parameterType="report" resultMap="userSelectMap">
+		SELECT
+		*
+		FROM
+		users
+		<where>
+		user_id = #{reportedUser.userId}
+		</where>
+	</select>
+	
+	<select id="getPostReport" parameterType="board" resultMap="boardMap">
+	
+		SELECT
+		*
+		FROM
+		board
+		<where>
+		post_no = #{postNo}
+		</where>
+	</select>
 	
 	
 	

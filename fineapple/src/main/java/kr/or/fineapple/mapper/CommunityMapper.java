@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Alarm;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -65,7 +66,7 @@ public interface CommunityMapper {
 	
 	public void updateReportStt(Report report);
 	
-	public void getReportList(Report report);
+	public List<Report> getReportListNotDispose(Report report);
 	
 	public List getAlarmList(User user);
 	
@@ -82,5 +83,19 @@ public interface CommunityMapper {
 	public void delGroupUserInter(HashMap map);
 	
 	public void updateGroupUserInter(HashMap map);
+	
+	public void deleteAlarm(Alarm alarm);
+	
+	public void deleteAlarmAll(Alarm alarm);
+	
+	public List<Report> getReportListAll(Report report);
+	
+	public Report getReport(Report report);
+	
+	public Cmnt getCmnt(Cmnt cmnt);
+	
+	public User getReportedUser(Report report);
+	
+	public Board getPostReport(Board board);
 	
 }

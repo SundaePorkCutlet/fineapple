@@ -29,39 +29,36 @@
 												
 												
 												
-											<th:block th:each="num: ${#numbers.sequence(1,30)}">
+											<th:block th:each="data: ${list}">
+												
 												<!--begin::User-->
 												<div class="d-flex flex-stack py-4">
 													<!--begin::Details-->
 													<div class="d-flex align-items-center">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-45px symbol-circle">
-															<span th:if="${numStat.even}" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">회</span>
-															<span th:if="${numStat.odd}" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">게</span>
+															<span th:if="${data.reportCate} == 1" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">게</span>
+															<span th:if="${data.reportCate} == 2" class="symbol-label fs-2 fw-bold bg-danger text-inverse-danger">댓</span>
 															
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Details-->
 														<div class="ms-5">
-															<a  href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2">회원신고</a>
-															<div class="fw-bold text-muted">해당 회원의 사진이 너무 이상합니다 </div>
+															<a th:onClick="|location.href='@{../community/getReport?(reportNo=${data.reportNo})}'|"  class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2" th:text="${data.reportCntnt}"></a>
+															<div class="fw-bold text-muted"th:text="${data.user.userId}"></div>
 														</div>
 														<!--end::Details-->
 													</div>
 													<!--end::Details-->
 													<!--begin::Lat seen-->
 													<div class="d-flex flex-column align-items-end ms-2">
-														<span class="text-muted fs-7 mb-1">2 weeks</span>
+														<span class="text-muted fs-7 mb-1"th:text="${data.reportDate}"></span>
 													</div>
 													<!--end::Lat seen-->
 												</div>
 												<!--end::User-->
 											</th:block>	
 
-											
-
-												
-												
 												
 											</div>
 											<!--end::List-->
@@ -70,33 +67,8 @@
 									
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
-<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
-			
-		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
 		
-<!-- 	
-	
-		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
-		
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<script>
-		      document.addEventListener('DOMContentLoaded', function() {
-		        var calendarEl = document.getElementById('calendar');
-		        var calendar = new FullCalendar.Calendar(calendarEl, {
-		          initialView: 'dayGridMonth'
-		        });
-		        calendar.render();
-		      });
-		</script>
-	
--->
 
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
 	</body>
 	<!--end::Body-->
 </html>

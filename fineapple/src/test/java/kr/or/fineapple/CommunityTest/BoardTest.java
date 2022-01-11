@@ -131,8 +131,17 @@ public class BoardTest {
 		}
 	}
 	
-	@Test
-	public void testGroupInter() {
+	//@Test
+	public void TestGetReport() {
+		
+		Report report = new Report();
+		
+		report.setReportNo(44);
+		
+		//Report report2 =  communityService.getReport(report);
+		
+		//ystem.out.println(report2);
+		
 		
 	}
 }
