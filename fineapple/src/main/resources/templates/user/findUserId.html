@@ -37,6 +37,8 @@
 <br>
 <div align="center" id="appendList">
 <input type="button" id="getUserList" name="getUserList" class="btn btn-success" value ="아이디찾기">
+<div id="change" name="change"></div>
+<br>
 </div>
 <div>
 </div>
@@ -54,6 +56,7 @@
 <script>
 	$(function(){
 		$("#getUserList").on("click",function(){
+			$('#change').empty();
 			var userName = $("#userName").val();
 			var cellphone =$("#cellphone").val();
 			if(userName == ""){
@@ -78,23 +81,72 @@
 					if(JSONData.length == 0){
 						alert("아이디가 없습니다.");
 					}
-				var result = "<br><p><h2>검색결과</h2></p>"
-				$("#appendList").append(result)
+				//var result = "<br><p><h2>검색결과</h2></p>"
+				//$("#appendList").append(result)
 					for(i = 0 ; i < JSONData.length ; i++){
-				var displayValue= "<br><div class='d-flex flex-column'><li class='d-flex align-items-center py-2'><a class='bullet bullet-vertical me-5'value='" + JSONData[i].userId + "'></a></li></div>" ; 
-				$("#appendList").append(displayValue);
+				var displayValue="<br><div class='card card-bordered'>"+
+				"<div class=\"card-body\">"+
+				"<div class=\"input-group\">"+
+				"<input id=\"kt_clipboard_1\" type=\"text\" class=\"form-control \" value="+JSONData[i].userId+">"+
+	            "<button type=\"button\" id=\"clip"+i+"\" class=\"btn btn-light-primary find-util-btn\" data-clipboard-target=\"#kt_clipboard_1\">Copy" +
+	            "</button> </div> </div> </div>";
+	            
+	           
+				$("#change").append(displayValue);
 					}
 				var displayButton = "<p><input type = 'button' class='btn btn-success' value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
-				$("#appendList").append(displayButton);
+				$("#change").append(displayButton);
 				
 				
 				})
 			}
 		});
 	});
-   
-
 	
+   $(function(){
+		// Select elements
+		let target = '';
+		let buttonn = '';
+		
+		$("body").on("click", ".find-util-btn", function(){
+			target = $(this).parent(".input-group").children(".form-control");
+			console.log(target);
+			buttonn = $(this);
+			
+		});
+
+		// Init clipboard -- for more info, please read the offical documentation: https://clipboardjs.com/
+		var clipboard = new ClipboardJS(buttonn, {
+		    target: target,
+		    text: function() {
+		        return target.value;
+		    }
+		});
+		
+		
+
+		// Success action handler
+		clipboard.on('success', function(e) {
+		    const currentLabel = buttonn.innerHTML;
+
+		    // Exit label update when already in progress
+		    if(buttonn.innerHTML === 'Copied!'){
+		        return;
+		    }
+
+		    // Update button label
+		    buttonn.innerHTML = 'Copied!';
+
+		    // Revert button label after 3 seconds
+		    setTimeout(function(){
+		        buttonn.innerHTML = currentLabel;
+		    }, 3000)
+		});
+		
+	   
+	   
+   })
+
 	 $(function () {
         // console.log("공통 SIDE");
          $("#appendList").on("click","#loginUserId",function () {
