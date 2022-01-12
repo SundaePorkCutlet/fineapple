@@ -727,6 +727,8 @@
  										),
  					contentType: "application/json"
  				}).done(function(map){
+ 					
+ 					calendar.destroy();
 
 					var badgeList = map.badgeList;
 					var userServ = map.userServ;
@@ -1026,6 +1028,8 @@
  										),
  					contentType: "application/json"
  				}).done(function(map){
+ 					
+ 					calendar.destroy();
 
 					var badgeList = map.badgeList;
 					var userServ = map.userServ;

@@ -106,7 +106,7 @@ public class DiaryController {
 		//parameter : viewDuration 내 userId, date
 		List<Object> userEventList = diaryService.getUserEventList(viewDuration);
 		
-		//getIntakeRecordList
+		////getIntakeRecordList
 		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
@@ -115,7 +115,7 @@ public class DiaryController {
 			System.out.println(intakeRecordList);
 		}
 
-		//getBurnningRecordList
+		////getBurnningRecordList
 		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
 		ExerServ exer = exerService.getUserService(userId);
 		if(exer != null) {
@@ -123,7 +123,16 @@ public class DiaryController {
 			mav.addObject("burnningRecordList", burnningRecordList);
 			System.out.println(burnningRecordList);
 		}
-		
+
+		//diet와 exer 서비스를 이용하는 경우 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
+		if(diet != null || exer != null) {
+			viewDuration.setStartDate(date);
+			viewDuration.setEndDate(date);
+			List dailyRecord = diaryService.getBadgeList(viewDuration);
+			mav.addObject("dailyRecord", dailyRecord);
+			System.out.println(dailyRecord);
+		}
+
 		////이주의 획득 뱃지 갯수 조회
 		//parameter : viewDuration 내 userId, startDate, endDate
 		LocalDate startDate = viewDuration.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
