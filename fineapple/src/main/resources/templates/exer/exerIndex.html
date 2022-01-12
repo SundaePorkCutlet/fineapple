@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+<style>
+ul{
+   list-style:none;
+   }
+   
+ li{
+   list-style:none;
+   }
+</style>
+
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,10 +29,12 @@
     <title>운동 시간 기록</title>
   </head>
   <body>
+  
+  <div align="center">
     <header class="header">
       <h4 style="font-weight:bold; font-size:25px ">현재 시간</h4>
       <div class="header__currentTime" id="js-currentTime">
-        <div class="header__currentTimeText" id="js-clock" style="font-size:20px">00:00:00</div>
+        <div class="header__currentTimeText" id="js-clock" style="font-size:25px">00:00:00</div>
       </div>
       
       
@@ -37,7 +51,7 @@
         <span class="header__title"  style="font-weight:bold; font-size:22px">총 운동 시간</span>
       </div>
       <div class="header__stopWatch">
-        <time class="header__stopWatchText" id="jsMainStopWatch" style="font-size:22px">00:00:00</time>
+        <time class="header__stopWatchText" id="jsMainStopWatch" style="font-size:35px">00:00:00</time>
       </div>
       <div class="header__btns">
         <button class="btn btn-info" id="jsStartBtn">시작</button>
@@ -46,22 +60,27 @@
       </div>
     </header>
     <main class="main">
-      <div class="main__workoutTitle">
-        <div class="main__addWorkoutTitle">
-          <button class="btn btn-secondary" id="jsAddWorkoutBtn">
+      <div class="main__workoutTitle" style="font-weight:bold; font-size:20px"  >
+        <div class="main__addWorkoutTitle" style="font-weight:bold; font-size:20px"  >
+          <button  class="btn btn-success btn-hover-rotate-end" id="jsAddWorkoutBtn">
           운동 추가
           </button>
         </div>
-        <label for="input" class="main__addWorkoutTitleText" style="font-weight:bold; font-size:20px" >운동</label>
+        <div class="main__addWorkoutTitleText" style="font-weight:bold; font-size:20px">운동</div>
         <input
           type="text"
-          class="main__workoutTitleInput"
+          class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"
+          style="width: 30%;"
           id="jsWorkoutTitle"
           
         />
       </div>
-      <ul class="main__workoutChecker" id="jsWorkoutUl">
-        <li class="main__workoutCheckerList">
+      
+      <br>
+      
+      <div class="main__workoutChecker" id="jsWorkoutUl">
+        <div class="main__workoutCheckerList">
+        
           <div class="main__addSet">
         <button class="btn btn-secondary" id="jsAddSetBtn">
 		<!-- <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -76,26 +95,30 @@
             <input type="text" class="main__wrightBox" id="jsKgWright" />
             <span class="main__kgText">KG</span>
           </div> -->
+          
           <div class="main__times">
-            <input type="text" class="main__wrightBox" id="jsTimeWright" />
+            <input type="text"    style="width: 30%; font-weight:bold;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"id="jsTimeWright" />
             <span class="main__timesText">운동할 시간</span>
           </div>
           <div class="main__set">
-            <input type="text" class="main__wrightBox" id="jsSetWright" />
+            <input type="text"    style="width: 30%; font-weight:bold;" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="jsSetWright" />
             <span class="main__setText">세트 수</span>
           </div>
-          <div class="main__stopwatch" id="jsStopWatch">00:00:00</div>
+       
+          <div class="main__stopwatch" id="jsStopWatch" style="font-weight:bold; font-size:20px" >00:00:00</div>
           <div class="main__completeBtnWrapper">
-            <button class="main__completeBtn" id="jsCompleteBtn">
+            <button  class="btn btn-light-info" id="jsCompleteBtn">
               운동 완료
             </button>
           </div>
-        </li>
-      </ul>
+         
+       </div>
+       </div>
     </main>
-    
+     </div>
    
     <script>
+    
     const currentTimeContainer = document.querySelector('#js-currentTime');
     const jsClock = currentTimeContainer.querySelector('#js-clock');
 
@@ -241,7 +264,7 @@
       const btnAddWokroutTitle = document.createElement('button');
       btnAddWokroutTitle.classList.add('main__addWorkoutBtn');
       btnAddWokroutTitle.id = `jsAddWorkoutBtn${newWorkoutId}`;
-      btnAddWokroutTitle.textContent = '-';
+      btnAddWokroutTitle.textContent = '운동삭제';
       btnAddWokroutTitle.addEventListener('click', () => {
         divTitle.parentNode.removeChild(divTitle);
         newUl.parentNode.removeChild(newUl);
@@ -251,13 +274,14 @@
 
       const labelWorkoutTitle = document.createElement('label');
       labelWorkoutTitle.classList.add('main__addWorkoutTitleText');
+
       labelWorkoutTitle.textContent = '운동';
       divTitle.appendChild(labelWorkoutTitle);
 
       const inputWorkoutTitle = document.createElement('input');
-      inputWorkoutTitle.classList.add('main__workoutTitleInput');
+      inputWorkoutTitle.classList.add('form-control');
       divTitle.appendChild(inputWorkoutTitle);
-
+     
       jsMain.appendChild(divTitle);
 
       const newUl = document.createElement('ul');
@@ -270,8 +294,8 @@
       divBtn.classList.add('main__delSet');
       const minusBtn = document.createElement('button');
       minusBtn.classList.add('main__delSetBtn');
-      minusBtn.id = 'jsDelSetBtn';
-      minusBtn.textContent = '+';
+      minusBtn.id = 'jsAddSetBtn';
+      minusBtn.textContent = '세트 추가';
       divBtn.addEventListener('click', () => {
         const li = document.createElement('li');
         li.classList.add('main__workoutCheckerList');
@@ -281,7 +305,7 @@
         const minusBtn = document.createElement('button');
         minusBtn.classList.add('main__delSetBtn');
         minusBtn.id = 'jsDelSetBtn';
-        minusBtn.textContent = '-';
+        minusBtn.textContent = '운동삭제';
         divBtn.addEventListener('click', () => {
           li.parentNode.removeChild(li);
         });
@@ -291,7 +315,7 @@
         const divTimes = document.createElement('div');
         divTimes.classList.add('main__times');
         const inputTimes = document.createElement('input');
-        inputTimes.classList.add('main__wrightBox');
+        inputTimes.classList.add('form-control');
         const spanTimes = document.createElement('span');
         spanTimes.classList.add('main__timesText');
         spanTimes.textContent = '운동할 시간';
@@ -301,7 +325,7 @@
         const divSet = document.createElement('div');
         divSet.classList.add('main__set');
         const inputSet = document.createElement('input');
-        inputSet.classList.add('main__wrightBox');
+        inputSet.classList.add('form-control');
         const spanSet = document.createElement('span');
         spanSet.classList.add('main__setText');
         spanSet.textContent = '세트 수';
@@ -315,7 +339,7 @@
         const divComBtn = document.createElement('div');
         divComBtn.classList.add('main__completeBtnWrapper');
         const completBtn = document.createElement('button');
-        completBtn.classList = 'main__completeBtn';
+        completBtn.classList = 'btn btn-light-info';
         completBtn.id = `jsCompleteBtn${newSetId}`;
         newSetId++;
         completBtn.textContent = '운동 완료';
@@ -326,14 +350,21 @@
         }
         completBtn.addEventListener('click', inputCurrentWatchOthers);
         divComBtn.appendChild(completBtn);
-
+        
         li.appendChild(divBtn);
         li.appendChild(divTimes);
         li.appendChild(divSet);
         li.appendChild(divStopWatch);
         li.appendChild(divComBtn);
         newUl.appendChild(li);
-        jsMain.appendChild(newUl);
+        jsMain.appendChild(newUl); 
+        $(".main__addWorkoutTitleText").attr("style", "font-weight:bold; font-size:20px");
+        $(".main__stopwatch").attr("style", "font-weight:bold; font-size:20px");
+        $(".form-control").attr("style",   "width: 30%; ", "aria-label", "Sizing example input", "aria-describedby", "inputGroup-sizing-sm");
+        $("#jsAddWorkoutBtn0").attr("class",   "btn btn-light-danger");
+        $("#jsAddSetBtn").attr("class",   "btn btn-secondary");
+        $("#jsDelSetBtn").attr("class",   "btn btn-danger btn-hover-scale me-5");
+        $("#jsDelSetBtn").attr("class",   "btn btn-danger btn-hover-scale me-5");
       });
       divBtn.appendChild(minusBtn);
 
@@ -342,7 +373,7 @@
       const divTimes = document.createElement('div');
       divTimes.classList.add('main__times');
       const inputTimes = document.createElement('input');
-      inputTimes.classList.add('main__wrightBox');
+      inputTimes.classList.add('form-control');
       const spanTimes = document.createElement('span');
       spanTimes.classList.add('main__timesText');
       spanTimes.textContent = '운동할 시간';
@@ -352,7 +383,7 @@
       const divSet = document.createElement('div');
       divSet.classList.add('main__set');
       const inputSet = document.createElement('input');
-      inputSet.classList.add('main__wrightBox');
+      inputSet.classList.add('form-control');
       const spanSet = document.createElement('span');
       spanSet.classList.add('main__setText');
       spanSet.textContent = '세트 수';
@@ -366,7 +397,7 @@
       const divComBtn = document.createElement('div');
       divComBtn.classList.add('main__completeBtnWrapper');
       const completBtn = document.createElement('button');
-      completBtn.classList = 'main__completeBtn';
+      completBtn.classList = 'btn btn-light-info';
       completBtn.id = `jsCompleteBtn${newSetId}`;
       newSetId++;
       completBtn.textContent = '운동 완료';
@@ -385,8 +416,17 @@
       li.appendChild(divComBtn);
       newUl.appendChild(li);
       jsMain.appendChild(newUl);
+      /* /////////////////// */
+      $(".main__addWorkoutTitleText").attr("style", "font-weight:bold; font-size:20px");
+      $(".main__stopwatch").attr("style", "font-weight:bold; font-size:20px");
+      $(".form-control").attr("style",   "width: 30%; ", "aria-label", "Sizing example input", "aria-describedby", "inputGroup-sizing-sm");
+      
+      $("#jsAddWorkoutBtn0").attr("class",   "btn btn-light-danger");
+      $("#jsAddSetBtn").attr("class",   "btn btn-secondary");
+      $("#jsDelSetBtn").attr("class",   "btn btn-danger btn-hover-scale me-5");
+      /* /////////////////// */
     });
-
+  
     jsCompleteBtn.addEventListener('click', inputCurrentWatch);
 
     // Add Set
@@ -399,17 +439,17 @@
       const minusBtn = document.createElement('button');
       minusBtn.classList.add('main__delSetBtn');
       minusBtn.id = 'jsDelSetBtn';
-      minusBtn.textContent = '-';
+      minusBtn.textContent = '세트 삭제';
       divBtn.addEventListener('click', () => {
         li.parentNode.removeChild(li);
       });
       divBtn.appendChild(minusBtn);
-
+    
 
       const divTimes = document.createElement('div');
       divTimes.classList.add('main__times');
       const inputTimes = document.createElement('input');
-      inputTimes.classList.add('main__wrightBox');
+      inputTimes.classList.add('form-control');
       const spanTimes = document.createElement('span');
       spanTimes.classList.add('main__timesText');
       spanTimes.textContent = '운동할 시간';
@@ -419,7 +459,7 @@
       const divSet = document.createElement('div');
       divSet.classList.add('main__set');
       const inputSet = document.createElement('input');
-      inputSet.classList.add('main__wrightBox');
+      inputSet.classList.add('form-control');
       const spanSet = document.createElement('span');
       spanSet.classList.add('main__setText');
       spanSet.textContent = '세트 수';
@@ -433,7 +473,7 @@
       const divComBtn = document.createElement('div');
       divComBtn.classList.add('main__completeBtnWrapper');
       const completBtn = document.createElement('button');
-      completBtn.classList = 'main__completeBtn';
+      completBtn.classList = 'btn btn-light-info';
       completBtn.id = `jsCompleteBtn${newSetId}`;
       newSetId++;
       completBtn.textContent = '운동 완료';
@@ -451,11 +491,18 @@
       li.appendChild(divStopWatch);
       li.appendChild(divComBtn);
       jsWorkoutUl.appendChild(li);
+      $(".main__addWorkoutTitleText").attr("style", "font-weight:bold; font-size:20px");
+      $(".main__stopwatch").attr("style", "font-weight:bold; font-size:20px");
+      $(".form-control").attr("style",   "width: 30%; ", "aria-label", "Sizing example input", "aria-describedby", "inputGroup-sizing-sm");
+      
+      $("#jsAddWorkoutBtn0").attr("class",  "btn btn-light-danger");
+      $("#jsAddSetBtn").attr("class",   "btn btn-secondary");
+      $("#jsDelSetBtn").attr("class",   "btn btn-danger btn-hover-scale me-5");
     });
     
     
     $(function() {
-		
+    	
 		$( "#back-btn").on("click" , function() {
 			
 	 		history.go(-1);
@@ -466,6 +513,6 @@
 	});
     </script>
     
- 
+  <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
   </body>
 </html>
