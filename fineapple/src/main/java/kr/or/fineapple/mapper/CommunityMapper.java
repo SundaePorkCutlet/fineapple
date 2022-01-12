@@ -98,4 +98,6 @@ public interface CommunityMapper {
 	
 	public Board getPostReport(Board board);
 	
+	public void addMtmQna(MtmQna mtmQna);
+	
 }

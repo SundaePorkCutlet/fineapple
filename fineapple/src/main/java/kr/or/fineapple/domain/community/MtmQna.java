@@ -20,4 +20,5 @@ public class MtmQna {
 	private LocalDate mtmAnswrCntntDate;
 	private String mtmAnswrCntnt;
 	private int mtmAnswrStt;
+	private String imgName;
 }

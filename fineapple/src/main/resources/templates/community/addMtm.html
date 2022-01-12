@@ -10,27 +10,53 @@
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 								<div class="card-body">
 										<!--begin::Form-->
-										<form action="" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework" method="post" id="kt_contact_form">
+										<form action="/community/addMtm" method="POST" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework"  id="kt_contact_form" enctype="multipart/form-data" >
+										<!-- enctype="multipart/form-data" 란?
+										위와 같은 코드를 php 에서 업로드할때 폼 양식에서 볼수 있다
+										다들 위와 같은 코드를 아무 생각없이 그냥 파일 업로드하는거니까 써줘야 하는거야 이렇게알고 있는 사람들이 많다.
+										데이터를 전송하는 방식에는 GET방식과 POST방식이 있고 또하나 ENCTYPE속성의 "multipart/form-data" 이다.
+										GET방식은 URL에 폼데이터가 노출되기때문에 입력내용의 길이제한이있고 256byte~4096byte 까지의 데이터를 전송할 수 있다.
+										POST방식은 URL에 노출되지않고 데이터를 전송하기 때문에 입력내용의 길이에 제한을 받지 않는다. 이렇게 데이터를 전송하는데 아무문제없을것처럼 보이니지만 이둘은 보낼수있는 데이터양의 한계가 있다 파일이나 용량이큰 데이터를 전송할때 문제가 생기는 것이다.
+										그때 쓰는 폼 데이터 전송방식이  바로 ENCTYPE 속성의 "multipart/form-data" 이다.
+										default는 application/x-www-form-urlencoded 입니다.-->
+										<!-- method는 전송 방식, action은 전송 목적지,  enctype은 전송되는 데이터 형식을 설정한다.-->
 											<!--begin::Title-->
 											<div class="d-flex flex-column mb-9 fv-row">
 												<h1 class="fw-bolder text-dark mb-7">1:1 문의하기</h1>
 												<span class="fs-4 fw-bold text-gray-600 d-block"> 등록하고자하는 문의를 등록하시면 됩니다.</span>
 											</div>
 											<!--end::Title-->
+											<div class="col-md-6 fv-row fv-plugins-icon-container" data-select2-id="select2-data-188-4lyu">
+											<label class="required fs-6 fw-bold mb-2">문의 사유</label>
+											<select id="mtmSelect" name = "mtmCate"  class="form-select form-select-solid select2-hidden-accessible" data-control="select2" data-hide-search="true" data-placeholder="문의 사유를 선택해주세요"  data-select2-id="select2-data-82-ftu8" tabindex="-1" aria-hidden="true">
+												<option value="" data-select2-id="select2-data-84-yno1">문의 사유를 선택해주세요</option>
+												<option value="1" data-select2-id="select2-data-193-e920">차단문의</option>
+												<option value="2" data-select2-id="select2-data-194-j9o0">정보 수정 문의</option>
+												<option value="3" data-select2-id="select2-data-195-xk0w">기타문의</option>
+
+											</select>
+											<div class="fv-plugins-message-container invalid-feedback"></div></div>
 											<!--begin::Input group-->
 											<div class="d-flex flex-column mb-5 fv-row">
 												<!--begin::Label-->
 												<label class="fs-5 fw-bold mb-2">문의 제목</label>
 												<!--end::Label-->
 												<!--begin::Input-->
-												<input class="form-control form-control-solid" placeholder="" name="subject">
+												<input name = "mtmQnaTitle" class="form-control form-control-solid" placeholder="문의 제목을 입력해주세요" >
 												<!--end::Input-->
+											</div>
+											<div class="mb-3">
+											  <div id="image_preview">
+                                   				 <img style="width:30%; height:60%;">
+                              				  </div>
+											  <label for="formFileDisabled" class="form-label">업로드할 이미지를 선택해주세요</label>
+											  <input class="form-control" id="img" name = "mtmFile" type="file" >
 											</div>
 											<!--end::Input group-->
 											<!--begin::Input group-->
 											<div class="d-flex flex-column mb-10 fv-row fv-plugins-icon-container">
 												<label class="fs-6 fw-bold mb-2">문의 내용</label>
-												<textarea class="form-control form-control-solid" rows="6" name="message" placeholder=""></textarea>
+												<textarea name = mtmQnaCntnt class="form-control form-control-solid" rows="6" placeholder="문의 내용을 입력해주세요"></textarea>
 											<div class="fv-plugins-message-container invalid-feedback"></div></div>
 											<!--end::Input group-->
 											<!--begin::Submit-->
@@ -46,6 +72,23 @@
 									</div>
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
-
+ 						<script>
+                            // 이미지 업로드
+                            $('#img').on('change', function() {
+                            ext = $(this).val().split('.').pop().toLowerCase(); //확장자
+                            //배열에 추출한 확장자가 존재하는지 체크
+                            if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                                resetFormElement($(this)); //폼 초기화
+                                window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
+                            } else {
+                                file = $('#img').prop("files")[0];
+                                blobURL = window.URL.createObjectURL(file);
+                                $('#image_preview img').attr('src', blobURL);
+                                $('#image_preview').slideDown(); //업로드한 이미지 미리보기 
+                                $(this).slideUp(); //파일 양식 감춤
+                            }
+                            });
+						 </script>
+		</body>
 	<!--end::Body-->
 </html>
