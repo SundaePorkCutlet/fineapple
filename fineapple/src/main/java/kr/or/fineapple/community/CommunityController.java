@@ -405,8 +405,15 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="faq")
-	public String faq()throws Exception{
-		return "community/faq.html";
+	public String faq(Model model)throws Exception{
+		List<MtmQna> list = communityService.getFaqList(4);
+		
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
+		
+		model.addAttribute("list", list);
+		return "community/getFaq.html";
 	}
 	
 
@@ -479,6 +486,30 @@ public class CommunityController {
 		
 		
 		return "community/addblackListView :: addBlackListView";
+	}
+	
+	@GetMapping(value = "getMtmList")
+	public String getMtmList(Model model, HttpServletRequest request) {
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
+		return "community/getMtmList.html";
+	}
+	
+	@GetMapping(value = "addMtm")
+	public String addMtm(Model model, HttpServletRequest request) {
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
+		return "community/addMtm.html";
 	}
 	
 	
