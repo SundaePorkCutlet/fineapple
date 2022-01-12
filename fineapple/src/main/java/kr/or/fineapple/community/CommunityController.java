@@ -1,5 +1,6 @@
 package kr.or.fineapple.community;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.or.fineapple.domain.community.*;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,14 +302,12 @@ public class CommunityController {
 		return "community/getBattleList.html";
 	}
 
-	@GetMapping("getBattleView/{no}")
+	@GetMapping("getBattleView")
 	public String getBattleView(
-			@PathVariable(value="no") int no,
+			@RequestParam(value="no") int no,
 			Model model
-		){
+	){
 
-		// get
-		// model
 		return "community/getBattleView.html";
 	}
 
