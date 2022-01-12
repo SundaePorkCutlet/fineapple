@@ -12,7 +12,9 @@ import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.common.ViewDuration;
 
 @Mapper
 @Repository
@@ -67,6 +69,9 @@ public interface DietMapper {
        void deleteIntakeRecord(int IntakeRecordNo);
        
        ////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
-       List<Object> getIntakeRecordListForDiary(Map map);
+       List<IntakeRecord> getIntakeRecordListForDiary(Map map);
+       
+       ////다이어리 진행자 하리니가 작성: 특정 일자의 영양소별 하루 총 섭취정보
+       TotalRecord getTotalDietRecord(ViewDuration viewDuration);
 }
 

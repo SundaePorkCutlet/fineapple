@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
@@ -119,6 +120,18 @@ public class DiaryServiceImpl implements DiaryService {
 	public UserServ getUserServiceDetails(String userId) {
 		//회원의 식단 서비스/운동 서비스 목표 정보 조회 
 		return diaryMapper.getUserServiceDetails(userId);
+	}
+
+	@Override
+	public Achievement getDietAchievement(ViewDuration viewDuration) {
+		////회윈의 식단 서비스 목표 달성률 계산해 조회
+		return diaryMapper.getDietAchievement(viewDuration);
+	}
+
+	@Override
+	public Integer getExerAchievement(ViewDuration viewDuration) {
+		////회윈의 운동 서비스 목표 달성률 계산해 조회
+		return diaryMapper.getExerAchievement(viewDuration);
 	}
 
 }
