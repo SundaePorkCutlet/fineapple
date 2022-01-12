@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+<style>
+	*{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	}
+	</style>
 <head th:replace="index/toolbar :: head">
 <meta charset="utf-8">
+
 </head>
+
 <body>
    <div id="loginModal" class="modal fade" role="dialog" th:fragment ="hong">      
    <div  class="modal-dialog " style="max-width:400px">
@@ -203,15 +213,13 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 <div align="center">
 <div class="container show-grid" align="center" style="max-width:300px; padding:0px; margin: 0px;" >
 
-<br>
-
 <div class="text-center mb-10">
 									<!--begin::Title-->
-									<h1 class="text-dark mb-3">Sign In to FineApple</h1>
+									<h1 class="text-dark mb-3">Login</h1>
 									<!--end::Title-->
 									<!--begin::Link-->
-									<div class="text-gray-400 fw-bold fs-4">New Here? 
-									<a value ="Join" id="join" th:onClick="|location.href='@{../user/addUser}'|" class="link-primary fw-bolder">Create an Account</a></div>
+									<div class="text-gray-400 fw-bold fs-4">처음 오셨나요? 
+									<a value ="Join" id="join" th:onClick="|location.href='@{../user/addUser}'|" class="link-primary fw-bolder">회원가입</a></div>
 									<!--end::Link-->
 								</div>
 <br>
@@ -251,14 +259,16 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
 <br><div class="text-center">
 									<!--begin::Submit button-->
 									<button type="button" id = "login" name="login" class="btn btn-lg btn-primary w-100 mb-5">
-										<span class="indicator-label">Continue</span>
+										<span class="indicator-label">Come In</span>
 										<span class="indicator-progress">Please wait... 
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 									</button>
 									<!--end::Submit button-->
 									<!--begin::Separator-->
 									<div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
-									<a href= "javascript:kakaoLogin();"><img src = "../assets/img/kakao_login_medium_narrow.png"></a>
+									<a href= "javascript:kakaoLogin();" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+									<img src = "../assets/media/svg/social-logos/kakao.svg" class="h-20px me-3">Continue with Kakao</a>
+								
 
 								</div>
 </div>

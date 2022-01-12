@@ -433,7 +433,7 @@
                                             <span class="menu-title" th:onClick="|location.href='@{../user/updateUserLeave?(userId=${session.user.userId})}'|" >회원탈퇴</span>
                                         </a>
                                     </div>
-                                    <div class="menu-item">
+                                    <div class="menu-item" th:if="${!session.user.password.equals('kakaopassword')}">
                                         <a class="menu-link" >
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
