@@ -836,6 +836,33 @@
 	</select>
 	
 	
+	<insert id="addMtmQna" parameterType="mtmQna">
+	INSERT INTO MTM_QNA
+	(
+	MTM_QNA_NO, 
+	USER_ID, 
+	MTM_QNA_CATE,
+	MTM_QNA_TITLE, 
+	MTM_QNA_CNTNT,
+	MTM_QNA_DATE
+	) 
+	VALUES 
+	(
+	seq_mtm_qna_mtm_qna_no.NEXTVAL, 
+	#{user.userId}, 
+	#{mtmCate}, 
+	#{mtmQnaTitle},  
+	#{mtmQnaCntnt},
+	SYSDATE
+	)
+
+	
+	</insert>
+	
+	<select id="getMyMtmQna" parameterType="mtmQna" >
+	</select>
+	
+	
 	
 	
 	

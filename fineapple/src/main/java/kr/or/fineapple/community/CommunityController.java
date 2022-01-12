@@ -1,6 +1,6 @@
 package kr.or.fineapple.community;
 
-import java.time.LocalDate;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -9,11 +9,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.fineapple.domain.community.*;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,7 @@ import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
 
+
 @Controller
 @RequestMapping("/community/*")
 public class CommunityController {
@@ -45,6 +47,12 @@ public class CommunityController {
 	public CommunityController() {
 		System.out.println(getClass().getName() + "생성함");
 	}
+	
+	@Value("${file.upload.directory.mtmQna}")
+	private String mtmFilePath;
+	
+	@Value("${file.upload.directory.mtmQna.Test}")
+	private String mtmFilePathTest;
 	
 	@Autowired
 	@Qualifier("communityServiceImpl")
@@ -233,6 +241,8 @@ public class CommunityController {
 	    
 	    
 	    System.out.println(request.getHeader("content-type"));
+	    System.out.println(request.getHeader("accept-encoding"));
+	    System.out.println(request.getHeader("accept"));
 
 
 
@@ -439,6 +449,10 @@ public class CommunityController {
 	@GetMapping(value = "{getReport}")
 	public String getReport(@RequestParam(name = "reportNo", required = false)String str, @PathVariable(value = "getReport") String pathVariable, Model model, HttpServletRequest request) {
 		
+		System.out.println(request.getHeader("content-type"));
+		System.out.println(request.getHeader("accept-encoding"));
+		System.out.println(request.getHeader("accept"));
+		
 		System.out.println(pathVariable); //이건 학습용
 		
 		System.out.println(str);
@@ -500,8 +514,12 @@ public class CommunityController {
 		return "community/getMtmList.html";
 	}
 	
-	@GetMapping(value = "addMtm")
+	@GetMapping(value = "addMtmView")
 	public String addMtm(Model model, HttpServletRequest request) {
+		
+		System.out.println(request.getHeader("content-type"));
+		System.out.println(request.getHeader("accept-encoding"));
+		System.out.println(request.getHeader("accept"));
 		
 		User user = new User();
 		
@@ -514,7 +532,42 @@ public class CommunityController {
 	
 	
 	
-	
+	@PostMapping(value = "addMtm")
+	public ModelAndView addMtm(HttpServletRequest request, ModelAndView modelAndView, @ModelAttribute MtmQna mtmQna, @RequestParam("mtmFile") MultipartFile files) throws Exception {
+		
+		System.out.println(request.getHeader("content-type"));
+		System.out.println(request.getHeader("accept-encoding"));
+		System.out.println(request.getHeader("accept"));
+		System.out.println(files.getName());
+
+		System.out.println(files.getContentType());
+		
+		System.out.println(files.getOriginalFilename());
+		
+		
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		mtmQna.setUser(user);
+		
+		System.out.println(files.getOriginalFilename().substring(files.getOriginalFilename().indexOf("."), files.getOriginalFilename().length()));
+		
+		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss"))+files.getOriginalFilename().substring(files.getOriginalFilename().indexOf("."), files.getOriginalFilename().length());
+		
+		files.transferTo(new File(mtmFilePath, time));
+		
+		mtmQna.setImgName(time);
+		
+		System.out.println(mtmQna);
+		
+		communityService.addMtmQna(mtmQna);
+		
+//		modelAndView.setViewName("");
+//		modelAndView.addObject("", modelAndView);
+		
+		
+		return null;
+	}
 	
 	
 	

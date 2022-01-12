@@ -222,6 +222,14 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("서어비스"+report);
 		return report;
 	}
+
+	@Override
+	public void addMtmQna(MtmQna mtmQna) {
+		communityMapper.addMtmQna(mtmQna);
+		
+	}
+	
+	
 	
 	
 	

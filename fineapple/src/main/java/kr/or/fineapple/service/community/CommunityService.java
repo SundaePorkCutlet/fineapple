@@ -63,4 +63,6 @@ public interface CommunityService {
 	public List<Report> getReportListNotDispose(Report report);
 	
 	public Report getReport(Report report, User user);
+	
+	public void addMtmQna(MtmQna mtmQna);
 }
