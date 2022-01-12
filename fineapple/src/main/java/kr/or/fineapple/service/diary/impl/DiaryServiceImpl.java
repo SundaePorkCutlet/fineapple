@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.service.diary.DiaryService;
@@ -113,4 +114,11 @@ public class DiaryServiceImpl implements DiaryService {
 
 		return list;
 	}
+
+	@Override
+	public UserServ getUserServiceDetails(String userId) {
+		//회원의 식단 서비스/운동 서비스 목표 정보 조회 
+		return diaryMapper.getUserServiceDetails(userId);
+	}
+
 }

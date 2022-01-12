@@ -22,6 +22,7 @@ import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.diet.DietService;
@@ -53,7 +54,7 @@ public class DiaryController {
 		
 		System.out.println("/diary/getDiary : GET");
 		
-		////사용자에게 보여지는 첫 화면에 필요한 정보(대표 사용자 이벤트, 뱃지, 습관 정보)조회 위한 parameter 설정
+		////사용자에게 보여지는 첫 화면에 필요한 정보(대표 사용자 이벤트, 뱃지, 습관 정보, 서비스 목표 상세 정보)조회 위한 parameter 설정
 		//userId, 첫 화면이 사용자 접속일자에 해당하는 월이므로 이달 기간
 		String userId = ((User)session.getAttribute("user")).getUserId();
 		LocalDate startDate = YearMonth.now().atDay(1);
@@ -66,14 +67,17 @@ public class DiaryController {
 		List<Object> keyEventTitleList = diaryService.getKeyEventTitleList(viewDuration);
 		List<Object> badgeList = diaryService.getBadgeList(viewDuration);
 		List<Object> trgtHabitList = trgtHabitService.getTrgtHabitList(viewDuration);
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
 
 		System.out.println(keyEventTitleList);
 		System.out.println(badgeList);
 		System.out.println(trgtHabitList);
+		System.out.println(userServ);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("keyEventTitleList", keyEventTitleList);
 		mav.addObject("badgeList", badgeList);
+		mav.addObject("userServ", userServ);
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.setViewName("diary/getDiary.html");
 		
@@ -102,7 +106,7 @@ public class DiaryController {
 		//parameter : viewDuration 내 userId, date
 		List<Object> userEventList = diaryService.getUserEventList(viewDuration);
 		
-		//getIntakeRecordList
+		////getIntakeRecordList
 		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
@@ -111,7 +115,7 @@ public class DiaryController {
 			System.out.println(intakeRecordList);
 		}
 
-		//getBurnningRecordList
+		////getBurnningRecordList
 		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
 		ExerServ exer = exerService.getUserService(userId);
 		if(exer != null) {
@@ -119,7 +123,16 @@ public class DiaryController {
 			mav.addObject("burnningRecordList", burnningRecordList);
 			System.out.println(burnningRecordList);
 		}
-		
+
+		//diet와 exer 서비스를 이용하는 경우 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
+		if(diet != null || exer != null) {
+			viewDuration.setStartDate(date);
+			viewDuration.setEndDate(date);
+			List dailyRecord = diaryService.getBadgeList(viewDuration);
+			mav.addObject("dailyRecord", dailyRecord);
+			System.out.println(dailyRecord);
+		}
+
 		////이주의 획득 뱃지 갯수 조회
 		//parameter : viewDuration 내 userId, startDate, endDate
 		LocalDate startDate = viewDuration.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
@@ -127,18 +140,22 @@ public class DiaryController {
 		viewDuration.setStartDate(startDate);
 		viewDuration.setEndDate(endDate);
 		Badge badgeCount = diaryService.getBadgeTotalCount(viewDuration);
+		
+		////회원의 식단 서비스/운동 서비스 목표 정보 조회
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
 
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.addObject("userEventList", userEventList);
 		mav.addObject("badgeCount", badgeCount);
+		mav.addObject("userServ", userServ);
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
-		
 		
 		System.out.println(date);
 		System.out.println(trgtHabitList);
 		System.out.println(userEventList);
 		System.out.println(badgeCount);
+		System.out.println(userServ);
 
 		return mav;
 	}

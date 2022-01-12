@@ -64,23 +64,19 @@
 										<div id="kt_account_settings_overview" class="collapse show">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
-												<div class="d-flex align-items-start flex-wrap">
-													<a href="/good/pages/profile/projects.html" class="btn btn-primary ms-auto mb-7">Projects (3)</a>
-												</div>
 												<!--begin::Row-->
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1">ex.1600Kcal</span>Per Month</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="|${dailyRecord.dailyIntakeKcal}Kcal|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 칼로리</div>
-														<a href="/good/account/billing.html" class="fw-bold">View Billing</a>
 													</div>
 													<!--begin::Status-->
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800">섭취 칼로리</span>
-															<span class="text-gray-800">목표 섭취 칼로리 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${dailyRecord.dailyIntakeKcal}Kcal|">섭취 칼로리</span>
+															<span class="text-gray-800" th:text="|목표 ${}|">목표 섭취 칼로리 얼마 중 얼마</span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -671,16 +667,20 @@
 		var date = [[${date}]];
 		var userEventList = [[${userEventList}]];
 		var badgeCount = [[${badgeCount}]];
+		var dailyRecord = [[${dailyRecord}]];
+		var userServ = [[${userServ}]];
 		var trgtHabitList = [[${trgtHabitList}]];
 		var intakeRecordList = [[${intakeRecordList}]];
-		var burnningRecordList = [[${burnningRecordList}]]
+		var burnningRecordList = [[${burnningRecordList}]];
+		console.log(date);
 		console.log(userEventList);
 		console.log(badgeCount);
+		console.log(dailyRecord);
+		console.log(userServ);
 		console.log(trgtHabitList);
 		console.log(intakeRecordList);
 		console.log(burnningRecordList);
 		
-
       $(function() {
          
          /* ///////////////////Date Picker/////////////////// */
@@ -689,7 +689,6 @@
               singleDatePicker: true,
               showDropdowns: true,
               changeYear: false,
-              maxDate: new Date(),
               locale: {
                  format: "YYYY-MM-DD",
                  separator: "-",
