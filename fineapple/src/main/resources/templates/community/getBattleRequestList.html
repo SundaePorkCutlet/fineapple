@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-center flex-wrap mb-5">
-                            <a href="#" class="btn btn-sm btn-light mx-3" onclick="cancelBattle();">
+                            <a href="#" class="btn btn-sm btn-light mx-3 btn-cancel">
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                 <span class="svg-icon svg-icon-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -139,6 +139,44 @@
 
     $(document).ready(function () {
         addComma();
+
+        $(".btn-cancel").click(function (e) {
+            e.preventDefault();
+
+            let swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonText:"닫기",
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            Swal.fire({
+                html: "승부 신청을 취소하시겠습니까?",
+                icon: "warning",
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: "예",
+                cancelButtonText: "아니오",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 예 클릭
+                    swalWithBootstrapButtons.fire(
+                        '취소되었습니다',
+                        '',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // 아니오 클릭
+                    console.log("취소클릭");
+                }
+            })
+        })
     });
 
     function addComma() {
@@ -150,13 +188,6 @@
         }
     }
 
-    function cancelBattle() {
-        if (confirm("취소하시겠습니까?")) {
-            console.log("취소");
-        } else {
-            console.log("그냥닫기");
-        }
-    }
 </script>
 
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// -->
