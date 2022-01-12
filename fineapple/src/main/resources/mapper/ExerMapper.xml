@@ -392,7 +392,7 @@
 	</where>
 	</if>
 	ORDER BY exer_No ) inner_table)
-	WHERE row_seq BETWEEN 1 AND 10
+	WHERE row_seq BETWEEN 1 AND 15
 	<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	</select>

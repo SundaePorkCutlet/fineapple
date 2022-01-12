@@ -268,7 +268,7 @@
 	          if(userId == ""){
 	             alert("메일주소가 입력되지 않았습니다.");
 	          }else{
-	        	 alert("userId:" + userId);
+	        	 alert("해당 이메일로 인증번호가 전송되었습니다");
 	         	 $.ajax({
 	         		type : "POST",
 	         		url : "/user/sendMail",

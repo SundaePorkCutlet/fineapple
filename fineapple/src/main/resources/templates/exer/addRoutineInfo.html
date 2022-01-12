@@ -185,10 +185,10 @@ $(function() {
 	
        <tbody class="py-5 fw-bold  border-bottom border-gray-300 fs-6">
 	<tr th:each="data, i : ${list}">
-		<td><input  type="radio" id="routineNo" th:value="${data.routineNo}" th:attr="data-routineNo=${data.routineNo}"></td>
-		<td align="center" th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.routineName}"  style="cursor:pointer; text-align: left;"></td>
-		<td align="center" th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
+		<td th:if="${not #strings.isEmpty(data.routineName)}"   ><input  type="radio" id="routineNo" th:value="${data.routineNo}" th:attr="data-routineNo=${data.routineNo}"></td>
+		<td th:if="${not #strings.isEmpty(data.routineName)}"   align="center" th:text="${i.count}"   style="cursor:pointer; text-align: left;"></td>
+		<td  th:if="${not #strings.isEmpty(data.routineName)}"   align="center" th:text="${data.routineName}"  style="cursor:pointer; text-align: left;"></td>
+		<td th:if="${not #strings.isEmpty(data.routineName)}"   align="center" th:text="${data.routineTime}" style="cursor:pointer; text-align: left;"></td>
 		<td></td>
 	</tr>
 </tbody>

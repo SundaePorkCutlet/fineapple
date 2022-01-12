@@ -7,7 +7,7 @@
 
 </head>
 <body>
-
+<div class="scroll h-400px px-5">
 	<div id="getRoutineList" class="modal fade" role="dialog" th:fragment ="getRoutineList">		
    <div  class="modal-dialog" style=" height:1300px;">
     <div class="modal-content">
@@ -60,7 +60,7 @@ $(function() {
 
 function addRoutine() {
 	
-	var userInput = prompt("루틴명을 입력해주세요(6자 이내)");
+	var userInput = prompt("루틴명을 입력해주세요(8자 이내)");
 	
 	
 	 
@@ -137,6 +137,7 @@ $(function() {
 		 
 	 var userInput = prompt("바꾸시려는 루틴명을 입력해주세요");
 	
+	 
 	 var routine_arr = [];
 	 var routineNo = $("input[name=chek]:checked").attr("data-routineNo");
 	 var routineTime = $("#routineTime").attr("data-routineTime");
@@ -263,7 +264,7 @@ $(function() {
     </div>
    </div>
   </div>		
-
+</div>
     <div id="mmodalHolder" ></div>
 	
 </body>

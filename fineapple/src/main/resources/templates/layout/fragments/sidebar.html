@@ -137,32 +137,81 @@
                               <span class="menu-title">운동관리</span>
                               <span class="menu-arrow"></span>
                            </span>
+                           
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
+                                         <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../exer/addUserService}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">서비스활성화</span>
                                         </a>
+                                        
+                                        </th:block>
+                                        
+                                  
+                                         <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">서비스활성화</span>
+                                        </a>
+                                        
+                                        </th:block>                                        
                                     </div>
+                                    
+                                    
                                     <div class="menu-item">
+                                      <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../exer/getExerList}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">운동검색</span>
                                         </a>
+                                        
+                                        </th:block>
+                                        
+                                         <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">운동검색</span>
+                                        </a>                                       
+                                        </th:block>                                    
                                     </div>
+                                    
+                                    
+                                    
+                                    
                                     <div class="menu-item">
+                                      <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../exer/getAddExer}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">운동등록</span>
                                         </a>
+                                        </th:block>
+                                        
+                                          <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">운동등록</span>
+                                        </a>
+                                        </th:block>
+                                       
                                     </div>
+                                    
+                                    
+                                    
                                     <div class="menu-item">
+                                     <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../exer/getDailyBurnning}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
@@ -170,7 +219,20 @@
 
                                             <span class="menu-title">일일운동량</span>
                                         </a>
+                                        </th:block>
+                                        
+                                        <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+
+                                            <span class="menu-title">일일운동량</span>
+                                        </a>
+                                        </th:block>                                     
                                     </div>
+                                    
+                                    
                                     <div class="menu-item">
                                         <a class="menu-link" th:href="@{../exer/searchExerPlace}">
                                     <span class="menu-bullet">
@@ -179,15 +241,30 @@
                                             <span class="menu-title">운동장소찾기</span>
                                         </a>
                                     </div>
+                                    
+                                    
                                     <div class="menu-item">
+                                     <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:onclick="|javascript:timer()|">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">운동하기</span>
                                         </a>
+                                        </th:block>
+                                        
+                                         <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">운동하기</span>
+                                        </a>
+                                        </th:block>
+                                        
+                                        
                                     </div>
-                                </div>
+                               </div>
                             </div>
                             <div class="menu-item">
                                 <a class="menu-link" th:href="@{../trgtHabit/getTrgtHabit}">
@@ -644,7 +721,7 @@
                         };
                     
                     function timer(){
-                        popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+                        popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=400, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
                     }
                     
                   
