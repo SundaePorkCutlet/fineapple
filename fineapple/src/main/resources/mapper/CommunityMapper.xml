@@ -566,7 +566,7 @@
 	FROM
 	alarm
 	<where>
-	user_id = #{userId}
+	user_id = #{user.userId}
 	</where>
 	</delete>
 	
@@ -581,7 +581,7 @@
 	FROM
 	alarm
 	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
-	user_id = #{userId}
+	user_id = #{userId:VARCHAR}
 	</trim>
 	</select>
 	
