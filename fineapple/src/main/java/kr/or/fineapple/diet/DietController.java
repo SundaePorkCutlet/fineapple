@@ -1,5 +1,10 @@
 package kr.or.fineapple.diet;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -643,6 +648,113 @@ public class DietController {
 
 		model.addAttribute("list", list2);
 		model.addAttribute("search", search1);
+		
+		
+		
+		
+		
+		
+		
+		String FCM_URL = "https://fcm.googleapis.com/fcm/send";
+
+		String server_key = "AAAA3Uv06fw:APA91bFaRq_ymk-a15dn7yuMV5OnJzDeji7eRLg2KgzcZ8R3Ke45hoeojptfUeRjNMknxzq6x90rllLQUsfQvI6Wd-HqY-bDnWLCS5Dv-NBC7SghIU97Mz4FP63VUJ0hrwan0Jz5iwbw";
+
+		String tokenId = "e6vkJHnCd6s:.................................U_nYts_01-XNhzV";
+
+		
+
+		String result = "";
+
+		URL url = new URL(FCM_URL);
+
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+
+
+		conn.setUseCaches(false);
+
+		conn.setDoInput(true);
+
+		conn.setDoOutput(true);
+
+
+
+		conn.setRequestMethod("POST");
+
+		conn.setRequestProperty("Authorization", "key=" + server_key);
+
+		conn.setRequestProperty("Content-Type", "application/json");
+
+
+
+		JSONObject json = new JSONObject();
+
+
+
+		try {
+
+			json.put("to", tokenId.trim());
+
+			JSONObject data = new JSONObject();
+
+			data.put("url", "https://test.com");
+
+			data.put("icon", "test.png"); 
+
+			json.put("data", data);
+
+			JSONObject info = new JSONObject();
+
+			info.put("title", "Çª½Ã Å×½ºÆ® ÁßÀÔ´Ï´ç"); 
+
+			info.put("body", "»ß»Ç»ß»Ç");
+
+			json.put("notification", info);
+
+		} catch (Exception e1) {
+
+			e1.printStackTrace();
+
+		}
+
+
+
+		try {
+
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+			wr.write(json.toString());
+
+			wr.flush();
+
+
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+
+
+			String output;
+
+			System.out.println("Output from Server .... \n");
+
+			while ((output = br.readLine()) != null) {
+
+				System.out.println(output);
+
+			}
+
+			result = "succcess";
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			result = "failure";
+
+		}
+
+		System.out.println("GCM Notification is sent successfully : " + result);
+
 
 		return "diet/getFoodList.html";
 	}

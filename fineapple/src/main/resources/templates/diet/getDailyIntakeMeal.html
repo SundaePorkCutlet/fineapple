@@ -75,7 +75,6 @@ hr {
       </div>
 			</div>
 			  <div class="card-footer" id="a">
-        Footer
     </div>
 			</div>
 			
@@ -94,7 +93,7 @@ hr {
         	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
             <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
             <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
-            <span class="aKcal" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span class="bKcal" th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
             <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
             <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
             <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
@@ -118,7 +117,7 @@ hr {
         	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
             <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
             <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
-            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span class="cKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
             <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
             <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
             <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
@@ -143,7 +142,7 @@ hr {
         	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
             <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
             <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
-            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span class="dKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
             <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
             <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
             <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
@@ -168,7 +167,7 @@ hr {
         	<span th:if="${radio}==1"><input th:attr="intakeRecordNo=${data.intakeRecordNo}" type="radio" class="updateName" name="chek"></span> 
             <div  th:utext="|섭취음식명  :  <b>${data.food.foodName}</b>&nbsp|"></div>
             <span  th:utext="|섭취량 : <b>${data.userFoodIntake}g</b>&nbsp|"></span>
-            <span class="aKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
+            <span class="eKcal"  th:attr="data-foodKcal=${data.food.foodKcal}" th:utext="|칼로리 : <b>${data.food.foodKcal}Kcal</b>&nbsp|"></span>
             <span  th:utext="|탄수화물 : <b>${data.food.foodCarb}g</b>&nbsp|"></span>
             <span  th:utext="|단백질 : <b>${data.food.foodProtein}g</b>&nbsp|"></span>
             <span th:utext="|지방 : <b>${data.food.foodFat}g</b>&nbsp|"></span>
