@@ -36,7 +36,9 @@
 </div>
 <br>
 <div align="center" id="appendList">
+
 <input type="button" id="getUserList" name="getUserList" class="btn btn-success" value ="아이디찾기">
+
 </div>
 <div>
 </div>
@@ -81,10 +83,25 @@
 				var result = "<br><p><h2>검색결과</h2></p>"
 				$("#appendList").append(result)
 					for(i = 0 ; i < JSONData.length ; i++){
-				var displayValue= "<br><div class='d-flex flex-column'><li class='d-flex align-items-center py-2'><a class='bullet bullet-vertical me-5'value='" + JSONData[i].userId + "'></a></li></div>" ; 
+
+				//var displayValue= "<br><p><h4> 아이디 : " + JSONData[i].userId + "</h4></p>" ; 
+				
+				 var displayValue = "<div class=\"border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3\">"+
+				"<div class=\"fs-6 fw-bolder text-gray-700\">찾으신 아이디</div>" +
+				"<div class=\"fw-bold text-gray-400\">"+
+				JSONData[i].userId+
+				"</div>"+
+				"</div>";
+
 				$("#appendList").append(displayValue);
 					}
-				var displayButton = "<p><input type = 'button' class='btn btn-success' value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
+
+				var displayButton = "<p><input type = 'submit' class=\"btn btn-secondary\" value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
+				
+				
+
+			
+
 				$("#appendList").append(displayButton);
 				
 				

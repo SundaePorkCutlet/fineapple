@@ -14,13 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
@@ -397,8 +405,15 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="faq")
-	public String faq()throws Exception{
-		return "community/faq.html";
+	public String faq(Model model)throws Exception{
+		List<MtmQna> list = communityService.getFaqList(4);
+		
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
+		
+		model.addAttribute("list", list);
+		return "community/getFaq.html";
 	}
 	
 
@@ -448,7 +463,54 @@ public class CommunityController {
 		
 		return "community/getReport.html";
 	}
-	 
+	
+	@PostMapping(value = "addBlackListView")
+	public String  blackListViewModal(@RequestBody String str, Model model) {
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		User blackUser = new User();
+		
+		blackUser.setUserId(jsonObject.get("reportedUserId").toString());
+		
+		BlackList blackList = new BlackList();
+		
+		blackList.setBlackUser(blackUser);
+		
+		
+		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		
+		model.addAttribute("time", time);
+		model.addAttribute("blackList", blackList);
+		
+		
+		
+		return "community/addblackListView :: addBlackListView";
+	}
+	
+	@GetMapping(value = "getMtmList")
+	public String getMtmList(Model model, HttpServletRequest request) {
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
+		return "community/getMtmList.html";
+	}
+	
+	@GetMapping(value = "addMtm")
+	public String addMtm(Model model, HttpServletRequest request) {
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
+		return "community/addMtm.html";
+	}
 	
 	
 	

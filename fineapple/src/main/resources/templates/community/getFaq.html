@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<style>
+  #toc-content {
+    display: none;
+  }
+ 
+</style>
+
+   <!--begin::Body-->
+<body id="kt_body" class="aside-enabled">
+      <!-- 공통 SideBar -->
+<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+<!--begin::Accordion-->
+<div align="center">
+<h1 class="fs-2tx fw-bolder mb-8">
+<span class="d-inline-block position-relative ms-2">
+<span class="d-inline-block mb-2">FAQ</span>
+<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
+</span></h1>
+<br>
+	<th:block th:each ="data ,i : ${list}">
+		<div class="accordion" id="kt_accordion_1" style="max-width:800px" >
+		    <div class="accordion-item">
+		    <!-- th:attr="|data-bs-target=#kt_accordion_1_body_${i.count}|" -->
+		    <!-- data-bs-target="#kt_accordion_1_body_1" -->
+		        <h2 class="accordion-header" id="kt_accordion_1_header_1">
+		            <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#kt_accordion_1_body_${i.count}|"  aria-expanded="false" aria-controls="kt_accordion_1_body_1" th:text ="${data.mtmQnaTitle}">
+		                
+		            </button>
+		        </h2>
+		        <div th:id = "|kt_accordion_1_body_${i.count}|" class="accordion-collapse collapse" aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
+		            <div class="accordion-body" th:text = "${data.mtmQnaCntnt}">
+		                
+		            </div>
+		        </div>
+		    </div>
+		
+		</div>
+	</th:block>
+</div>
+<!--end::Accordion-->
+<th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script th:inline="javascript">
+
+
+</script>
+
+   
+
+   </body>
+   <!--end::Body-->
+</html>

@@ -11,6 +11,7 @@ import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -281,6 +283,40 @@ public class CommunityRestController {
 
 		
 	}
+	
+	@PostMapping(value = "addBlackList")
+	public void addBlackList(@RequestBody String str) {
+		
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		BlackList blackList = new BlackList();
+		
+		User blakcUser = new User();
+		
+		blakcUser.setUserId(jsonObject.get("blackUserId").toString());
+		
+		blackList.setBlackUser(blakcUser);
+		
+		blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 }

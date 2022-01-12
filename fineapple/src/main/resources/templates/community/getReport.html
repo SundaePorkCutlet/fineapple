@@ -44,8 +44,10 @@
 								</div>
 							</div>
 							<div class="fw-bold">
-								<span class="fs-6 text-gray-800 me-2" th:text = "${report.user.userName}"></span>
-								<span class="badge badge-light"th:text = "${report.user.userId}"></span>
+								
+								<div style="font-size: 20px;" class="text-muted" th:text = "${report.user.userName}"></div>
+								
+								<div style="font-size: 20px;" class="text-muted" th:text = "${report.user.userId}"></div>
 							</div>
 							</div>
 						</div>
@@ -92,13 +94,13 @@
 								
 							</div>
 							<div class="fw-bold">
-								<span class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userName}"></span>
-								<span id = "reportedUserId" class="badge badge-light"th:text="${report.reportedUser.userId}"></span>
+								<span style="font-size: 20px;" class="text-muted" th:text="${report.reportedUser.userName}"></span>
+								<span id = "reportedUserId" style="font-size: 20px;" class="text-muted" th:text="${report.reportedUser.userId}"></span>
 							</div>
 							<div class="fw-bold">
-								<div class="fs-6 text-gray-800 me-2" th:text="${report.reportedUser.userSttMsg}"></div>
+								<div style="font-size: 15px;" class="text-muted" th:text="${report.reportedUser.userSttMsg}"></div>
 							</div>
-							<button  class="btn btn-light-dark"	 style="float: right;" th:onClick="javascript:fcAddBlackList">블랙리스트 추가</button>
+							<button  class="btn btn-light-dark"	 style="float: right;" th:onClick="javascript:fcAddBlackList()">블랙리스트 추가</button>
 							
 						</div>
 						
@@ -133,7 +135,7 @@
 		function fcAddBlackList(){
 			
 			
-			var reportedUserId = $("reportedUserId").text();
+			var reportedUserId = $("#reportedUserId").text();
 
 			console.log(reportedUserId);
 			
@@ -149,12 +151,14 @@
 					console.log("성공" + data);
 					
 					$("#mmodalHolder").html(data);
-		            $("#blackListViewModal").modal("show");
+		            $("#addBlackListViewModal").modal("show");
 					
 				}
 				
 			})
 		};
+		
+		
 		</script>
 	</body>
 </html>
