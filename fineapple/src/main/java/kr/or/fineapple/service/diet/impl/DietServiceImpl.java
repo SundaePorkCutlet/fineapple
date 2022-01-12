@@ -27,7 +27,9 @@ import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Recipe;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.mapper.DietMapper;
 import kr.or.fineapple.service.diet.DietService;
 
@@ -732,13 +734,20 @@ public class DietServiceImpl implements DietService{
 	
 	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
 	@Override
-	public List<Object> getIntakeRecordListForDiary(LocalDate date, int userServiceNo) {
+	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate date, int userServiceNo) {
 		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
 		Map<String, Object> map = new HashMap<>();
 		map.put("date", date);
 		map.put("userServiceNo", userServiceNo);
 		return dietMapper.getIntakeRecordListForDiary(map);
 	}
+
+	@Override
+	public TotalRecord getTotalDietRecord(ViewDuration viewDuration) {
+		return dietMapper.getTotalDietRecord(viewDuration);
+	}
+	
+	
 }
 	
 	

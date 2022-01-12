@@ -52,16 +52,16 @@
 									</div>
 									<!--end::Overview-->
 									<!--begin::Overview-->
-									<div class="card mb-5 mb-xl-10" id="kt_account_settings_overview" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
+									<div class="card mb-5 mb-xl-10" id="diet_record" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_overview">
+										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
 											<div class="card-title">
 												<h3 class="fw-bolder m-0">식단 기록</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_overview" class="collapse show">
+										<div id="diet_record_cntnt" class="collapse show">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::Row-->
@@ -75,13 +75,13 @@
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800" th:text="|${dailyRecord.dailyIntakeKcal}Kcal|">섭취 칼로리</span>
-															<span class="text-gray-800" th:text="|목표 ${}|">목표 섭취 칼로리 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeKcalInPercentage}%|">섭취 칼로리</span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeKcal}Kcal 중 ${totalRecord.totalIntakeKcal}Kcal 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
 														<div class="progress h-8px bg-light-primary mb-3">
-															<div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeKcalInPercentage}%|" th:aria-valuenow="${achievement.intakeKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
@@ -91,25 +91,27 @@
 													<!--end::Status-->
 												</div>
 												<!--end::Row-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
 												<!--begin::Row-->
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1">ex.123g</span>Per Month</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeCarb}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 탄수화물</div>
-														<a href="/good/account/billing.html" class="fw-bold">View Billing</a>
 													</div>
 													<!--begin::Status-->
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800">섭취 탄수화물</span>
-															<span class="text-gray-800">목표 섭취량 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeCarbInPercentage}%|">섭취 탄수화물</span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalRecord.totalIntakeCarb}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
 														<div class="progress h-8px bg-light-primary mb-3">
-															<div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeCarbInPercentage}%|" th:aria-valuenow="${achievement.intakeCarbInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
@@ -119,25 +121,27 @@
 													<!--end::Status-->
 												</div>
 												<!--end::Row-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
 												<!--begin::Row-->
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1">ex.13g</span>Per Month</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeProtein}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 단백질</div>
-														<a href="/good/account/billing.html" class="fw-bold">View Billing</a>
 													</div>
 													<!--begin::Status-->
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800">섭취 단백질</span>
-															<span class="text-gray-800">목표 섭취량 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeProteinInPercentage}%|">섭취 단백질</span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalRecord.totalIntakeProtein}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
 														<div class="progress h-8px bg-light-primary mb-3">
-															<div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeProteinInPercentage}%|" th:aria-valuenow="${achievement.intakeProteinInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
@@ -147,25 +151,27 @@
 													<!--end::Status-->
 												</div>
 												<!--end::Row-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
 												<!--begin::Row-->
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1">ex.20g</span>Per Month</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeFat}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 지방</div>
-														<a href="/good/account/billing.html" class="fw-bold">View Billing</a>
 													</div>
 													<!--begin::Status-->
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800">섭취 지방</span>
-															<span class="text-gray-800">목표 섭취량 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeFatInPercentage}%|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalRecord.totalIntakeFat}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
 														<div class="progress h-8px bg-light-primary mb-3">
-															<div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeFatInPercentage}%|" th:aria-valuenow="${achievement.intakeFatInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
@@ -203,37 +209,6 @@
 														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
 													</div>
 													<!--end::Label-->
-													<!--begin::Edit-->
-													<!-- <div id="kt_signin_email_edit" class="flex-row-fluid d-none">
-														begin::Form
-														<form id="kt_signin_change_email" class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
-															<div class="row mb-6">
-																<div class="col-lg-6 mb-4 mb-lg-0">
-																	<div class="fv-row mb-0 fv-plugins-icon-container">
-																		<label for="emailaddress" class="form-label fs-6 fw-bolder mb-3">Enter New Email Address</label>
-																		<input type="email" class="form-control form-control-lg form-control-solid" id="emailaddress" placeholder="Email Address" name="emailaddress" value="support@keenthemes.com">
-																	<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																</div>
-																<div class="col-lg-6">
-																	<div class="fv-row mb-0 fv-plugins-icon-container">
-																		<label for="confirmemailpassword" class="form-label fs-6 fw-bolder mb-3">Confirm Password</label>
-																		<input type="password" class="form-control form-control-lg form-control-solid" name="confirmemailpassword" id="confirmemailpassword">
-																	<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																</div>
-															</div>
-															<div class="d-flex">
-																<button id="kt_signin_submit" type="button" class="btn btn-primary me-2 px-6">Update Email</button>
-																<button id="kt_signin_cancel" type="button" class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
-															</div>
-														<div></div></form>
-														end::Form
-													</div> -->
-													<!--end::Edit-->
-													<!--begin::Action-->
-													<!-- <div id="kt_signin_email_button" class="ms-auto">
-														<button class="btn btn-light btn-active-light-primary">Change Email</button>
-													</div> -->
-													<!--end::Action-->
 												</div>
 												<!--end::Email Address-->
 												<!--begin::Separator-->
@@ -248,44 +223,6 @@
 														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
 													</div>
 													<!--end::Label-->
-													<!--begin::Edit-->
-													<!-- <div id="kt_signin_password_edit" class="flex-row-fluid d-none">
-														begin::Form
-														<form id="kt_signin_change_password" class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
-															<div class="row mb-1">
-																<div class="col-lg-4">
-																	<div class="fv-row mb-0 fv-plugins-icon-container">
-																		<label for="currentpassword" class="form-label fs-6 fw-bolder mb-3">Current Password</label>
-																		<input type="password" class="form-control form-control-lg form-control-solid" name="currentpassword" id="currentpassword">
-																	<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																</div>
-																<div class="col-lg-4">
-																	<div class="fv-row mb-0 fv-plugins-icon-container">
-																		<label for="newpassword" class="form-label fs-6 fw-bolder mb-3">New Password</label>
-																		<input type="password" class="form-control form-control-lg form-control-solid" name="newpassword" id="newpassword">
-																	<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																</div>
-																<div class="col-lg-4">
-																	<div class="fv-row mb-0 fv-plugins-icon-container">
-																		<label for="confirmpassword" class="form-label fs-6 fw-bolder mb-3">Confirm New Password</label>
-																		<input type="password" class="form-control form-control-lg form-control-solid" name="confirmpassword" id="confirmpassword">
-																	<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																</div>
-															</div>
-															<div class="form-text mb-5">Password must be at least 8 character and contain symbols</div>
-															<div class="d-flex">
-																<button id="kt_password_submit" type="button" class="btn btn-primary me-2 px-6">Update Password</button>
-																<button id="kt_password_cancel" type="button" class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
-															</div>
-														<div></div></form>
-														end::Form
-													</div> -->
-													<!--end::Edit-->
-													<!--begin::Action-->
-													<!-- <div id="kt_signin_password_button" class="ms-auto">
-														<button class="btn btn-light btn-active-light-primary">Reset Password</button>
-													</div> -->
-													<!--end::Action-->
 												</div>
 												<!--end::Password-->
 												
@@ -599,7 +536,7 @@
 											<!--begin::Menu-->
 											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#kt_account_settings_overview" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
+													<a href="#diet_record" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -664,21 +601,37 @@
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
 		<script th:inline="javascript">
+		//공통
 		var date = [[${date}]];
 		var userEventList = [[${userEventList}]];
-		var badgeCount = [[${badgeCount}]];
-		var dailyRecord = [[${dailyRecord}]];
-		var userServ = [[${userServ}]];
 		var trgtHabitList = [[${trgtHabitList}]];
-		var intakeRecordList = [[${intakeRecordList}]];
+		var badgeCount = [[${badgeCount}]];
+		
+		//서비스 이용 시
+		var dailyRecord = [[${dailyRecord}]];
+		var totalRecord = [[${totalRecord}]];
+		var userServ = [[${userServ}]];
+		var achievement = [[${achievement}]];
+		var breakfastIntakeRecordList = [[${breakfastIntakeRecordList}]];
+		var lunchIntakeRecordList = [[${lunchIntakeRecordList}]];
+		var dinnerIntakeRecordList = [[${dinnerIntakeRecordList}]];
+		var snackIntakeRecordList = [[${snackIntakeRecordList}]];
+		var supperIntakeRecordList = [[${supperIntakeRecordList}]];
 		var burnningRecordList = [[${burnningRecordList}]];
+		
 		console.log(date);
 		console.log(userEventList);
+		console.log(trgtHabitList);
 		console.log(badgeCount);
 		console.log(dailyRecord);
+		console.log(totalRecord);
 		console.log(userServ);
-		console.log(trgtHabitList);
-		console.log(intakeRecordList);
+		console.log(achievement);
+		console.log(breakfastIntakeRecordList);
+		console.log(lunchIntakeRecordList);
+		console.log(dinnerIntakeRecordList);
+		console.log(snackIntakeRecordList);
+		console.log(supperIntakeRecordList);
 		console.log(burnningRecordList);
 		
       $(function() {

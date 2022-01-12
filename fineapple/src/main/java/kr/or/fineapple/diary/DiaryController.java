@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.DietServ;
 import kr.or.fineapple.domain.ExerServ;
+import kr.or.fineapple.domain.IntakeRecord;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
@@ -110,9 +114,36 @@ public class DiaryController {
 		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
-			List intakeRecordList = dietService.getIntakeRecordListForDiary(date, diet.getUserServiceNo());
-			mav.addObject("intakeRecordList", intakeRecordList);
-			System.out.println(intakeRecordList);
+			//해당 날짜 매 끼니 별로 식사 나눠서 담기
+			List<IntakeRecord> intakeRecordListAll = dietService.getIntakeRecordListForDiary(date, diet.getUserServiceNo());
+			List<IntakeRecord> breakfastIntakeRecordList = new ArrayList<IntakeRecord>();
+			List<IntakeRecord> lunchIntakeRecordList = new ArrayList<IntakeRecord>();
+			List<IntakeRecord> dinnerIntakeRecordList = new ArrayList<IntakeRecord>();
+			List<IntakeRecord> snackIntakeRecordList = new ArrayList<IntakeRecord>();
+			List<IntakeRecord> supperIntakeRecordList = new ArrayList<IntakeRecord>();
+			for (IntakeRecord intakeRecord : intakeRecordListAll) {
+				if(intakeRecord.getMeal().equals("아침")) {
+					breakfastIntakeRecordList.add(intakeRecord);
+				}else if(intakeRecord.getMeal().equals("점심")) {
+					lunchIntakeRecordList.add(intakeRecord);
+				}else if(intakeRecord.getMeal().equals("저녁")) {
+					dinnerIntakeRecordList.add(intakeRecord);
+				}else if(intakeRecord.getMeal().equals("간식")) {
+					snackIntakeRecordList.add(intakeRecord);
+				}else if(intakeRecord.getMeal().equals("야식")) {
+					supperIntakeRecordList.add(intakeRecord);
+				}
+			}
+			mav.addObject("breakfastIntakeRecordList", breakfastIntakeRecordList);
+			mav.addObject("lunchIntakeRecordList", lunchIntakeRecordList);
+			mav.addObject("dinnerIntakeRecordList", dinnerIntakeRecordList);
+			mav.addObject("snackIntakeRecordList", snackIntakeRecordList);
+			mav.addObject("supperIntakeRecordList", supperIntakeRecordList);
+			System.out.println(breakfastIntakeRecordList);
+			System.out.println(lunchIntakeRecordList);
+			System.out.println(dinnerIntakeRecordList);
+			System.out.println(snackIntakeRecordList);
+			System.out.println(supperIntakeRecordList);
 		}
 
 		////getBurnningRecordList
@@ -123,14 +154,42 @@ public class DiaryController {
 			mav.addObject("burnningRecordList", burnningRecordList);
 			System.out.println(burnningRecordList);
 		}
-
-		//diet와 exer 서비스를 이용하는 경우 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
+		
+		////diet 또는 exer 서비스를 이용하는 경우
+		//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
+		//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
+		//3. 회원의 서비스 이용 목표달성률 산출 및 조회
 		if(diet != null || exer != null) {
 			viewDuration.setStartDate(date);
 			viewDuration.setEndDate(date);
-			List dailyRecord = diaryService.getBadgeList(viewDuration);
+			
+			//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
+			List dailyRecordList = diaryService.getBadgeList(viewDuration);
+			Badge dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
+			TotalRecord totalRecord = dietService.getTotalDietRecord(viewDuration); //하루 기간 내 총 섭취 영양소 정보 조회
+			
+			//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
+			UserServ userServ = diaryService.getUserServiceDetails(userId);
+			
+			//3. 회원의 서비스 이용 목표달성률 산출 및 조회
+			Achievement achievement = new Achievement();
+			
+			if(diet != null) {
+				achievement = diaryService.getDietAchievement(viewDuration);
+			}
+			if(exer !=null) {
+				Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
+				achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);
+			}
+			
+			mav.addObject("userServ", userServ);
 			mav.addObject("dailyRecord", dailyRecord);
+			mav.addObject("totalRecord", totalRecord);
+			mav.addObject("achievement", achievement);
+			
+			System.out.println(achievement);
 			System.out.println(dailyRecord);
+			System.out.println(userServ);
 		}
 
 		////이주의 획득 뱃지 갯수 조회
@@ -141,13 +200,10 @@ public class DiaryController {
 		viewDuration.setEndDate(endDate);
 		Badge badgeCount = diaryService.getBadgeTotalCount(viewDuration);
 		
-		////회원의 식단 서비스/운동 서비스 목표 정보 조회
-		UserServ userServ = diaryService.getUserServiceDetails(userId);
-
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.addObject("userEventList", userEventList);
 		mav.addObject("badgeCount", badgeCount);
-		mav.addObject("userServ", userServ);
+		
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
 		
@@ -155,7 +211,6 @@ public class DiaryController {
 		System.out.println(trgtHabitList);
 		System.out.println(userEventList);
 		System.out.println(badgeCount);
-		System.out.println(userServ);
 
 		return mav;
 	}

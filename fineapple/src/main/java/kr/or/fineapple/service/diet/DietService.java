@@ -11,7 +11,9 @@ import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Recipe;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.common.ViewDuration;
 
 
 public interface DietService {
@@ -68,8 +70,10 @@ public interface DietService {
 	
 	public Recipe getRcp(String rcpCd);
 
-	public List<Object> getIntakeRecordListForDiary(LocalDate date, int userServiceNo);
+	////다이어리 진행자 하리니가 작성
+	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate date, int userServiceNo);
 	
-	
+	////다이어리 진행자 하리니가 작성: 특정 일자의 영양소별 하루 총 섭취정보
+    public TotalRecord getTotalDietRecord(ViewDuration viewDuration);
 
 }

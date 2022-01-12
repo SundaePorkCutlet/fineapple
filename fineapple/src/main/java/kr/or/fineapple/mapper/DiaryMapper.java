@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
@@ -57,5 +58,11 @@ public interface DiaryMapper {
 
 	////회원의 식단 서비스/운동 서비스 목표 정보 조회
 	UserServ getUserServiceDetails(String userId);
+	
+	////회윈의 식단 서비스 목표 달성률 계산해 조회
+	Achievement getDietAchievement(ViewDuration viewDuration);
+	
+	////회윈의 운동 서비스 목표 달성률 계산해 조회
+	Integer getExerAchievement(ViewDuration viewDuration);
 
 }

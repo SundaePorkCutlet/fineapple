@@ -61,8 +61,13 @@
   		<result property="food.foodProtein" 	column="FOOD_PROTEIN" 		jdbcType="DOUBLE"/>
   		<result property="totalKcal"		column="TOTAL_KCAL"		jdbcType="DOUBLE"/>
 		</resultMap>
-
-
+		
+		<resultMap id="TotalRecordMap" type="TotalRecord">
+			<result property="totalIntakeKcal" column="total_intake_kcal" jdbcType="DOUBLE"/>
+			<result property="totalIntakeCarb" column="total_intake_carb" jdbcType="DOUBLE"/>
+			<result property="totalIntakeProtein" column="total_intake_protein" jdbcType="DOUBLE"/>
+			<result property="totalIntakeFat" column="total_intake_fat" jdbcType="DOUBLE"/>
+		</resultMap>
 
 	<insert id="insertDietService" parameterType="DietServ">
 	INSERT INTO USER_SERVICE (USER_SERVICE_NO,USER_ID,DAILY_TRGT_INTAKE_KCAL,DAILY_TRGT_INTAKE_CARB,DAILY_TRGT_INTAKE_PROTEIN,DAILY_TRGT_INTAKE_FAT,TRGT_BODY_FAT)
@@ -140,6 +145,15 @@
 	SELECT * FROM INTAKE_RECORD 
 	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(#{date},'YYYYMMDD')
 	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getTotalDietRecord" resultMap="TotalRecordMap">
+	SELECT SUM(food_kcal) as "total_intake_kcal", SUM(food_carb) as "total_intake_carb", SUM(food_protein) as "total_intake_protein", SUM(food_fat) as "total_intake_fat"
+	FROM intake_record
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	GROUP BY TRUNC(intake_record_date)
 	</select>
 	
 	<update id="updateIntakeRecord" parameterType="IntakeRecord">

@@ -23,14 +23,22 @@ public class UserServ {
 	////식단 서비스 목표 정보
 	//일일 목표 섭취 정보
 	Double dailyTrgtIntakeKcal;
+	//목표 달성률(화면 디스플레이용)
+	int intakeKcalInPercentage;
 	
 	////운동 서비스 목표 정보
 	//일일 목표 소모 정보
 	Double dailyTrgtBurnningKcal;
+	//목표 달성률(화면 디스플레이용)
+	int burnningKcalInPercentage;
 
 	////식단 서비스 목표 정보
 	//상세 목표
 	Double dailyTrgtIntakeCarb;
+	int intakeCarbInPercentage;
 	Double dailyTrgtIntakeProtein;
+	int intakeProteinInPercentage;
 	Double dailyTrgtIntakeFat;
+	int intakeFatInPercentage;
+	
 }
