@@ -3,7 +3,17 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
+<style>
+    .battle-sub-text:first-child{
+        margin-left: 0;
+        padding-left: 0;
+    }
 
+    .battle-sub-text{
+        margin: 0 10px;
+        padding: 2px 6px;
+    }
+</style>
 <!--begin::Body-->
 <body id="kt_body" class="aside-enabled">
 <!-- 공통 SideBar -->
@@ -84,6 +94,81 @@
             <div class="col">
                 <div class="card p-0">
                     <div class="btn-sm battle-progress">진행중</div>
+                    <!--                    <div class="btn-sm battle-win">승리</div>-->
+                    <!--                    <div class="btn-sm battle-lose">패배</div>-->
+                    <div class="card-body">
+                        <div class="row mb-8">
+                            <div class="col-xl-12">
+                                <div class="d-flex flex-center flex-wrap mb-5">
+                                    <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
+                                        <div class="fs-6 fw-bolder text-gray-700">칼로리 섭취</div>
+                                        <div class="fw-bold text-gray-400">승부 유형</div>
+                                    </div>
+                                    <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
+                                        <div class="fs-6 fw-bolder text-gray-700">10일</div>
+                                        <div class="fw-bold text-gray-400">승부 기간</div>
+                                    </div>
+                                    <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
+                                        <div class="fs-6 fw-bolder text-gray-700">2022-01-11 ~ 2022-01-21</div>
+                                        <div class="fw-bold text-gray-400">승부 기간</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="d-flex flex-column mt-5 mb-5">
+                                    <div class="d-flex justify-content-between w-100 fs-4 fw-bolder mb-3">
+                                        <span class="mt-auto mb-auto">나의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green">1000</span>Kcal</span>
+                                        <div>
+                                            <span>2 / 10</span>
+                                            <div class="fs-10 opacity-50">성공 / 전체</div>
+                                        </div>
+                                    </div>
+                                    <div class="h-8px bg-light rounded mb-3">
+                                        <div class="bg-success rounded h-8px" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <!--                                    <div class="fw-bold text-gray-600">14 Targets are remaining</div>-->
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="d-flex flex-column mt-5 mb-5">
+                                    <div class="d-flex justify-content-between w-100 fs-4 fw-bolder mb-3">
+                                        <span class="mt-auto mb-auto">상대의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green">500</span>Kcal</span>
+                                        <div>
+                                            <span>4 / 10</span>
+                                            <div class="fs-10 opacity-50">성공 / 전체</div>
+                                        </div>
+                                    </div>
+                                    <div class="h-8px bg-light rounded mb-3">
+                                        <div class="bg-success rounded h-8px" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <!--                                    <div class="fw-bold text-gray-600">14 Targets are remaining</div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end py-6">
+                        <button type="reset" class="btn btn-light btn-active-light-danger me-2">기권하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 승리 -->
+        <div class="row g-6 mb-6 g-xl-9 mb-xl-9 col-sm-12 col-xl-10">
+            <div class="col">
+                <div class="card p-0">
+                    <div class="btn-sm battle-win">
+                        <div>
+                            <h1>승리</h1>
+                        </div>
+                        <div class="d-flex">
+                            <div class="fs-6 fw-bolder text-gray-700 battle-sub-text">칼로리 섭취</div>
+                            <span>|</span>
+                            <div class="fs-6 fw-bolder text-gray-700 battle-sub-text">10일</div>
+                            <span>|</span>
+                            <div class="fs-6 fw-bolder text-gray-700 battle-sub-text">2022-01-11 ~ 2022-01-21</div>
+                        </div>
+                    </div>
                     <!--                    <div class="btn-sm battle-win">승리</div>-->
                     <!--                    <div class="btn-sm battle-lose">패배</div>-->
                     <div class="card-body">
