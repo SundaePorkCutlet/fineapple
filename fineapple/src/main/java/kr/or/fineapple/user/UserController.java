@@ -45,12 +45,14 @@ public class UserController {
 	
 	@RequestMapping(value="checkPassword")
 	public String checkPassword(Model model) {
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","비밀번호 변경");
 		return "user/changeUserPassword.html";
 	}
 	@RequestMapping(value="findPassword")
 	public String findPassword(Model model) {
-	
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","비밀번호 찾기(변경)");
 		return "user/findPassword.html";
 	}
 	
@@ -104,9 +106,11 @@ public class UserController {
 	
 	
 	@RequestMapping(value="addUser")
-	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session){
+	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session,Model model){
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원가입");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
@@ -160,7 +164,8 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","내 정보 보기");
 		return "user/getUser.html";
 		
 	}
@@ -173,7 +178,8 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-	
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","내 정보 수정");
 		return "user/updateUser.html";
 		
 	}
@@ -241,13 +247,16 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원탈퇴");
 		return "user/updateUserLeave.html";
 	}
 	
 	@RequestMapping(value="restoreUser", method= RequestMethod.GET)
-	public String restoreUser(){
+	public String restoreUser(Model model){
 		System.out.println("회원복구창 입!짱");
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원복구");
 		return "user/restoreUser.html";
 	}
 	
@@ -265,9 +274,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="getUserList")
-	public String getUserList() throws Exception{
+	public String getUserList(Model model) throws Exception{
 		System.out.println("아이디찾기 들어오세요");
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","아이디찾기");
 		return "user/findUserId.html";
 	}
 	

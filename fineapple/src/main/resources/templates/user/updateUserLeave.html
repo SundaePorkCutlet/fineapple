@@ -50,8 +50,11 @@
 <br>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label" th:if ="${session.user == null}">인증번호</label>
-   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
-   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
+    <div class="d-flex flex-stack input-with-btn">
+   <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+               <button class="btn btn-primary" type="button" data-kt-element="send" id="sendNum" name="sendNum">확인</button>
+   </div>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span>
 </div>
 
 
@@ -84,37 +87,13 @@
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script th:inline="javascript">
-	$(function(){
-			var comparedPassword = [[${session.user.password}]];
-			var userId=$("#userId").val()
-			console.log(comparedPassword);
-			$("#updateUserLeave").on("click",function(){
-				//alert("ㅇㅇ")
-			var password = $("#password").val()
-			console.log(password)
-				console.log("클릭이벤트 ")
-				//alert("dd")
-				if(password == comparedPassword){  		
-				//	alert("ff")
-				//	console.log("if문 진입")
-			  		$("form").attr("method","POST").attr("action","/user/updateUserLeaveResult").submit();
-			
-			 		}else {
-			 			
-					alert("비밀번호가 일치하지 않습니다");
-					alert(userId);
-					self.location="/user/updateUserLeave?userId="+userId
-				}
-			});
-  		
-  	
-	});
+	
 
 	
 	 $(function(){
 
 	      $("#sendMail").on("click",function(){
-	    	  
+	    	 
 	          var userId = $("#userId").val();
 	          var data ={
 	        	  userId:userId
@@ -130,13 +109,14 @@
 	         		accept : "application/json",
 	         		contentType : "application/json"
 	         	 }).done(function(data){
-	         		 alert("인증번호를 확인해주세요.");
+	         		 alert("입력한 이메일을 통해 인증번호를 확인해주세요.");
 	         		 isCertifidation = true;
 	         		 var key = data;
-	         		   $("#compare").on("keyup",function(){
+	         		   $("#sendNum").on("click",function(){
 	         			   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
 	         			   console.log(compare)
+	         			   
 	         			   if(compare == key){
 	         				   $("#compareEmail").html("<p>인증성공!</p>")
 	         				   $("#compareEmail").css('color','green');
@@ -144,6 +124,9 @@
 	         			   }else{
 	         				   $("#compareEmail").html("<p>인증실패!</p>")
 	         				   	$("#compareEmail").css('color','red');
+	         				    $("#compare").val("");
+	         				    $("#compare").focus();
+	         			
 	         				   isCertification=false;
 	         			   }
 	         		   })
@@ -154,6 +137,34 @@
 
          })
   })
+  
+  $(function(){
+	var comparedPassword = [[${session.user.password}]];
+	var userId=$("#userId").val();
+	$("#updateUserLeave").on("click",function(){
+	var compare = $("#compare").val()
+		console.log(compare);
+		console.log(comparedPassword);
+	var password = $("#password").val()
+		console.log(password)
+		console.log("클릭이벤트 ")
+		if(compare==""){
+			alert("인증을 해주세요.");
+			self.location="/user/updateUserLeave?userId="+userId
+		}else if(password == ""){
+			alert("비밀번호를 입력해주세요.");	
+			self.location="/user/updateUserLeave?userId="+userId
+		}else if(password == comparedPassword){  		
+		  		$("form").attr("method","POST").attr("action","/user/updateUserLeaveResult").submit();
+		}else{
+				alert("비밀번호가 일치하지 않습니다");
+				//alert(userId);
+				self.location="/user/updateUserLeave?userId="+userId
+			}
+	});
+	
+
+});
 </script>
 	</body>
 	<!--end::Body-->
