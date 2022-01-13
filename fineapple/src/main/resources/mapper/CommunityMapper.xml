@@ -860,7 +860,15 @@
 	</insert>
 	
 	<select id="getMyMtmQna" parameterType="mtmQna" >
+	
+	SELECT
+	*
+	FROM
+	
+	
 	</select>
+	
+	
 	
 	
 	

@@ -302,7 +302,7 @@ public class CommunityRestController {
 		blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
 		
 		
-		
+		System.out.println(blackList);
 		
 		
 		
