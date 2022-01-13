@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Alarm;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -100,7 +101,10 @@ public interface CommunityMapper {
 	
 	public void addMtmQna(MtmQna mtmQna);
 	
-	
 	public List<MtmQna> getMyMtmList(User user);
+	
+	public User getUserBattle(User user);
+	
+	public void addBattleInter(Battle battle);
 	
 }

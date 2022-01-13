@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
@@ -308,7 +309,44 @@ public class CommunityRestController {
 		
 	}
 	
-	
+	@RequestMapping(value = "addBattle", method = RequestMethod.POST)
+	public void addBattle(@RequestBody String str, HttpServletRequest request) {
+		//내가 "battleCate":"1" 에 대한 값을 클라이언트에서 까먹고 Id를 안가져왔다 그랬더니 value가 null인 battleCate이 빠지고 request의 body에 담겨서 왔다. 
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		String rivalUserId = jsonObject.get("userId").toString();
+		
+		//String battleCate = jsonObject.get("battleCate").toString();
+		
+		//String battleTerm = jsonObject.get("battleTerm").toString();
+		
+		//String trgtKcal = jsonObject.get("trgtKcal").toString();
+		
+		int intTrgtKcal = Integer.parseInt(jsonObject.get("trgtKcal").toString());
+		
+		int battleTerm = Integer.parseInt( jsonObject.get("battleTerm").toString());
+		
+		int battleCate = Integer.parseInt(jsonObject.get("battleCate").toString());
+		
+		//valueOF = Integer
+		//parseInt = int
+		
+		Battle battle = new Battle();
+		
+		battle.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		battle.setBattleItemCate(battleCate);
+		
+		battle.setBattlePeriod(battleTerm);
+		
+		battle.setUserTrgtKcal(intTrgtKcal);
+		
+		communityService.addBattleInter(battle, rivalUserId);
+		 
+		
+	}
 	
 	
 	

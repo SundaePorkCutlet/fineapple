@@ -287,13 +287,21 @@ public class CommunityController {
 	
 	
 	@RequestMapping(value = "addBattleView", method = RequestMethod.POST)
-	public String addBattleView(Model model) {
+	public String addBattleView(Model model, @RequestBody User user) {
 		
-		
+		System.out.println(user);
 		System.out.println("addBattleView 거침");
+		
+		user = communityService.getUserBattle(user);
+		
+		
+		model.addAttribute("user", user);
+		
 		
 		return "community/addBattleView :: addBattleView";
 	}
+	
+	
 
 	// 승부 받은 리스트
 	@GetMapping("getBattleReceiveList")
@@ -308,7 +316,13 @@ public class CommunityController {
 	}
 
 	@GetMapping("getBattleList")
-	public String getBattleList(){
+	public String getBattleList(HttpServletRequest request){
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		
+		
 		return "community/getBattleList.html";
 	}
 
@@ -585,10 +599,12 @@ public class CommunityController {
 		model.addAttribute("list", list);
 		
 		
+		
+		
 		return "community/getMtmList.html";
 	}
 	
-	
+
 	
 	
 	

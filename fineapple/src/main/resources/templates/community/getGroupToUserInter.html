@@ -94,7 +94,7 @@
                                     <td th:text="${data.groupIntro}" style="cursor:pointer; text-align: left;"></td>
                                     <td>
                                     <button th:id = "'interYes' + ${i.count}" th:onclick="javascript:fnAcceptOrRejectGroupInter(1, this.id)" th:attr="data-groupUserNo=${data.groupNo}"  class="btn btn-warning" >수락</button>
-									<button th:id = "'interNo' + ${i.count}" th:onclick="javascript:fnAcceptOrRejectGroupInter(2, this.id, i.count)" th:attr="data-groupUserNo=${data.groupNo}" class="btn btn-secondary" >거절</button>
+									<button th:id = "'interNo' + ${i.count}" th:onclick="javascript:fnAcceptOrRejectGroupInter(2, this.id)" th:attr="data-groupUserNo=${data.groupNo}" class="btn btn-secondary" >거절</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -113,7 +113,7 @@
 		<script type="text/javascript">
 		
 		
-		function fnAcceptOrRejectGroupInter(stt, id, cclass){
+		function fnAcceptOrRejectGroupInter(stt, id){
 			console.log("안녕");
 			var groupUserNoData = $('#'+ id).attr("data-groupUserNo");
 			var data = {"interStt" : stt,
@@ -126,15 +126,17 @@
 				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
 				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 					console.log("안녕");
-					window.location.href="/community/getGroupToUserInter";
+					
 				
 					
 				}
+		
 			
 				
 				
 				
 			});
+			location.reload();
 			
 			 
 		};

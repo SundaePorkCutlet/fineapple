@@ -875,6 +875,43 @@
 	<select id="getAdminMtmList">
 	</select>
 	
+	<select id="getUserBattle" parameterType="user" resultMap="userSelectMap">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	user_id = #{userId}
+	</where>
+	
+	</select>
+	
+	<insert id="addBattleInter" parameterType="battle">
+	INSERT INTO battle
+	(
+	battle_no,
+	user_id,
+	rival_user_id,
+	battling_stt,
+	battle_item_cate,
+	user_trgt_kcal,
+	battle_period
+	)
+	VALUES
+	(
+	seq_battle_battle_no.NEXTVAL,
+	#{user.userId},
+	#{rivalUser.userId},
+	#{battleStt},
+	#{battleItemCate},
+	#{userTrgtKcal},
+	#{battlePeriod}
+	)
+	
+	</insert>
+	
+	
+	
 	
 	
 	

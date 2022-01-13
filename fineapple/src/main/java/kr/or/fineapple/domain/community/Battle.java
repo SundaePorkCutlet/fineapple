@@ -19,7 +19,7 @@ public class Battle {
 	private int battlePeriod;
 	private int userScore;
 	private int rivalUserScore;
-	private Boolean battleStt;
+	private int battleStt;
 	private int userTrgtKcal;
 	private int rivalTrgtKcal;
 	private User user;
