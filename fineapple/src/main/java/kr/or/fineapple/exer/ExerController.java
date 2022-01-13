@@ -140,7 +140,8 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	
 	
 	session.setAttribute("user",user);
-	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 서비스 활성화");
 
 	return "exer/getUserService.html";
 }
@@ -203,7 +204,8 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 
 	model.addAttribute("exerServ",serv);	
 	model.addAttribute("user",user);
-	 
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 서비스 활성화 조회");
 	
 	
 	return "redirect:../exer/addUserService";
@@ -255,7 +257,8 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-		//model.addAttribute("resultPage", resultPage);
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동리스트");
 		
 		
 		
@@ -344,7 +347,8 @@ public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @R
 	
 
 	model.addAttribute("exer", exer);
-	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 상세 정보");
 	
 	return "exer/getExer";
 	
@@ -369,10 +373,9 @@ public String deleteExer(@ModelAttribute("exer") Exer exer , Model model) throws
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-	
-	
-	
-	model.addAttribute("exer", exer);
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동리스트");
+		model.addAttribute("exer", exer);
 	
 	return "exer/getExerList";
 }
@@ -414,7 +417,8 @@ public String postAddExer(@ModelAttribute("exer") Exer exer , Model model, @Requ
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-		
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동 리스트");
 		
 	
 	model.addAttribute("exer", exer);
@@ -431,7 +435,7 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 	System.out.println("getAddExer");
 	
 	model.addAttribute("NavName1","운동관리");
-	model.addAttribute("NavName2","운동 정보 생성");
+	model.addAttribute("NavName2","새로운 운동 등록");
 	
 	
 	return "exer/addExer.html";	
@@ -696,6 +700,10 @@ record.setDailyExerTime(resultTime2);
 System.out.println("입력되는 일일 운동량~~~"+record);
 
 exerService.addDailyBurnning(record);
+
+model.addAttribute("NavName1","운동관리");
+model.addAttribute("NavName2","일일 운동량 정보 조회");
+
 
 
 
