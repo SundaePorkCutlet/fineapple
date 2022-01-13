@@ -228,6 +228,12 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.addMtmQna(mtmQna);
 		
 	}
+
+	@Override
+	public List<MtmQna> getMtmList(User user) {
+		// TODO Auto-generated method stub
+		return communityMapper.getMyMtmList(user);
+	}
 	
 	
 	

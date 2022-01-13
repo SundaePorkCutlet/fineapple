@@ -65,4 +65,6 @@ public interface CommunityService {
 	public Report getReport(Report report, User user);
 	
 	public void addMtmQna(MtmQna mtmQna);
+	
+	public List<MtmQna> getMtmList(User user);
 }

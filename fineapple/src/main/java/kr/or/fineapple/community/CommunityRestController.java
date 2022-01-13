@@ -132,7 +132,7 @@ public class CommunityRestController {
 		
 		report.setTrgtNo(Integer.parseInt(TrgtNo));
 		
-		report.setReportStt(1);
+		report.setReportStt(0);
 		
 		
 		

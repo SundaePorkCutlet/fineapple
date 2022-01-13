@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan
 @SpringBootApplication
-public class FineappleApplication {
+public class FineappleApplication {	
 	public static void main(String[] args) {
 		SpringApplication.run(FineappleApplication.class, args);
 		

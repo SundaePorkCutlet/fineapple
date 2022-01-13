@@ -502,17 +502,17 @@ public class CommunityController {
 		return "community/addblackListView :: addBlackListView";
 	}
 	
-	@GetMapping(value = "getMtmList")
-	public String getMtmList(Model model, HttpServletRequest request) {
-		
-		User user = new User();
-		
-		user = (User)request.getSession(true).getAttribute("user");
-		
-		model.addAttribute("user", user);
-		
-		return "community/getMtmList.html";
-	}
+//	@GetMapping(value = "getMtmList")
+//	public String getMtmList(Model model, HttpServletRequest request) {
+//		
+//		User user = new User();
+//		
+//		user = (User)request.getSession(true).getAttribute("user");
+//		
+//		model.addAttribute("user", user);
+//		
+//		return "community/getMtmList.html";
+//	}
 	
 	@GetMapping(value = "addMtmView")
 	public String addMtm(Model model, HttpServletRequest request) {
@@ -565,9 +565,31 @@ public class CommunityController {
 //		modelAndView.setViewName("");
 //		modelAndView.addObject("", modelAndView);
 		
+		modelAndView.setViewName("redirect:/community/getMtmList");
 		
-		return null;
+		
+		return modelAndView;
 	}
+	
+	@GetMapping("getMtmList")
+	public String getMtmList(HttpServletRequest request, Model model) {
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		List<MtmQna> list = communityService.getMtmList(user);
+		
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
+		
+		model.addAttribute("list", list);
+		
+		
+		return "community/getMtmList.html";
+	}
+	
+	
+	
 	
 	
 	

@@ -112,7 +112,8 @@
 	<result property="mtmQnaCntnt" column="mtm_qna_cntnt"/>
 	<result property="mtmAnswrCntntDate" column="mtm_answer_cntnt_date"/>
 	<result property="mtmAnswrCntnt" column="mtm_answer_cntnt"/>
-	<result property="mtmAnswrStt" column="mtm_answer_stt"/>	
+	<result property="mtmAnswrStt" column="mtm_answer_stt"/>
+	<result property="imgName" column="mtm_img"/>	
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -193,7 +194,7 @@
 	FROM
 	board b,
 	(SELECT COUNT(*) cmnt_count, c.post_no FROM board b, comments c WHERE b.post_no = c.post_no GROUP BY c.post_no) c,
-	(SELECT b.post_no, SUM(ral.post_no) ssum FROM board b, report_and_like ral WHERE b.post_no = ral.post_no GROUP BY (b.post_no)) sub
+	(SELECT b.post_no, SUM(ral.post_no) ssum FROM board b, report_and_like ral WHERE b.post_no = ral.post_no AND like_stt = 1 GROUP BY (b.post_no)) sub
 	
 	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
 	b.post_no = c.post_no(+)
@@ -844,6 +845,7 @@
 	MTM_QNA_CATE,
 	MTM_QNA_TITLE, 
 	MTM_QNA_CNTNT,
+	MTM_IMG,
 	MTM_QNA_DATE
 	) 
 	VALUES 
@@ -853,19 +855,24 @@
 	#{mtmCate}, 
 	#{mtmQnaTitle},  
 	#{mtmQnaCntnt},
+	#{imgName},
 	SYSDATE
 	)
 
 	
 	</insert>
 	
-	<select id="getMyMtmQna" parameterType="mtmQna" >
 	
+	<select id="getMyMtmList" parameterType="user" resultMap="mtmQnaMap">
 	SELECT
 	*
 	FROM
+	mtm_qna
+	WHERE
+	user_id = #{userId}
+	</select>
 	
-	
+	<select id="getAdminMtmList">
 	</select>
 	
 	

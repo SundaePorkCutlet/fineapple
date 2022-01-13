@@ -100,4 +100,7 @@ public interface CommunityMapper {
 	
 	public void addMtmQna(MtmQna mtmQna);
 	
+	
+	public List<MtmQna> getMyMtmList(User user);
+	
 }
