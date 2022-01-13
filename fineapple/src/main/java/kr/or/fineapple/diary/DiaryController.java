@@ -134,11 +134,11 @@ public class DiaryController {
 					supperIntakeRecordList.add(intakeRecord);
 				}
 			}
-			mav.addObject("breakfastIntakeRecordList", breakfastIntakeRecordList);
-			mav.addObject("lunchIntakeRecordList", lunchIntakeRecordList);
-			mav.addObject("dinnerIntakeRecordList", dinnerIntakeRecordList);
-			mav.addObject("snackIntakeRecordList", snackIntakeRecordList);
-			mav.addObject("supperIntakeRecordList", supperIntakeRecordList);
+			mav.addObject("breakfast", breakfastIntakeRecordList);
+			mav.addObject("lunch", lunchIntakeRecordList);
+			mav.addObject("dinner", dinnerIntakeRecordList);
+			mav.addObject("snack", snackIntakeRecordList);
+			mav.addObject("supper", supperIntakeRecordList);
 			System.out.println(breakfastIntakeRecordList);
 			System.out.println(lunchIntakeRecordList);
 			System.out.println(dinnerIntakeRecordList);

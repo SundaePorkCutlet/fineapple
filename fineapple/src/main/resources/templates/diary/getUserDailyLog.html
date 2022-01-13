@@ -16,17 +16,17 @@
 							<div class="d-flex flex-column flex-lg-row">
 								<!--begin::Layout-->
 								<div class="flex-md-row-fluid ms-lg-12" style="margin-right: 3rem">
-									<!--begin::Overview-->
-									<div class="card mb-5 mb-xl-10" id="kt_account_settings_overview_top" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
+									<!--begin::user_daily_log-->
+									<div class="card mb-5 mb-xl-10" id="user_daily_log" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_overview_top">
+										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#user_daily_log">
 											<div class="card-title">
 												<h2 class="fw-bolder m-0">일별 상세 정보 조회</h2>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_overview" class="collapse show">
+										<div id="user_daily_log" class="collapse show">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<div class="d-flex align-items-start flex-wrap">
@@ -50,18 +50,18 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Overview-->
-									<!--begin::Overview-->
-									<div class="card mb-5 mb-xl-10" id="diet_record" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
+									<!--end::user_daily_log-->
+									<!--begin::diet_record-->
+									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
+										<div class="card-header border-0 cursor-pointer" id="diet_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
 											<div class="card-title">
 												<h3 class="fw-bolder m-0">식단 기록</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="diet_record_cntnt" class="collapse show">
+										<div id="diet_record_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::Row-->
@@ -186,48 +186,117 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Overview-->
-									<!--begin::Sign-in Method-->
+									<!--end::diet_record-->
+									<!--begin::diet_record_details-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_signin_method">
+										<div class="card-header border-0 cursor-pointer" id="diet_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record_details">
 											<div class="card-title m-0">
 												<h3 class="fw-bolder m-0">오늘 먹은 식단</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_signin_method" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="diet_record_details_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
-												<!--begin::Email Address-->
+												<!--begin::breakfast-->
 												<div class="d-flex flex-wrap align-items-center">
 													<!--begin::Label-->
-													<div id="kt_signin_email">
+													<div id="breakfast">
 														<div class="fs-6 fw-bolder mb-1">아침</div>
-														<div class="fw-bold text-gray-600">뭐먹엇는지 쏼라쏼라</div>
-														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
+														<th:block th:if="${#strings.listIsEmpty(breakfast)}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<th:block th:unless="${#strings.listIsEmpty(breakfast)}">
+															<div class="fw-bold text-gray-600" th:each="food, i : ${breakfast}" th:text="${i.count eq i.size}? '|${breakfast.food.foodName}|' : '|${breakfast.food.foodName}, |'" th:value="${breakfast.food.foodCd}"></div>
+															<div class="fw-bold text-gray-600" th:each="food, i : ${breakfast}" th:text="|총 칼로리 ${#aggregates.sum(breakfast.foodKcal)}Kcal, 탄수화물 ${#aggregates.sum(breakfast.foodCarb)}g, 단백질 ${#aggregates.sum(breakfast.foodProtein)}g, 지방 ${#aggregates.sum(breakfast.foodFat)}g 섭취|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
-												<!--end::Email Address-->
+												<!--end::breakfast-->
 												<!--begin::Separator-->
 												<div class="separator separator-dashed my-6"></div>
 												<!--end::Separator-->
-												<!--begin::Password-->
-												<div class="d-flex flex-wrap align-items-center mb-10">
+												<!--begin::lunch-->
+												<div class="d-flex flex-wrap align-items-center">
 													<!--begin::Label-->
-													<div id="kt_signin_password">
+													<div id="lunch">
 														<div class="fs-6 fw-bolder mb-1">점심</div>
-														<div class="fw-bold text-gray-600">뭐먹엇는지 쏼라쏼라</div>
-														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
+														<th:block th:if="${#lists.size(lunch) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<th:block th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}">
+															<div class="fw-bold text-gray-600"><span th:utext="|${item.food.foodName}|"></span></div>
+															<!-- <div class="fw-bold text-gray-600" th:text="|총 칼로리 ${#aggregates.sum(item.{foodKcal})}Kcal, 탄수화물 ${#aggregates.sum(item.{foodCarb})}g, 단백질 ${#aggregates.sum(item.{foodProtein})}g, 지방 ${#aggregates.sum(item.{foodFat})}g 섭취|"></div> -->
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
-												<!--end::Password-->
-												
-												
-												
+												<!--end::lunch-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::dinner-->
+												<div class="d-flex flex-wrap align-items-center">
+													<!--begin::Label-->
+													<div id="dinner">
+														<div class="fs-6 fw-bolder mb-1">저녁</div>
+														<th:block th:if="${#strings.listIsEmpty(dinner)}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<th:block th:unless="${#strings.listIsEmpty(dinner)}">
+															<div class="fw-bold text-gray-600" th:each="food, i : ${dinner}" th:text="${i.count eq i.size}? '|${dinner.food.foodName}|' : '|${dinner.food.foodName}, |'" th:value="${dinner.food.foodCd}"></div>
+															<div class="fw-bold text-gray-600" th:each="food, i : ${dinner}" th:text="|총 칼로리 ${#aggregates.sum(dinner.foodKcal)}Kcal, 탄수화물 ${#aggregates.sum(dinner.foodCarb)}g, 단백질 ${#aggregates.sum(dinner.foodProtein)}g, 지방 ${#aggregates.sum(dinner.foodFat)}g 섭취|"></div>
+														</th:block>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::dinner-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::snack-->
+												<div class="d-flex flex-wrap align-items-center">
+													<!--begin::Label-->
+													<div id="snack">
+														<div class="fs-6 fw-bolder mb-1">간식</div>
+														<th:block th:if="${#strings.listIsEmpty(snack)}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<th:block th:unless="${#strings.listIsEmpty(snack)}">
+															<div class="fw-bold text-gray-600" th:each="food, i : ${snack}" th:text="${i.count eq i.size}? '|${snack.food.foodName}|' : '|${snack.food.foodName}, |'" th:value="${snack.food.foodCd}"></div>
+															<div class="fw-bold text-gray-600" th:each="food, i : ${snack}" th:text="|총 칼로리 ${#aggregates.sum(snack.foodKcal)}Kcal, 탄수화물 ${#aggregates.sum(snack.foodCarb)}g, 단백질 ${#aggregates.sum(snack.foodProtein)}g, 지방 ${#aggregates.sum(snack.foodFat)}g 섭취|"></div>
+														</th:block>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::snack-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::supper-->
+												<div class="d-flex flex-wrap align-items-center mb-10">
+													<!--begin::Label-->
+													<div id="supper">
+														<div class="fs-6 fw-bolder mb-1">야식</div>
+														<th:block th:if="${#strings.listIsEmpty(supper)}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<th:block th:unless="${#strings.listIsEmpty(supper)}">
+															<div class="fw-bold text-gray-600" th:each="food, i : ${supper}" th:text="${i.count eq i.size}? '|${supper.food.foodName}|' : '|${supper.food.foodName}, |'" th:value="${supper.food.foodCd}"></div>
+															<div class="fw-bold text-gray-600" th:each="food, i : ${supper}" th:text="|총 칼로리 ${#aggregates.sum(supper.foodKcal)}Kcal, 탄수화물 ${#aggregates.sum(supper.foodCarb)}g, 단백질 ${#aggregates.sum(supper.foodProtein)}g, 지방 ${#aggregates.sum(supper.foodFat)}g 섭취|"></div>
+														</th:block>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::supper-->
 												<!--begin::Notice-->
 												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
 													<!--begin::Icon-->
@@ -248,9 +317,6 @@
 															<div class="fs-6 text-gray-700 pe-7">Two-factor authentication adds an extra layer of security to your account. To log in, in addition you'll need to provide a 6 digit code</div>
 														</div>
 														<!--end::Content-->
-														<!--begin::Action-->
-														<a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_two_factor_authentication">Enable</a>
-														<!--end::Action-->
 													</div>
 													<!--end::Wrapper-->
 												</div>
@@ -260,7 +326,7 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Sign-in Method-->
+									<!--end::diet_record_details-->
 									<!--begin::Basic info-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
@@ -536,7 +602,7 @@
 											<!--begin::Menu-->
 											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#diet_record" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
+													<a href="#diet_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -544,7 +610,7 @@
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#kt_account_settings_signin_method" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#diet_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -612,11 +678,11 @@
 		var totalRecord = [[${totalRecord}]];
 		var userServ = [[${userServ}]];
 		var achievement = [[${achievement}]];
-		var breakfastIntakeRecordList = [[${breakfastIntakeRecordList}]];
-		var lunchIntakeRecordList = [[${lunchIntakeRecordList}]];
-		var dinnerIntakeRecordList = [[${dinnerIntakeRecordList}]];
-		var snackIntakeRecordList = [[${snackIntakeRecordList}]];
-		var supperIntakeRecordList = [[${supperIntakeRecordList}]];
+		var breakfast = [[${breakfast}]];
+		var lunch = [[${lunch}]];
+		var dinner = [[${dinner}]];
+		var snack = [[${snack}]];
+		var supper = [[${supper}]];
 		var burnningRecordList = [[${burnningRecordList}]];
 		
 		console.log(date);
@@ -627,11 +693,14 @@
 		console.log(totalRecord);
 		console.log(userServ);
 		console.log(achievement);
-		console.log(breakfastIntakeRecordList);
-		console.log(lunchIntakeRecordList);
-		console.log(dinnerIntakeRecordList);
-		console.log(snackIntakeRecordList);
-		console.log(supperIntakeRecordList);
+		console.log(breakfast);
+		console.log(lunch);
+		console.log(lunch[0]);
+		console.log(lunch[0].food);
+		console.log(lunch[0].food.foodName);
+		console.log(dinner);
+		console.log(snack);
+		console.log(supper);
 		console.log(burnningRecordList);
 		
       $(function() {
