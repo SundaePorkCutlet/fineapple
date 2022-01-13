@@ -38,13 +38,16 @@
 		    <!-- data-bs-target="#kt_accordion_1_body_1" -->
 		        <h2 class="accordion-header" id="kt_accordion_1_header_1">
 		            <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#kt_accordion_1_body_${i.count}|"  aria-expanded="false" aria-controls="kt_accordion_1_body_1" th:text ="${data.mtmQnaTitle}">	                
+
 		            </button>
 		        </h2>
 		        <div th:id = "|kt_accordion_1_body_${i.count}|" class="accordion-collapse collapse" aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
 		            <button class="btn btn-danger" style="float: right; font-size: 10px;" type="button" th:href="@{../community/deleteFaq?mtmQnaNo=}+${mtmQna.mtmQnaNo}" >삭제하기</button>
+
 		            <div class="accordion-body" th:text = "${data.mtmQnaCntnt}">
-		                
+		            
 		            </div>
+		               
 		        </div>
 		    </div>
 		
