@@ -66,5 +66,15 @@ public interface CommunityService {
 	
 	public void addMtmQna(MtmQna mtmQna);
 	
-	public List<MtmQna> getMtmList(User user);
+
+	//Faq
+	public void addFqa(MtmQna mtmQna);
+	
+	public void deleteFaq(int mtmQnaNo);
+	
+	//블랙리스트
+	public void addUserBlc(User userId);
+	
+	//신고 처리 완료
+	public void updateReportStt(Report report);
 }

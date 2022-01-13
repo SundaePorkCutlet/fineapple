@@ -15,24 +15,33 @@
       <!-- 공통 SideBar -->
 <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!--begin::Accordion-->
+<form class="form-inline" name="detailForm"> 
 <div align="center">
 <h1 class="fs-2tx fw-bolder mb-8">
 <span class="d-inline-block position-relative ms-2">
 <span class="d-inline-block mb-2">FAQ</span>
 <span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
-</span></h1>
+</span>
+</h1>
+
+
+
 <br>
-	<th:block th:each ="data ,i : ${list}">
+<div align="center">
+	<div align="right" class="accordion-header">
+	<button type="button" id="add" class="btn btn-success">작성하기</button>
+	</div>
+	<div th:each ="data ,i : ${list}" id="count" th:attr="data-i=${i.count}">
 		<div class="accordion" id="kt_accordion_1" style="max-width:800px" >
 		    <div class="accordion-item">
 		    <!-- th:attr="|data-bs-target=#kt_accordion_1_body_${i.count}|" -->
 		    <!-- data-bs-target="#kt_accordion_1_body_1" -->
 		        <h2 class="accordion-header" id="kt_accordion_1_header_1">
-		            <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#kt_accordion_1_body_${i.count}|"  aria-expanded="false" aria-controls="kt_accordion_1_body_1" th:text ="${data.mtmQnaTitle}">
-		                
+		            <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#kt_accordion_1_body_${i.count}|"  aria-expanded="false" aria-controls="kt_accordion_1_body_1" th:text ="${data.mtmQnaTitle}">	                
 		            </button>
 		        </h2>
 		        <div th:id = "|kt_accordion_1_body_${i.count}|" class="accordion-collapse collapse" aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
+		            <button class="btn btn-danger" style="float: right; font-size: 10px;" type="button" th:href="@{../community/deleteFaq?mtmQnaNo=}+${mtmQna.mtmQnaNo}" >삭제하기</button>
 		            <div class="accordion-body" th:text = "${data.mtmQnaCntnt}">
 		                
 		            </div>
@@ -40,13 +49,50 @@
 		    </div>
 		
 		</div>
-	</th:block>
+	</div>
 </div>
+</div>
+
+<div hidden="" th:attr="data-mtmQnaNo=${mtmQna.mtmQnaNo}" id="mtmQnaNo"> </div>
+              
+              
+</form>
 <!--end::Accordion-->
 <th:block th:replace="/layout/fragments/footer.html :: footer"></th:block>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
 
+
+function fncGetUserList(currentPage) {
+	   //document.getElementById("currentPage").value = currentPage;
+
+	      //document.detailForm.submit();
+	      
+	      	var count =  $("#count").attr("data-i");
+	   		var a =  $("#mtmQnaNo").attr("data-mtmQnaNo");
+	   		
+	      	console.log(count)
+	      	
+	      	alert(a)
+	      	
+	      	
+	   $("form").attr("method" , "GET").attr("action" , "/community/getAddFaq").submit();
+	}
+
+	$(function() {
+
+	    
+	    $(".btn.btn-success").on("click" , function() {
+	       fncGetUserList(1);
+	      
+	});
+	});
+	
+	
+	
+	
+	
+	
 
 </script>
 

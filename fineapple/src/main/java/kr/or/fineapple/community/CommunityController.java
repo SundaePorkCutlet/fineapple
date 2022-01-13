@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.BlackList;
@@ -571,32 +572,88 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-	@GetMapping("getMtmList")
-	public String getMtmList(HttpServletRequest request, Model model) {
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping(value = "updateReportStt")
+	public String updateReportStt(HttpServletRequest request, Model model) throws Exception {
 		
+		System.out.println("updateReportStt");
+		  	 	 
 		User user = (User)request.getSession(true).getAttribute("user");
 		
-		List<MtmQna> list = communityService.getMtmList(user);
+		Report report = new Report();
+	
+		report.setUser(user);
 		
-		for (MtmQna mtmQna : list) {
-			System.out.println(mtmQna);
-		}
+		communityService.updateReportStt(report);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("report", report);
+		model.addAttribute("user", user);
+		
+		return "redirect:../community/getReportList";
 		
 		
-		return "community/getMtmList.html";
 	}
 	
 	
 	
+	@GetMapping("getAddFaq")
+	public String getAddFaq( Model model) throws Exception {
+		
+		
+		System.out.println("getAddFaq");
+		
+		
+		return "community/addFaq.html";	
+		
+	}
+
+
+
+	@PostMapping("postAddFaq")
+	public String postAddFaq(@ModelAttribute("faq") MtmQna mtmQna , Model model) throws Exception {
+		
+		MtmQna mtmQna1 = new MtmQna();
+		
+		System.out.println("postAddFaq");
+		
+		
+		//mtmQna1.setMtmQnaTitle(mtmQna.getMtmQnaTitle());
+		//mtmQna1.setMtmQnaCntnt(mtmQna.getMtmQnaCntnt());
+		
+		communityService.addFqa(mtmQna);
+		
+		System.out.println(mtmQna);
+		
+				
+		model.addAttribute("mtmQna", mtmQna);
+		
+		
+		return "redirect:../community/faq";	
+		
+	}
+
 	
-	
-	
-	
-	
-	
-	
+	@PostMapping("deleteFaq")
+	public String deleteFaq(Model model, @ModelAttribute("mtmQna") MtmQna mtmQna,
+							HttpServletRequest request) throws Exception {
+		
+		
+		System.out.println("deleteFaq");
+		
+		communityService.deleteFaq(mtmQna.getMtmQnaNo());
+		
+		
+		model.addAttribute("mtmQna", mtmQna);
+		
+		
+		return "redirect:../community/faq";
+	}
 	
 	
 	

@@ -524,8 +524,12 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<update id="addUserBlc">
-	
+	<update id="addUserBlc" parameterType="user" >
+	 UPDATE USERS
+	 SET  BLC_RGS_STT = 1,
+	      BLC_ADD_WHY = #{blcAddWhy:VARCHAR},
+	      BLC_ADD_DATE = SYSDATE
+	 WHERE USER_ID= #{userId}
 	</update>
 	
 	
@@ -628,6 +632,19 @@
 	)
 	</insert>
 	
+	
+	
+	
+	<update id="updateReportStt" parameterType="report" >
+	 UPDATE REPORT_AND_LIKE
+	 SET  REPORT_STT = 1
+	 WHERE USER_ID= #{user.userId}
+	</update>
+	
+	
+	
+
+	
 	<select id="getReportListNotDispose" parameterType="report">
 	SELECT
 	*
@@ -640,12 +657,7 @@
 	
 	</select>
 	
-	<update id="updateReportStt" parameterType="report">
-	UPDATE
-	FROM
-	<trim prefix="SET" suffixOverrides=",">
-	</trim>
-	</update>
+
 	
 	<select id="getUserSearchList" parameterType="search" resultMap="userSelectMap">
 	SELECT
@@ -858,18 +870,44 @@
 	#{imgName},
 	SYSDATE
 	)
-
-	
 	</insert>
 	
 	
-	<select id="getMyMtmList" parameterType="user" resultMap="mtmQnaMap">
-	SELECT
-	*
-	FROM
-	mtm_qna
-	WHERE
-	user_id = #{userId}
+
+		
+	<insert id="addFaq" parameterType="mtmQna">
+	INSERT INTO MTM_QNA
+	(
+	MTM_QNA_NO, 
+	MTM_QNA_CATE,
+	MTM_QNA_TITLE, 
+	MTM_QNA_CNTNT,
+	MTM_QNA_DATE
+	) 
+	VALUES 
+	(
+	seq_mtm_qna_mtm_qna_no.NEXTVAL, 
+	4, 
+	#{mtmQnaTitle:VARCHAR},  
+	#{mtmQnaCntnt:VARCHAR},
+	SYSDATE
+	)
+	</insert>
+	
+	<delete id="deleteFaq" parameterType="mtmQna">
+	DELETE 
+	FROM MTM_QNA  
+	WHERE  MTM_QNA_NO = ${mtmQnaNo}
+	</delete>
+	
+	
+	
+	
+	 
+	
+	
+	
+	<select id="getMyMtmQna" parameterType="mtmQna" >
 	</select>
 	
 	<select id="getAdminMtmList">

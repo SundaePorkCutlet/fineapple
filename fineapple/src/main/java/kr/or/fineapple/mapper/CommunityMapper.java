@@ -101,6 +101,15 @@ public interface CommunityMapper {
 	public void addMtmQna(MtmQna mtmQna);
 	
 	
-	public List<MtmQna> getMyMtmList(User user);
+
+	//Faq
+	public void addFaq(MtmQna mtmQna);
 	
+	public void deleteFaq(int mtmQnaNo);
+	
+	
+	//블랙리스트
+	public void addUserBlc(User userId);
+	
+
 }
