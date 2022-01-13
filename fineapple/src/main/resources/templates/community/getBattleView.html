@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end py-6">
-                        <button type="reset" class="btn btn-light btn-active-light-danger me-2">기권하기</button>
+                        <button type="reset" class="btn btn-light btn-active-light-danger me-2 btn-surrender">기권하기</button>
                     </div>
                 </div>
             </div>
@@ -158,6 +158,44 @@
 
     $(document).ready(function () {
         addComma();
+
+        $(".btn-surrender").click(function (e) {
+            e.preventDefault();
+
+            let swalWithBootstrapButtons = Swal.mixin({
+                confirmButtonText:"닫기",
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            Swal.fire({
+                html: "정말 기권하시겠습니까?",
+                icon: "warning",
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: "예",
+                cancelButtonText: "아니오",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 예 클릭
+                    swalWithBootstrapButtons.fire(
+                        '승부에서 패배하셨습니다.',
+                        '',
+                        'warning'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // 아니오 클릭
+                    console.log("취소클릭");
+                }
+            })
+        })
     });
 
     function fcAddGroupView(no, cateNo) {

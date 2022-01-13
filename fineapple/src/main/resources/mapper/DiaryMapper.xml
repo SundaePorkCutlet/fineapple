@@ -48,6 +48,13 @@
 		<result property="dailyTrgtBurnningKcal" column="DAILY_TRGT_BURNNING_KCAL" jdbcType="DOUBLE"/>
 	</resultMap>
 	
+	<resultMap id="AchievementMap" type="Achievement">
+		<result property="intakeKcalInPercentage" column="intake_kcal" jdbcType="INTEGER"/>
+		<result property="intakeCarbInPercentage" column="intake_carb" jdbcType="INTEGER"/>
+		<result property="intakeProteinInPercentage" column="intake_protein" jdbcType="INTEGER"/>
+		<result property="intakeFatInPercentage" column="intake_fat" jdbcType="INTEGER"/>
+	</resultMap> 
+	
 	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
 	<insert id="addUserBodyInfo">
 	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
@@ -121,8 +128,8 @@
 			key_event_stt = 1
 		</set>
 	WHERE (TRUNC(user_event_date), user_id) = (SELECT TRUNC(user_event_date), user_id
-									FROM user_event
-									WHERE user_event_no = #{userEventNo:INTEGER})
+												FROM user_event
+												WHERE user_event_no = #{userEventNo:INTEGER})
 	</update>
 	
 	<!-- UPDATE : 대표 사용자 이벤트 등록-->
@@ -192,6 +199,53 @@
 	SELECT user_service_no, user_id, u.trgt_weight, us.trgt_body_fat, us.trgt_body_muscle, daily_trgt_intake_kcal, daily_trgt_burnning_kcal, daily_trgt_intake_carb, daily_trgt_intake_protein, daily_trgt_intake_fat
 	FROM users u JOIN user_service us USING(user_id)
 	WHERE user_id = #{userId:VARCHAR}
+	</select>
+	
+	<!-- SELECT ONE : 회윈의 식단 서비스 목표 달성률 계산해 조회 -->
+	<select id="getDietAchievement" parameterType="viewDuration" resultMap="AchievementMap">
+	SELECT ROUND((SELECT SUM(food_kcal)
+					FROM intake_record
+					WHERE user_id = #{userId:VARCHAR}
+					AND TRUNC(intake_record_date) = TRUNC(#{date})
+					GROUP BY TRUNC(intake_record_date))/(SELECT daily_trgt_intake_kcal
+														FROM user_service
+														WHERE user_id = #{userId:VARCHAR})*100) as "intake_kcal",
+			ROUND((SELECT SUM(food_carb)
+					FROM intake_record
+					WHERE user_id = #{userId:VARCHAR}
+					AND TRUNC(intake_record_date) = TRUNC(#{date})
+					GROUP BY TRUNC(intake_record_date))/(SELECT daily_trgt_intake_carb
+														FROM user_service
+														WHERE user_id = #{userId:VARCHAR})*100) as "intake_carb",
+			ROUND((SELECT SUM(food_protein)
+					FROM intake_record
+					WHERE user_id = #{userId:VARCHAR}
+					AND TRUNC(intake_record_date) = TRUNC(#{date})
+					GROUP BY TRUNC(intake_record_date))/(SELECT daily_trgt_intake_protein
+														FROM user_service
+														WHERE user_id = #{userId:VARCHAR})*100) as "intake_protein",
+			ROUND((SELECT SUM(food_fat)
+					FROM intake_record
+					WHERE user_id = #{userId:VARCHAR}
+					AND TRUNC(intake_record_date) = TRUNC(#{date})
+					GROUP BY TRUNC(intake_record_date))/(SELECT daily_trgt_intake_fat
+														FROM user_service
+														WHERE user_id = #{userId:VARCHAR})*100) as "intake_fat"
+	FROM dual
+	</select>
+	
+	<!-- SELECT ONE : 회윈의 운동 서비스 목표 달성률 계산해 조회 -->
+	<select id="getExerAchievement" parameterType="viewDuration" resultMap="AchievementMap">
+	SELECT ROUND((SELECT SUM(user_exer_burnning)
+					FROM burnning_record
+					WHERE user_service_no = (SELECT user_service_no
+												FROM user_service
+												WHERE user_id = #{userId:VARCHAR})
+					AND TRUNC(burnning_record_date) = TRUNC(#{date})
+					GROUP BY TRUNC(burnning_record_date))/(SELECT daily_trgt_burnning_kcal
+															FROM user_service
+															WHERE user_id = #{userId:VARCHAR})*100) as "burnning_kcal"
+	FROM dual
 	</select>
 	
 </mapper>

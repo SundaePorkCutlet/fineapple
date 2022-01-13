@@ -25,5 +25,4 @@ public class Badge {
 	Double dailyIntakeKcal;
 	Double dailyBurnningKcal;
 	double userWtrIntake;
-	
 }

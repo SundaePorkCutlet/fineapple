@@ -3,10 +3,15 @@ package kr.or.fineapple.domain.community;
 import java.time.LocalDate;
 
 import kr.or.fineapple.domain.User;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 public class Alarm {
 	private int alarmNo;
-	private User user;
+	public User user;
 	private User otherUser;
 	private String alarmTitle;
 	private String alarmCntnt;

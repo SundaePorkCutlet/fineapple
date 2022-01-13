@@ -3,7 +3,13 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 <style>
+	*{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	}
     form .mb-10 label{
         text-align: left;
         display: block;
@@ -32,10 +38,8 @@
 												<span class="d-inline-block mb-2">JOIN</span>
 												<span class="d-inline-block position-absolute h-8px bottom-0 end-0 start-0 bg-success translate rounded"></span>
 											</span></h1>
-<br>
-
-<div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">회원가입은 무료이며</div>
-<div align="center" data-text-content="true" style="font-size: 10px; color: black;" class="">기능별 추가 기입사항은 기능 활성화시 요구됩니다.</div>
+<div align="center" data-text-content="true" style="font-size: 13px;" class="text-muted">회원가입은 무료이며</div>
+<div align="center" data-text-content="true" style="font-size: 13px;" class="text-muted">기능별 추가 기입사항은 기능 활성화시 요구됩니다.</div>
 <br>
 <ins>
 </ins>
@@ -118,7 +122,7 @@
 
 <br>
           <button class="btn btn-success" id="submit" style="max-width:100px;">회원가입</button>
-         <button class="btn btn-info" style="max-width:100px;" >이전</button>
+        
 
 </div>
 <br>

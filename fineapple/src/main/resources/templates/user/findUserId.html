@@ -2,6 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+<style>
+	*{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	}
+</style>
+
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
 	<!--begin::Body-->
@@ -55,6 +64,8 @@
 		<!-- 공통 하단 footer -->
 	
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+<script src="assets/plugins/global/plugins.bundle.js"></script>
 <script>
 	$(function(){
 		$("#getUserList").on("click",function(){
@@ -82,71 +93,100 @@
 					console.log(JSONData);
 					if(JSONData.length == 0){
 						alert("아이디가 없습니다.");
-					}
+					}else{
 				//var result = "<br><p><h2>검색결과</h2></p>"
 				//$("#appendList").append(result)
 					for(i = 0 ; i < JSONData.length ; i++){
-				var displayValue="<br><div class='card card-bordered'>"+
+				var displayValue="<br><div class='card card-bordered' style='max-width:500px'>"+
 				"<div class=\"card-body\">"+
 				"<div class=\"input-group\">"+
 				"<input id=\"kt_clipboard_1\" type=\"text\" class=\"form-control \" value="+JSONData[i].userId+">"+
-	            "<button type=\"button\" id=\"clip"+i+"\" class=\"btn btn-light-primary find-util-btn\" data-clipboard-target=\"#kt_clipboard_1\">Copy" +
+	            "<button type=\"button\" id=\"clip"+i+"\" name='data' class=\"btn btn-light-primary find-util-btn\" data-clipboard-target=\"#kt_clipboard_1\">Copy" +
 	            "</button> </div> </div> </div>";
 	            
 	           
 				$("#change").append(displayValue);
-					}
-
-				var displayButton = "<p><input type = 'button' class='btn btn-success' value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
-				$("#change").append(displayButton);
 				
+				let target = document.getElementById("kt_clipboard_1");
+				let button = target.nextElementSibling;
+				
+				console.log(button , target );
+				
+				var clipboard = new ClipboardJS(button, {
+				    target: target,
+				    text: function() {
+				        return target.value;
+				    }
+				});
+				clipboard.on('success', function(e) {
+				    const currentLabel = button.innerHTML;
+
+				    // Exit label update when already in progress
+				    if(button.innerHTML === 'Copied!'){
+				        return;
+				    }
+
+				    // Update button label
+				    button.innerHTML = 'Copied!';
+
+				    // Revert button label after 3 seconds
+				    setTimeout(function(){
+				        button.innerHTML = currentLabel;
+				    }, 3000)
+				});
+					
+				}
+
+				var displayButton = "<br><p><input type = 'button' class='btn btn-success' value = '로그인' id = 'loginUserId' name ='loginUserId'><p>"
+				$("#change").append(displayButton);
+					}
 				})
+				
 			}
 		});
 	});
 	
    $(function(){
 		// Select elements
-		let target = '';
+		/* $("body").on("click", ".find-util-btn", function(){
+		
 		let buttonn = '';
-		
-		$("body").on("click", ".find-util-btn", function(){
-			target = $(this).parent(".input-group").children(".form-control");
+//			target = $(this).parent(".input-group").children(".form-control");
+			target = 
+			buttonn = 
+			var sdd=$('#kt_clipboard_1');
+			console.log(buttonn);
 			console.log(target);
-			buttonn = $(this);
+			targetval = target.val();
+			console.log(targetval);
 			
-		});
-
-		// Init clipboard -- for more info, please read the offical documentation: https://clipboardjs.com/
-		var clipboard = new ClipboardJS(buttonn, {
-		    target: target,
-		    text: function() {
-		        return target.value;
-		    }
-		});
+			 
+			var clipboard = new Clipboard(buttonn, {
+			    target: sdd,
+			    text: function() {
+			        return targetval;
+			    }
+			});
 		
-		
+			
+			clipboard.on('success', function(e) {
+				alert("성공?")
+			    const currentLabel = buttonn.innerHTML;
 
-		// Success action handler
-		clipboard.on('success', function(e) {
-		    const currentLabel = buttonn.innerHTML;
+			    // Exit label update when already in progress
+			    if(buttonn.innerHTML === 'Copied!'){
+			        return;
+			    }
 
-		    // Exit label update when already in progress
-		    if(buttonn.innerHTML === 'Copied!'){
-		        return;
-		    }
+			    // Update button label
+			    buttonn.innerHTML = 'Copied!';
 
-		    // Update button label
-		    buttonn.innerHTML = 'Copied!';
-
-		    // Revert button label after 3 seconds
-		    setTimeout(function(){
-		        buttonn.innerHTML = currentLabel;
-		    }, 3000)
-		});
-		
-	   
-	   
+			    // Revert button label after 3 seconds
+			    setTimeout(function(){
+			        buttonn.innerHTML = currentLabel;
+			    }, 3000)
+			});
+		}); */
    })
 
 	 $(function () {

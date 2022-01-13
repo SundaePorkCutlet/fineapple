@@ -2,6 +2,7 @@ package kr.or.fineapple.service.diary;
 
 import java.util.List;
 
+import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
@@ -33,5 +34,9 @@ public interface DiaryService {
 	public List<Object> getKeyEventTitleList(ViewDuration viewDuration);
 
 	public UserServ getUserServiceDetails(String userId);
+	
+	public Achievement getDietAchievement(ViewDuration viewDuration);
+	
+	public Integer getExerAchievement(ViewDuration viewDuration);
 
 }

@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 	<!-- 怨듯넻 header -->
-<script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-messaging.js"></script>
 	<th:block th:replace="layout/fragments/header.html :: header"></th:block>
-
-
-
 
 <style>
 .scrolltop2 {
@@ -97,6 +92,8 @@
 		    });
 		    
 		    
+		
+		
 		    
 		    
 		    $(document).ready(function () {
@@ -104,8 +101,8 @@
 		    		url: "../diet/rest/getAlarmCount",
 		    		success:function(data){
 		    			var Count = data;
+		    			console.log(data)
 		    			$("#count").text(Count);
-		    			
 		    		}
 		    		
 		    		
@@ -115,80 +112,78 @@
 		    
 		    if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
+        navigator.serviceWorker.register("/firebase-messaging-sw.js");
     });
 }
-		    
-		    
-		    
-			// Your web app's Firebase configuration
-
-
-
-
-
-
-
-			
-			
-			
-		    
-		    
 		 </script>
-		 
-<!-- 		 <script type="module"> -->
+	
+	
+	<script type="module">
+ // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-<!--   // Import the functions you need from the SDKs you need -->
-<!--   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js"; -->
-<!--   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-analytics.js"; -->
-<!--   // TODO: Add SDKs for Firebase products that you want to use -->
-<!--   // https://firebase.google.com/docs/web/setup#available-libraries -->
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-mLj16sn2IKg1NgpaYMayKicZqudslfE",
+    authDomain: "fineapple-67f2b.firebaseapp.com",
+    projectId: "fineapple-67f2b",
+    storageBucket: "fineapple-67f2b.appspot.com",
+    messagingSenderId: "950462114300",
+    appId: "1:950462114300:web:a762042fe15befa82b6a79",
+    measurementId: "G-KNDQ1YY7JY"
+  };
 
-<!--   // Your web app's Firebase configuration -->
-<!--   // For Firebase JS SDK v7.20.0 and later, measurementId is optional -->
-<!--   const firebaseConfig = { -->
-<!--     apiKey: "AIzaSyB-mLj16sn2IKg1NgpaYMayKicZqudslfE", -->
-<!--     authDomain: "fineapple-67f2b.firebaseapp.com", -->
-<!--     projectId: "fineapple-67f2b", -->
-<!--     storageBucket: "fineapple-67f2b.appspot.com", -->
-<!--     messagingSenderId: "950462114300", -->
-<!--     appId: "1:950462114300:web:a762042fe15befa82b6a79", -->
-<!--     measurementId: "G-KNDQ1YY7JY" -->
-<!--   }; -->
-
-<!--   // Initialize Firebase -->
-<!--   const app = initializeApp(firebaseConfig); -->
-<!--   const analytics = getAnalytics(app); -->
-<!-- 			console.log("FCM INIT DONE"); -->
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+			console.log("FCM INIT DONE");
 
 
 
 
 
 			
-<!-- 		import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-messaging.js"; -->
+		import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-messaging.js";
 
-<!-- // Get registration token. Initially this makes a network call, once retrieved -->
-<!-- // subsequent calls to getToken will return from cache. -->
-<!-- const messaging = getMessaging(); -->
-<!-- getToken(messaging, { vapidKey: 'AAAA3Uv06fw:APA91bFaRq_ymk-a15dn7yuMV5OnJzDeji7eRLg2KgzcZ8R3Ke45hoeojptfUeRjNMknxzq6x90rllLQUsfQvI6Wd-HqY-bDnWLCS5Dv-NBC7SghIU97Mz4FP63VUJ0hrwan0Jz5iwbw' }).then((currentToken) => { -->
-<!-- 	cnonsole.log(currentToken);  -->
-<!--  if (currentToken) { -->
-<!--     // Send the token to your server and update the UI if necessary -->
-<!--     // ... -->
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+const messaging = getMessaging();
+getToken(messaging, { vapidKey:'BD_JdwaMgwVf9JvHLKV6Nsv8dRhsPXMQFrXbYDgsY24HU2gWRvTw5XmYPPDyLYKZd42rvpx4quN_EcAySoX5JLo'}).then((currentToken) => {
+	var currentToken = currentToken;
+	console.log(currentToken);
+ if (currentToken) {
+    // Send the token to your server and update the UI if necessary
+    // ...
 
-<!--   } else { -->
-<!--     // Show permission request UI -->
-<!--     console.log('No registration token available. Request permission to generate one.'); -->
-<!--     // ... -->
-<!--   } -->
-<!-- }).catch((err) => { -->
-<!--   console.log('An error occurred while retrieving token. ', err); -->
-<!--   // ... -->
-<!-- }); -->
+		$.ajax({
+	    		url: "../diet/rest/addAlarm?tokenId="+currentToken,
+	    		success:function(data){
+	    			
+	    		}
+	    		
+	    		
+	    	});
 
-	
-<!-- </script> -->
+
+
+
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
+});
+
+	</script>
+		 
+		 
 	</body>
 	<!--end::Body-->
 </html>

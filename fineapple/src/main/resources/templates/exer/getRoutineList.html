@@ -43,7 +43,7 @@ $(function() {
 		  $.ajax({
 				url: "/exer/getRoutine?routineNo="+$(this).attr("data-routineNo"),
 				success:function(data){
-					$("#mmodalHolder").html(data);
+					$("#loginModalHolder").html(data);
 					$("#getRoutine").modal("show");			
 					
 				}  

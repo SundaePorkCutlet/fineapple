@@ -1,10 +1,5 @@
 package kr.or.fineapple.diet;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +29,7 @@ import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Recipe;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Alarm;
 import kr.or.fineapple.service.community.CommunityService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
@@ -655,105 +651,7 @@ public class DietController {
 		
 		
 		
-		String FCM_URL = "https://fcm.googleapis.com/fcm/send";
-
-		String server_key = "AAAA3Uv06fw:APA91bFaRq_ymk-a15dn7yuMV5OnJzDeji7eRLg2KgzcZ8R3Ke45hoeojptfUeRjNMknxzq6x90rllLQUsfQvI6Wd-HqY-bDnWLCS5Dv-NBC7SghIU97Mz4FP63VUJ0hrwan0Jz5iwbw";
-
-		String tokenId = "e6vkJHnCd6s:.................................U_nYts_01-XNhzV";
-
 		
-
-		String result = "";
-
-		URL url = new URL(FCM_URL);
-
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-
-
-		conn.setUseCaches(false);
-
-		conn.setDoInput(true);
-
-		conn.setDoOutput(true);
-
-
-
-		conn.setRequestMethod("POST");
-
-		conn.setRequestProperty("Authorization", "key=" + server_key);
-
-		conn.setRequestProperty("Content-Type", "application/json");
-
-
-
-		JSONObject json = new JSONObject();
-
-
-
-		try {
-
-			json.put("to", tokenId.trim());
-
-			JSONObject data = new JSONObject();
-
-			data.put("url", "https://test.com");
-
-			data.put("icon", "test.png"); 
-
-			json.put("data", data);
-
-			JSONObject info = new JSONObject();
-
-			info.put("title", "Çª½Ã Å×½ºÆ® ÁßÀÔ´Ï´ç"); 
-
-			info.put("body", "»ß»Ç»ß»Ç");
-
-			json.put("notification", info);
-
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
-
-		}
-
-
-
-		try {
-
-			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-
-			wr.write(json.toString());
-
-			wr.flush();
-
-
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-
-
-			String output;
-
-			System.out.println("Output from Server .... \n");
-
-			while ((output = br.readLine()) != null) {
-
-				System.out.println(output);
-
-			}
-
-			result = "succcess";
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-			result = "failure";
-
-		}
-
-		System.out.println("GCM Notification is sent successfully : " + result);
 
 
 		return "diet/getFoodList.html";
@@ -938,11 +836,31 @@ public class DietController {
 	}
 	
 	@RequestMapping("deleteAlarm")
-	public String deleteAlarm(Model model,HttpServletRequest request) {
+	public String deleteAlarm(Model model,HttpServletRequest request,
+								@RequestParam("alarmNo")int alarmNo) {
+		System.out.println(alarmNo);
+		Alarm al = new Alarm();
+		al.setAlarmNo(alarmNo);
+		communityService.deleteAlarm(al);
 		
 		
 		
 		return "redirect:../diet/getAlarm";
 	}
 	
+	@RequestMapping("deleteAllAlarm")
+	public String deleteAllAlarm(Model model,HttpServletRequest request
+								) {
+		Alarm al = new Alarm();
+		User user = (User)request.getSession(true).getAttribute("user");
+		al.setUser(user);
+		communityService.deleteAlarmAll(al);
+		
+		
+		
+		return "redirect:../diet/getAlarm";
+	}
+	
+	
+
 }
