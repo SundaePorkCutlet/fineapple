@@ -48,15 +48,15 @@
   <label for="exampleFormControlInput1" >정보입력(* 필수)</label>
 </div>
 
-<div class="mb-10" style="max-width:300px;" th:if="${session.user != null }">
+<div class="mb-10" style="max-width:300px;" th:if="${user.userId != null }">
             <label for="userId" class="required form-label">이메일</label>
             <div class="d-flex flex-stack input-with-btn">
-                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" th:value = "${session.user.userId}" readonly/>
+                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" th:value = "${user.userId}" readonly/>
                 <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
             </div>
         </div>
 
-<div class="mb-10" style="max-width:300px;" th:if="${session.user == null }">
+<div class="mb-10" style="max-width:300px;" th:if="${user.userId == null }">
             <label for="userId" class="required form-label">이메일</label>
             <div class="d-flex flex-stack input-with-btn">
                 <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." required/>
@@ -65,21 +65,24 @@
         </div>
                 <span align="center" id = "change" name ="change"></span>
 <div class="mb-10" style="max-width:300px;">
-    <label for="exampleFormControlInput1" class="required form-label" th:if ="${session.user == null}">인증번호</label>
+    <label for="exampleFormControlInput1" class="required form-label" th:if ="${user.userId == null}">인증번호</label>
    <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
    <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">이름(닉네임)</label>
-    <input name="userName" id="userName" type="text" class="form-control form-control-solid" placeholder="ex)파인이"required/>
+    <input name="userName" id="userName" type="text" class="form-control form-control-solid" placeholder="ex)파인이" maxlength ="10"required/>
+        <div id="changetwo" name="changetwo"></div>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">휴대폰번호</label>
     <input name="cellphone" id="cellphone" type="text" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
 </div>
-<div class="mb-10" style="max-width:300px;" th:if="${session.user == null}">
+<div class="mb-10" style="max-width:300px;" th:if="${user.userId == null}">
     <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
-    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요."required/>
+    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요." maxlength="11" required/>
+    <div id="changeone" name="changeone"></div>
     <br>
     <label for="exampleFormControlInput1" class="required form-label">비밀번호 확인</label>
     <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
@@ -88,7 +91,8 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">몸무게</label>
-    <input name="weight" id="weight" type="text" class="form-control form-control-solid" placeholder="ex)60"required/>
+    <input name="weight" id="weight" type="text" class="form-control form-control-solid" placeholder="ex)60" maxlength ="4"required/>
+    <div id="changethree" name="changethree"></div>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">성별</label>
@@ -97,15 +101,21 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170"required/>
+    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170" maxlength="4" required/>
+    <div id="changefour" name="changefour"></div>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">나이</label>
-    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" required/>
+    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" maxlength ="3" required/>
+    <div id="changefive" name="changefive"></div>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1"class="required form-label" >목표체중</label>
     <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
+    <div id="changesix" name="changesix"></div>
+    
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >프로필사진(선택)</label>
@@ -133,6 +143,51 @@
 <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
+	$(function(){
+		$("#password").on("keyup",function(){
+			var password = $("#password").val();
+			if(password.length == 11 ){
+				$("#changeone").html("<p>비밀번호는 11자까지 입력이 가능합니다.</p>");
+				   	$("#changeone").css('color','red');
+			}
+		});
+		$("#userName").on("keyup",function(){
+			var userName = $("#userName").val();
+			if(userName.length == 10 ){
+				$("#changetwo").html("<p>닉네임(이름)은 10자까지 입력이 가능합니다.</p>");
+			   	$("#changetwo").css('color','red');
+			}
+		});
+		$("#weight").on("keyup",function(){
+			var weight = $("#weight").val();
+			if(weight.length == 4 ){
+				$("#changethree").html("<p>입력된 몸무게를 다시 확인해주세요.</p>");
+			    $("#changethree").css('color','red');
+			}
+		});
+		$("#height").on("keyup",function(){
+			var height = $("#height").val();
+			if(height.length == 4 ){
+				$("#changefour").html("<p>입력된 키를 다시 확인해주세요.</p>");
+			    $("#changefour").css('color','red');
+			}
+		});
+		$("#age").on("keyup",function(){
+			var age = $("#age").val();
+			if(age.length == 3 ){
+				$("#changefive").html("<p>입력된 나이를 다시 확인해주세요.</p>");
+			    $("#changefive").css('color','red');
+			}
+		});
+		$("#trgtWeight").on("keyup",function(){
+			var trgtWeight = $("#trgtWeight").val();
+			if(trgtWeight.length == 4 ){
+				$("#changesix").html("<p>입력된 목표체중을 다시 확인해주세요.</p>");
+			    $("#changesix").css('color','red');
+			}
+		});
+		
+	})
 
    $(function(){
       $("#agreementbt").on("click",function(){

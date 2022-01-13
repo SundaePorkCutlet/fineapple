@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.service.user.UserService;
@@ -43,15 +44,15 @@ public class UserController {
     }
 	
 	@RequestMapping(value="checkPassword")
-	public String checkPassword() {
+	public String checkPassword(Model model) {
+		
 		return "user/changeUserPassword.html";
 	}
 	@RequestMapping(value="findPassword")
-	public String findPassword() {
+	public String findPassword(Model model) {
+	
 		return "user/findPassword.html";
 	}
-	
-	
 	
 	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
@@ -103,16 +104,19 @@ public class UserController {
 	
 	
 	@RequestMapping(value="addUser")
-	public String addUser(@ModelAttribute("user") User user, HttpSession session){
+	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session){
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
-		session.setAttribute("user", user);
+			 System.out.println("여기 들어왔니");
+			 mav.addObject(user);
 		 }
 		System.out.println();
 		
 		System.out.println(user);
-		return "user/addUser.html";
+		return mav;
 	}
 	
 	
@@ -169,7 +173,6 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
 	
 		return "user/updateUser.html";
 		
