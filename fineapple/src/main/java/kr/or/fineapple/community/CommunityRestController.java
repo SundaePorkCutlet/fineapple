@@ -132,7 +132,7 @@ public class CommunityRestController {
 		
 		report.setTrgtNo(Integer.parseInt(TrgtNo));
 		
-		report.setReportStt(1);
+		report.setReportStt(0);
 		
 		
 		
@@ -145,7 +145,7 @@ public class CommunityRestController {
 		System.out.println(report);
 		
 		communityService.addReport(report);
-
+		
 	}
 	
 	
@@ -284,8 +284,13 @@ public class CommunityRestController {
 		
 	}
 	
+	
+	
 	@PostMapping(value = "addBlackList")
-	public void addBlackList(@RequestBody String str) {
+	public void addBlackList(@RequestBody String str,  HttpServletRequest request) {
+		
+		System.out.println("post::addBlackList");
+		
 		
 		System.out.println(str);
 		
@@ -293,18 +298,24 @@ public class CommunityRestController {
 		
 		BlackList blackList = new BlackList();
 		
-		User blakcUser = new User();
+		User user = (User)request.getSession(true).getAttribute("user");
 		
-		blakcUser.setUserId(jsonObject.get("blackUserId").toString());
+		user.setUserId(jsonObject.get("blackUserId").toString());
 		
-		blackList.setBlackUser(blakcUser);
+		blackList.setBlackUser(user);
 		
-		blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		//blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		
+		user.setBlcAddWhy(jsonObject.get("blackcontent").toString());
 		
 		
+		communityService.addUserBlc(user);
+		
+		//User user = (User)request.getSession(true).getAttribute("user");
 		
 		
-		
+			
+		//System.out.println("blackUserµÉ user Á¤º¸:   " + user);
 		
 	}
 	

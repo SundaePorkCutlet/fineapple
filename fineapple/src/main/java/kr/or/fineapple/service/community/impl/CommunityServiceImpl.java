@@ -228,6 +228,37 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.addMtmQna(mtmQna);
 		
 	}
+
+	
+	//블랙리스트
+	@Override
+	public void addUserBlc(User userId) {
+	
+		communityMapper.addUserBlc(userId);
+		
+	}
+
+	//신고처리 완료
+	@Override
+	public void updateReportStt(Report report) {
+		
+		communityMapper.updateReportStt(report);
+		
+	}
+
+	@Override
+	public void addFqa(MtmQna mtmQna) {
+		
+		communityMapper.addFaq(mtmQna);
+		
+	}
+
+	@Override
+	public void deleteFaq(int mtmQnaNo) {
+		
+		communityMapper.deleteFaq(mtmQnaNo);
+		
+	}
 	
 	
 	
