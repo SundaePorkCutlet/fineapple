@@ -3,7 +3,10 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <!-- <link rel="manifest" href="/manifest.json" /> -->
+<style>
+.makerName { display: block;  width: 150px; white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;}
 
+</style>
 
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
@@ -69,12 +72,12 @@
                                     <td class="min-w-50px">번호</td>
                                     <td class="min-w-200px">식품명</td>
                                     <td class="min-w-100px">식품칼로리</td>
-                                    <td class="min-w-150px">제조사</td>
+                                    <td class="min-w-100px">제조사</td>
                                     <td class="min-w-100px">식품탄수화물</td>
                                     <td class="min-w-100px">식품단백질</td>
                                     <td class="min-w-100px">식품지방</td>
                                     <td class="min-w-150px">확인된정보</td>
-                                </tr>
+                                </tr> 
                                 </thead>
 
                                 <tbody>
@@ -83,7 +86,7 @@
                                     <td th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;">
                                         <a href="#" th:text="${data.foodName}"></a></td>
                                     <td th:text="${data.foodKcal}+Kcal" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.makerName}" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.makerName}" class="makerName" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.foodCarb}+g" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.foodProtein}+g" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
                                     <td th:text="${data.foodFat}+g" class="foodFat" style="cursor:pointer; text-align: left;"></td>
@@ -169,7 +172,7 @@
 function pagenation(cp) {
 //         document.getElementById("currentPage").value = currentPage;
 //         document.detailForm.submit();
-        $("form").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
+        $("form.").attr("method", "post").attr("action", "/diet/getFoodList?page="+cp).submit();
 }
 
 

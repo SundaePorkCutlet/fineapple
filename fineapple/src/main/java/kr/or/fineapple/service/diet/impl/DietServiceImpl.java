@@ -44,11 +44,12 @@ public class DietServiceImpl implements DietService{
 	public int addDietService(DietServ diet) throws Exception {
 				dietMapper.updateServiceTrgt(diet);
 				dietMapper.updateBodyInfo(diet);
-				dietMapper.getDietService(diet.getUserId());
-
+				dietMapper.insertDietService(diet);
+			diet=dietMapper.getDietService(diet.getUserId());
+			
 				
 				
-		return	dietMapper.insertDietService(diet);
+		return	dietMapper.updateDietServiceNo(diet);
 	}
 
 	
@@ -522,9 +523,12 @@ public class DietServiceImpl implements DietService{
 				HttpEntity<?> entity = new HttpEntity<>(header);
 
 				String baseUrl = "";
-								
+					if(search.searchKeyword.equals("")) {
 					baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/COOKRCP01/json/"+search.startNum+"/"+search.endNum+"/CHNG_DT=20000101";
-					
+					}else {
+						
+						baseUrl = "http://openapi.foodsafetykorea.go.kr/api/6dc83aa70289415fafb1/COOKRCP01/json/1/2/RCP_NM="+search.searchKeyword;
+					}
 					ResponseEntity<Map> resultMap = resttemplate.exchange(baseUrl.toString(), HttpMethod.GET, entity,
 							Map.class);
 

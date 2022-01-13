@@ -10,7 +10,11 @@
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 <!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
 
+<style>
 
+.content { display: inline-block; width: 200px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
+
+</style>
 		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
 		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
 
@@ -143,7 +147,7 @@
 												 	<td th:text = "사진" ></td>
 													<td th:text = "${data.title}"></td>
 													<td>
-														<a th:href="@{/community/getPost(postNo=${data.postNo})}" th:text = "${data.content}"></a>
+														<a th:href="@{/community/getPost(postNo=${data.postNo})}" class="content" th:text = "${data.content}"></a>
 													</td>
 													<td th:text = "${data.user.userId}"></td>
 													<td th:text = "${data.postDate}" ></td>

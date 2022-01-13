@@ -8,8 +8,7 @@
 <body id="kt_body" class="aside-enabled">
 <!-- 공통 SideBar -->
 <th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
-
-<form>
+<form id="search">
     <div class="container show-grid">
         <div class="row">
             <div class="col-md-12">
@@ -33,7 +32,7 @@
 
                         <!-- 			<button data-text-content="true" id="button" class="btn btn-sm btn-primary" >검색</button>
                          -->
-                        <button data-text-content="true" class="btn btn-primary">검색</button>
+                        <button type="button" data-text-content="true" class="btn btn-primary">검색</button>
                         <br>
 
                     </form>
@@ -114,7 +113,7 @@
 <script type="text/javascript">
 
 function pagenation(cp) {
-        $("form").attr("method", "post").attr("action", "/diet/getRcpList?page="+cp).submit();
+	$("form.form-inline").attr("method", "post").attr("action", "/diet/getRcpList?page="+cp).submit();
 }
 
 
@@ -122,9 +121,11 @@ function pagenation(cp) {
 
 
 
-    function fncGetUserList(currentPage) {
-        $("form").attr("method", "POST").attr("action", "/diet/getFood").submit();
-    }
+    $(function () {
+    	$("button.btn.btn-primary").on("click",function(){
+        $("#search").attr("method", "POST").attr("action", "../diet/getRcpList").submit();
+    });
+    });
 
     $(function () {
         $(".foodName").on("click", function () {
