@@ -52,10 +52,13 @@
  
  <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">인증번호</label>
-   <p> <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
-   <span align="center" id = "compareEmail" name ="compareEmail"></span></p>
+    <div class="d-flex flex-stack input-with-btn">
+    <input id="compare" name ="compare"type="text" class="form-control form-control-solid" placeholder="인증번호 전송버튼을 눌러주세용"/>
+    <button class="btn btn-primary" type="button" data-kt-element="send" id="sendNum" name="sendNum">확인</button>
+   </div>
+   <span align="center" id = "compareEmail" name ="compareEmail"></span>
 </div>
-<br>
+
 <div th:if="${session.kakao == null}">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
@@ -70,7 +73,7 @@
 </form>
 <br>
 <div align="center">
-	<input type="submit" id="restoreUser" name="restoreUser" value="회원복구">
+	<input class="btn btn-success" type="button" id="restoreUser" name="restoreUser" value="회원복구">
 </div>
 </div>
 </div>
@@ -83,21 +86,33 @@
 	$(function(){
 		$("#userId").focus();
 		$("#restoreUser").on("click",function(){
+		var compare = $("#compare").val();
+		console.log(compare);
+		
+		var userId = $("#userId").val();
+		var password = $("#password").val();
+		
 		if(userId == null || userId.length< 1){
 			alert("ID를 입력해주세요.")
 			$("#userId").focus();
-			return;
-		}
-		
-		if(password == null || password.length< 1){
+			self.location="/user/restoreUser";
+			
+			}else if(compare == ""){
+				alert("인증번호를 입력해주세요.");
+				$("#compare").focus();
+				self.location="/user/restoreUser";
+				
+			}else if(password == null || password.length< 1){
 			alert("비밀번호를 입력해주세요.")
 			$("#password").focus();
-			return;
-		}
-		
+			self.location="/user/restoreUser";
+			
+		}else{
 		$("form").attr("method","POST").attr("action","/user/restoreUserResult").submit();
+		}
 		})
-		alert("환영합니다~")
+		
+		
 	})
 
 	 $(function(){
@@ -122,7 +137,7 @@
 	         		 alert("인증번호를 확인해주세요.");
 	         		 isCertifidation = true;
 	         		 var key = data;
-	         		   $("#compare").on("keyup",function(){
+	         		 $("#sendNum").on("click",function(){
 	         			   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
 	         			   console.log(compare)
@@ -132,7 +147,9 @@
 	         				   isCertification=true;
 	         			   }else{
 	         				   $("#compareEmail").html("<p>인증실패!</p>")
-	         				   	$("#compareEmail").css('color','red');
+	         			    	$("#compareEmail").css('color','red');
+	         				   $("#compare").val("");
+	         				    $("#compare").focus();
 	         				   isCertification=false;
 	         			   }
 	         		   })

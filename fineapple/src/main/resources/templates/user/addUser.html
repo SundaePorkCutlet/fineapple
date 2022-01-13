@@ -59,7 +59,7 @@
 <div class="mb-10" style="max-width:300px;" th:if="${user.userId == null }">
             <label for="userId" class="required form-label">이메일</label>
             <div class="d-flex flex-stack input-with-btn">
-                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="이메일 형식으로 작성해주세요." required/>
+                <input name="userId" type="text" id ="userId" class="form-control form-control-solid" placeholder="fine@fineapple.or.kr" required/>
                 <button class="btn btn-primary" type="button" data-kt-element="send" id="sendMail" name="sendMail">전송</button>
             </div>
         </div>
@@ -149,6 +149,8 @@
 			if(password.length == 11 ){
 				$("#changeone").html("<p>비밀번호는 11자까지 입력이 가능합니다.</p>");
 				   	$("#changeone").css('color','red');
+			}else{
+				$("#changeone").empty();
 			}
 		});
 		$("#userName").on("keyup",function(){
@@ -156,6 +158,8 @@
 			if(userName.length == 10 ){
 				$("#changetwo").html("<p>닉네임(이름)은 10자까지 입력이 가능합니다.</p>");
 			   	$("#changetwo").css('color','red');
+			}else{
+				$("#changetwo").empty();
 			}
 		});
 		$("#weight").on("keyup",function(){
@@ -163,6 +167,8 @@
 			if(weight.length == 4 ){
 				$("#changethree").html("<p>입력된 몸무게를 다시 확인해주세요.</p>");
 			    $("#changethree").css('color','red');
+			}else{
+				$("#changethree").empty();
 			}
 		});
 		$("#height").on("keyup",function(){
@@ -170,6 +176,8 @@
 			if(height.length == 4 ){
 				$("#changefour").html("<p>입력된 키를 다시 확인해주세요.</p>");
 			    $("#changefour").css('color','red');
+			}else{
+				$("#changefour").empty();
 			}
 		});
 		$("#age").on("keyup",function(){
@@ -177,6 +185,8 @@
 			if(age.length == 3 ){
 				$("#changefive").html("<p>입력된 나이를 다시 확인해주세요.</p>");
 			    $("#changefive").css('color','red');
+			}else{
+				$("#changefive").empty();
 			}
 		});
 		$("#trgtWeight").on("keyup",function(){
@@ -184,6 +194,8 @@
 			if(trgtWeight.length == 4 ){
 				$("#changesix").html("<p>입력된 목표체중을 다시 확인해주세요.</p>");
 			    $("#changesix").css('color','red');
+			}else{
+				$("#changesix").empty();
 			}
 		});
 		
@@ -236,6 +248,8 @@
                if(userId != ""){
                   if(userId.indexOf('@') <1 || userId.indexOf('.') == -1){
                      $("#change").html("<p>올바른 email형식이 아닙니다.</p>");
+                     $("#userId").css('color','red');
+
                   }
                   else{
                      $("#change").html("<p>사용가능한 아이디입니다.</p>");
@@ -248,6 +262,9 @@
             }else{
                $("#change").html("<p>이미 사용중인 아이디 이거나 중복된 아이디 입니다.</p>");
                $("#userId").css('color',"red");
+               $("#userId").val("");
+               $("#userId").focus();
+               
             }
          })
       });
@@ -270,6 +287,7 @@
       var weight = $("#weight").val();
       var trgtWeight=$("trgtWeight").val();
       var userId = $("#userId").val();
+      var compareEmail = $("compareEmail").val();
       var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
       if($("#male").val() == 'male'){
          var gender=$("#male").val();
@@ -290,6 +308,9 @@
       else if(password == ""){
          alert("비밀번호를 입력하지 않으셨습니다.");
          return;
+      }else if(compareEmail == ""){
+    	alert("인증번호를 입력하지 않으셨습니다.");
+    	return;
       }else if(cellphone == ""){
          alert("전화번호를 입력하지 않으셨습니다.");
          return;
@@ -327,7 +348,7 @@
 	          if(userId == ""){
 	             alert("메일주소가 입력되지 않았습니다.");
 	          }else{
-	        	 alert("해당 이메일로 인증번호가 전송되었습니다");
+	        	
 	         	 $.ajax({
 	         		type : "POST",
 	         		url : "/user/sendMail",
@@ -335,7 +356,7 @@
 	         		accept : "application/json",
 	         		contentType : "application/json"
 	         	 }).done(function(data){
-	         		 alert("인증번호를 확인해주세요.");
+	         		 alert("해당 이메일로 인증번호가 전송되었습니다");
 	         		 isCertifidation = true;
 	         		 var key = data;
 	         		   $("#compare").on("keyup",function(){
