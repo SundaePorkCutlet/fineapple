@@ -91,9 +91,6 @@
 	<update id="updateDietService" parameterType="DietServ">
 	UPDATE USER_SERVICE SET 
 	DAILY_TRGT_INTAKE_KCAL=#{dailyTrgtIntakeKcal:DOUBLE},
-	DAILY_TRGT_INTAKE_CARB=#{dailyTrgtIntakeCarb:DOUBLE},
-	DAILY_TRGT_INTAKE_PROTEIN=#{dailyTrgtIntakeProtein:DOUBLE},
-	DAILY_TRGT_INTAKE_FAT=#{dailyTrgtIntakeFat:DOUBLE},
 	TRGT_BODY_FAT=#{trgtBodyFat:DOUBLE}
 	WHERE USER_ID=#{userId:VARCHAR}
 	</update>

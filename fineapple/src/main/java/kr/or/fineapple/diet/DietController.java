@@ -146,6 +146,8 @@ public class DietController {
 					      
 					   }
 
+					   
+					   
 					model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
 					
 					
@@ -212,8 +214,13 @@ public class DietController {
 		
 		String userId = user.getUserId();
 		serv.setUserId(userId);
-
-		dietService.addDietService(serv);
+				
+		
+			
+			dietService.addDietService(serv);
+		
+			
+			
 		
 
 		
