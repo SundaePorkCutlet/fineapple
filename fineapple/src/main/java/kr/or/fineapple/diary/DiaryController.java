@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -139,6 +141,98 @@ public class DiaryController {
 			mav.addObject("dinner", dinnerIntakeRecordList);
 			mav.addObject("snack", snackIntakeRecordList);
 			mav.addObject("supper", supperIntakeRecordList);
+			
+			if(breakfastIntakeRecordList != null) {
+				double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ
+				double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
+				double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
+				double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
+				Map<String, Object> bfTotal = new HashMap<>();
+				for(IntakeRecord item : breakfastIntakeRecordList) {
+					totalIntakeKcal += item.getFoodKcal();
+					totalIntakeCarb += item.getFoodCarb();
+					totalIntakeProtein += item.getFoodProtein();
+					totalIntakeFat += item.getFoodFat();
+				}
+				bfTotal.put("totalIntakeKcal", totalIntakeKcal);
+				bfTotal.put("totalIntakeCarb", totalIntakeCarb);
+				bfTotal.put("totalIntakeProtein", totalIntakeProtein);
+				bfTotal.put("totalIntakeFat", totalIntakeFat);
+				mav.addObject("bfTotal", bfTotal);
+			}
+			if(lunchIntakeRecordList != null) {
+				double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ
+				double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
+				double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
+				double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
+				Map<String, Object> lunchTotal = new HashMap<>();
+				for(IntakeRecord item : lunchIntakeRecordList) {
+					totalIntakeKcal += item.getFoodKcal();
+					totalIntakeCarb += item.getFoodCarb();
+					totalIntakeProtein += item.getFoodProtein();
+					totalIntakeFat += item.getFoodFat();
+				}
+				lunchTotal.put("totalIntakeKcal", totalIntakeKcal);
+				lunchTotal.put("totalIntakeCarb", totalIntakeCarb);
+				lunchTotal.put("totalIntakeProtein", totalIntakeProtein);
+				lunchTotal.put("totalIntakeFat", totalIntakeFat);
+				mav.addObject("lunchTotal", lunchTotal);
+			}
+			if(dinnerIntakeRecordList != null) {
+				double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ
+				double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
+				double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
+				double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
+				Map<String, Object> dinnerTotal = new HashMap<>();
+				for(IntakeRecord item : dinnerIntakeRecordList) {
+					totalIntakeKcal += item.getFoodKcal();
+					totalIntakeCarb += item.getFoodCarb();
+					totalIntakeProtein += item.getFoodProtein();
+					totalIntakeFat += item.getFoodFat();
+				}
+				dinnerTotal.put("totalIntakeKcal", totalIntakeKcal);
+				dinnerTotal.put("totalIntakeCarb", totalIntakeCarb);
+				dinnerTotal.put("totalIntakeProtein", totalIntakeProtein);
+				dinnerTotal.put("totalIntakeFat", totalIntakeFat);
+				mav.addObject("dinnerTotal", dinnerTotal);
+			}
+			if(snackIntakeRecordList != null) {
+				double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ
+				double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
+				double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
+				double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
+				Map<String, Object> sncakTotal = new HashMap<>();
+				for(IntakeRecord item : snackIntakeRecordList) {
+					totalIntakeKcal += item.getFoodKcal();
+					totalIntakeCarb += item.getFoodCarb();
+					totalIntakeProtein += item.getFoodProtein();
+					totalIntakeFat += item.getFoodFat();
+				}
+				sncakTotal.put("totalIntakeKcal", totalIntakeKcal);
+				sncakTotal.put("totalIntakeCarb", totalIntakeCarb);
+				sncakTotal.put("totalIntakeProtein", totalIntakeProtein);
+				sncakTotal.put("totalIntakeFat", totalIntakeFat);
+				mav.addObject("sncakTotal", sncakTotal);
+			}
+			if(supperIntakeRecordList != null) {
+				double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ
+				double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
+				double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
+				double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
+				Map<String, Object> supperTotal = new HashMap<>();
+				for(IntakeRecord item : supperIntakeRecordList) {
+					totalIntakeKcal += item.getFoodKcal();
+					totalIntakeCarb += item.getFoodCarb();
+					totalIntakeProtein += item.getFoodProtein();
+					totalIntakeFat += item.getFoodFat();
+				}
+				supperTotal.put("totalIntakeKcal", totalIntakeKcal);
+				supperTotal.put("totalIntakeCarb", totalIntakeCarb);
+				supperTotal.put("totalIntakeProtein", totalIntakeProtein);
+				supperTotal.put("totalIntakeFat", totalIntakeFat);
+				mav.addObject("supperTotal", supperTotal);
+			}
+	
 			System.out.println(breakfastIntakeRecordList);
 			System.out.println(lunchIntakeRecordList);
 			System.out.println(dinnerIntakeRecordList);
@@ -176,10 +270,13 @@ public class DiaryController {
 			
 			if(diet != null) {
 				achievement = diaryService.getDietAchievement(viewDuration);
+				System.out.println(achievement);
 			}
 			if(exer !=null) {
 				Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
+				System.out.println(burnningKcalInPercentage);
 				achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);
+				System.out.println(achievement);
 			}
 			
 			mav.addObject("userServ", userServ);
