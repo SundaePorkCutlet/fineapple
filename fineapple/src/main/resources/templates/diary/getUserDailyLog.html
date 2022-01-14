@@ -532,7 +532,7 @@
 														<!--begin::Card-->
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
-																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}" th:onClick="fncUpdateUserEvent(this.data-target)"></div>
+																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${event.keyEventStt == 0}">대표</div>
 															</div>
 															<div class="card-body" th:text="|${event.eventCntnt}|"></div>
@@ -551,7 +551,7 @@
 														<!--begin::Card-->
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
-																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}" th:onClick="fncUpdateUserEvent(this.data-target)"></div>
+																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${event.keyEventStt == 0}">대표</div>
 															</div>
 															<div class="card-body" th:text="|${event.eventCntnt}|"></div>
@@ -739,7 +739,7 @@
 												<h2 class="fw-bolder" data-kt-calendar="title">나의 이벤트 수정</h2>
 												<!--end::Modal title-->
 												<!--begin::Close-->
-												<div class="btn btn-icon btn-sm btn-active-icon-primary" id="kt_modal_add_update_close" data-dismiss="modal">
+												<div class="btn btn-icon btn-sm btn-active-icon-primary" id="kt_modal_update_event_close" data-dismiss="modal">
 													<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
 													<span class="svg-icon svg-icon-1">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -761,6 +761,7 @@
 													<!--end::Label-->
 													<!--begin::Input-->
 													<input type="text" class="form-control form-control-solid" name="user_event_title">
+													<input type="hidden" name="user_event_no"/>
 													<!--end::Input-->
 												<div class="fv-plugins-message-container invalid-feedback"></div></div>
 												<!--end::Input group-->
@@ -792,9 +793,6 @@
 											<!--end::Modal body-->
 											<!--begin::Modal footer-->
 											<div class="modal-footer flex-center">
-												<!--begin::Button-->
-												<button type="reset" id="kt_modal_update_event_cancel" class="btn btn-light me-3" data-dismiss="modal">취소</button>
-												<!--end::Button-->
 												<!--begin::Button-->
 												<button type="button" id="kt_modal_update_event_submit" class="btn btn-primary">
 													<span class="indicator-label">수정</span>
@@ -921,7 +919,7 @@
 				$.ajax({
 					url: "/diary/json/addUserEvent",
 					type: "POST",
-					data: JSON.stringify({userId: "hc@gmail.com",
+					data: JSON.stringify({userId: userId,
 										eventDate: eventDate,
 										eventTitle: eventTitle,
 										eventCntnt: eventCntnt}
@@ -933,56 +931,57 @@
 				
 			});
 			
-
-
-			/* $("#user_event_cntnt > div > div > div:nth-child(1) > div > div.card-header.ribbon.ribbon-end > div.card-title.cursor-pointer, #user_event_cntnt > div > div > div:nth-child(2) > div > div.card-header.ribbon.ribbon-end > div, #user_event_cntnt > div > div > div:nth-child(3) > div > div.card-header.ribbon.ribbon-end > div, #user_event_cntnt > div > div > div:nth-child(4) > div > div.card-header.ribbon.ribbon-end > div, #user_event_cntnt > div > div > div:nth-child(5) > div > div.card-header.ribbon.ribbon-end > div").on("click", function(){
-					console.log("???zzz");
-					var userEventNo = this.value;
-					console.log(this.value);
-					console.log(userEventNo)
-				 $.ajax({
-					url: "/diary/json/getUserEvent/"+userEventNo,
-					type: "GET",
-					contentType: "application/json"
-				}).done(function(userEvent){
-					var userEvent = userEvent;
-					$("#kt_modal_update_event").modal("show");
-				})
-				
-			}) */
-			
+			/* 사용자 이벤트 수정 모달 열기 */
 			$(".test-script").on("click",function(){
-				console.log("jijiijij");
-				console.log($(this).attr("data-target"));
-				console.log("====");
+				
 				var target = $(this).attr("data-target");
+				
 				$.ajax({
 					url: "/diary/json/getUserEvent/"+target,
 					type: "GET",
 					contentType: "application/json"
 				}).done(function(userEvent){
-					var userEvent = userEvent;
+					console.log(userEvent);
+					
+					$("input[name=user_event_no]").val(userEvent.userEventNo);
+					$("input[name=user_event_title]").val(userEvent.eventTitle);
+					$("textarea[name=user_event_cntnt]").val(userEvent.eventCntnt);
+					$("input[name=user_event_date]").val(userEvent.eventDate);
 					$("#kt_modal_update_event").modal("show");
-				})
-			});
+					
+				})//getUserEvent
+			});//click event
 
+			/* 사용자 이벤트 수정 모달 닫기 */
+			$("#kt_modal_update_event_close").on("click",function(){
+				$("#kt_modal_add_event").modal("hide");
+			});
+			
+			/* 사용자 이벤트 수정 */
+			$("#kt_modal_update_event_submit").on("click",function(){
+				var userEventNo = $("input[name=user_event_no]").val();
+				var eventTitle = $("input[name=user_event_title]").val();
+				var eventCntnt = $("textarea[name=user_event_cntnt]").val();
+				
+				console.log(eventDate);
+				
+				$.ajax({
+					url: "/diary/json/updateUserEvent",
+					type: "POST",
+					data: JSON.stringify({userEventNo : userEventNo,
+										eventTitle: eventTitle,
+										eventCntnt: eventCntnt}
+										),
+					contentType: "application/json"
+				}).done(function(){
+					$("#kt_modal_add_event").modal("hide");
+				})
+				
+			});
+			
+			
 			
 		});
-		
-		function fncUpdateUserEvent(userEventNo){
-			console.log(userEventNo);
-			$.ajax({
-				url: "/diary/json/getUserEvent/"+userEventNo,
-				type: "GET",
-				contentType: "application/json"
-			}).done(function(userEvent){
-				var userEvent = userEvent;
-				$("input[name=user_event_title]").val(userEvent.eventTitle);
-				$("textarea[name=user_event_cntnt]").val(userEvent.eventCntnt);
-				
-				$("#kt_modal_update_event").modal("show");
-			})
-		}
 		
 		</script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
