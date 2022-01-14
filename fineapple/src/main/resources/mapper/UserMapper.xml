@@ -25,6 +25,7 @@
 	<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
 	<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
 	<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
+	<result property="kakaoStt" column="kakao_stt" jdbcType="INTEGER"/>
 </resultMap>
 
 <insert id="addUser"   parameterType="User">
@@ -49,7 +50,8 @@
 	LAST_CON_TIME,
 	USER_STT_MSG,
 	TRGT_WEIGHT,
-	SERVICE_TRGT
+	SERVICE_TRGT,
+	KAKAO_STT
 	)   
 	VALUES 
 	(
@@ -70,7 +72,8 @@
     #{lastConTime:DATE},
     '상태메세지없음',
     #{trgtWeight : VARCHAR},
-    #{serviceTrgt : VARCHAR}
+    #{serviceTrgt : VARCHAR},
+    #{kakaoStt:INTEGER}
     )
 </insert>
 
@@ -109,7 +112,8 @@ HEIGHT)
 	a.trgt_weight,
 	a.service_trgt,
 	b.weight,
-	b.height
+	b.height,
+	a.kakao_stt
 	from 
 	users a, 
 	user_body_info b
@@ -164,6 +168,12 @@ HEIGHT)
 	SELECT count(*)
 	FROM users
 	WHERE password = #{password:VARCHAR} AND user_Id=#{userId:VARCHAR}
+</select>
+
+<select id="kakaoStt" parameterType="user" resultType="String">
+	select kakao_stt
+	from users
+	where user_id=#{userId:INTEGER}
 </select>
 
 <select id ="getUserList" parameterType="user" resultMap="userSelectMap">

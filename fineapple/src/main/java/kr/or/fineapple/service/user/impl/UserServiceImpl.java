@@ -76,7 +76,15 @@ public class UserServiceImpl implements UserService {
 	public void changePassword(User user) throws Exception {
 		userMapper.changePassword(user);
 	}
-	
+
+
+	@Override
+	public String kakaoStt(User user) throws Exception {
+		return userMapper.kakaoStt(user);
+		
+	}
+
+
 
 	
 	

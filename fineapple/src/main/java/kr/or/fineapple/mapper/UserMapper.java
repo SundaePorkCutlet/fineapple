@@ -35,5 +35,7 @@ public interface UserMapper{
 		////다이어리 담당자 하리니가 작성
 		public List<User> getAllUsers();
 		
+		public String kakaoStt(User user) throws Exception;
+		
 	}
 

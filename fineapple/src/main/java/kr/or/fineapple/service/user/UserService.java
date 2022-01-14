@@ -24,6 +24,8 @@ public interface UserService {
 	public String checkPassword(User user) throws Exception;
 	
 	public void changePassword(User user) throws Exception;
+	
+	public String kakaoStt(User user) throws Exception;
 
 
 }
