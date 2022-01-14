@@ -76,8 +76,7 @@ public class UserServiceImpl implements UserService {
 	public void changePassword(User user) throws Exception {
 		userMapper.changePassword(user);
 	}
-
-
+	
 
 	
 	

@@ -88,6 +88,7 @@ public class TrgtHabitController {
 
 		double userWtrIntake = trgtHabitService.getWtrIntake(userId, date);
 		mav.addObject("userWtrIntake", userWtrIntake);
+		mav.addObject("NavName1", "습관관리");
 		mav.setViewName("trgtHabit/getTrgtHabit.html");
 		
 		return mav;

@@ -135,7 +135,7 @@ public class DiaryRestController {
 	}
 	
 	@RequestMapping(value="json/updateUserEvent", method=RequestMethod.POST)
-	public void updateUserEvent(UserEvent userEvent) {
+	public void updateUserEvent(@RequestBody UserEvent userEvent) {
 		diaryService.updateUserEvent(userEvent);
 	}
 	

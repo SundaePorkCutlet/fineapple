@@ -85,6 +85,8 @@ public class DiaryController {
 		mav.addObject("badgeList", badgeList);
 		mav.addObject("userServ", userServ);
 		mav.addObject("trgtHabitList", trgtHabitList);
+		mav.addObject("NavName1", "다이어리");
+		mav.addObject("NavName2", "다이어리 조회");
 		mav.setViewName("diary/getDiary.html");
 		
 		return mav;
@@ -94,6 +96,7 @@ public class DiaryController {
 	public ModelAndView getUserDailyLog(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date, HttpSession session) throws Exception{
 		
 		System.out.println("/diary/getUserDailyLog : GET");
+		System.out.println(date);
 		
 		//viewDuration 내 userId, date 셋팅
 		String userId = ((User)session.getAttribute("user")).getUserId();
@@ -103,7 +106,7 @@ public class DiaryController {
 		
 		////리턴해줄 mav 생성
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("date", date);
+		mav.addObject("todayDate", date);
 		
 		////해당 일자 기준 진행중인 목표 습관 관리 진행 정보 조회
 		//parameter : viewDuration 내 userId, date
@@ -300,7 +303,9 @@ public class DiaryController {
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.addObject("userEventList", userEventList);
 		mav.addObject("badgeCount", badgeCount);
-		
+		mav.addObject("NavName1", "다이어리");
+		mav.addObject("NavName2", "다이어리 조회");
+		mav.addObject("NavName3", "일별 상세 정보 조회");
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
 		
@@ -331,8 +336,11 @@ public class DiaryController {
 		
 		List<Object> list = diaryService.getUserBodyInfoList(viewDuration);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("diary/getUserBodyInfo.html");
+		
 		mav.addObject("userBodyInfo", list);
+		mav.addObject("NavName1", "다이어리");
+		mav.addObject("NavName2", "신체 변화 추이 조회");
+		mav.setViewName("diary/getUserBodyInfo.html");
 		System.out.println(list);
 		return mav;
 	}
