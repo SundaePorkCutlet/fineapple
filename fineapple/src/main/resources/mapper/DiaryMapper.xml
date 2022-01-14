@@ -235,7 +235,7 @@
 	</select>
 	
 	<!-- SELECT ONE : 회윈의 운동 서비스 목표 달성률 계산해 조회 -->
-	<select id="getExerAchievement" parameterType="viewDuration" resultMap="AchievementMap">
+	<select id="getExerAchievement" parameterType="viewDuration" resultType="int">
 	SELECT ROUND((SELECT SUM(user_exer_burnning)
 					FROM burnning_record
 					WHERE user_service_no = (SELECT user_service_no
