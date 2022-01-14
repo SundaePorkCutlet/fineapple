@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -504,7 +505,7 @@ public class CommunityController {
 		return mav;
 	}
 	
-	@RequestMapping(value="faq")
+	@RequestMapping(value="getFaq")
 	public String faq(Model model)throws Exception{
 		List<MtmQna> list = communityService.getFaqList(4);
 		
@@ -515,7 +516,7 @@ public class CommunityController {
 		model.addAttribute("list", list);
 		
 		model.addAttribute("NavName1","문의");
-		model.addAttribute("NavName2","1:1 문의");
+		model.addAttribute("NavName2","FAQ");
 		
 		return "community/getFaq.html";
 	}
@@ -691,6 +692,14 @@ public class CommunityController {
 //		return "community/getMtmList.html";
 //	}
 //	
+	
+	@PostMapping(value = "delPost")
+	public String delPost(HttpSession session) {
+		
+		
+		
+		return null;
+	}
 
 
 	
