@@ -53,19 +53,16 @@ public class ExerController {
 public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 	
     System.out.println("get: addUserService");
-
-
-	if((User)request.getSession(true).getAttribute("user")!=null) {
 		
 		User user =(User)request.getSession(true).getAttribute("user");
-		
+		user = userService.getUser(user.getUserId());
 		System.out.println(user);
 	
 		ExerServ serv = exerService.getUserService(user.getUserId());
 		
 		System.out.println(serv);
 		
-		if(serv!=null) {
+		if (serv != null) {
 				if(serv.getUserServiceNo()!=0) {
 		
 					model.addAttribute("user",user);
@@ -75,24 +72,22 @@ public String addUserService(HttpServletRequest request,Model model) throws Exce
 					
 					return "exer/getUserService.html";
 					
-					}else {
-						
-						return "exer/addUserService.html";
-						
-						}
-				
 		}else {
 			model.addAttribute("user",user);
+			model.addAttribute("NavName1","운동관리");
+			model.addAttribute("NavName2","운동 서비스 활성화");
 			
-			return "exer/addUserService.html";}
-		
-	}else {
-		
-		return "user/login";
-		
-	}
+			return "exer/addUserService.html";
+		}
+		}
 	
-}
+			model.addAttribute("user",user);
+			model.addAttribute("NavName1","운동관리");
+			model.addAttribute("NavName2","운동 서비스 활성화");
+			
+			return "exer/addUserService.html";
+	}
+
 
 
     
@@ -109,16 +104,11 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
-	if(user.getExerServiceNo()==0) {
+	if(serv.getExerServiceNo() == 0) {
 		
-	exerService.addUserService(serv);
-	
-	}
-	
-	serv = exerService.getUserService(userId);
-
-	
-	System.out.println("내가 방금 입력한 서비스 활성화 자료" + serv);
+		exerService.addUserService(serv);
+		
+		}
 	
 	System.out.println(serv.getUserServiceNo());
 	serv.setExerServiceNo(serv.getUserServiceNo());
@@ -140,8 +130,7 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	
 	
 	session.setAttribute("user",user);
-	model.addAttribute("NavName1","운동관리");
-	model.addAttribute("NavName2","운동 서비스 활성화");
+
 
 	return "exer/getUserService.html";
 }
