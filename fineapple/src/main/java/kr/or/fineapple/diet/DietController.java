@@ -674,7 +674,8 @@ public class DietController {
 
 		System.out.println(food);
 		dietService.addFood(food);
-
+		int page = 1;
+		int nextpage = 0;
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
 		search1.setPageSize(30);
@@ -686,7 +687,8 @@ public class DietController {
 
 		model.addAttribute("list", list2);
 		model.addAttribute("search", search1);
-		
+		model.addAttribute("page",page);
+		model.addAttribute("nextpage",nextpage);
 		
 		
 		
