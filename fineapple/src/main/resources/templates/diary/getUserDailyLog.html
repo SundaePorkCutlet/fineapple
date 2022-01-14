@@ -16,17 +16,17 @@
 							<div class="d-flex flex-column flex-lg-row">
 								<!--begin::Layout-->
 								<div class="flex-md-row-fluid ms-lg-12" style="margin-right: 3rem">
-									<!--begin::Overview-->
-									<div class="card mb-5 mb-xl-10" id="kt_account_settings_overview_top" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
+									<!--begin::user_daily_log-->
+									<div class="card mb-5 mb-xl-10" id="user_daily_log" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_overview_top">
+										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#user_daily_log">
 											<div class="card-title">
 												<h2 class="fw-bolder m-0">일별 상세 정보 조회</h2>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_overview" class="collapse show">
+										<div id="user_daily_log" class="collapse show">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<div class="d-flex align-items-start flex-wrap">
@@ -39,7 +39,7 @@
 							                                 </div>
 															<div class="d-flex flex-column">
 							                                    <span class="fs-6 fw-bold text-gray-400">일자 선택</span>
-							                                     <input class="form-control form-control-solid" placeholder="일자를 선택하세요" id="kt_daterangepicker_3"/>
+							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${todayDate}" id="kt_daterangepicker_3"/>
 							                                 </div>
 														</div>
 														<!--end::Profile-->
@@ -50,18 +50,18 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Overview-->
-									<!--begin::Overview-->
-									<div class="card mb-5 mb-xl-10" id="diet_record" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
+									<!--end::user_daily_log-->
+									<!--begin::diet_record-->
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
+										<div class="card-header border-0 cursor-pointer" id="diet_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
 											<div class="card-title">
 												<h3 class="fw-bolder m-0">식단 기록</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="diet_record_cntnt" class="collapse show">
+										<div id="diet_record_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::Row-->
@@ -186,48 +186,107 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Overview-->
-									<!--begin::Sign-in Method-->
-									<div class="card mb-5 mb-xl-10">
+									<!--end::diet_record-->
+									<!--begin::diet_record_details-->
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtIntakeKcal == null}">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_signin_method">
+										<div class="card-header border-0 cursor-pointer" id="diet_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record_details">
 											<div class="card-title m-0">
 												<h3 class="fw-bolder m-0">오늘 먹은 식단</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_signin_method" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="diet_record_details_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
-												<!--begin::Email Address-->
+												<!--begin::breakfast-->
 												<div class="d-flex flex-wrap align-items-center">
 													<!--begin::Label-->
-													<div id="kt_signin_email">
+													<div id="breakfast">
 														<div class="fs-6 fw-bolder mb-1">아침</div>
-														<div class="fw-bold text-gray-600">뭐먹엇는지 쏼라쏼라</div>
-														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
+														<th:block th:if="${#lists.size(breakfast) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(breakfast) > 0}" th:each="item, i : ${breakfast}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+														<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) > 0}" th:text="|총 칼로리 ${bfTotal.totalIntakeKcal}Kcal, 탄수화물 ${bfTotal.totalIntakeCarb}g, 단백질 ${bfTotal.totalIntakeProtein}g, 지방 ${bfTotal.totalIntakeFat}g|"></div>
 													</div>
 													<!--end::Label-->
 												</div>
-												<!--end::Email Address-->
+												<!--end::breakfast-->
 												<!--begin::Separator-->
 												<div class="separator separator-dashed my-6"></div>
 												<!--end::Separator-->
-												<!--begin::Password-->
-												<div class="d-flex flex-wrap align-items-center mb-10">
+												<!--begin::lunch-->
+												<div class="d-flex flex-wrap align-items-center">
 													<!--begin::Label-->
-													<div id="kt_signin_password">
+													<div id="lunch">
 														<div class="fs-6 fw-bolder mb-1">점심</div>
-														<div class="fw-bold text-gray-600">뭐먹엇는지 쏼라쏼라</div>
-														<div class="fw-bold text-gray-600">총칼로리:1231Kcal 탄수화물: 32g 단백질: 32g 지방: 23g</div>
+														<th:block th:if="${#lists.size(lunch) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+														<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) > 0}" th:text="|총 칼로리 ${lunchTotal.totalIntakeKcal}Kcal, 탄수화물 ${lunchTotal.totalIntakeCarb}g, 단백질 ${lunchTotal.totalIntakeProtein}g, 지방 ${lunchTotal.totalIntakeFat}g|"></div>
 													</div>
 													<!--end::Label-->
 												</div>
-												<!--end::Password-->
-												
-												
-												
+												<!--end::lunch-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::dinner-->
+												<div class="d-flex flex-wrap align-items-center">
+													<!--begin::Label-->
+													<div id="dinner">
+														<div class="fs-6 fw-bolder mb-1">저녁</div>
+														<th:block th:if="${#lists.size(dinner) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(dinner) > 0}" th:each="item, i : ${dinner}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+														<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) > 0}" th:text="|총 칼로리 ${dinnerTotal.totalIntakeKcal}Kcal, 탄수화물 ${dinnerTotal.totalIntakeCarb}g, 단백질 ${dinnerTotal.totalIntakeProtein}g, 지방 ${dinnerTotal.totalIntakeFat}g|"></div>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::dinner-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::snack-->
+												<div class="d-flex flex-wrap align-items-center">
+													<!--begin::Label-->
+													<div id="snack">
+														<div class="fs-6 fw-bolder mb-1">간식</div>
+														<th:block th:if="${#lists.size(snack) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(snack) > 0}" th:each="item, i : ${snack}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+														<div class="fw-bold text-gray-600" th:if="${#lists.size(snack) > 0}" th:text="|총 칼로리 ${snackTotal.totalIntakeKcal}Kcal, 탄수화물 ${snackTotal.totalIntakeCarb}g, 단백질 ${snackTotal.totalIntakeProtein}g, 지방 ${snackTotal.totalIntakeFat}g|"></div>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::snack-->
+												<!--begin::Separator-->
+												<div class="separator separator-dashed my-6"></div>
+												<!--end::Separator-->
+												<!--begin::supper-->
+												<div class="d-flex flex-wrap align-items-center mb-10">
+													<!--begin::Label-->
+													<div id="supper">
+														<div class="fs-6 fw-bolder mb-1">야식</div>
+														<th:block th:if="${#lists.size(supper) == 0}">
+															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"></div>													
+														</th:block>
+														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(supper) > 0}" th:each="item, i : ${supper}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+														<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) > 0}" th:text="|총 칼로리 ${supperTotal.totalIntakeKcal}Kcal, 탄수화물 ${supperTotal.totalIntakeCarb}g, 단백질 ${supperTotal.totalIntakeProtein}g, 지방 ${supperTotal.totalIntakeFat}g|"></div>
+													</div>
+													<!--end::Label-->
+												</div>
+												<!--end::supper-->
 												<!--begin::Notice-->
 												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
 													<!--begin::Icon-->
@@ -248,9 +307,6 @@
 															<div class="fs-6 text-gray-700 pe-7">Two-factor authentication adds an extra layer of security to your account. To log in, in addition you'll need to provide a 6 digit code</div>
 														</div>
 														<!--end::Content-->
-														<!--begin::Action-->
-														<a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_two_factor_authentication">Enable</a>
-														<!--end::Action-->
 													</div>
 													<!--end::Wrapper-->
 												</div>
@@ -260,11 +316,11 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Sign-in Method-->
-									<!--begin::Basic info-->
-									<div class="card mb-5 mb-xl-10">
+									<!--end::diet_record_details-->
+									<!--begin::exer_record-->
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+										<div class="card-header border-0 cursor-pointer" id="exer_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
 											<div class="card-title m-0">
 												<h3 class="fw-bolder m-0">운동 기록</h3>
@@ -273,28 +329,27 @@
 										</div>
 										<!--begin::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_profile_details" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="exer_record_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">													
 												<!--begin::Row-->
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1">ex.200Kcal</span>Per Month</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="|${dailyRecord.dailyBurnningKcal}Kcal|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 소모 칼로리</div>
-														<a href="/good/account/billing.html" class="fw-bold">View Billing</a>
 													</div>
 													<!--begin::Status-->
 													<div class="col-lg-7">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
-															<span class="flex-grow-1 text-gray-800">총 소모 칼로리</span>
-															<span class="text-gray-800">목표 소모 칼로리 얼마 중 얼마</span>
+															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.burnningKcalInPercentage}%|">총 소모 칼로리</span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtBurnningKcal}Kcal 중 ${dailyRecord.dailyBurnningKcal}Kcal 소모|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-primary mb-3">
-															<div class="progress-bar bg-primary" role="progressbar" style="width: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="progress h-8px bg-light-info mb-3">
+															<div class="progress-bar bg-info" role="progressbar" th:style="|width: ${achievement.burnningKcalInPercentage}%|" th:aria-valuenow="${achievement.burnningKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 													</div>
@@ -306,45 +361,45 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Basic info-->
-									<!--begin::Connected Accounts-->
-									<div class="card mb-5 mb-xl-10">
+									<!--end::exer_record-->
+									<!--begin::exer_record_details-->
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_connected_accounts" aria-expanded="true" aria-controls="kt_account_connected_accounts">
+										<div class="card-header border-0 cursor-pointer" id="exer_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record_details" aria-expanded="true" aria-controls="kt_account_connected_accounts">
 											<div class="card-title m-0">
 												<h3 class="fw-bolder m-0">오늘 한 운동</h3>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_signin_method" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="exer_record_details_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
-												<!--begin::Email Address-->
-												<div class="d-flex flex-wrap align-items-center">
+												<!--begin::exer_item-->
+												<div class="d-flex flex-wrap align-items-center" th:if="${#lists.size(burnningRecordList) == 0}">
 													<!--begin::Label-->
-													<div id="kt_signin_email">
-														<div class="fs-6 fw-bolder mb-1">걷기</div>
-														<div class="fw-bold text-gray-600">00:30:00</div>
-														<div class="fw-bold text-gray-600">소모 칼로리:1231Kcal</div>
+													<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt">
+														<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 													</div>
 													<!--end::Label-->
 												</div>
-												<!--end::Email Address-->
-												<!--begin::Separator-->
-												<div class="separator separator-dashed my-6"></div>
-												<!--end::Separator-->
-												<!--begin::Password-->
-												<div class="d-flex flex-wrap align-items-center mb-10">
-													<!--begin::Label-->
-													<div id="kt_signin_password">
-														<div class="fs-6 fw-bolder mb-1">날기</div>
-														<div class="fw-bold text-gray-600">12:00:00</div>
-														<div class="fw-bold text-gray-600">소모 칼로리:1231Kcal</div>
+												<!--end::exer_item-->
+												<th:block th:if="${#lists.size(burnningRecordList) > 0}" th:each="item, i : ${burnningRecordList}">
+													<!--begin::exer_item-->
+													<div class="d-flex flex-wrap align-items-center" >
+														<!--begin::Label-->
+														<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt" >
+															<div class="fs-6 fw-bolder mb-1" th:text="${item.exerName}" th:value="${item.exer.exerNo}"></div>
+															<div class="fw-bold text-gray-600" th:text="${item.anExerTime}"></div>
+															<div class="fw-bold text-gray-600" th:text="|${item.userExerBurnning}Kcal 소모|"></div>
+														</div>
+														<!--end::Label-->
 													</div>
-													<!--end::Label-->
-												</div>
-												<!--end::Password-->
+													<!--end::exer_item-->
+													<!--begin::Separator-->
+													<div class="separator separator-dashed my-6" th:unless="${i.count eq i.size}"></div>
+													<!--end::Separator-->
+												</th:block>
 												<!--begin::Notice-->
 												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
 													<!--begin::Icon-->
@@ -377,18 +432,18 @@
 										</div>
 										<!--end::Content-->
 									</div>
-									<!--end::Connected Accounts-->
+									<!--end::exer_record_details-->
 									<!--begin::Notifications-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_notifications" aria-expanded="true" aria-controls="kt_account_notifications">
+										<div class="card-header border-0 cursor-pointer" id="weekly_badge_count_title" role="button" data-bs-toggle="collapse" data-bs-target="#weekly_badge_count" aria-expanded="true" aria-controls="kt_account_notifications">
 											<div class="card-title m-0">
 												<h3 class="fw-bolder m-0">이주의 획득 뱃지</h3>
 											</div>
 										</div>
 										<!--begin::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_notifications" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="weekly_badge_count_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
 											<div class="card-body border-top px-9 pt-3 pb-4">
 												<!--begin::Table-->
@@ -398,61 +453,43 @@
 															<!--begin::Table row-->
 															<tr>
 																<td>식단 뱃지</td>
-																<td>1개</td>
-																<td>이미지</td>
+																<th:block th:if="${userServ.dailyTrgtIntakeKcal == null}">
+																	<td>서비스 활성화 전입니다</td>
+																	<td></td>
+																</th:block>
+																<th:block th:unless="${userServ.dailyTrgtIntakeKcal == null}">
+																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
+																	<td>이미지</td>
+																</th:block>
 															</tr>
-															<!--begin::Table row-->
+															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
 																<td>운동 뱃지</td>
-																<td>
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="team1" checked="checked" data-kt-settings-notification="email">
-																		<label class="form-check-label ps-2" for="team1"></label>
-																	</div>
-																</td>
-																<td>
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="team2" data-kt-settings-notification="phone">
-																		<label class="form-check-label ps-2" for="team2"></label>
-																	</div>
-																</td>
+																<th:block th:if="${userServ.dailyTrgtBurnningKcal == null}">
+																	<td>서비스 활성화 전입니다</td>
+																	<td></td>
+																</th:block>
+																<th:block th:unless="${userServ.dailyTrgtBurnningKcal == null}">
+																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
+																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
+																</th:block>
 															</tr>
-															<!--begin::Table row-->
+															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
 																<td>물 마시기 뱃지</td>
-																<td>
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="project1" data-kt-settings-notification="email">
-																		<label class="form-check-label ps-2" for="project1"></label>
-																	</div>
-																</td>
-																<td>
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="project2" checked="checked" data-kt-settings-notification="phone">
-																		<label class="form-check-label ps-2" for="project2"></label>
-																	</div>
-																</td>
+																<td th:text="|총 ${badgeCount.wtrBadgeCount}개|"></td>
+																<td>이미지</td>
 															</tr>
-															<!--begin::Table row-->
+															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
-																<td class="border-bottom-0">승부 뱃지</td>
-																<td class="border-bottom-0">
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="newsletter1" data-kt-settings-notification="email">
-																		<label class="form-check-label ps-2" for="newsletter1"></label>
-																	</div>
-																</td>
-																<td class="border-bottom-0">
-																	<div class="form-check form-check-solid">
-																		<input class="form-check-input" type="checkbox" value="" id="newsletter2" data-kt-settings-notification="phone">
-																		<label class="form-check-label ps-2" for="newsletter2"></label>
-																	</div>
-																</td>
+																<td>승부 뱃지</td>
+																<td th:text="|총 ${badgeCount.bttlBadgeCount}개|"></td>
+																<td>이미지</td>
 															</tr>
-															<!--begin::Table row-->
+															<!--end::Table row-->
 														</tbody>
 													</table>
 												</div>
@@ -466,57 +503,103 @@
 									<!--begin::Deactivate Account-->
 									<div class="card">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_deactivate" aria-expanded="true" aria-controls="kt_account_deactivate">
+										<div class="card-header" id="user_event_title" data-bs-toggle="collapse" data-bs-target="#user_event" aria-expanded="true" aria-controls="kt_account_deactivate">
 											<div class="card-title m-0">
-												<h3 class="fw-bolder m-0">나의 이벤트</h3>
+												<div class="card-title"><h3 class="fw-bolder m-0">나의 이벤트</h3></div>
+												<div class="card-toolbar">
+													<button class="btn btn-flex btn-primary" id="addUserEvent_bttn" data-kt-calendar="add">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+													<span class="svg-icon svg-icon-2">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+															<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->나의 이벤트 등록</button>
+												</div>
 											</div>
 										</div>
 										<!--end::Card header-->
 										<!--begin::Content-->
-										<div id="kt_account_settings_deactivate" class="collapse show" tabindex="-1" style="outline: none;">
+										<div id="user_event_cntnt" class="collapse show" tabindex="-1" style="outline: none;">
 											<!--begin::Card body-->
-											<div class="card-body border-top p-9">
+											<div class="card-body border-top p-9" th:unless="${#lists.size(userEventList) == 0}">
 												<!--begin::Row-->
-												<div class="row row-cols-1 row-cols-lg-3 g-9">
+												<div class="row row-cols-1 row-cols-lg-3 g-9 mb-5" th:if="${#lists.size(userEventList) >= 1}">
 													<!--begin::Col-->
-													<div class="col">
+													<div class="col" th:if="${#lists.size(userEventList) >= 1}">
 														<!--begin::Card-->
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
-																<div class="card-title">사용자이벤트제목</div>
-																<div class="ribbon-label bg-primary">Ribbon</div>
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[0].eventTitle}" th:data-target="${userEventList[0].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[0].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[0].userEventNo}"></i></div>
 															</div>
-															<div class="card-body">사용자이벤트내용</div>
+															<div class="card-body" th:text="|${userEventList[0].eventCntnt}|"></div>
 														</div>
 														<!--end::Card-->
 													</div>
 													<!--end::Col-->
 													<!--begin::Col-->
-													<div class="col">
+													<div class="col" th:if="${#lists.size(userEventList) >= 2}">
 														<!--begin::Card-->
 														<div class="card card-bordered">
-															<div class="card-header ribbon ribbon-top">
-																<div class="ribbon-label bg-primary">Ribbon</div>
-																<div class="card-title">Ribbon Example</div>
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[1].eventTitle}" th:data-target="${userEventList[1].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[1].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[1].userEventNo}"></i></div>
 															</div>
-															<div class="card-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+															<div class="card-body" th:text="|${userEventList[1].eventCntnt}|"></div>
 														</div>
 														<!--end::Card-->
 													</div>
 													<!--end::Col-->
 													<!--begin::Col-->
-													<div class="col">
+													<div class="col" th:if="${#lists.size(userEventList) >= 3}">
 														<!--begin::Card-->
 														<div class="card card-bordered">
-															<div class="card-header justify-content-end ribbon ribbon-start">
-																<div class="ribbon-label bg-primary">Ribbon</div>
-																<div class="card-title">Ribbon Example</div>
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[2].eventTitle}" th:data-target="${userEventList[2].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[2].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[2].userEventNo}"></i></div>
 															</div>
-															<div class="card-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+															<div class="card-body" th:text="|${userEventList[2].eventCntnt}|"></div>
 														</div>
 														<!--end::Card-->
 													</div>
 													<!--end::Col-->
+												</div>
+												<!--end::Row-->
+												<!--begin::Row-->
+												<div class="row row-cols-1 row-cols-lg-3 g-9" th:if="${#lists.size(userEventList) >= 4}">
+													<!-- begin::Col -->
+													<div class="col" th:if="${#lists.size(userEventList) >= 4}">
+														<!-- begin::Card -->
+														<div class="card card-bordered">
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[3].eventTitle}" th:data-target="${userEventList[3].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[3].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[3].userEventNo}"></i></div>
+															</div>
+															<div class="card-body" th:text="|${userEventList[3].eventCntnt}|"></div>
+														</div>
+														<!-- end::Card -->
+													</div>
+													<!-- end::Col -->
+													<!-- begin::Col -->
+													<div class="col" th:if="${#lists.size(userEventList) >= 5}">
+														<!-- begin::Card -->
+														<div class="card card-bordered">
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[4].eventTitle}" th:data-target="${userEventList[4].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[4].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[4].userEventNo}"></i></div>
+															</div>
+															<div class="card-body" th:text="|${userEventList[4].eventCntnt}|"></div>
+														</div>
+														<!-- end::Card -->
+													</div>
+													<!-- end::Col -->
 												</div>
 												<!--end::Row-->
 											</div>
@@ -536,7 +619,7 @@
 											<!--begin::Menu-->
 											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#diet_record" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
+													<a href="#diet_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -544,7 +627,7 @@
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#kt_account_settings_signin_method" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#diet_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -552,7 +635,7 @@
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#kt_account_settings_profile_details" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#exer_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -560,7 +643,7 @@
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0 pb-1">
-													<a href="#kt_account_settings_connected_accounts" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#exer_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -568,15 +651,15 @@
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0">
-													<a href="#kt_account_settings_notifications" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#weekly_badge_count_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
-														<span class="menu-title">습관 기록</span>
+														<span class="menu-title">이주의 획득 뱃지</span>
 													</a>
 												</li>
 												<li class="menu-item px-3 pt-0">
-													<a href="#kt_account_settings_deactivate" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
+													<a href="#user_event_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
 														</span>
@@ -592,6 +675,182 @@
 								</div>
 								<!--end::Aside-->
 							</div>
+							<!--begin::Modals-->
+							<!--begin::Modal - New Product-->
+							<div class="modal fade" id="kt_modal_add_event" tabindex="-1" aria-hidden="true">
+								<!--begin::Modal dialog-->
+								<div class="modal-dialog modal-dialog-centered mw-650px">
+									<!--begin::Modal content-->
+									<div class="modal-content">
+										<!--begin::Form-->
+										<form class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#" id="kt_modal_add_event_form">
+											<!--begin::Modal header-->
+											<div class="modal-header">
+												<!--begin::Modal title-->
+												<h2 class="fw-bolder" data-kt-calendar="title">나의 이벤트 등록</h2>
+												<!--end::Modal title-->
+												<!--begin::Close-->
+												<div class="btn btn-icon btn-sm btn-active-icon-primary" id="kt_modal_add_event_close" data-dismiss="modal">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+													<span class="svg-icon svg-icon-1">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+															<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+												</div>
+												<!--end::Close-->
+											</div>
+											<!--end::Modal header-->
+											<!--begin::Modal body-->
+											<div class="modal-body py-10 px-lg-17">
+												<!--begin::Input group-->
+												<div class="fv-row mb-9 fv-plugins-icon-container">
+													<!--begin::Label-->
+													<label class="fs-6 fw-bold required mb-2">나의 이벤트 제목</label>
+													<!--end::Label-->
+													<!--begin::Input-->
+													<input type="text" class="form-control form-control-solid" placeholder="나의 이벤트 제목을 입력해주세요" name="user_event_title">
+													<!--end::Input-->
+												<div class="fv-plugins-message-container invalid-feedback"></div></div>
+												<!--end::Input group-->
+												<!--begin::Input group-->
+												<div class="fv-row mb-9">
+													<!--begin::Label-->
+													<label class="fs-6 fw-bold required mb-2">나의 이벤트 내용</label>
+													<!--end::Label-->
+													<!--begin::Input-->
+													<textarea class="form-control form-control-solid" placeholder="나의 이벤트 내용을 입력해주세요" name="user_event_cntnt"></textarea>
+													<!--end::Input-->
+												</div>
+												<!--end::Input group-->
+												<!--begin::Input group-->
+												<div class="row row-cols-lg-2 g-10">
+													<div class="col">
+														<div class="fv-row mb-9 fv-plugins-icon-container">
+															<!--begin::Label-->
+															<label class="fs-6 fw-bold mb-2 required">나의 이벤트 등록 일자</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<input class="form-control form-control-solid flatpickr-input" name="user_event_date" placeholder="" id="kt_calendar_datepicker_start_date" type="text" readonly="readonly">
+															<!--end::Input-->
+														<div class="fv-plugins-message-container invalid-feedback"></div></div>
+													</div>	
+												</div>
+												<!--end::Input group-->
+											</div>
+											<!--end::Modal body-->
+											<!--begin::Modal footer-->
+											<div class="modal-footer flex-center">
+												<!--begin::Button-->
+												<button type="reset" id="kt_modal_add_event_cancel" class="btn btn-light me-3" data-dismiss="modal">취소</button>
+												<!--end::Button-->
+												<!--begin::Button-->
+												<button type="button" id="kt_modal_add_event_submit" class="btn btn-primary">
+													<span class="indicator-label">등록</span>
+													<span class="indicator-progress">잠시만 기다려주세요!
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
+												<!--end::Button-->
+											</div>
+											<!--end::Modal footer-->
+										<div></div></form>
+										<!--end::Form-->
+									</div>
+								</div>
+							</div>
+							<!--end::Modal - New Product-->
+							
+							<!--begin::Modal - Update Product-->
+							<div class="modal fade" id="kt_modal_update_event" tabindex="-1" aria-hidden="true">
+								<!--begin::Modal dialog-->
+								<div class="modal-dialog modal-dialog-centered mw-650px">
+									<!--begin::Modal content-->
+									<div class="modal-content">
+										<!--begin::Form-->
+										<form class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#" id="kt_modal_update_event_form">
+											<!--begin::Modal header-->
+											<div class="modal-header">
+												<!--begin::Modal title-->
+												<h2 class="fw-bolder" data-kt-calendar="title">나의 이벤트 수정</h2>
+												<!--end::Modal title-->
+												<!--begin::Close-->
+												<div class="btn btn-icon btn-sm btn-active-icon-primary" id="kt_modal_update_event_close" data-dismiss="modal">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+													<span class="svg-icon svg-icon-1">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+															<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+												</div>
+												<!--end::Close-->
+											</div>
+											<!--end::Modal header-->
+											<!--begin::Modal body-->
+											<div class="modal-body py-10 px-lg-17">
+												<!--begin::Input group-->
+												<div class="fv-row mb-9 fv-plugins-icon-container">
+													<!--begin::Label-->
+													<label class="fs-6 fw-bold required mb-2">나의 이벤트 제목</label>
+													<!--end::Label-->
+													<!--begin::Input-->
+													<input type="text" class="form-control form-control-solid" id="user_event_title" name="update_user_event_title">
+													<input type="hidden" name="user_event_no"/>
+													<!--end::Input-->
+												<div class="fv-plugins-message-container invalid-feedback"></div></div>
+												<!--end::Input group-->
+												<!--begin::Input group-->
+												<div class="fv-row mb-9">
+													<!--begin::Label-->
+													<label class="fs-6 fw-bold required mb-2">나의 이벤트 내용</label>
+													<!--end::Label-->
+													<!--begin::Input-->
+													<textarea class="form-control form-control-solid" id="user_event_cntnt" name="update_user_event_cntnt"></textarea>
+													<!--end::Input-->
+												</div>
+												<!--end::Input group-->
+												<!--begin::Input group-->
+												<div class="row row-cols-lg-2 g-10">
+													<div class="col">
+														<div class="fv-row mb-9 fv-plugins-icon-container">
+															<!--begin::Label-->
+															<label class="fs-6 fw-bold mb-2 required">나의 이벤트 등록 일자</label>
+															<!--end::Label-->
+															<!--begin::Input-->
+															<input class="form-control form-control-solid flatpickr-input" name="user_event_date" id="kt_calendar_datepicker_start_date" type="text" readonly="readonly">
+															<!--end::Input-->
+														<div class="fv-plugins-message-container invalid-feedback"></div></div>
+													</div>	
+												</div>
+												<!--end::Input group-->
+											</div>
+											<!--end::Modal body-->
+											<!--begin::Modal footer-->
+											<div class="modal-footer flex-center">
+												<!--begin::Button-->
+												<button type="button" id="kt_modal_update_event_submit" class="btn btn-primary">
+													<span class="indicator-label">수정</span>
+													<span class="indicator-progress">잠시만 기다려주세요!
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
+												<button type="button" id="kt_modal_delete_event_submit" class="btn btn-danger">
+													<span class="indicator-label">삭제</span>
+													<span class="indicator-progress">잠시만 기다려주세요!
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
+												<!--end::Button-->
+											</div>
+											<!--end::Modal footer-->
+										<div></div></form>
+										<!--end::Form-->
+									</div>
+								</div>
+							</div>
+							<!--end::Modal - Update Product-->
+							<!--end::Modals-->
 						</div>
 						<!--end::Container-->
 					</div>
@@ -602,8 +861,8 @@
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
 		<script th:inline="javascript">
 		//공통
-		var date = [[${date}]];
-		var userEventList = [[${userEventList}]];
+		//var date = [[${date}]];
+		
 		var trgtHabitList = [[${trgtHabitList}]];
 		var badgeCount = [[${badgeCount}]];
 		
@@ -612,65 +871,152 @@
 		var totalRecord = [[${totalRecord}]];
 		var userServ = [[${userServ}]];
 		var achievement = [[${achievement}]];
-		var breakfastIntakeRecordList = [[${breakfastIntakeRecordList}]];
-		var lunchIntakeRecordList = [[${lunchIntakeRecordList}]];
-		var dinnerIntakeRecordList = [[${dinnerIntakeRecordList}]];
-		var snackIntakeRecordList = [[${snackIntakeRecordList}]];
-		var supperIntakeRecordList = [[${supperIntakeRecordList}]];
+		var breakfast = [[${breakfast}]];
+		var lunch = [[${lunch}]];
+		var dinner = [[${dinner}]];
+		var snack = [[${snack}]];
+		var supper = [[${supper}]];
 		var burnningRecordList = [[${burnningRecordList}]];
 		
-		console.log(date);
-		console.log(userEventList);
-		console.log(trgtHabitList);
-		console.log(badgeCount);
-		console.log(dailyRecord);
-		console.log(totalRecord);
-		console.log(userServ);
-		console.log(achievement);
-		console.log(breakfastIntakeRecordList);
-		console.log(lunchIntakeRecordList);
-		console.log(dinnerIntakeRecordList);
-		console.log(snackIntakeRecordList);
-		console.log(supperIntakeRecordList);
-		console.log(burnningRecordList);
-		
-      $(function() {
+		$(function() {
          
-         /* ///////////////////Date Picker/////////////////// */
-         
-         $("#kt_daterangepicker_3").daterangepicker({
-              singleDatePicker: true,
-              showDropdowns: true,
-              changeYear: false,
-              locale: {
-                 format: "YYYY-MM-DD",
-                 separator: "-",
-                 applyLabel: "선택",
-                 cancelLabel: "취소"
-              }
-          }, function(start, end, label) {
-             var startDate = start.toJSON().substring(0,10);
-             var endDate = end.toJSON().substring(0,10);
-             console.log(startDate , endDate);
+			/* ///////////////////Date Picker/////////////////// */
 
-             $.ajax({
-                 url: "/diary/getUserDailyLog?date="+endDate,
-                 type: "GET",
-                 data: JSON.stringify({userId : [[${session.user.userId}]],
-                              startDate : endDate,
-                              endDate : endDate}
-                                ),
-                 contentType: "application/json"
-              }).done(function(info){
-            	  self.location = "/diary/getUserDailyLog?date="+info.date;
-              })
-             
-          });
-         
-       /* ///////////////////Date Picker End/////////////////// */
-         
-      });
-		
+	        $("#kt_daterangepicker_3").daterangepicker({
+				singleDatePicker: true,
+				showDropdowns: true,
+				changeYear: false,
+				locale: {
+				   format: "YYYY-MM-DD",
+				   separator: "-",
+				   applyLabel: "선택",
+				   cancelLabel: "취소"
+				}
+	        }, function(start, end, label) {
+				var startDate = start.toJSON().substring(0,10);
+				var endDate = end.toJSON().substring(0,10);
+				console.log(startDate , endDate);
+				
+				$.ajax({
+				    url: "/diary/getUserDailyLog?date="+endDate,
+				    type: "GET"
+				 }).done(function(info){
+				  self.location = "/diary/getUserDailyLog?date="+info.date;
+				 })
+	        });
+	         
+	       /* ///////////////////Date Picker End/////////////////// */
+	       
+	        /* 사용자 이벤트 등록 모달 열기 */
+	        $("#addUserEvent_bttn").on("click", function(){
+	        	$("input[name=user_event_date]").attr("placeholder", date);
+	        	$("#kt_modal_add_event").modal("show");
+	        });
+       
+			/* 사용자 이벤트 등록 모달 닫기 */
+			$("#kt_modal_add_event_close, #kt_modal_add_event_cancel").on("click",function(){
+				$("#kt_modal_add_event").modal("hide");
+			});
+			
+			/* 사용자 이벤트 등록 */
+			$("#kt_modal_add_event_submit").on("click",function(){
+				var userId = [[${session.user.userId}]];
+				var eventTitle = $("input[name=user_event_title]").val();
+				var eventCntnt = $("textarea[name=user_event_cntnt]").val();
+				var eventDate = $("input[name=user_event_date]").attr("placeholder");
+
+				$.ajax({
+					url: "/diary/json/addUserEvent",
+					type: "POST",
+					data: JSON.stringify({userId: userId,
+										eventDate: eventDate,
+										eventTitle: eventTitle,
+										eventCntnt: eventCntnt}
+										),
+					contentType: "application/json"
+				}).done(function(){
+					$("#kt_modal_add_event").modal("hide");
+					location.reload();
+				})
+			});
+			
+			/* 사용자 이벤트 수정 모달 열기 */
+			$(".test-script").on("click",function(){
+				
+				var target = $(this).attr("data-target");
+				
+				$.ajax({
+					url: "/diary/json/getUserEvent/"+target,
+					type: "GET",
+					contentType: "application/json"
+				}).done(function(userEvent){
+					
+					$("input[name=user_event_no]").val(userEvent.userEventNo);
+					$("input[name=update_user_event_title]").val(userEvent.eventTitle);
+					$("textarea[name=update_user_event_cntnt]").val(userEvent.eventCntnt);
+					$("input[name=user_event_date]").val(userEvent.eventDate);
+					$("#kt_modal_update_event").modal("show");
+					
+					/* 사용자 이벤트 수정 */
+					$("#kt_modal_update_event_submit").on("click",function(){
+						
+						var userEventNo = $("input[name=user_event_no]").val();
+						var eventTitle = $("input[name=update_user_event_title]").val();
+						var eventCntnt = $("textarea[name=update_user_event_cntnt]").val();
+						
+						$.ajax({
+							url: "/diary/json/updateUserEvent",
+							type: "POST",
+							data: JSON.stringify({userEventNo : userEventNo,
+												eventTitle: eventTitle,
+												eventCntnt: eventCntnt}
+												),
+							contentType: "application/json"
+						}).done(function(){
+							$("#kt_modal_update_event").modal("hide");
+							location.reload();
+						})
+						
+					});//updateUserEvent
+					
+					
+					/* 사용자 이벤트 삭제 */
+					$("#kt_modal_delete_event_submit").on("click",function(){
+						var userEventNo = $("input[name=user_event_no]").val();
+
+						$.ajax({
+							url: "/diary/json/deleteUserEvent/"+userEventNo,
+							type: "GET",
+							contentType: "application/json"
+						}).done(function(){
+							$("#kt_modal_update_event").modal("hide");
+							location.reload();
+						})
+						
+					});//deleteUserEvent
+					
+				})//getUserEvent
+			});//click event
+
+			/* 사용자 이벤트 수정 모달 닫기 */
+			$("#kt_modal_update_event_close").on("click",function(){
+				$("#kt_modal_update_event").modal("hide");
+			});
+			
+			/* 대표 이벤트 지정 */
+			$("div.ribbon-label.bg-warning > i").on("click", function(){
+				var target = $(this).attr("data-target");
+				
+				$.ajax({
+					url: "/diary/json/updateKeyUserEventStt/"+target,
+					type: "GET",
+					contentType: "application/json"
+				}).done(function(){
+					location.reload();
+				})
+			});
+			
+		});
 		
 		</script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	

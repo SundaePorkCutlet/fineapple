@@ -41,13 +41,12 @@
 	
 		<script>
 		function fnAddBlackList(){
-			//$("form").attr("method", "POST").attr("action" , "/community/addReport").submit();
-			
+			//$("form").attr("method", "POST").attr("action" , "/community/addReport").submit(); 
 			data = {
 					"blackUserId" : $("#blackUserId").text(), 
 					"blackcontent" : $("#blackcontent").val(),
 					"time" : $("#time").text()
-
+       
 					};
 			console.log(data)
 			
@@ -72,7 +71,7 @@
 
 
 			
-			$('#reportPostViewModal').modal("hide");
+			$('#addBlackListViewModal').modal("hide");
 		};
 		</script>
 	</div>

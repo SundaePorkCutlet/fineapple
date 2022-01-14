@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="index/toolbar :: head">
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 <meta charset="utf-8">
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
  
 
 </head>
@@ -64,12 +64,12 @@ function addRoutine() {
 	
 	
 	 
+				$("#getRoutineList").modal("hide");	
 	  $.ajax({
 			url: "/exer/addRoutine?routineName="+userInput,
 			type : 'post',
 			success:function(data){
-				$("#getRoutineList").modal("hide");	
-				$("#mmodalHolder").html(data);
+				$("#loginModalHolder").html(data);
 				$("#getRoutineList").modal("show");			
 				
 			}  
@@ -114,12 +114,14 @@ $(function() {
 		 //alert(routineNo)
 		 
 		 $("#getRoutineList").modal("hide");
+		   
+		   
 		  $.ajax({
 				url: "/exer/deleteRoutine?routineNo="+routineNo,
 				type : 'post',
 				success:function(data){
 						
-					$("#mmodalHolder").html(data);
+					$("#loginModalHolder").html(data);
 					$("#getRoutineList").modal("show");				
 					
 				}  
@@ -174,7 +176,7 @@ $(function() {
 			type : 'post',
 			success:function(data){
 				console.log(data)
-				$("#mmodalHolder").html(data);
+				$("#loginModalHolder").html(data);
 				$("#getRoutineList").modal("show");				
 				
 			}  
@@ -266,6 +268,8 @@ $(function() {
   </div>		
 </div>
     <div id="mmodalHolder" ></div>
+	
+	<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 	
 </body>
 </html>

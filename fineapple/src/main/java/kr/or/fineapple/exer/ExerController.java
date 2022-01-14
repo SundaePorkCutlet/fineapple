@@ -49,50 +49,90 @@ public class ExerController {
 
 
 	
-@GetMapping("addUserService")
-public String addUserService(HttpServletRequest request,Model model) throws Exception  {
-	
-    System.out.println("get: addUserService");
+	/*
+	 * @GetMapping("addUserService") public String addUserService(HttpServletRequest
+	 * request,Model model) throws Exception {
+	 * 
+	 * System.out.println("get: addUserService");
+	 * 
+	 * User user =(User)request.getSession(true).getAttribute("user"); user =
+	 * userService.getUser(user.getUserId()); System.out.println(user);
+	 * 
+	 * ExerServ serv = exerService.getUserService(user.getUserId());
+	 * 
+	 * System.out.println(serv);
+	 * 
+	 * if (serv != null) { if(serv.getUserServiceNo()!=0) {
+	 * 
+	 * model.addAttribute("user",user); model.addAttribute("exerServ",serv);
+	 * model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/getUserService.html";
+	 * 
+	 * }else { model.addAttribute("user",user);
+	 * model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/addUserService.html"; } }
+	 * 
+	 * model.addAttribute("user",user); model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/addUserService.html"; }
+	 */
 
 
-	if((User)request.getSession(true).getAttribute("user")!=null) {
+	@GetMapping("addUserService")
+	public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 		
-		User user =(User)request.getSession(true).getAttribute("user");
-		
-		System.out.println(user);
-	
-		ExerServ serv = exerService.getUserService(user.getUserId());
-		
-		System.out.println(serv);
-		
-		if(serv!=null) {
-				if(serv.getUserServiceNo()!=0) {
-		
-					model.addAttribute("user",user);
-					model.addAttribute("exerServ",serv);
-					
-					return "exer/getUserService.html";
-					
-					}else {
-						
-						return "exer/addUserService.html";
-						
-						}
-				
-		}else {
-			model.addAttribute("user",user);
+	    System.out.println("get: addUserService");
+
+
+		if((User)request.getSession(true).getAttribute("user")!=null) {
 			
-			return "exer/addUserService.html";}
+			User user =(User)request.getSession(true).getAttribute("user");
+			
+			System.out.println(user);
 		
-	}else {
-		
-		return "user/login";
+			ExerServ serv = exerService.getUserService(user.getUserId());
+			
+			System.out.println(serv);
+			
+			if(serv!=null) {
+					if(serv.getUserServiceNo()!=0) {
+			
+						model.addAttribute("user",user);
+						model.addAttribute("exerServ",serv);
+						model.addAttribute("NavName1","운동관리");
+						model.addAttribute("NavName2","운동 서비스 활성화");
+						
+						return "exer/getUserService.html";
+						
+						}else {
+							
+							model.addAttribute("NavName1","운동관리");
+							model.addAttribute("NavName2","운동 서비스 활성화");
+							
+							return "exer/addUserService.html";
+							
+							}
+					
+			}else {
+				model.addAttribute("user",user);
+				model.addAttribute("NavName1","운동관리");
+				model.addAttribute("NavName2","운동 서비스 활성화");
+				
+				
+				return "exer/addUserService.html";}
+			
+		}else {
+			
+			return "user/login";
+			
+		}
 		
 	}
-	
-}
-
-
     
 @PostMapping("addUserService")
 public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
@@ -107,16 +147,15 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
-	if(user.getExerServiceNo()==0) {
+	if(serv.getExerServiceNo() == 0) {
 		
-	exerService.addUserService(serv);
+		exerService.addUserService(serv);
+		
+		}
 	
-	}
-	
-	serv = exerService.getUserService(userId);
 
+	serv = exerService.getUserService(userId);
 	
-	System.out.println("내가 방금 입력한 서비스 활성화 자료" + serv);
 	
 	System.out.println(serv.getUserServiceNo());
 	serv.setExerServiceNo(serv.getUserServiceNo());
@@ -138,7 +177,7 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	
 	
 	session.setAttribute("user",user);
-	
+
 
 	return "exer/getUserService.html";
 }
@@ -149,7 +188,8 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 @GetMapping("getUserService")
 public String getUserService(Model model, HttpServletRequest request) {
 	
-	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 서비스 활성화 조회");
 	
 	return "exer/getUserService.html";
 }
@@ -171,6 +211,9 @@ public String getUpdateUserService(Model model, HttpServletRequest request) thro
 	
 	model.addAttribute("user",user);
 	model.addAttribute("exerServ",serv);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 서비스 활성화 수정");
+	
 	
 	return "exer/updateUserService.html";
 		
@@ -197,7 +240,8 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 
 	model.addAttribute("exerServ",serv);	
 	model.addAttribute("user",user);
-	 
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 서비스 활성화 조회");
 	
 	
 	return "redirect:../exer/addUserService";
@@ -249,7 +293,8 @@ public String getExerList( @ModelAttribute("search") Search search, Model model)
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-		//model.addAttribute("resultPage", resultPage);
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동리스트");
 		
 		
 		
@@ -279,6 +324,8 @@ public String getExer(@ModelAttribute("exer") Exer exer, Model model) throws Exc
 	System.out.println("exerVideoName이 null체크" + exer);
 		
 	model.addAttribute("exer", exer);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 상세 정보");
 	
 	}
 	
@@ -296,6 +343,9 @@ public String getUpdateExer(@ModelAttribute("exer") Exer exer, Model model) thro
 	exer= exerService.getExer(exer.getExerNo());
 	
 	model.addAttribute("exer", exer);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 상세 정보 수정");
+	
 	
 	System.out.println("getUpdateExer");
 	
@@ -333,7 +383,8 @@ public String postUpdateExer(@ModelAttribute("exer") Exer exer , Model model, @R
 	
 
 	model.addAttribute("exer", exer);
-	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 상세 정보");
 	
 	return "exer/getExer";
 	
@@ -358,10 +409,9 @@ public String deleteExer(@ModelAttribute("exer") Exer exer , Model model) throws
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-	
-	
-	
-	model.addAttribute("exer", exer);
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동리스트");
+		model.addAttribute("exer", exer);
 	
 	return "exer/getExerList";
 }
@@ -403,7 +453,8 @@ public String postAddExer(@ModelAttribute("exer") Exer exer , Model model, @Requ
 	  
 	    model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
-	
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동 리스트");
 		
 	
 	model.addAttribute("exer", exer);
@@ -419,6 +470,9 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 	
 	System.out.println("getAddExer");
 	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","새로운 운동 등록");
+	
 	
 	return "exer/addExer.html";	
 	
@@ -429,11 +483,15 @@ public String getAddExer(@ModelAttribute("exer") Exer exer, Model model) throws 
 
 
 @RequestMapping(value="searchExerPlace")
-public String searchExerPlace() {
+public String searchExerPlace(Model model) {
 	
 	
 	System.out.println("searchExerPlace");
 
+	
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 장소 찾기");
+	
 	
 	return "exer/searchExerPlace.html";
 	
@@ -452,6 +510,7 @@ public String timer(Model model,HttpServletRequest request) {
  
 	
 	model.addAttribute("user", user);
+	
 	
 	return "exer/exerIndex.html";
 	
@@ -481,6 +540,9 @@ public String getRoutineList(Model model,HttpServletRequest request) throws Exce
 	System.out.println(map);
 	
 	model.addAttribute("list", map.get("list"));
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 루틴 리스트");
+	
 	
 	return "exer/getRoutineList :: getRoutineList";
 
@@ -509,6 +571,9 @@ public String getRoutineInfoList(@ModelAttribute("routine") Routine routine, Mod
 	model.addAttribute("list", map.get("list"));
 	model.addAttribute("routine", routine);
 	model.addAttribute("routineNo", routineNo);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","루틴 상세 정보");
+	
 	
 	
 	return "exer/getRoutine:: getRoutine";
@@ -540,7 +605,8 @@ public String getAddDailyBurnning(Model model, @RequestParam("addDailyBurnning")
 	 * model.addAttribute("list",map.get("list"));
 	 */
   model.addAttribute("exer", exer);
-
+  model.addAttribute("NavName1","운동관리");
+  model.addAttribute("NavName2","일일 운동량 정보 입력");
 
 return "exer/addDailyBurnning :: addDailyBurnning";
 
@@ -671,6 +737,10 @@ System.out.println("입력되는 일일 운동량~~~"+record);
 
 exerService.addDailyBurnning(record);
 
+model.addAttribute("NavName1","운동관리");
+model.addAttribute("NavName2","일일 운동량 정보 조회");
+
+
 
 
 return "exer/getDailyBurnning.html";
@@ -712,6 +782,8 @@ public String deleteDailyBurnning(Model model, HttpServletRequest request, @Requ
 	model.addAttribute("list", list);
 	model.addAttribute("serv", exerServ);
 	model.addAttribute("radio", radio);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","일일 운동량 정보 삭제");
 
 	return "redirect:../exer/getDailyBurnning";
 
@@ -870,6 +942,8 @@ model.addAttribute("exerServ", exerServ);
 model.addAttribute("userExerBurnning", userExerBurnning);
 model.addAttribute("radio", radio);
 model.addAttribute("daily", daily);
+model.addAttribute("NavName1","운동관리");
+model.addAttribute("NavName2","일일 운동량 정보 조회");
 
 
 return "exer/getDailyBurnning.html";
@@ -1363,6 +1437,8 @@ public String recommandExerList(Model model, HttpServletRequest request, HttpSes
 	
 	model.addAttribute("overKcal", remainKcal);
 	model.addAttribute("list", list);
+	model.addAttribute("NavName1","운동관리");
+	model.addAttribute("NavName2","운동 추천 리스트");
 	session.setAttribute("overKcal", remainKcal);
 	
 	return "exer/recommandExerList.html";

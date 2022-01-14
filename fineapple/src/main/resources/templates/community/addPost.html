@@ -8,62 +8,119 @@
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
-<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
-
-
-		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
-		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
-
-<!-- 
-
-		이런식으로 걍 냅다 넣으면돼 아래가 예시
-		
-		<div class="container">
-		
-			<div class="row mb-3">
-			    <div class="col-md-2 themed-grid-col"></div>
-			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
-			    <div class="col-md-2 themed-grid-col"></div>
-			</div>
-			
-		</div>
-
--->
- 
- 
- 
- 
-
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+								<div class="card-body">
+										<!--begin::Form-->
+										<form action="/community/addPost" method="POST" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework"  id="kt_contact_form" enctype="multipart/form-data" >
+										<!-- enctype="multipart/form-data" 란?
+										위와 같은 코드를 php 에서 업로드할때 폼 양식에서 볼수 있다
+										다들 위와 같은 코드를 아무 생각없이 그냥 파일 업로드하는거니까 써줘야 하는거야 이렇게알고 있는 사람들이 많다.
+										데이터를 전송하는 방식에는 GET방식과 POST방식이 있고 또하나 ENCTYPE속성의 "multipart/form-data" 이다.
+										GET방식은 URL에 폼데이터가 노출되기때문에 입력내용의 길이제한이있고 256byte~4096byte 까지의 데이터를 전송할 수 있다.
+										POST방식은 URL에 노출되지않고 데이터를 전송하기 때문에 입력내용의 길이에 제한을 받지 않는다. 이렇게 데이터를 전송하는데 아무문제없을것처럼 보이니지만 이둘은 보낼수있는 데이터양의 한계가 있다 파일이나 용량이큰 데이터를 전송할때 문제가 생기는 것이다.
+										그때 쓰는 폼 데이터 전송방식이  바로 ENCTYPE 속성의 "multipart/form-data" 이다.
+										default는 application/x-www-form-urlencoded 입니다.-->
+										<!-- method는 전송 방식, action은 전송 목적지,  enctype은 전송되는 데이터 형식을 설정한다.-->
+											<!--begin::Title-->
+											<div class="d-flex flex-column mb-9 fv-row">
+												<h1 class="fw-bolder text-dark mb-7">게시글작성하기</h1>
+												<span class="fs-4 fw-bold text-gray-600 d-block"> 작성하고자하는 제시글을 작성하시면 됩니다.</span>
+											</div>
+											<!--end::Title-->
+											<div class="col-md-6 fv-row fv-plugins-icon-container" data-select2-id="select2-data-188-4lyu">
+											
+											<div class="fv-plugins-message-container invalid-feedback"></div></div>
+											<!--begin::Input group-->
+											<div class="d-flex flex-column mb-5 fv-row">
+												<!--begin::Label-->
+												<label class="fs-5 fw-bold mb-2">게시글 제목</label>
+												<!--end::Label-->
+												<!--begin::Input-->
+												<input  name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
+												<!--end::Input-->
+											</div>
+											<div>
+										        <h2><b>이미지 미리보기</b></h2>
+										        <div class="input_wrap">
+										            <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일 업로드</a>
+										            <input type="file" id="input_imgs" name = "mtmFile" multiple/>
+										        </div>
+										    </div>
+										 
+										    <div>
+										        <div class="imgs_wrap">
+										            <img id="img" />
+										        </div>
+										    </div>
+										 
+										    <a href="javascript:" class="my_button" onclick="submitAction();">업로드</a>
+											<!--end::Input group-->
+											<!--begin::Input group-->
+											<div class="d-flex flex-column mb-10 fv-row fv-plugins-icon-container">
+												<label class="fs-6 fw-bold mb-2">게시글 내용</label>
+												<textarea name = "content" class="form-control form-control-solid" rows="6" placeholder="게시글 내용을 입력해주세요"></textarea>
+											<div class="fv-plugins-message-container invalid-feedback"></div></div>
+											<!--end::Input group-->
+											<!--begin::Submit-->
+											<button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
+												<!--begin::Indicator-->
+												<span class="indicator-label">게시글등록</span>
+												<!--end::Indicator-->
+											</button>
+											<!--end::Submit-->
+										<div></div></form>
+										<!--end::Form-->
+									
+									</div>
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
-<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
-			
-		<!-- 얘들아 여기서부터 너네가 넣고 싶은 자바스크립트 코드 넣으면돼!!!!!! -->
-		
-<!-- 	
-	
-		이런식으로 필요한 거 잇으면 script srt 하고 link rel도 해도 돼!!! 아래가 예시!!!
-		
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css">
-		<script>
-		      document.addEventListener('DOMContentLoaded', function() {
-		        var calendarEl = document.getElementById('calendar');
-		        var calendar = new FullCalendar.Calendar(calendarEl, {
-		          initialView: 'dayGridMonth'
-		        });
-		        calendar.render();
-		      });
-		</script>
-	
--->
+ 						<script type="text/javascript">
+ 
+        // 이미지 정보들을 담을 배열
+        var sel_files = [];
+ 
+ 
+        $(document).ready(function() {
+            $("#input_imgs").on("change", handleImgFileSelect);
+        }); 
+ 
+        function fileUploadAction() {
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+        }
+ 
+        function handleImgFileSelect(e) {
+ 
+            // 이미지 정보들을 초기화
+            sel_files = [];
+            $(".imgs_wrap").empty();
+ 
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+ 
+            var index = 0;
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+ 
+                sel_files.push(f);
+ 
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                	var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+               
 
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
-	</body>
+                    $(".imgs_wrap").append(html);
+                    index++;
+ 
+                }
+                reader.readAsDataURL(f);
+                
+            });
+        }
+</script>
+
+		</body>
 	<!--end::Body-->
 </html>

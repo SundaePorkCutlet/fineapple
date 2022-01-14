@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Alarm;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -16,7 +17,7 @@ import kr.or.fineapple.domain.community.Report;
 
 public interface CommunityService {
 	
-	public void addPost(Board board);
+	public void addPost(Board board, String[] times);
 	
 	public Map addCmnt(Cmnt cmnt);
 	
@@ -65,4 +66,22 @@ public interface CommunityService {
 	public Report getReport(Report report, User user);
 	
 	public void addMtmQna(MtmQna mtmQna);
+	
+
+	//Faq
+	public void addFqa(MtmQna mtmQna);
+	
+	public void deleteFaq(int mtmQnaNo);
+	
+	//블랙리스트
+	public void addUserBlc(User userId);
+	
+	//신고 처리 완료
+	public void updateReportStt(Report report);
+	
+	public User getUserBattle(User user);
+	
+	public void addBattleInter(Battle battle, String rivalUserId);
+	
+	public List<Battle> getMybattleInter(Battle battle);
 }

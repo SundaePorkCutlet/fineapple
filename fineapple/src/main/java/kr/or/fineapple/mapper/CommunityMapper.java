@@ -2,6 +2,7 @@ package kr.or.fineapple.mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Repository;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Alarm;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Img;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 
@@ -99,5 +102,31 @@ public interface CommunityMapper {
 	public Board getPostReport(Board board);
 	
 	public void addMtmQna(MtmQna mtmQna);
+	
+	
+
+	//Faq
+	public void addFaq(MtmQna mtmQna);
+	public List<MtmQna> getMyMtmList(User user);
+	
+	public void deleteFaq(int mtmQnaNo);
+	
+	public void addPostImg(Map<String, String> map);
+	
+
+	
+	
+	//블랙리스트
+	public void addUserBlc(User userId);
+	
+
+	public User getUserBattle(User user);
+	
+	public void addBattleInter(Battle battle);
+	
+	public List<Battle> getMybattleInter(Battle battle);
+	
+	public List<Img> getPostImg(int postNo);
+	
 	
 }

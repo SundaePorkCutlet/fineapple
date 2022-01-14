@@ -13,8 +13,18 @@
 
 <script type="text/javascript">
 function fncGetUserList(currentPage) {
-   //document.getElementById("currentPage").value = currentPage;
 
+	
+	var dailyTrgtBurnningKcal = $("input[name='dailyTrgtBurnningKcal']").val();
+	
+	
+	
+	 if(dailyTrgtBurnningKcal == null || dailyTrgtBurnningKcal.length<1){
+		alert("하루 목표 소모칼로리는 반드시 입력하여야 합니다.");
+		return;
+	}
+	
+	 
       //document.detailForm.submit();
    $("form").attr("method" , "POST").attr("action" , "/exer/addUserService").submit();
 }

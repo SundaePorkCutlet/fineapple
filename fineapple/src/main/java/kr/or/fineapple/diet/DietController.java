@@ -55,7 +55,6 @@ public class DietController {
 
 		System.out.println("get:addDietService");
 
-		if ((User) request.getSession(true).getAttribute("user") != null) {
 			User user = (User) request.getSession(true).getAttribute("user");
 			user = userService.getUser(user.getUserId());
 			System.out.println("++++++++"+user);
@@ -107,6 +106,10 @@ public class DietController {
 					
 					model.addAttribute("user", user);
 					model.addAttribute("dietServ", serv);
+					model.addAttribute("NavName1","식단관리");
+					model.addAttribute("NavName2","식단 서비스 활성화");
+					
+					
 					return "diet/getDietService.html";
 				} else {
 					System.out.println("설마여기?");
@@ -143,11 +146,14 @@ public class DietController {
 					      
 					   }
 
+					   
+					   
 					model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
 					
 					
 					model.addAttribute("user", user);
-					
+					model.addAttribute("NavName1","식단관리");
+					model.addAttribute("NavName2","식단 서비스 활성화");
 					
 					return "diet/addDietService.html";
 				}
@@ -188,14 +194,12 @@ public class DietController {
 				System.out.println(totaldailyIntakeKcal);
 				model.addAttribute("dailyIntakeKcal",totaldailyIntakeKcal);
 				model.addAttribute("user", user);
+				model.addAttribute("NavName1","식단관리");
+				model.addAttribute("NavName2","식단 서비스 활성화");
 				return "diet/addDietService.html";
 			}
 
-		} else {
-			
-			System.out.println("그럼여기?");
-			return "user/login";
-		}
+	
 
 	}
 
@@ -210,8 +214,13 @@ public class DietController {
 		
 		String userId = user.getUserId();
 		serv.setUserId(userId);
-
-		dietService.addDietService(serv);
+				
+		
+			
+			dietService.addDietService(serv);
+		
+			
+			
 		
 
 		
@@ -224,7 +233,8 @@ public class DietController {
 		session.setAttribute("user",user);
 
 		
-		
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식단 서비스 활성화");
 		
 
 		return "diet/getDietService.html";
@@ -282,6 +292,8 @@ public class DietController {
 		model.addAttribute("totaldailyIntakeKcal",totaldailyIntakeKcal);
 		model.addAttribute("user", user);
 		model.addAttribute("dietServ", serv);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식단 서비스 활성화");
 
 		return "diet/updateDietService.html";
 
@@ -345,10 +357,10 @@ public class DietController {
 		list2 = dietService.getFoodList(search1);
 		int startNum;
 		int endNum;
+		int nextpage=1;
 		
 		System.out.println(page);
 		int size=list2.size();
-			
 		if(page!=1) {
 			startNum= (page-1)*50+1-size;  
 		}else {
@@ -359,17 +371,27 @@ public class DietController {
 		search.setStartNum(startNum);
 		search.setEndNum(endNum);
 		list = dietService.getFoodAPIlist(search);
+		int Apisize=list.size();	
 			
 		if(page==1){
 			list.addAll(list2);		
 		}
 	
-		
+		if((size+Apisize)<50) {
+			nextpage=0;
+			
+		}
 		
 		
 
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
+		model.addAttribute("page",page);
+		model.addAttribute("nextpage",nextpage);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품검색");
+		
+		
 		return "diet/getFoodList.html";
 	}
 	
@@ -382,6 +404,9 @@ public class DietController {
 		food = dietService.getFood(foodCd);
 		System.out.println(food);
 		model.addAttribute("food", food);
+		
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품상세정보");
 		return "diet/getFood.html";
 	}
 
@@ -421,7 +446,10 @@ public class DietController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
-
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품구매");
+		
+			
 		return "diet/getPurchaseFoodList.html";
 
 	}
@@ -446,6 +474,9 @@ public class DietController {
 	@GetMapping("getAddDaily")
 	public String getAddDaily(Model model) throws Exception {
 
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","일일섭취식단");
+		
 		return "diet/getAddDailyIntakeMeal.html";
 	}
 
@@ -519,7 +550,9 @@ public class DietController {
 		fav.setFavMealNo(favMealNo);
 
 		dietService.addFavMealItem(fav);
-
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품직접등록");
+		
 		return "diet/addFood.html";
 	}
 	@GetMapping("getaddDailyIntakeMeal")
@@ -575,6 +608,8 @@ public class DietController {
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
 		model.addAttribute("radio", radio);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","일일섭취식단");
 
 		return "diet/getDailyIntakeMeal.html";
 	}
@@ -596,6 +631,8 @@ public class DietController {
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
 		model.addAttribute("radio", radio);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","일일섭취식단");
 
 		return "diet/getDailyIntakeMeal.html";
 	}
@@ -616,6 +653,8 @@ public class DietController {
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
 		model.addAttribute("radio", radio);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","일일섭취식단");
 
 		return "diet/getDailyIntakeMeal.html";
 
@@ -624,6 +663,9 @@ public class DietController {
 	@GetMapping("getaddFood")
 	public String getaddFood(Model model) {
 
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품직접등록");
+		
 		return "diet/addFood.html";
 	}
 
@@ -632,7 +674,8 @@ public class DietController {
 
 		System.out.println(food);
 		dietService.addFood(food);
-
+		int page = 1;
+		int nextpage = 0;
 		Search search1 = new Search();
 		search1.setCurrentPage(1);
 		search1.setPageSize(30);
@@ -644,13 +687,15 @@ public class DietController {
 
 		model.addAttribute("list", list2);
 		model.addAttribute("search", search1);
+		model.addAttribute("page",page);
+		model.addAttribute("nextpage",nextpage);
 		
 		
 		
 		
 		
-		
-		
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품검색");
 		
 
 
@@ -788,10 +833,24 @@ public class DietController {
 		List<Recipe> list2 = new ArrayList<Recipe>();
 		
 		list2 = dietService.getrcpList(search);
+		int nextpage = 1;
+		
+		if(list2.size()<20) {
+			
+			nextpage = 0;
+			
+		}
+				
+		
+		
 		
 		System.out.println(list2);
 		model.addAttribute("list",list2);
 		model.addAttribute("search",search);
+		model.addAttribute("nextpage",nextpage);
+		model.addAttribute("page",page);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품레시피");
 		
 		
 		return "diet/getRcpList.html";
@@ -811,6 +870,8 @@ public class DietController {
 		
 		System.out.println(rcp);
 		model.addAttribute("rcp",rcp);
+		model.addAttribute("NavName1","식단관리");
+		model.addAttribute("NavName2","식품레시피상세정보");
 		
 		
 		return "diet/getRcp.html";

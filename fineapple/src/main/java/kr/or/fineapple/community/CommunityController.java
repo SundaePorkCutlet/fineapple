@@ -1,6 +1,7 @@
-package kr.or.fineapple.community;
+ package kr.or.fineapple.community;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -31,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
@@ -68,7 +71,11 @@ public class CommunityController {
 		
 		List<Board> list = communityService.getPostList();
 		
+		
+		
 		model.addAttribute("list", list);
+		model.addAttribute("NavName1","게시파");
+		model.addAttribute("NavName2","게시글 리스트 조회");
 		
 		
 		return "community/getBoard.html";
@@ -80,7 +87,11 @@ public class CommunityController {
 		
 		User usersys = (User)request.getSession(true).getAttribute("user");
 		
+		
+		
 		System.out.println(usersys);
+		
+		
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
 		
@@ -89,6 +100,8 @@ public class CommunityController {
 		System.out.println(map.get("board")+"Scope에 담기전 Board");
 		
 		model.addAttribute("map", map);
+		model.addAttribute("NavName1","게시판");
+		model.addAttribute("NavName2","게시글 조회");
 		 
 		return "community/getPost.html";
 	}
@@ -107,11 +120,31 @@ public class CommunityController {
 	
 
 	@PostMapping(value = "addPost")
-	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request) {
+	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam("mtmFile") MultipartFile[] files) throws IllegalStateException, IOException {
+		
+		String[] times = new String[files.length];
+		
+		int i = 0;
+		
+		for (MultipartFile multipartFile : files) {
+			
+			
+			System.out.println(multipartFile.getOriginalFilename());
+			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
+			multipartFile.transferTo(new File(mtmFilePath, time));
+			times[i] = time; 
+			i += 1;
+		}
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
+		
+		board.setGroup(group);
+		
+		for (String string : times) {
+			System.out.println(string);
+		}
 			
-		communityService.addPost(board);
+		communityService.addPost(board, times);
 		
 		return "redirect:/community/getBoard";
 	}
@@ -143,13 +176,22 @@ public class CommunityController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("community/getMyGroupList.html");
 		modelAndView.addObject("list", list);
+		
+		modelAndView.addObject("NavName1", "소그룹");
+		
+		modelAndView.addObject("NavName1", "내가 가입된 소그룹 ");
+
 		return modelAndView;
 	}
 	
 	
 	@GetMapping(value = "getUserSerach")
-	public String getUserList() {
+	public String getUserList(Model model
+			) {
 		
+		
+		model.addAttribute("NavName1","검색");
+		model.addAttribute("NavName2","회원검색");
 		
 		
 		return "community/getUserSerach.html";
@@ -287,36 +329,96 @@ public class CommunityController {
 	
 	
 	@RequestMapping(value = "addBattleView", method = RequestMethod.POST)
-	public String addBattleView(Model model) {
+	public String addBattleView(Model model, @RequestBody User user) {
 		
-		
+		System.out.println(user);
 		System.out.println("addBattleView 거침");
+		
+		user = communityService.getUserBattle(user);
+		
+		
+		model.addAttribute("user", user);
+		
+		
+		
 		
 		return "community/addBattleView :: addBattleView";
 	}
+	
+	
 
 	// 승부 받은 리스트
 	@GetMapping("getBattleReceiveList")
-	public String getBattleReceiveList(){
+	public String getBattleReceiveList(HttpServletRequest request, Model model){
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		Battle battle = new Battle();
+		
+		battle.setRivalUser(user);
+		
+		battle.setBattleStt(1);
+		
+		
+		List<Battle> list = communityService.getMybattleInter(battle);
+		
+		model.addAttribute("list", list);
+		
+		for (Battle battle2 : list) {
+			System.out.println(battle2);
+		} 
+		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
+		
 		return "community/getBattleReceiveList.html";
 	}
 
 	// 승부 보낸 리스트
 	@GetMapping("getBattleRequestList")
-	public String getBattleRequestList(){
+	public String getBattleRequestList(HttpServletRequest request, Model model){
+		
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		Battle battle = new Battle();
+		
+		battle.setUser(user);
+		
+		battle.setBattleStt(1);
+		
+		
+		List<Battle> list = communityService.getMybattleInter(battle);
+		
+		model.addAttribute("list", list);
+		
+		for (Battle battle2 : list) {
+			System.out.println(battle2);
+		} 
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
+		
 		return "community/getBattleRequestList.html";
 	}
 
 	@GetMapping("getBattleList")
-	public String getBattleList(){
+	public String getBattleList(HttpServletRequest request, Model model){
+		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
+		
 		return "community/getBattleList.html";
 	}
 
 	@GetMapping("getBattleView")
-	public String getBattleView(
-			@RequestParam(value="no") int no,
-			Model model
-	){
+	public String getBattleView(@RequestParam(value="no") int no,Model model){
+		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
 
 		return "community/getBattleView.html";
 	}
@@ -334,6 +436,9 @@ public class CommunityController {
 		User user =  communityService.getUserSearch(search);
 		
 		model.addAttribute("user", user);
+		
+		model.addAttribute("NavName1","검색");
+		model.addAttribute("NavName2","회원 상세정보");
 
 		
 		return "community/getUserDetail.html";
@@ -378,6 +483,8 @@ public class CommunityController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("user", intetUser);
+		
+		
 		return "community/addGroupToUserInter :: addGroupToUserInter";
 	}
 	
@@ -400,6 +507,9 @@ public class CommunityController {
 		
 		model.addAttribute("list", list);
 		
+		model.addAttribute("NavName1","소그륩");
+		model.addAttribute("NavName2","소그룹 리스트");
+		
 		return "community/getGroupToUserInter.html";
 	}
 	
@@ -414,7 +524,7 @@ public class CommunityController {
 		return mav;
 	}
 	
-	@RequestMapping(value="faq")
+	@RequestMapping(value="getFaq")
 	public String faq(Model model)throws Exception{
 		List<MtmQna> list = communityService.getFaqList(4);
 		
@@ -423,6 +533,10 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("list", list);
+		
+		model.addAttribute("NavName1","문의");
+		model.addAttribute("NavName2","FAQ");
+		
 		return "community/getFaq.html";
 	}
 	
@@ -442,6 +556,9 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("list", list);
+		
+		model.addAttribute("NavName1","관리자");
+		model.addAttribute("NavName2","신고 관리");
 		
 		return "community/getReportList.html";
 	}
@@ -468,7 +585,8 @@ public class CommunityController {
 		report = communityService.getReport(report ,user);
 		
 		
-	
+		model.addAttribute("NavName1","관리자");
+		model.addAttribute("NavName2","신고 관리");
 
 		
 		model.addAttribute("report", report);
@@ -502,17 +620,17 @@ public class CommunityController {
 		return "community/addblackListView :: addBlackListView";
 	}
 	
-	@GetMapping(value = "getMtmList")
-	public String getMtmList(Model model, HttpServletRequest request) {
-		
-		User user = new User();
-		
-		user = (User)request.getSession(true).getAttribute("user");
-		
-		model.addAttribute("user", user);
-		
-		return "community/getMtmList.html";
-	}
+//	@GetMapping(value = "getMtmList")
+//	public String getMtmList(Model model, HttpServletRequest request) {
+//		
+//		User user = new User();
+//		
+//		user = (User)request.getSession(true).getAttribute("user");
+//		
+//		model.addAttribute("user", user);
+//		
+//		return "community/getMtmList.html";
+//	}
 	
 	@GetMapping(value = "addMtmView")
 	public String addMtm(Model model, HttpServletRequest request) {
@@ -526,6 +644,9 @@ public class CommunityController {
 		user = (User)request.getSession(true).getAttribute("user");
 		
 		model.addAttribute("user", user);
+		
+		model.addAttribute("NavName1","문의");
+		model.addAttribute("NavName2","1:1문의");
 		
 		return "community/addMtm.html";
 	}
@@ -565,9 +686,44 @@ public class CommunityController {
 //		modelAndView.setViewName("");
 //		modelAndView.addObject("", modelAndView);
 		
+		modelAndView.setViewName("redirect:/community/getMtmList");
+		
+		
+		return modelAndView;
+	}
+	
+//	@GetMapping("getMtmList")
+//	public String getMtmList(HttpServletRequest request, Model model) {
+//		
+//		User user = (User)request.getSession(true).getAttribute("user");
+//		
+//		List<MtmQna> list = communityService.getMtmList(user);
+//		
+//		for (MtmQna mtmQna : list) {
+//			System.out.println(mtmQna);
+//		}
+//		
+//		model.addAttribute("list", list);
+//		
+//		
+//		
+//		
+//		return "community/getMtmList.html";
+//	}
+//	
+	
+	@PostMapping(value = "delPost")
+	public String delPost(HttpSession session) {
+		
+		
 		
 		return null;
 	}
+
+
+	
+
+	
 	
 	
 	

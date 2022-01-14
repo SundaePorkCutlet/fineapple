@@ -60,21 +60,37 @@
 	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
 	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
 			TRUNC(SYSDATE),
-			(SELECT user_id
-			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+			#{userId:VARCHAR},
             (SELECT weight
 			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
             (SELECT body_fat
 			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
             (SELECT body_muscle
 			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)),
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
             (SELECT height
 			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)))
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}))
+	</insert>
+	
+	<insert id="addBadge">
+	INSERT INTO badge (badge_no, user_id, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, user_wtr_intake, daily_burnnin_kcal, daily_intake_kcal)
+	VALUES (SEQ_BADGE_BADGE_NO.nextval,
+            #{userId:VARCHAR},
+            SYSDATE,
+            0,
+            0,
+            0,
+            0,
+            0
+            #{dailyBurnningKcal:DOUBLE},
+            #{dailyIntakeKcal:DOUBLE})
 	</insert>
 	
 	<!-- INSERT : 사용자이벤트 등록 -->
@@ -97,7 +113,7 @@
 	</select>
 	
 	<!-- SELECT ONE : 사용자이벤트 조회 -->
-	<select id="getUserEvent" resultType="UserEvent">
+	<select id="getUserEvent" resultMap="UserEventMap">
 	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
 	FROM user_event
 	WHERE user_event_no = #{userEventNo:INTEGER}
@@ -235,7 +251,7 @@
 	</select>
 	
 	<!-- SELECT ONE : 회윈의 운동 서비스 목표 달성률 계산해 조회 -->
-	<select id="getExerAchievement" parameterType="viewDuration" resultMap="AchievementMap">
+	<select id="getExerAchievement" parameterType="viewDuration" resultType="int">
 	SELECT ROUND((SELECT SUM(user_exer_burnning)
 					FROM burnning_record
 					WHERE user_service_no = (SELECT user_service_no

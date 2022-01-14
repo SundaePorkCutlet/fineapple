@@ -21,6 +21,7 @@
 											</div>
 											<!--end::Intro-->
 											<!--begin::Items-->
+											
 											<div class="m-0">
 												<!--begin::Item-->
 												<div class="mb-12">
@@ -29,9 +30,10 @@
 													<!--end::Title-->
 													<!--begin::Accordion-->
 													<!--begin::Section-->
+													<th:block  th:each ="data ,i : ${list}">
 													<div class="m-0">
 														<!--begin::Heading-->
-														<div class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kt_job_1_1" aria-expanded="false">
+														<div class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" th:attr="data-bs-target=|#kt_job_1_${i.count}|" aria-expanded="false">
 															<!--begin::Icon-->
 															<div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
 																<!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -54,19 +56,25 @@
 															</div>
 															<!--end::Icon-->
 															<!--begin::Title-->
-															<h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">What platforms are compatible?</h4>
+															<h4 class="text-gray-700 fw-bolder cursor-pointer mb-0" th:text="${data.mtmQnaTitle}"></h4>
 															<!--end::Title-->
 														</div>
 														<!--end::Heading-->
 														<!--begin::Body-->
-														<div id="kt_job_1_1" class="fs-6 ms-1 collapse">
+														<div th:id = "|kt_job_1_${i.count}|" class="fs-6 ms-1 collapse">
 															<!--begin::Text-->
-															<div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</div>
+															<!-- <img th:src="@{../assets/profile/}+${session.user.userImg}" alt="image"> -->
+															<div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+																<img th:src="@{../assets/mtmqna/}+${data.imgName}"  width="30%" height="40%;">
+
+															</div>
+															
+															<div class="mb-4 text-gray-600 fw-bold fs-6 ps-10" th:text="${data.mtmQnaCntnt}"></div>
 																
 																
 																
 																
-																<div class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kt_job_2_1" aria-expanded="false">
+																<div  th:if="${false}" class="d-flex align-items-center collapsible py-3 toggle mb-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kt_job_2_1" aria-expanded="false">
 																	<!--begin::Icon-->
 																	<div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
 																		<!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -92,7 +100,7 @@
 																	<h4 class="text-gray-700 fw-bolder cursor-pointer mb-0"></h4>
 																	<!--end::Title-->
 																</div>
-																<div id="kt_job_2_1" class="fs-6 ms-1 collapse" >
+																<div th:if="${false}" id="kt_job_2_1" class="fs-6 ms-1 collapse" >
 																<!--begin::Text-->
 																	<div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</div>	
 																</div>
@@ -101,7 +109,7 @@
 																
 																
 																
-																
+
 														</div>
 														
 														<!--end::Svg Icon-->
@@ -118,6 +126,7 @@
 												<!--end::Item-->
 												
 											</div>
+											</th:block>
 											<!--end::Items-->
 										</div>
 										<!--end::Faq content-->

@@ -28,7 +28,7 @@ public class BoardTest {
 	public void addPost() {
 		Board board = new Board();
 		User user = new User();
-		communityService.addPost(board);
+		//communityService.addPost(board);
 	}
 	
 	//@Test

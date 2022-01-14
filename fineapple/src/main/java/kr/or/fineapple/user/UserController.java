@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.service.user.UserService;
@@ -43,15 +44,17 @@ public class UserController {
     }
 	
 	@RequestMapping(value="checkPassword")
-	public String checkPassword() {
+	public String checkPassword(Model model) {
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","비밀번호 변경");
 		return "user/changeUserPassword.html";
 	}
 	@RequestMapping(value="findPassword")
-	public String findPassword() {
+	public String findPassword(Model model) {
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","비밀번호 찾기(변경)");
 		return "user/findPassword.html";
 	}
-	
-	
 	
 	@RequestMapping(value="login",method = RequestMethod.GET)
     public String login(){
@@ -103,16 +106,21 @@ public class UserController {
 	
 	
 	@RequestMapping(value="addUser")
-	public String addUser(@ModelAttribute("user") User user, HttpSession session){
+	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session,Model model){
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원가입");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
-		session.setAttribute("user", user);
+			 System.out.println("여기 들어왔니");
+			 mav.addObject(user);
 		 }
 		System.out.println();
 		
 		System.out.println(user);
-		return "user/addUser.html";
+		return mav;
 	}
 	
 	
@@ -122,7 +130,8 @@ public class UserController {
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		if(user.getPassword() == null) {
-			user.setPassword("kakaopassword");			
+			user.setPassword("kakaopassword");
+			user.setKakaoStt(1);
 		}
 		if(!file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
@@ -156,7 +165,8 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","내 정보 보기");
 		return "user/getUser.html";
 		
 	}
@@ -169,8 +179,8 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
-	
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","내 정보 수정");
 		return "user/updateUser.html";
 		
 	}
@@ -238,13 +248,16 @@ public class UserController {
 		User user = userService.getUser(userId);
 		
 		model.addAttribute("user",user);
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원탈퇴");
 		return "user/updateUserLeave.html";
 	}
 	
 	@RequestMapping(value="restoreUser", method= RequestMethod.GET)
-	public String restoreUser(){
+	public String restoreUser(Model model){
 		System.out.println("회원복구창 입!짱");
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","회원복구");
 		return "user/restoreUser.html";
 	}
 	
@@ -262,9 +275,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="getUserList")
-	public String getUserList() throws Exception{
+	public String getUserList(Model model) throws Exception{
 		System.out.println("아이디찾기 들어오세요");
-		
+		model.addAttribute("NavName1", "회원관리");
+		model.addAttribute("NavName2","아이디찾기");
 		return "user/findUserId.html";
 	}
 	

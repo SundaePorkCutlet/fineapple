@@ -78,6 +78,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	@Override
+	public String kakaoStt(User user) throws Exception {
+		return userMapper.kakaoStt(user);
+		
+	}
+
+
 
 	
 	

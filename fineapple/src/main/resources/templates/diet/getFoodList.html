@@ -3,7 +3,10 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <!-- <link rel="manifest" href="/manifest.json" /> -->
+<style>
+.makerName { display: block;  width: 150px; white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;}
 
+</style>
 
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
@@ -66,27 +69,27 @@
                             <table class="table table-row-bordered align-middle gy-4 gs-9">
                                 <thead class="border-bottom border-green-200 fs-6 text-green-600 fw-bolder bg-light bg-opacity-75">
                                 <tr>
-                                    <td class="min-w-60px">번호</td>
-                                    <td class="min-w-150px">제조사</td>
+                                    <td class="min-w-50px">번호</td>
                                     <td class="min-w-200px">식품명</td>
                                     <td class="min-w-100px">식품칼로리</td>
+                                    <td class="min-w-100px">제조사</td>
                                     <td class="min-w-100px">식품탄수화물</td>
                                     <td class="min-w-100px">식품단백질</td>
                                     <td class="min-w-100px">식품지방</td>
                                     <td class="min-w-150px">확인된정보</td>
-                                </tr>
+                                </tr> 
                                 </thead>
 
                                 <tbody>
                                 <tr  th:each="data, i : ${list}">
                                     <td th:text="${i.count}" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.makerName}" style="cursor:pointer; text-align: left;"></td>
                                     <td th:attr="data-foodCd=${data.foodCd}" class="foodName" style="cursor:pointer; text-align: left;">
                                         <a href="#" th:text="${data.foodName}"></a></td>
-                                    <td th:text="${data.foodKcal}" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodCarb}" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodProtein}" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
-                                    <td th:text="${data.foodFat}" class="foodFat" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodKcal}+Kcal" class="foodKcal" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.makerName}" class="makerName" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodCarb}+g" class="foodCarb" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodProtein}+g" class="foodProtein" style="cursor:pointer; text-align: left;"></td>
+                                    <td th:text="${data.foodFat}+g" class="foodFat" style="cursor:pointer; text-align: left;"></td>
                                     <td align="left">
                                         <span th:if="${data.isAPI==1}" class="badge badge-light-success fs-7 fw-bolder">Ok</span>
                                     </td>
@@ -96,18 +99,38 @@
 
                             </table>
                             <ul class="pagination pagination-circle">
-    <li class="page-item previous disabled"><a href="#" class="page-link"><i class="previous"></i></a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(1)|" class="page-link">1</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(2)|"  class="page-link">2</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(3)|" class="page-link">3</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(4)|" class="page-link">4</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(5)|" class="page-link">5</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(6)|" class="page-link">6</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(7)|" class="page-link">7</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(8)|" class="page-link">8</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(9)|" class="page-link">9</a></li>
-    <li class="page-item "><a th:onclick="|javascript:pagenation(10)|" class="page-link">10</a></li>
-    <li class="page-item next"><a href="#"  class="page-link"><i class="next"></i></a></li></ul>
+    <li th:if="${page}>3" class="page-item previous "><a th:onclick="|javascript:pagenation(${page}-3)|" class="page-link"><i class="previous"></i></a></li>
+ 	  <li  th:if="${page}>2" class="page-item"><a th:onclick="|javascript:pagenation(${page}-2)|"  class="page-link" th:text="${page}-2"></a></li>
+ 	  <li  th:if="${page}>2" class="page-item"><a th:onclick="|javascript:pagenation(${page}-1)|"  class="page-link" th:text="${page}-1"></a></li>
+ 	  <li class="page-item active "><a class="page-link" th:text="${page}"></a></li>
+ 	  <li th:if="${nextpage}!=0" class="page-item "><a th:onclick="|javascript:pagenation(${page}+1)|"  class="page-link" th:text="${page}+1"></a></li>
+ 	  <li th:if="${nextpage}!=0" class="page-item"><a th:onclick="|javascript:pagenation(${page}+2)|"  class="page-link" th:text="${page}+2"></a></li>
+ 	 <li th:if="${nextpage}!=0" class="page-item next"><a th:onclick="|javascript:pagenation(${page}+3)|"   class="page-link"><i class="next"></i></a></li></ul>
+ 
+ 
+ 
+ 
+<!--     <li th:if="${page}!=1" class="page-item "><a th:onclick="|javascript:pagenation(1)|" class="page-link">1</a></li> -->
+<!--     <li th:if="${page}==1" class="page-item active "><a th:onclick="|javascript:pagenation(1)|" class="page-link">1</a></li> -->
+<!--     <li th:if="${page}!=2" class="page-item "><a th:onclick="|javascript:pagenation(2)|"  class="page-link">2</a></li> -->
+<!--     <li th:if="${page}==2" class="page-item active"><a th:onclick="|javascript:pagenation(2)|"  class="page-link">2</a></li> -->
+<!--     <li th:if="${page}!=3" class="page-item "><a th:onclick="|javascript:pagenation(3)|" class="page-link">3</a></li> -->
+<!--     <li th:if="${page}==3" class="page-item active"><a th:onclick="|javascript:pagenation(3)|" class="page-link">3</a></li> -->
+<!--     <li th:if="${page}!=4" class="page-item "><a th:onclick="|javascript:pagenation(4)|" class="page-link">4</a></li> -->
+<!--     <li th:if="${page}==4" class="page-item active"><a th:onclick="|javascript:pagenation(4)|" class="page-link">4</a></li> -->
+<!--     <li th:if="${page}!=5" class="page-item "><a th:onclick="|javascript:pagenation(5)|" class="page-link">5</a></li> -->
+<!--     <li th:if="${page}==5" class="page-item active"><a th:onclick="|javascript:pagenation(5)|" class="page-link">5</a></li> -->
+<!--     <li th:if="${page}!=6" class="page-item "><a th:onclick="|javascript:pagenation(6)|" class="page-link">6</a></li> -->
+<!--     <li th:if="${page}==6" class="page-item active"><a th:onclick="|javascript:pagenation(6)|" class="page-link">6</a></li> -->
+<!--     <li th:if="${page}!=7" class="page-item "><a th:onclick="|javascript:pagenation(7)|" class="page-link">7</a></li> -->
+<!--     <li th:if="${page}==7" class="page-item active"><a th:onclick="|javascript:pagenation(7)|" class="page-link">7</a></li> -->
+<!--     <li th:if="${page}!=8" class="page-item "><a th:onclick="|javascript:pagenation(8)|" class="page-link">8</a></li> -->
+<!--     <li th:if="${page}==8" class="page-item active"><a th:onclick="|javascript:pagenation(8)|" class="page-link">8</a></li> -->
+<!--     <li th:if="${page}!=9" class="page-item "><a th:onclick="|javascript:pagenation(9)|" class="page-link">9</a></li> -->
+<!--     <li th:if="${page}==9" class="page-item active"><a th:onclick="|javascript:pagenation(9)|" class="page-link">9</a></li> -->
+<!--     <li th:if="${page}!=10" class="page-item "><a th:onclick="|javascript:pagenation(10)|" class="page-link">10</a></li> -->
+<!--     <li th:if="${page}==10" class="page-item active"><a th:onclick="|javascript:pagenation(10)|" class="page-link">10</a></li> -->
+   
                             
                         </div>
                     </div>

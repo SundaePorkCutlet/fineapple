@@ -69,7 +69,7 @@
 	                url: "../diet/deleteAlarm?alarmNo="+alarmNo,
 	                success: function (data) {
 	                	console.log(data)
-	                    $("#dModalHolder").html(data);
+	                    $("#loginModalHolder").html(data);
 	                    $("#getalarm").modal("show");
 	                }
 	            });
@@ -83,7 +83,7 @@
 		                url: "../diet/deleteAllAlarm",
 		                success: function (data) {
 		                	console.log(data)
-		                    $("#dModalHolder").html(data);
+		                    $("#loginModalHolder").html(data);
 		                    $("#getalarm").modal("show");
 		                }
 		            });

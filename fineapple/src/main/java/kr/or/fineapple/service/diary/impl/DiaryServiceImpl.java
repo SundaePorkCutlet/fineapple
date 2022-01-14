@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
+import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.UserBodyInfo;
 import kr.or.fineapple.domain.UserEvent;
 import kr.or.fineapple.domain.UserServ;

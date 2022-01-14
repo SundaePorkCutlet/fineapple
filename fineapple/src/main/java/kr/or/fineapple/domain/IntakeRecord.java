@@ -25,7 +25,7 @@ public class IntakeRecord {
 	String meal;
 	LocalDate date;
 	Food food;
-
+	
 	public IntakeRecord() {
 		// TODO Auto-generated constructor stub
 	}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head th:replace="index/toolbar :: head">
-<meta charset="utf-8">
+<head th:replace="index/toolbar :: head"><th:block th:fragment="header"><meta charset="utf-8">
 
 
 </head>
@@ -11,7 +10,7 @@
 
 
 	<div id="mmodal" class="modal fade" role="dialog" th:fragment ="addFavMealItem">		
-   <div  class="modal-dialog " style="width:800px; height:1300px;">
+   <div  class="modal-dialog " style="height:1300px;">
     <div class="modal-content">
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
@@ -66,7 +65,7 @@ $(function() {
 
      </div>
         <div class="modal-body" style="height:500px;">
-
+<div class="scroll h-400px px-5">
 <form target="iframe1">
 
 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
@@ -128,6 +127,7 @@ $(function() {
 </form>
 
 
+ </div>
  </div>
  
      <div class="modal-footer">

@@ -101,6 +101,8 @@ public @ResponseBody String getExerListJSON(Model model) throws Exception {
 	
 	
 	model.addAttribute("data", str);
+	model.addAttribute("NavName1","款悼包府");
+	model.addAttribute("NavName2","款悼府胶飘");
 	
 	return str;
 	

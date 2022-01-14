@@ -40,6 +40,13 @@
 		        
 	    </div>
     <div class="card-body">
+   		 <div th:if = "${map.board.img} != null">
+			<div th:each = "data : ${map.board.img}">
+			<div align="center">
+				<img th:src="@{../assets/mtmqna/}+${data.imgName}">
+			</div>
+			</div>
+		</div>
         <div class="card-body py-5" th:text="${map.board.content}">
     	</div>
 	    <div class="card-footer">
@@ -48,6 +55,8 @@
 	    <div class="separator border-5 my-10"></div>
 		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
 		<div class="separator border-5 my-10"></div>
+		
+		
 		<div style="text-align: left;" th:insert="community/getCmnt :: getCmnt"></div>
 		<div class="separator border-5 my-10"></div>
 	</div>

@@ -18,17 +18,17 @@
         <div class="table-responsive">
             <!--begin::Table-->
 
-            <!--begin::Follow-->
-            <a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+       
+            <!-- <a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
+                
                 <span class="svg-icon svg-icon-3">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
 									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
 								</svg>
 							</span>
-                <!--end::Svg Icon-->승부생성</a>
-            <!--end::Follow-->
+                승부생성</a> -->
+            
 
 
             <!--begin::Follow-->
@@ -71,12 +71,12 @@
         </div>
     </div>
 </div>
-
+ <div th:each = "data : ${list}">
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Container-->
     <div id="kt_content_container" class="container-fluid">
         <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
-            <h3 class="fw-bolder my-2">승부 보낸 리스트<span class="fs-6 text-gray-400 fw-bold ms-1">(3)</span></h3>
+            <h3 class="fw-bolder my-2">승부 보낸 리스트<span class="fs-6 text-gray-400 fw-bold ms-1"></span></h3>
         </div>
 
         <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
@@ -86,19 +86,19 @@
                         <div class="symbol symbol-65px symbol-circle mb-5">
                             <img src="/assets/profile/돼지.png"/>
                         </div>
-                        <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">김영희</a>
-                        <div class="fw-bold text-gray-400 mb-6">bbb123@gmail.com</div>
+                        <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0" th:text = "${data.user.userName}"></a>
+                        <div class="fw-bold text-gray-400 mb-6" th:text = "${data.rivalUser.userId}"></div>
                         <div class="d-flex flex-center flex-wrap mb-5">
                             <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
                                 <div class="fs-6 fw-bolder text-gray-700">칼로리 섭취</div>
                                 <div class="fw-bold text-gray-400">승부 유형</div>
                             </div>
                             <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-                                <div class="fs-6 fw-bolder text-gray-700">10일</div>
+                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3"th:text = "${data.battlePeriod}"></span>일</div>
                                 <div class="fw-bold text-gray-400">승부 기간</div>
                             </div>
                             <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3">10000</span>Kcal</div>
+                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3"th:text = "${data.userTrgtKcal}"></span>Kcal</div>
                                 <div class="fw-bold text-gray-400">나의 목표 칼로리</div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
         <!--        </div>-->
     </div>
 </div>
-
+</div>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// -->
 <!-- 공통 하단 footer -->
 <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>

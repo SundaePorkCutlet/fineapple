@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
@@ -132,7 +133,7 @@ public class CommunityRestController {
 		
 		report.setTrgtNo(Integer.parseInt(TrgtNo));
 		
-		report.setReportStt(1);
+		report.setReportStt(0);
 		
 		
 		
@@ -145,7 +146,7 @@ public class CommunityRestController {
 		System.out.println(report);
 		
 		communityService.addReport(report);
-
+		
 	}
 	
 	
@@ -284,8 +285,13 @@ public class CommunityRestController {
 		
 	}
 	
+	
+	
 	@PostMapping(value = "addBlackList")
-	public void addBlackList(@RequestBody String str) {
+	public void addBlackList(@RequestBody String str,  HttpServletRequest request) {
+		
+		System.out.println("post::addBlackList");
+		
 		
 		System.out.println(str);
 		
@@ -293,22 +299,67 @@ public class CommunityRestController {
 		
 		BlackList blackList = new BlackList();
 		
-		User blakcUser = new User();
+		User user = (User)request.getSession(true).getAttribute("user");
 		
-		blakcUser.setUserId(jsonObject.get("blackUserId").toString());
+		user.setUserId(jsonObject.get("blackUserId").toString());
 		
-		blackList.setBlackUser(blakcUser);
+		blackList.setBlackUser(user);
 		
-		blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		//blackList.setAddBlackWhy(jsonObject.get("blackcontent").toString());
+		
+		user.setBlcAddWhy(jsonObject.get("blackcontent").toString());
 		
 		
+
+		communityService.addUserBlc(user);
+		
+		//User user = (User)request.getSession(true).getAttribute("user");
 		
 		
-		
+			
+		//System.out.println("blackUser될 user 정보:   " + user);
 		
 	}
 	
-	
+	@RequestMapping(value = "addBattle", method = RequestMethod.POST)
+	public void addBattle(@RequestBody String str, HttpServletRequest request) {
+		//내가 "battleCate":"1" 에 대한 값을 클라이언트에서 까먹고 Id를 안가져왔다 그랬더니 value가 null인 battleCate이 빠지고 request의 body에 담겨서 왔다. 
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		String rivalUserId = jsonObject.get("userId").toString();
+		
+		//String battleCate = jsonObject.get("battleCate").toString();
+		
+		//String battleTerm = jsonObject.get("battleTerm").toString();
+		
+		//String trgtKcal = jsonObject.get("trgtKcal").toString();
+		
+		int intTrgtKcal = Integer.parseInt(jsonObject.get("trgtKcal").toString());
+		
+		int battleTerm = Integer.parseInt( jsonObject.get("battleTerm").toString());
+		
+		int battleCate = Integer.parseInt(jsonObject.get("battleCate").toString());
+		
+		//valueOF = Integer
+		//parseInt = int
+		
+		Battle battle = new Battle();
+		
+		battle.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		battle.setBattleItemCate(battleCate);
+		
+		battle.setBattlePeriod(battleTerm);
+		
+		battle.setUserTrgtKcal(intTrgtKcal);
+		battle.setBattleStt(1);
+		
+		communityService.addBattleInter(battle, rivalUserId);
+		 
+		
+	}
 	
 	
 	

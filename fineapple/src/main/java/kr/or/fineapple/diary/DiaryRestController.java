@@ -135,7 +135,7 @@ public class DiaryRestController {
 	}
 	
 	@RequestMapping(value="json/updateUserEvent", method=RequestMethod.POST)
-	public void updateUserEvent(UserEvent userEvent) {
+	public void updateUserEvent(@RequestBody UserEvent userEvent) {
 		diaryService.updateUserEvent(userEvent);
 	}
 	
@@ -144,7 +144,7 @@ public class DiaryRestController {
 		diaryService.updateKeyUserEventStt(userEventNo);
 	}
 	
-	@RequestMapping(value="json/deleteUserEvent/{userEventNo}", method=RequestMethod.POST)
+	@RequestMapping(value="json/deleteUserEvent/{userEventNo}", method=RequestMethod.GET)
 	public void deleteUserEvent(@PathVariable int userEventNo) {
 		diaryService.deleteUserEvent(userEventNo);
 	}

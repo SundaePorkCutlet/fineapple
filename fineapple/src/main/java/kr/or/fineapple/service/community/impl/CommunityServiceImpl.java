@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Alarm;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
@@ -32,8 +33,14 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void addPost(Board board) {
+	public void addPost(Board board, String[] times) {
 		communityMapper.addPost(board);
+		for (String time : times) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("postNo", board.getPostNo() + "");
+			map.put("time", time);
+			communityMapper.addPostImg(map);
+		}
 	}
 
 	@Override
@@ -55,8 +62,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public Map getPost(Board board) {
 		communityMapper.updatePostViewCount(board);
 		Map map = new HashMap();
+		Board boardData = communityMapper.getPost(board);
+		boardData.setImg(communityMapper.getPostImg(board.getPostNo()));
 		map.put("list", communityMapper.getCmntList(board));
-		map.put("board", communityMapper.getPost(board));
+		map.put("board", boardData);
+		//map.put("imgList", communityMapper.getPostImg(board.getPostNo())); // 애초에 board안에 img라는 List를 담아서 줘도 된다 하지만 나는 비교를 해서 할거다.
+		
 		return map;
 	}
 	
@@ -228,6 +239,70 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.addMtmQna(mtmQna);
 		
 	}
+
+
+	
+	//블랙리스트
+	@Override
+	public void addUserBlc(User userId) {
+	
+		communityMapper.addUserBlc(userId);
+		
+	}
+
+	//신고처리 완료
+	@Override
+	public void updateReportStt(Report report) {
+		
+		communityMapper.updateReportStt(report);
+		
+	}
+
+	@Override
+	public void addFqa(MtmQna mtmQna) {
+		
+		communityMapper.addFaq(mtmQna);
+		
+	}
+
+	@Override
+	public void deleteFaq(int mtmQnaNo) {
+		
+		communityMapper.deleteFaq(mtmQnaNo);
+		
+	}
+
+	@Override
+	public User getUserBattle(User user) {
+		// TODO Auto-generated method stub
+		return communityMapper.getUserBattle(user);
+	}
+
+	@Override
+	public void addBattleInter(Battle battle, String rivalUserId) {
+		
+		User rivalUser = new User();
+		
+		rivalUser.setUserId(rivalUserId);
+		
+		rivalUser = communityMapper.getUserBattle(rivalUser);
+		
+		battle.setRivalUser(rivalUser);
+		
+		communityMapper.addBattleInter(battle);
+		
+		
+		
+	}
+
+	@Override
+	public List<Battle> getMybattleInter(Battle battle) {
+		// TODO Auto-generated method stub
+		return communityMapper.getMybattleInter(battle);
+	}
+	
+	
+	
 	
 	
 	

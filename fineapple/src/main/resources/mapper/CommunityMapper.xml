@@ -112,7 +112,31 @@
 	<result property="mtmQnaCntnt" column="mtm_qna_cntnt"/>
 	<result property="mtmAnswrCntntDate" column="mtm_answer_cntnt_date"/>
 	<result property="mtmAnswrCntnt" column="mtm_answer_cntnt"/>
-	<result property="mtmAnswrStt" column="mtm_answer_stt"/>	
+	<result property="mtmAnswrStt" column="mtm_answer_stt"/>
+	<result property="imgName" column="mtm_img"/>	
+	</resultMap>
+	
+	
+	<resultMap type="battle" id="battleMap">
+	<result property="battleNo" column="battle_no"/>
+	<result property="battleResultCate" column="battle_result_cate"/>
+	<result property="battleItemCate" column="battle_item_cate"/>
+	<result property="battleStartDate" column="battle_start_date"/>
+	<result property="battleEndDate" column="battle_end_date"/>
+	<result property="battlePeriod" column="battle_period"/>
+	<result property="userScore" column="user_score"/>
+	<result property="rivalUserScore" column="rival_user_score"/>
+	<result property="battleStt" column="battling_stt"/>
+	<result property="userTrgtKcal" column="user_trgt_kcal"/>
+	<result property="rivalTrgtKcal" column="rival_user_trgt_kcal"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="rivalUser.userId" column="rival_user_id"/>
+	</resultMap>
+	
+	<resultMap type="img" id="imgMap">
+	<result property="imgNo" column="img_no"/>
+	<result property="imgName" column="img_name"/>
+	<result property="postNo" column="post_no"/>
 	</resultMap>
 	
 	<sql id="orderByPostNo">
@@ -193,7 +217,7 @@
 	FROM
 	board b,
 	(SELECT COUNT(*) cmnt_count, c.post_no FROM board b, comments c WHERE b.post_no = c.post_no GROUP BY c.post_no) c,
-	(SELECT b.post_no, SUM(ral.post_no) ssum FROM board b, report_and_like ral WHERE b.post_no = ral.post_no GROUP BY (b.post_no)) sub
+	(SELECT b.post_no, SUM(ral.post_no) ssum FROM board b, report_and_like ral WHERE b.post_no = ral.post_no AND like_stt = 1 GROUP BY (b.post_no)) sub
 	
 	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
 	b.post_no = c.post_no(+)
@@ -523,8 +547,12 @@
 	
 	<!-- //////////////////////////////////////////////////////// -->
 	
-	<update id="addUserBlc">
-	
+	<update id="addUserBlc" parameterType="user" >
+	 UPDATE USERS
+	 SET  BLC_RGS_STT = 1,
+	      BLC_ADD_WHY = #{blcAddWhy:VARCHAR},
+	      BLC_ADD_DATE = SYSDATE
+	 WHERE USER_ID= #{userId}
 	</update>
 	
 	
@@ -627,6 +655,19 @@
 	)
 	</insert>
 	
+	
+	
+	
+	<update id="updateReportStt" parameterType="report" >
+	 UPDATE REPORT_AND_LIKE
+	 SET  REPORT_STT = 1
+	 WHERE USER_ID= #{user.userId}
+	</update>
+	
+	
+	
+
+	
 	<select id="getReportListNotDispose" parameterType="report">
 	SELECT
 	*
@@ -639,12 +680,7 @@
 	
 	</select>
 	
-	<update id="updateReportStt" parameterType="report">
-	UPDATE
-	FROM
-	<trim prefix="SET" suffixOverrides=",">
-	</trim>
-	</update>
+
 	
 	<select id="getUserSearchList" parameterType="search" resultMap="userSelectMap">
 	SELECT
@@ -844,6 +880,7 @@
 	MTM_QNA_CATE,
 	MTM_QNA_TITLE, 
 	MTM_QNA_CNTNT,
+	MTM_IMG,
 	MTM_QNA_DATE
 	) 
 	VALUES 
@@ -853,14 +890,152 @@
 	#{mtmCate}, 
 	#{mtmQnaTitle},  
 	#{mtmQnaCntnt},
+	#{imgName},
 	SYSDATE
 	)
-
-	
 	</insert>
+	
+	
+
+		
+	<insert id="addFaq" parameterType="mtmQna">
+	INSERT INTO MTM_QNA
+	(
+	MTM_QNA_NO, 
+	MTM_QNA_CATE,
+	MTM_QNA_TITLE, 
+	MTM_QNA_CNTNT,
+	MTM_QNA_DATE
+	) 
+	VALUES 
+	(
+	seq_mtm_qna_mtm_qna_no.NEXTVAL, 
+	4, 
+	#{mtmQnaTitle:VARCHAR},  
+	#{mtmQnaCntnt:VARCHAR},
+	SYSDATE
+	)
+	</insert>
+	
+	<delete id="deleteFaq" parameterType="mtmQna">
+	DELETE 
+	FROM MTM_QNA  
+	WHERE  MTM_QNA_NO = ${mtmQnaNo}
+	</delete>
+	
+	
+	
+	
+	 
+	
+	
 	
 	<select id="getMyMtmQna" parameterType="mtmQna" >
 	</select>
+	
+	<select id="getAdminMtmList">
+	</select>
+	
+	<select id="getUserBattle" parameterType="user" resultMap="userSelectMap">
+	SELECT
+	*
+	FROM
+	users
+	<where>
+	user_id = #{userId}
+	</where>
+	
+	</select>
+	
+	<insert id="addBattleInter" parameterType="battle">
+	INSERT INTO battle
+	(
+	battle_no,
+	user_id,
+	rival_user_id,
+	battling_stt,
+	battle_item_cate,
+	user_trgt_kcal,
+	battle_period
+	)
+	VALUES
+	(
+	seq_battle_battle_no.NEXTVAL,
+	#{user.userId},
+	#{rivalUser.userId},
+	#{battleStt},
+	#{battleItemCate},
+	#{userTrgtKcal},
+	#{battlePeriod}
+	)
+	
+	</insert>
+	
+	<select id="getMybattleInter" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	<if test="rivalUser == null">
+	user_id = #{user.userId}
+	</if>
+	<if test="rivalUser != null">
+	rival_user_id = #{rivalUser.userId}
+	</if>
+	AND
+	battling_stt = #{battleStt}
+	</where>
+	</select>
+	
+	<select id="getMybattle" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	(user_id = #{user.userId}
+	OR
+	rival_user_id = #{user.userId})
+	AND
+	battling_stt IN (2,3)
+	<!-- <foreach collection="battleStt" open="(" close=")" separator="," item="value">
+	#{value}
+	</foreach> -->
+	</where>
+	</select>
+	
+	
+	<insert id="addPostImg" parameterType="Map">
+	INSERT
+	INTO
+	board_img
+	(
+	img_no,
+	post_no,
+	img_name
+	)
+	VALUES
+	(
+	seq_board_img_board_img_no.NEXTVAL,
+	#{postNo},
+	#{time}
+	)
+	
+	
+	</insert>
+	
+	<select id="getPostImg" parameterType="int" resultMap="imgMap">
+	SELECT
+	*
+	FROM
+	board_img
+	<where>
+	post_no = #{value}
+	</where>
+	ORDER BY img_no
+	</select>
+	
 	
 	
 	

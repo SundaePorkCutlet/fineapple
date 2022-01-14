@@ -126,19 +126,6 @@
 											
 											
 											
-											<!--begin::Follow-->
-											<a href="#" class="btn btn-sm btn-light" th:onClick ="javascript:fnGetUser()">
-											<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-											<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-													<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-												</svg>
-											</span>
-											<!--end::Svg Icon-->Ban</a>
-											<!--end::Follow-->
-											
-											
 											
 											
 										</span>
@@ -177,15 +164,14 @@
 		
 		
 		function fcAddBattleView(no, cateNo){
-			var data = { "No" : no,
-						"cate" : cateNo};
+			var data = { "userId" : $("#userId").text()};
 			console.log("안녕");
 			$.ajax({
 				url: "/community/addBattleView", //url : 요청 Url
 				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
 				dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
-				data: data, //요청과 함께 서버로 데이터를 전송 할 string 또는 map
-				contentType: "text/html", // 서버에 보내는 데이터의 타입이다.
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
 				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 					console.log("성공" + data);
 					

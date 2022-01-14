@@ -390,7 +390,7 @@
                                         </a>
                                     </div>
                                       <div class="menu-item">
-                                        <a class="menu-link" th:href="@{../community/faq}">
+                                        <a class="menu-link" th:href="@{../community/getFaq}">
 
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
@@ -433,7 +433,8 @@
                                             <span class="menu-title" th:onClick="|location.href='@{../user/updateUserLeave?(userId=${session.user.userId})}'|" >회원탈퇴</span>
                                         </a>
                                     </div>
-                                    <div class="menu-item">
+
+                                    <div class="menu-item" th:if="${session.user.password} != kakaopassword">
                                         <a class="menu-link" >
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
@@ -594,10 +595,10 @@
                 <!--begin::Header-->
                 <div id="kt_header" th:attr="data-session=${session.user}" style="" class="header align-items-stretch">
                     <!--begin::Brand-->
-                    <div class="header-brand">
+                    <div class="header-brand" >
                         <!--begin::Logo-->
-                        <img alt="Logo" src="../assets/img/logo.png" class="logo"/>
-                        <a href="../" style="text-decoration:none; color:black;"><p class="logo-typo">FineApple</p></a>
+                        
+                        <a href="../" style="text-decoration:none; color:black;"><img alt="Logo" src="../assets/img/banner.png" style="max-width:100%;max-height:100%;" class="banner"/></a>
                         <!--end::Logo-->
                         <!--begin::Aside toggle-->
                         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
@@ -621,7 +622,7 @@
                             <!--begin::Page title-->
                             <div class="page-title d-flex flex-column me-5">
                                 <!--begin::Title-->
-                                <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0">Dashbaord</h1>
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0" th:text="${NavName2}"></h1>
                                 <!--end::Title-->
                                 <!--begin::Breadcrumb-->
                                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -636,7 +637,7 @@
                                     </li>
                                     <!--end::Item-->
                                     <!--begin::Item-->
-                                    <li class="breadcrumb-item text-muted">Dashboards</li>
+                                    <li class="breadcrumb-item text-muted"  th:text="${NavName1}"></li>
                                     <!--end::Item-->
                                     <!--begin::Item-->
                                     <li class="breadcrumb-item">
@@ -644,7 +645,7 @@
                                     </li>
                                     <!--end::Item-->
                                     <!--begin::Item-->
-                                    <li class="breadcrumb-item text-dark">Default</li>
+                                    <li class="breadcrumb-item text-dark"  th:text="${NavName2}"></li>
                                     <!--end::Item-->
                                 </ul>
                                 <!--end::Breadcrumb-->
