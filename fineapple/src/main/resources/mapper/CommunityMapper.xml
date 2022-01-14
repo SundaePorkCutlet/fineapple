@@ -116,6 +116,23 @@
 	<result property="imgName" column="mtm_img"/>	
 	</resultMap>
 	
+	
+	<resultMap type="battle" id="battleMap">
+	<result property="battleNo" column="battle_no"/>
+	<result property="battleResultCate" column="battle_result_cate"/>
+	<result property="battleItemCate" column="battle_item_cate"/>
+	<result property="battleStartDate" column="battle_start_date"/>
+	<result property="battleEndDate" column="battle_end_date"/>
+	<result property="battlePeriod" column="battle_period"/>
+	<result property="userScore" column="user_score"/>
+	<result property="rivalUserScore" column="rival_user_score"/>
+	<result property="battleStt" column="battling_stt"/>
+	<result property="userTrgtKcal" column="user_trgt_kcal"/>
+	<result property="rivalTrgtKcal" column="rival_user_trgt_kcal"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="rivalUser.userId" column="rival_user_id"/>
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -947,6 +964,40 @@
 	)
 	
 	</insert>
+	
+	<select id="getMybattleInter" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	<if test="rivalUser == null">
+	user_id = #{user.userId}
+	</if>
+	<if test="rivalUser != null">
+	rival_user_id = #{rivalUser.userId}
+	</if>
+	AND
+	battling_stt = #{battleStt}
+	</where>
+	</select>
+	
+	<select id="getMybattle" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	(user_id = #{user.userId}
+	OR
+	rival_user_id = #{user.userId})
+	AND
+	battling_stt IN (2,3)
+	<!-- <foreach collection="battleStt" open="(" close=")" separator="," item="value">
+	#{value}
+	</foreach> -->
+	</where>
+	</select>
 	
 	
 	

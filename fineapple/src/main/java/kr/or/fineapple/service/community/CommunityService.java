@@ -82,4 +82,6 @@ public interface CommunityService {
 	public User getUserBattle(User user);
 	
 	public void addBattleInter(Battle battle, String rivalUserId);
+	
+	public List<Battle> getMybattleInter(Battle battle);
 }
