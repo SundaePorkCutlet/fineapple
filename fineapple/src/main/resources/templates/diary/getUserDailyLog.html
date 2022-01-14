@@ -949,36 +949,49 @@
 					$("input[name=user_event_date]").val(userEvent.eventDate);
 					$("#kt_modal_update_event").modal("show");
 					
+					
+					/* 사용자 이벤트 수정 */
+					$("#kt_modal_update_event_submit").on("click",function(){
+						var userEventNo = $("input[name=user_event_no]").val();
+						var eventTitle = $("input[name=user_event_title]").val();
+						var eventCntnt = $("textarea[name=user_event_cntnt]").val();
+
+						$.ajax({
+							url: "/diary/json/updateUserEvent",
+							type: "POST",
+							data: JSON.stringify({userEventNo : userEventNo,
+												eventTitle: eventTitle,
+												eventCntnt: eventCntnt}
+												),
+							contentType: "application/json"
+						}).done(function(){
+							$("#kt_modal_update_event").modal("hide");
+						})
+						
+					});//updateUserEvent
+					
+					
+					/* 사용자 이벤트 삭제 */
+					$("#kt_modal_delete_event_submit").on("click",function(){
+						var userEventNo = $("input[name=user_event_no]").val();
+
+						$.ajax({
+							url: "/diary/json/deleteUserEvent/"+userEventNo,
+							type: "GET",
+							contentType: "application/json"
+						}).done(function(){
+							$("#kt_modal_update_event").modal("hide");
+						})
+						
+					});//deleteUserEvent
+					
 				})//getUserEvent
 			});//click event
 
 			/* 사용자 이벤트 수정 모달 닫기 */
 			$("#kt_modal_update_event_close").on("click",function(){
-				$("#kt_modal_add_event").modal("hide");
+				$("#kt_modal_update_event").modal("hide");
 			});
-			
-			/* 사용자 이벤트 수정 */
-			$("#kt_modal_update_event_submit").on("click",function(){
-				var userEventNo = $("input[name=user_event_no]").val();
-				var eventTitle = $("input[name=user_event_title]").val();
-				var eventCntnt = $("textarea[name=user_event_cntnt]").val();
-				
-				console.log(eventDate);
-				
-				$.ajax({
-					url: "/diary/json/updateUserEvent",
-					type: "POST",
-					data: JSON.stringify({userEventNo : userEventNo,
-										eventTitle: eventTitle,
-										eventCntnt: eventCntnt}
-										),
-					contentType: "application/json"
-				}).done(function(){
-					$("#kt_modal_add_event").modal("hide");
-				})
-				
-			});
-			
 			
 			
 		});
