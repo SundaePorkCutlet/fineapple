@@ -51,12 +51,35 @@
 				<span id="kt_typedjs_example_1" class="fs-1 fw-bolder"></span>
 				
 				<br>
-				
-				 <iframe width="50%" height="200%"
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+	<!-- 			<div align="right">  
+				 <iframe width="60%" height="200%"
                th:src=${exer.exerLink}
                frameborder="0" ></iframe>
                
-		<div data-text-content="true" style="font-weight:bold;font-size:32px;" class="" align="center" th:text=${exer.exerName}></div>
+		<div data-text-content="true" style="font-weight:bold;font-size:32px;" class=""  th:text=${exer.exerName}></div>
+      </div> -->
+  <div align="right">  
+      <div class="card shadow-sm" style=" width: 50%; ">
+    <div class="card-header">
+        <h3 class="card-title" style="font-weight:bold;font-size:32px;"  th:text=${exer.exerName} ></h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+    <div class="card-body">
+        <iframe width="80%" height="350"
+               th:src=${exer.exerLink}
+               frameborder="0" ></iframe>
+    </div>
+    
+</div>
+      </div>
+      
       
 			</div>
 		</div>
