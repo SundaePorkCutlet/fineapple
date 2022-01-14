@@ -90,7 +90,7 @@
         </div>
 		
         <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
-        <th:block th:each="num : ${#numbers.sequence(1,5)}">
+        <div th:each="num : ${#numbers.sequence(1,5)}">
             <div class="col-md-6 col-xxl-4">
                 <div class="card">
                     <div class="btn-sm battle-progress">진행중</div>
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            </th:block>
+            </div>
             
             <!-- <div class="col-md-6 col-xxl-4">
                 <div class="card">

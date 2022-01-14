@@ -354,6 +354,7 @@ public class CommunityRestController {
 		battle.setBattlePeriod(battleTerm);
 		
 		battle.setUserTrgtKcal(intTrgtKcal);
+		battle.setBattleStt(1);
 		
 		communityService.addBattleInter(battle, rivalUserId);
 		 

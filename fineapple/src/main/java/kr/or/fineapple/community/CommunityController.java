@@ -1,4 +1,4 @@
-package kr.or.fineapple.community;
+ package kr.or.fineapple.community;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -29,9 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
@@ -69,6 +69,8 @@ public class CommunityController {
 		
 		List<Board> list = communityService.getPostList();
 		
+		
+		
 		model.addAttribute("list", list);
 		
 		
@@ -81,7 +83,11 @@ public class CommunityController {
 		
 		User usersys = (User)request.getSession(true).getAttribute("user");
 		
+		
+		
 		System.out.println(usersys);
+		
+		
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
 		
@@ -108,9 +114,11 @@ public class CommunityController {
 	
 
 	@PostMapping(value = "addPost")
-	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request) {
+	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam("mtmFile") MultipartFile files) {
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
+		
+		board.setGroup(group);
 			
 		communityService.addPost(board);
 		
@@ -306,22 +314,59 @@ public class CommunityController {
 
 	// 승부 받은 리스트
 	@GetMapping("getBattleReceiveList")
-	public String getBattleReceiveList(){
+	public String getBattleReceiveList(HttpServletRequest request, Model model){
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		Battle battle = new Battle();
+		
+		battle.setRivalUser(user);
+		
+		battle.setBattleStt(1);
+		
+		
+		List<Battle> list = communityService.getMybattleInter(battle);
+		
+		model.addAttribute("list", list);
+		
+		for (Battle battle2 : list) {
+			System.out.println(battle2);
+		} 
+		
 		return "community/getBattleReceiveList.html";
 	}
 
 	// 승부 보낸 리스트
 	@GetMapping("getBattleRequestList")
-	public String getBattleRequestList(){
-		return "community/getBattleRequestList.html";
-	}
-
-	@GetMapping("getBattleList")
-	public String getBattleList(HttpServletRequest request){
+	public String getBattleRequestList(HttpServletRequest request, Model model){
+		
+		
 		User user = new User();
 		
 		user = (User)request.getSession(true).getAttribute("user");
 		
+		Battle battle = new Battle();
+		
+		battle.setUser(user);
+		
+		battle.setBattleStt(1);
+		
+		
+		List<Battle> list = communityService.getMybattleInter(battle);
+		
+		model.addAttribute("list", list);
+		
+		for (Battle battle2 : list) {
+			System.out.println(battle2);
+		} 
+		
+		return "community/getBattleRequestList.html";
+	}
+
+	@GetMapping("getBattleList")
+	public String getBattleList(HttpServletRequest request, Model model){
 		
 		
 		return "community/getBattleList.html";
@@ -586,89 +631,37 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	@PostMapping(value = "updateReportStt")
-	public String updateReportStt(HttpServletRequest request, Model model) throws Exception {
-		
-		System.out.println("updateReportStt");
-		  	 	 
-		User user = (User)request.getSession(true).getAttribute("user");
-		
-		Report report = new Report();
-	
-		report.setUser(user);
-		
-		communityService.updateReportStt(report);
-		
-		model.addAttribute("report", report);
-		model.addAttribute("user", user);
-		
-		return "redirect:../community/getReportList";
-		
-		
+//	@GetMapping("getMtmList")
+//	public String getMtmList(HttpServletRequest request, Model model) {
+//		
+//		User user = (User)request.getSession(true).getAttribute("user");
+//		
+//		List<MtmQna> list = communityService.getMtmList(user);
+//		
+//		for (MtmQna mtmQna : list) {
+//			System.out.println(mtmQna);
+//		}
+//		
+//		model.addAttribute("list", list);
+//		
+//		
+//		
+//		
+//		return "community/getMtmList.html";
+//	}
+//	
 
-	}
+
 	
 
 	
-	@GetMapping("getAddFaq")
-	public String getAddFaq( Model model) throws Exception {
-		
-		
-		System.out.println("getAddFaq");
-		
-		
-		return "community/addFaq.html";	
-		
-	}
-
-
-
-	@PostMapping("postAddFaq")
-	public String postAddFaq(@ModelAttribute("faq") MtmQna mtmQna , Model model) throws Exception {
-		
-		MtmQna mtmQna1 = new MtmQna();
-		
-		System.out.println("postAddFaq");
-		
-		
-		//mtmQna1.setMtmQnaTitle(mtmQna.getMtmQnaTitle());
-		//mtmQna1.setMtmQnaCntnt(mtmQna.getMtmQnaCntnt());
-		
-		communityService.addFqa(mtmQna);
-		
-		System.out.println(mtmQna);
-		
-				
-		model.addAttribute("mtmQna", mtmQna);
-		
-		
-		return "redirect:../community/faq";	
-		
-	}
-
 	
-	@PostMapping("deleteFaq")
-	public String deleteFaq(Model model, @ModelAttribute("mtmQna") MtmQna mtmQna,
-							HttpServletRequest request) throws Exception {
-		
-		
-		System.out.println("deleteFaq");
-		
-		communityService.deleteFaq(mtmQna.getMtmQnaNo());
-		
-		
-		model.addAttribute("mtmQna", mtmQna);
-		
-		
-		return "redirect:../community/faq";
-	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

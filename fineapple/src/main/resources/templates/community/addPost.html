@@ -10,7 +10,7 @@
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 								<div class="card-body">
 										<!--begin::Form-->
-										<form action="/community/addMtm" method="POST" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework"  id="kt_contact_form" enctype="multipart/form-data" >
+										<form action="/community/addPost" method="POST" class="form mb-15 fv-plugins-bootstrap5 fv-plugins-framework"  id="kt_contact_form" enctype="multipart/form-data" >
 										<!-- enctype="multipart/form-data" 란?
 										위와 같은 코드를 php 에서 업로드할때 폼 양식에서 볼수 있다
 										다들 위와 같은 코드를 아무 생각없이 그냥 파일 업로드하는거니까 써줘야 하는거야 이렇게알고 있는 사람들이 많다.
@@ -35,7 +35,7 @@
 												<label class="fs-5 fw-bold mb-2">게시글 제목</label>
 												<!--end::Label-->
 												<!--begin::Input-->
-												<input name = "postT" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
+												<input name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
 												<!--end::Input-->
 											</div>
 											<div class="mb-3">
@@ -49,7 +49,7 @@
 											<!--begin::Input group-->
 											<div class="d-flex flex-column mb-10 fv-row fv-plugins-icon-container">
 												<label class="fs-6 fw-bold mb-2">게시글 내용</label>
-												<textarea name = "postCntnt" class="form-control form-control-solid" rows="6" placeholder="게시글 내용을 입력해주세요"></textarea>
+												<textarea name = "content" class="form-control form-control-solid" rows="6" placeholder="게시글 내용을 입력해주세요"></textarea>
 											<div class="fv-plugins-message-container invalid-feedback"></div></div>
 											<!--end::Input group-->
 											<!--begin::Submit-->

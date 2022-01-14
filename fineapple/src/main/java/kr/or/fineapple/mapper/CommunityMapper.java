@@ -109,6 +109,8 @@ public interface CommunityMapper {
 	
 	public void deleteFaq(int mtmQnaNo);
 	
+
+	
 	
 	//블랙리스트
 	public void addUserBlc(User userId);
@@ -117,5 +119,8 @@ public interface CommunityMapper {
 	public User getUserBattle(User user);
 	
 	public void addBattleInter(Battle battle);
+	
+	public List<Battle> getMybattleInter(Battle battle);
+	
 	
 }

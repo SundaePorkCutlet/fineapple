@@ -281,7 +281,17 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		communityMapper.addBattleInter(battle);
 		
+		
+		
 	}
+
+	@Override
+	public List<Battle> getMybattleInter(Battle battle) {
+		// TODO Auto-generated method stub
+		return communityMapper.getMybattleInter(battle);
+	}
+	
+	
 	
 	
 	
