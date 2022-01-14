@@ -97,7 +97,7 @@
 	</select>
 	
 	<!-- SELECT ONE : 사용자이벤트 조회 -->
-	<select id="getUserEvent" resultType="UserEvent">
+	<select id="getUserEvent" resultMap="UserEventMap">
 	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
 	FROM user_event
 	WHERE user_event_no = #{userEventNo:INTEGER}
