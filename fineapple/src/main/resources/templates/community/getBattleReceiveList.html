@@ -3,7 +3,14 @@
 <meta charset="utf-8">
 <!-- 공통 header -->
 <th:block th:replace="layout/fragments/header.html :: header"></th:block>
-
+<style>
+    #swal2-html-container{
+        overflow-x: hidden;
+    }
+    .text-left{
+        text-align: left;
+    }
+</style>
 <!--begin::Body-->
 <body id="kt_body" class="aside-enabled">
 <!-- 공통 SideBar -->
@@ -326,6 +333,40 @@
         $(".btn-accept").click(function (e) {
             e.preventDefault();
 
+            // Swal.fire({
+            //     title: '목표 칼로리를 입력해주세요.',
+            //     input: 'text',
+            //     inputAttributes: {
+            //         autocapitalize: 'off'
+            //     },
+            //     showCancelButton: true,
+            //     confirmButtonText: 'Look up',
+            //     showLoaderOnConfirm: true,
+            //     preConfirm: (login) => {
+            //         return fetch(`//api.github.com/users/${login}`)
+            //             .then(response => {
+            //                 if (!response.ok) {
+            //                     throw new Error(response.statusText)
+            //                 }
+            //                 return response.json()
+            //             })
+            //             .catch(error => {
+            //                 Swal.showValidationMessage(
+            //                     `Request failed: ${error}`
+            //                 )
+            //             })
+            //     },
+            //     allowOutsideClick: () => !Swal.isLoading()
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         Swal.fire({
+            //             title: `${result.value.login}'s avatar`,
+            //             imageUrl: result.value.avatar_url
+            //         })
+            //     }
+            // })
+
+
             let swalWithBootstrapButtons = Swal.mixin({
                 confirmButtonText:"닫기",
                 customClass: {
@@ -335,13 +376,21 @@
                 buttonsStyling: false
             })
 
+            let html_ = '';
+            html_ += '승부를 수락하시겠습니까?';
+            html_ += '<div class="row mb-5 mt-5 pt-5">';
+            html_ += '<div class="col-md-12 fv-row text-left">';
+            html_ += '<label class="required fs-6 fw-bold mb-2">나의 목표 칼로리</label>';
+            html_ += '<input type="text" class="form-control form-control-solid" placeholder="" name="kcal" id="kcal" inputmode="text">';
+            html_ += '</div>';
+            html_ += '</div>';
             Swal.fire({
-                html: "승부 신청을 수락하시겠습니까?",
+                html: html_,
                 icon: "question",
                 buttonsStyling: false,
                 showCancelButton: true,
-                confirmButtonText: "예",
-                cancelButtonText: "아니오",
+                confirmButtonText: "수락",
+                cancelButtonText: "닫기",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: 'btn btn-danger'
@@ -349,6 +398,10 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // 예 클릭
+                    console.log($("#kcal").val());
+
+                    // 서버에 수락 요청
+
                     swalWithBootstrapButtons.fire(
                         '수락되었습니다',
                         '',
