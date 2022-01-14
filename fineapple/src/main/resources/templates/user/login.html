@@ -155,7 +155,8 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                               url :"/user/addUser/rest",
                               data :JSON.stringify({userId : user.userId,
                                     gender : user.gender,
-                                    password : "kakaopassword"}),
+                                    password : "kakaopassword"}
+                              		),
                               accept:"application/json",
                               contentType : "application/json",
                            }).done(function(user){

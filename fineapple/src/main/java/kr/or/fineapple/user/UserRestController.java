@@ -84,10 +84,11 @@ public class UserRestController {
 		return list;
 	}
 	@RequestMapping(value="addUser/rest",method = RequestMethod.POST)
-	public User addUser(@RequestBody User user){
+	public User addUser(@RequestBody User user) throws Exception{
 		System.out.println("UserController:addUser/rest");
 		//session.setAttribute("user", user);
 		System.out.println(user);
+		//user.setKakaoStt(1);
 		return user;
 	}
 	
@@ -108,6 +109,21 @@ public class UserRestController {
 		
 	}
 	
+	@RequestMapping(value="kakaoStt",method=RequestMethod.POST)
+	public String kakaoStt(@RequestBody User user)throws Exception{
+		
+		System.out.println("kakaoStt비교 입장");
+		
+		user.setUserId(user.getUserId());
+		
+		String result = userService.kakaoStt(user);
+		
+		System.out.println(result);
+		
+		
+		return result;
+		
+	}
 	@RequestMapping(value = "checkPassword/rest", method=RequestMethod.POST)
 	public String checkPassword(@RequestBody User user) throws Exception{
 		System.out.println("비밀번호 확인창 입장");
@@ -121,6 +137,7 @@ public class UserRestController {
 	}
 	
 
+	
 	@RequestMapping(value = "checkDuplication/kakao",method = RequestMethod.POST)
 	public Map<String,Object> kakaocheckDuplication(@RequestBody User user) throws Exception{
 		System.out.println("checkDuplicationKakao");
@@ -132,12 +149,15 @@ public class UserRestController {
 		String result = userService.checkDuplication(user);
 		
 		
-		  Map<String, Object> map = new HashMap<>(); map.put("result", result);
+		  Map<String, Object> map = new HashMap<>(); 
+		  map.put("result", result);
 		  map.put("user", user);
 		 
 		return map;
 		
 	}
+	
+	
 	
 	
 	@RequestMapping(value="addUser/kakao", method= RequestMethod.POST)

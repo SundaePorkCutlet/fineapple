@@ -32,5 +32,7 @@ public interface UserMapper{
 		
 		public void changePassword(User user) throws Exception;
 		
+		public String kakaoStt(User user) throws Exception;
+		
 	}
 

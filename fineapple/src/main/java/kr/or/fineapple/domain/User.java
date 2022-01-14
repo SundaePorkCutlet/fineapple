@@ -35,6 +35,7 @@ public class User {
 	Double trgtBodyFat;
 	Double trgtBodyMuscle;
 	String serviceTrgt;
+	int kakaoStt;
 	
 	public User() {
 		System.out.println("User 도메인 객체 생성함");

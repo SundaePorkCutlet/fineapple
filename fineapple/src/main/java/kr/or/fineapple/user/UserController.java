@@ -130,7 +130,8 @@ public class UserController {
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		if(user.getPassword() == null) {
-			user.setPassword("kakaopassword");			
+			user.setPassword("kakaopassword");
+			user.setKakaoStt(1);
 		}
 		if(!file.getOriginalFilename().isEmpty()) {
 			System.out.println("if문 입장");
