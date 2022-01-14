@@ -525,44 +525,78 @@
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9" th:unless="${#lists.size(userEventList) == 0}">
 												<!--begin::Row-->
-												<div class="row row-cols-1 row-cols-lg-3 g-9" th:if="${#lists.size(userEventList) <= 3}">
-													<th:block th:each="event, i :${userEventList}">
+												<div class="row row-cols-1 row-cols-lg-3 g-9" th:if="${#lists.size(userEventList) >= 1}">
 													<!--begin::Col-->
-													<div class="col">
+													<div class="col" th:if="${#lists.size(userEventList) >= 1}">
 														<!--begin::Card-->
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
-																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${event.keyEventStt == 0}">대표</div>
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[0].eventTitle}" th:data-target="${userEventList[0].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}">대표</div>
 															</div>
-															<div class="card-body" th:text="|${event.eventCntnt}|"></div>
+															<div class="card-body" th:text="|${userEventList[0].eventCntnt}|"></div>
 														</div>
 														<!--end::Card-->
 													</div>
 													<!--end::Col-->
-													</th:block>
+													<!--begin::Col-->
+													<div class="col" th:if="${#lists.size(userEventList) >= 2}">
+														<!--begin::Card-->
+														<div class="card card-bordered">
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[1].eventTitle}" th:data-target="${userEventList[1].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}">대표</div>
+															</div>
+															<div class="card-body" th:text="|${userEventList[1].eventCntnt}|"></div>
+														</div>
+														<!--end::Card-->
+													</div>
+													<!--end::Col-->
+													<!--begin::Col-->
+													<div class="col" th:if="${#lists.size(userEventList) >= 3}">
+														<!--begin::Card-->
+														<div class="card card-bordered">
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[2].eventTitle}" th:data-target="${userEventList[2].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}">대표</div>
+															</div>
+															<div class="card-body" th:text="|${userEventList[2].eventCntnt}|"></div>
+														</div>
+														<!--end::Card-->
+													</div>
+													<!--end::Col-->
 												</div>
 												<!--end::Row-->
 												<!--begin::Row-->
 												<div class="row row-cols-1 row-cols-lg-3 g-9" th:if="${#lists.size(userEventList) >= 4}">
-													<th:block th:each="event, i :${userEventList}">
-													<!--begin::Col-->
-													<div class="col" th:style="${i.count <= 3}? 'hidden:hidden' : 'visible:visible'">
-														<!--begin::Card-->
+													<!-- begin::Col -->
+													<div class="col" th:if="${#lists.size(userEventList) >= 4}">
+														<!-- begin::Card -->
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
-																<div class="card-title test-script cursor-pointer" th:text="${event.eventTitle}" th:data-target="${event.userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${event.keyEventStt == 0}">대표</div>
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[3].eventTitle}" th:data-target="${userEventList[3].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}">대표</div>
 															</div>
-															<div class="card-body" th:text="|${event.eventCntnt}|"></div>
+															<div class="card-body" th:text="|${userEventList[3].eventCntnt}|"></div>
 														</div>
-														<!--end::Card-->
+														<!-- end::Card -->
 													</div>
-													<!--end::Col-->
-													</th:block>
+													<!-- end::Col -->
+													<!-- begin::Col -->
+													<div class="col" th:if="${#lists.size(userEventList) >= 5}">
+														<!-- begin::Card -->
+														<div class="card card-bordered">
+															<div class="card-header ribbon ribbon-end">
+																<div class="card-title test-script cursor-pointer" th:text="${userEventList[4].eventTitle}" th:data-target="${userEventList[4].userEventNo}"></div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}">대표</div>
+															</div>
+															<div class="card-body" th:text="|${userEventList[4].eventCntnt}|"></div>
+														</div>
+														<!-- end::Card -->
+													</div>
+													<!-- end::Col -->
 												</div>
 												<!--end::Row-->
-												
 											</div>
 											<!--end::Card body-->
 										</div>
@@ -636,8 +670,6 @@
 								</div>
 								<!--end::Aside-->
 							</div>
-							
-							
 							<!--begin::Modals-->
 							<!--begin::Modal - New Product-->
 							<div class="modal fade" id="kt_modal_add_event" tabindex="-1" aria-hidden="true">
@@ -760,7 +792,7 @@
 													<label class="fs-6 fw-bold required mb-2">나의 이벤트 제목</label>
 													<!--end::Label-->
 													<!--begin::Input-->
-													<input type="text" class="form-control form-control-solid" name="user_event_title">
+													<input type="text" class="form-control form-control-solid" id="user_event_title" name="user_event_title">
 													<input type="hidden" name="user_event_no"/>
 													<!--end::Input-->
 												<div class="fv-plugins-message-container invalid-feedback"></div></div>
@@ -771,7 +803,7 @@
 													<label class="fs-6 fw-bold required mb-2">나의 이벤트 내용</label>
 													<!--end::Label-->
 													<!--begin::Input-->
-													<textarea class="form-control form-control-solid" name="user_event_cntnt"></textarea>
+													<textarea class="form-control form-control-solid" id="user_event_cntnt" name="user_event_cntnt"></textarea>
 													<!--end::Input-->
 												</div>
 												<!--end::Input group-->
@@ -814,7 +846,6 @@
 							</div>
 							<!--end::Modal - Update Product-->
 							<!--end::Modals-->
-							
 						</div>
 						<!--end::Container-->
 					</div>
@@ -842,30 +873,12 @@
 		var supper = [[${supper}]];
 		var burnningRecordList = [[${burnningRecordList}]];
 		
-		console.log(date);
-		
-		console.log(trgtHabitList);
-		console.log(badgeCount);
-		console.log(dailyRecord);
-		console.log(totalRecord);
-		console.log(userServ);
-		console.log(achievement);
-		console.log(breakfast);
-		console.log(lunch);
-		console.log(lunch[0]);
-		console.log(lunch[0].food);
-		console.log(lunch[0].food.foodName);
-		console.log(dinner);
-		console.log(snack);
-		console.log(supper);
-		console.log(burnningRecordList);
-		
+		console.log(date);	
 		
 		$(function() {
          
 			/* ///////////////////Date Picker/////////////////// */
 
-	         
 	        $("#kt_daterangepicker_3").daterangepicker({
 				singleDatePicker: true,
 				showDropdowns: true,
@@ -883,12 +896,7 @@
 				
 				$.ajax({
 				    url: "/diary/getUserDailyLog?date="+endDate,
-				    type: "GET",
-				    data: JSON.stringify({userId : [[${session.user.userId}]],
-				                 startDate : endDate,
-				                 endDate : endDate}
-				                   ),
-				    contentType: "application/json"
+				    type: "GET"
 				 }).done(function(info){
 				  self.location = "/diary/getUserDailyLog?date="+info.date;
 				 })
@@ -954,7 +962,11 @@
 					$("#kt_modal_update_event_submit").on("click",function(){
 						var userEventNo = $("input[name=user_event_no]").val();
 						var eventTitle = $("input[name=user_event_title]").val();
-						var eventCntnt = $("textarea[name=user_event_cntnt]").val();
+						var eventCntnt = $("input[name=user_event_cntnt]").val();
+						
+						console.log(userEventNo);
+						console.log(eventTitle);
+						console.log(eventCntnt);
 
 						$.ajax({
 							url: "/diary/json/updateUserEvent",
