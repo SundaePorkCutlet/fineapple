@@ -49,47 +49,90 @@ public class ExerController {
 
 
 	
-@GetMapping("addUserService")
-public String addUserService(HttpServletRequest request,Model model) throws Exception  {
-	
-    System.out.println("get: addUserService");
+	/*
+	 * @GetMapping("addUserService") public String addUserService(HttpServletRequest
+	 * request,Model model) throws Exception {
+	 * 
+	 * System.out.println("get: addUserService");
+	 * 
+	 * User user =(User)request.getSession(true).getAttribute("user"); user =
+	 * userService.getUser(user.getUserId()); System.out.println(user);
+	 * 
+	 * ExerServ serv = exerService.getUserService(user.getUserId());
+	 * 
+	 * System.out.println(serv);
+	 * 
+	 * if (serv != null) { if(serv.getUserServiceNo()!=0) {
+	 * 
+	 * model.addAttribute("user",user); model.addAttribute("exerServ",serv);
+	 * model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/getUserService.html";
+	 * 
+	 * }else { model.addAttribute("user",user);
+	 * model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/addUserService.html"; } }
+	 * 
+	 * model.addAttribute("user",user); model.addAttribute("NavName1","운동관리");
+	 * model.addAttribute("NavName2","운동 서비스 활성화");
+	 * 
+	 * return "exer/addUserService.html"; }
+	 */
+
+
+	@GetMapping("addUserService")
+	public String addUserService(HttpServletRequest request,Model model) throws Exception  {
 		
-		User user =(User)request.getSession(true).getAttribute("user");
-		user = userService.getUser(user.getUserId());
-		System.out.println(user);
-	
-		ExerServ serv = exerService.getUserService(user.getUserId());
+	    System.out.println("get: addUserService");
+
+
+		if((User)request.getSession(true).getAttribute("user")!=null) {
+			
+			User user =(User)request.getSession(true).getAttribute("user");
+			
+			System.out.println(user);
 		
-		System.out.println(serv);
-		
-		if (serv != null) {
-				if(serv.getUserServiceNo()!=0) {
-		
-					model.addAttribute("user",user);
-					model.addAttribute("exerServ",serv);
-					model.addAttribute("NavName1","운동관리");
-					model.addAttribute("NavName2","운동 서비스 활성화");
+			ExerServ serv = exerService.getUserService(user.getUserId());
+			
+			System.out.println(serv);
+			
+			if(serv!=null) {
+					if(serv.getUserServiceNo()!=0) {
+			
+						model.addAttribute("user",user);
+						model.addAttribute("exerServ",serv);
+						model.addAttribute("NavName1","운동관리");
+						model.addAttribute("NavName2","운동 서비스 활성화");
+						
+						return "exer/getUserService.html";
+						
+						}else {
+							
+							model.addAttribute("NavName1","운동관리");
+							model.addAttribute("NavName2","운동 서비스 활성화");
+							
+							return "exer/addUserService.html";
+							
+							}
 					
-					return "exer/getUserService.html";
-					
+			}else {
+				model.addAttribute("user",user);
+				model.addAttribute("NavName1","운동관리");
+				model.addAttribute("NavName2","운동 서비스 활성화");
+				
+				
+				return "exer/addUserService.html";}
+			
 		}else {
-			model.addAttribute("user",user);
-			model.addAttribute("NavName1","운동관리");
-			model.addAttribute("NavName2","운동 서비스 활성화");
 			
-			return "exer/addUserService.html";
-		}
-		}
-	
-			model.addAttribute("user",user);
-			model.addAttribute("NavName1","운동관리");
-			model.addAttribute("NavName2","운동 서비스 활성화");
+			return "user/login";
 			
-			return "exer/addUserService.html";
+		}
+		
 	}
-
-
-
     
 @PostMapping("addUserService")
 public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
@@ -109,6 +152,10 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 		exerService.addUserService(serv);
 		
 		}
+	
+
+	serv = exerService.getUserService(userId);
+	
 	
 	System.out.println(serv.getUserServiceNo());
 	serv.setExerServiceNo(serv.getUserServiceNo());
