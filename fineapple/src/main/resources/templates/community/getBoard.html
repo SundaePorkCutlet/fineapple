@@ -12,7 +12,11 @@
 
 <style>
 
-.content { display: inline-block; width: 200px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
+th, td {
+  text-align: center;
+}
+
+.content { display: inline-block; width: 300px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
 
 </style>
 		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
@@ -111,73 +115,40 @@
 													<tr><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Checkbox: activate to sort column ascending" style="width: 0px;">Checkbox</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 0px;">Actions</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Author: activate to sort column ascending" style="width: 0px;">Author</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 0px;">Title</th><th class="sorting" tabindex="0" aria-controls="kt_inbox_listing" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th></tr>
 												</thead>
 												<!--end::Table head-->
+												</table>
 												
 												
 												
 												
-												
-												
-												
+												<table class="table table-rounded table-flush">
+												<thead >
 													
 												<tr class="fw-bold fs-7 text-danger border-bottom border-gray-200 py-4">
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">작성자</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">제목</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">내용</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">댓글수</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">조회수</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">좋아요</span>
-														</td>
-														<td class="w-100px text-end fs-7 pe-9">
-															<span class="fw-bold">날짜</span>
-														</td>
+														<th>번호</th>
+														<th>썸네일</th>
+														<th >제목</th>
+														<th >내용</th>
+														<th >작성자</th>
+														<th >댓글수</th>
+														<th >조회수</th>
+														<th >좋아요</th>
+														<th >날짜</th>
 												</tr>
-												
-												<tr th:each = "data : ${list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
-												 	<td th:text = "사진" ></td>
-													<td th:text = "${data.title}"></td>
+												</thead>
+													<tbody>	
+												<tr th:each = "data , i: ${list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
+													<td th:text = "${i.count}"></td>
+												 	<td ><img src="../assets/img/exer_silver_badge.png" style="max-width:60px;max-height:60px;"></td>
+													<td  th:text = "${data.title}"></td>
 													<td>
 														<a th:href="@{/community/getPost(postNo=${data.postNo})}" class="content" th:text = "${data.content}"></a>
 													</td>
-													<td th:text = "${data.user.userId}"></td>
-													<td th:text = "${data.postDate}" ></td>
-													<td th:text = "${data.viewCount}" ></td>
+													<td  th:text = "${data.user.userId}"></td>
 													<td th:text = "${data.cmntCount}"></td>
+													<td th:text = "${data.viewCount}" ></td>
 													<td th:text = "${data.postLikeCount}"></td>
+													<td th:text = "${data.postDate}" ></td>
 												</tr>
-													
-													
-												<tbody>	
-													
-												
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
-													
 													
 													</tbody>
 												<!--end::Table body-->
