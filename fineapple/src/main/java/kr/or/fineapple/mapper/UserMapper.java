@@ -32,5 +32,8 @@ public interface UserMapper{
 		
 		public void changePassword(User user) throws Exception;
 		
+		////다이어리 담당자 하리니가 작성
+		public List<User> getAllUsers();
+		
 	}
 

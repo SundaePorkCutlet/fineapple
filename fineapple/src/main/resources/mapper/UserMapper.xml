@@ -180,5 +180,13 @@ HEIGHT)
 	WHERE user_id=#{userId:VARCHAR}
 </update>
 
+	<!-- 다이어리 담당자 하리니가 작성 -->
+	<select id="getAllUsers" resultMap="userSelectMap">
+		SELECT user_id, diet_service_no, exer_service_no
+		FROM users
+		WHERE user_leave_stt = 0
+	</select>
+
+
 </mapper>
 

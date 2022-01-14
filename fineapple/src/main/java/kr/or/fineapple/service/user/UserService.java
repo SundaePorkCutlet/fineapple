@@ -25,4 +25,5 @@ public interface UserService {
 	
 	public void changePassword(User user) throws Exception;
 
+
 }

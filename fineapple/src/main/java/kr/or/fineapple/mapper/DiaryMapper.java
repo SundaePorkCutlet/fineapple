@@ -65,4 +65,9 @@ public interface DiaryMapper {
 	////회윈의 운동 서비스 목표 달성률 계산해 조회
 	Integer getExerAchievement(ViewDuration viewDuration);
 
+	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
+	void addUserBodyInfo(String userId);
+	
+	////배치프로그램 실행: 매일 뱃지 기록 insert
+	void addBadge(Badge defaultBadge);
 }
