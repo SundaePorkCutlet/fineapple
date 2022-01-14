@@ -72,6 +72,8 @@ public class CommunityController {
 		
 		
 		model.addAttribute("list", list);
+		model.addAttribute("NavName1","게시파");
+		model.addAttribute("NavName2","게시글 리스트 조회");
 		
 		
 		return "community/getBoard.html";
@@ -96,6 +98,8 @@ public class CommunityController {
 		System.out.println(map.get("board")+"Scope에 담기전 Board");
 		
 		model.addAttribute("map", map);
+		model.addAttribute("NavName1","게시판");
+		model.addAttribute("NavName2","게시글 조회");
 		 
 		return "community/getPost.html";
 	}
@@ -152,13 +156,22 @@ public class CommunityController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("community/getMyGroupList.html");
 		modelAndView.addObject("list", list);
+		
+		modelAndView.addObject("NavName1", "소그룹");
+		
+		modelAndView.addObject("NavName1", "내가 가입된 소그룹 ");
+
 		return modelAndView;
 	}
 	
 	
 	@GetMapping(value = "getUserSerach")
-	public String getUserList() {
+	public String getUserList(Model model
+			) {
 		
+		
+		model.addAttribute("NavName1","검색");
+		model.addAttribute("NavName2","회원검색");
 		
 		
 		return "community/getUserSerach.html";
@@ -307,6 +320,8 @@ public class CommunityController {
 		model.addAttribute("user", user);
 		
 		
+		
+		
 		return "community/addBattleView :: addBattleView";
 	}
 	
@@ -335,6 +350,9 @@ public class CommunityController {
 			System.out.println(battle2);
 		} 
 		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
+		
 		return "community/getBattleReceiveList.html";
 	}
 
@@ -361,6 +379,8 @@ public class CommunityController {
 		for (Battle battle2 : list) {
 			System.out.println(battle2);
 		} 
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
 		
 		return "community/getBattleRequestList.html";
 	}
@@ -368,15 +388,17 @@ public class CommunityController {
 	@GetMapping("getBattleList")
 	public String getBattleList(HttpServletRequest request, Model model){
 		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
 		
 		return "community/getBattleList.html";
 	}
 
 	@GetMapping("getBattleView")
-	public String getBattleView(
-			@RequestParam(value="no") int no,
-			Model model
-	){
+	public String getBattleView(@RequestParam(value="no") int no,Model model){
+		
+		model.addAttribute("NavName1","승부");
+		model.addAttribute("NavName2","승부리스트");
 
 		return "community/getBattleView.html";
 	}
@@ -394,6 +416,9 @@ public class CommunityController {
 		User user =  communityService.getUserSearch(search);
 		
 		model.addAttribute("user", user);
+		
+		model.addAttribute("NavName1","검색");
+		model.addAttribute("NavName2","회원 상세정보");
 
 		
 		return "community/getUserDetail.html";
@@ -438,6 +463,8 @@ public class CommunityController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("user", intetUser);
+		
+		
 		return "community/addGroupToUserInter :: addGroupToUserInter";
 	}
 	
@@ -459,6 +486,9 @@ public class CommunityController {
 		List<Group> list =  communityService.getGroupInterGroup(groupUser);
 		
 		model.addAttribute("list", list);
+		
+		model.addAttribute("NavName1","소그륩");
+		model.addAttribute("NavName2","소그룹 리스트");
 		
 		return "community/getGroupToUserInter.html";
 	}
@@ -483,6 +513,10 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("list", list);
+		
+		model.addAttribute("NavName1","문의");
+		model.addAttribute("NavName2","1:1 문의");
+		
 		return "community/getFaq.html";
 	}
 	
@@ -502,6 +536,9 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("list", list);
+		
+		model.addAttribute("NavName1","관리자");
+		model.addAttribute("NavName2","신고 관리");
 		
 		return "community/getReportList.html";
 	}
@@ -528,7 +565,8 @@ public class CommunityController {
 		report = communityService.getReport(report ,user);
 		
 		
-	
+		model.addAttribute("NavName1","관리자");
+		model.addAttribute("NavName2","신고 관리");
 
 		
 		model.addAttribute("report", report);
@@ -586,6 +624,9 @@ public class CommunityController {
 		user = (User)request.getSession(true).getAttribute("user");
 		
 		model.addAttribute("user", user);
+		
+		model.addAttribute("NavName1","문의");
+		model.addAttribute("NavName2","1:1문의");
 		
 		return "community/addMtm.html";
 	}
