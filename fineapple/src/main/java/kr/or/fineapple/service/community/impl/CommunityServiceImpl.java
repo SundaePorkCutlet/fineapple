@@ -33,8 +33,14 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void addPost(Board board) {
+	public void addPost(Board board, String[] times) {
 		communityMapper.addPost(board);
+		for (String time : times) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("postNo", board.getPostNo() + "");
+			map.put("time", time);
+			communityMapper.addPostImg(map);
+		}
 	}
 
 	@Override
@@ -56,8 +62,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public Map getPost(Board board) {
 		communityMapper.updatePostViewCount(board);
 		Map map = new HashMap();
+		Board boardData = communityMapper.getPost(board);
+		boardData.setImg(communityMapper.getPostImg(board.getPostNo()));
 		map.put("list", communityMapper.getCmntList(board));
-		map.put("board", communityMapper.getPost(board));
+		map.put("board", boardData);
+		//map.put("imgList", communityMapper.getPostImg(board.getPostNo())); // 애초에 board안에 img라는 List를 담아서 줘도 된다 하지만 나는 비교를 해서 할거다.
+		
 		return map;
 	}
 	

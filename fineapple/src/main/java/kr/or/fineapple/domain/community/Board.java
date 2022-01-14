@@ -25,7 +25,7 @@ public class Board {
 	private int postLikeStt;
 	private int updateStt;
 	private int cateName;
-	//private List<Img> img;
+	private List<Img> img;
 	
 	
 	public Board() {

@@ -17,7 +17,7 @@ import kr.or.fineapple.domain.community.Report;
 
 public interface CommunityService {
 	
-	public void addPost(Board board);
+	public void addPost(Board board, String[] times);
 	
 	public Map addCmnt(Cmnt cmnt);
 	

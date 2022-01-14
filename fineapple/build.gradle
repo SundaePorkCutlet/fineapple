@@ -36,6 +36,7 @@ dependencies {
    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
    implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.14'
    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.2'
+   implementation 'commons-io:commons-io:2.6'
    
 }
 
