@@ -35,16 +35,24 @@
 												<label class="fs-5 fw-bold mb-2">게시글 제목</label>
 												<!--end::Label-->
 												<!--begin::Input-->
-												<input name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
+												<input  name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
 												<!--end::Input-->
 											</div>
-											<div class="mb-3">
-											  <div id="image_preview">
-                                   				 <img style="width:30%; height:60%;">
-                              				  </div>
-											  <label for="formFileDisabled" class="form-label">업로드할 이미지를 선택해주세요</label>
-											  <input class="form-control" id="img" name = "mtmFile" type="file" >
-											</div>
+											<div>
+										        <h2><b>이미지 미리보기</b></h2>
+										        <div class="input_wrap">
+										            <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일 업로드</a>
+										            <input type="file" id="input_imgs" name = "mtmFile" multiple/>
+										        </div>
+										    </div>
+										 
+										    <div>
+										        <div class="imgs_wrap">
+										            <img id="img" />
+										        </div>
+										    </div>
+										 
+										    <a href="javascript:" class="my_button" onclick="submitAction();">업로드</a>
 											<!--end::Input group-->
 											<!--begin::Input group-->
 											<div class="d-flex flex-column mb-10 fv-row fv-plugins-icon-container">
@@ -65,23 +73,54 @@
 									</div>
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
- 						<script>
-                            // 이미지 업로드
-                            $('#img').on('change', function() {
-                            ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-                            //배열에 추출한 확장자가 존재하는지 체크
-                            if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-                                resetFormElement($(this)); //폼 초기화
-                                window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
-                            } else {
-                                file = $('#img').prop("files")[0];
-                                blobURL = window.URL.createObjectURL(file);
-                                $('#image_preview img').attr('src', blobURL);
-                                $('#image_preview').slideDown(); //업로드한 이미지 미리보기 
-                                $(this).slideUp(); //파일 양식 감춤
-                            }
-                            });
-						 </script>
+ 						<script type="text/javascript">
+ 
+        // 이미지 정보들을 담을 배열
+        var sel_files = [];
+ 
+ 
+        $(document).ready(function() {
+            $("#input_imgs").on("change", handleImgFileSelect);
+        }); 
+ 
+        function fileUploadAction() {
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+        }
+ 
+        function handleImgFileSelect(e) {
+ 
+            // 이미지 정보들을 초기화
+            sel_files = [];
+            $(".imgs_wrap").empty();
+ 
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+ 
+            var index = 0;
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+ 
+                sel_files.push(f);
+ 
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                	var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+               
+
+                    $(".imgs_wrap").append(html);
+                    index++;
+ 
+                }
+                reader.readAsDataURL(f);
+                
+            });
+        }
+</script>
+
 		</body>
 	<!--end::Body-->
 </html>

@@ -133,6 +133,12 @@
 	<result property="rivalUser.userId" column="rival_user_id"/>
 	</resultMap>
 	
+	<resultMap type="img" id="imgMap">
+	<result property="imgNo" column="img_no"/>
+	<result property="imgName" column="img_name"/>
+	<result property="postNo" column="post_no"/>
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -1000,7 +1006,35 @@
 	</select>
 	
 	
+	<insert id="addPostImg" parameterType="Map">
+	INSERT
+	INTO
+	board_img
+	(
+	img_no,
+	post_no,
+	img_name
+	)
+	VALUES
+	(
+	seq_board_img_board_img_no.NEXTVAL,
+	#{postNo},
+	#{time}
+	)
 	
+	
+	</insert>
+	
+	<select id="getPostImg" parameterType="int" resultMap="imgMap">
+	SELECT
+	*
+	FROM
+	board_img
+	<where>
+	post_no = #{value}
+	</where>
+	ORDER BY img_no
+	</select>
 	
 	
 	

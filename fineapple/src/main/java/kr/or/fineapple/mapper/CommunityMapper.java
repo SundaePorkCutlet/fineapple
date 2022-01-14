@@ -2,6 +2,7 @@ package kr.or.fineapple.mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Img;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 
@@ -109,6 +111,8 @@ public interface CommunityMapper {
 	
 	public void deleteFaq(int mtmQnaNo);
 	
+	public void addPostImg(Map<String, String> map);
+	
 
 	
 	
@@ -121,6 +125,8 @@ public interface CommunityMapper {
 	public void addBattleInter(Battle battle);
 	
 	public List<Battle> getMybattleInter(Battle battle);
+	
+	public List<Img> getPostImg(int postNo);
 	
 	
 }

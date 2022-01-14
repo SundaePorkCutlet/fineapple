@@ -1,6 +1,7 @@
  package kr.or.fineapple.community;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -119,13 +120,31 @@ public class CommunityController {
 	
 
 	@PostMapping(value = "addPost")
-	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam("mtmFile") MultipartFile files) {
+	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam("mtmFile") MultipartFile[] files) throws IllegalStateException, IOException {
+		
+		String[] times = new String[files.length];
+		
+		int i = 0;
+		
+		for (MultipartFile multipartFile : files) {
+			
+			
+			System.out.println(multipartFile.getOriginalFilename());
+			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
+			multipartFile.transferTo(new File(mtmFilePath, time));
+			times[i] = time; 
+			i += 1;
+		}
 		
 		board.setUser((User)request.getSession().getAttribute("user"));
 		
 		board.setGroup(group);
+		
+		for (String string : times) {
+			System.out.println(string);
+		}
 			
-		communityService.addPost(board);
+		communityService.addPost(board, times);
 		
 		return "redirect:/community/getBoard";
 	}
