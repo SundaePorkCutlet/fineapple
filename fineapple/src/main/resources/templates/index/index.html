@@ -65,9 +65,9 @@
 		<div data-text-content="true" style="font-weight:bold;font-size:32px;" class=""  th:text=${exer.exerName}></div>
       </div> -->
   <div align="right" >  
-      <div class="card shadow-sm" style=" width: 50%; ">
+      <div class="card shadow-sm" style="width: 40%;">
     <div class="card-header">
-        <h3 class="card-title" style="font-weight:bold;font-size:32px;"  th:text=${exer.exerName} ></h3>
+        <h3 class="card-title" style="font-weight:bold;font-size:30px;"  th:text="|추천 운동 영상:  ${exer.exerName}|" ></h3>
         <div class="card-toolbar">
         </div>
     </div>
@@ -110,6 +110,47 @@
 		    $(function () {
 		        $("#alarm_button").on("click", function () {
 
+		        	
+		        	 alarm_button.onmousedown = function(event) {
+
+		        		 
+		        		 //좌표값
+				    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
+				    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
+
+				    	  alarm_button.style.position = 'absolute';
+				    	  alarm_button.style.zIndex = 1000;
+				    	  document.body.append(alarm_button);
+
+				    	  moveAt(event.pageX, event.pageY);
+
+				    	
+				    	  function moveAt(pageX, pageY) {
+				    		  alarm_button.style.left = pageX - shiftX + 'px';
+				    		  alarm_button.style.top = pageY - shiftY + 'px';
+				    	  }
+
+				    	  function onMouseMove(event) {
+				    	    moveAt(event.pageX, event.pageY);
+				    	  }
+
+				    	  // mousemove로 알림 움직이게 하고
+				    	  document.addEventListener('mousemove', onMouseMove);
+
+				    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+				    	  alarm_button.onmouseup = function() {
+				    	    document.removeEventListener('mousemove', onMouseMove);
+				    	    alarm_button.onmouseup = null;
+				    	  };
+
+				    	};
+
+				    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+				    	alarm_button.ondragstart = function() {
+				    	  return false;
+				    	}; 
+				    	
+				    	
 		            $.ajax({
 		                url: "../diet/getAlarm",
 		                success: function (data) {
@@ -145,6 +186,10 @@
         navigator.serviceWorker.register("/firebase-messaging-sw.js");
     });
 }
+		    
+		    
+		
+		    	
 		 </script>
 	
 	
