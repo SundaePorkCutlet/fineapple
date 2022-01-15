@@ -41,6 +41,7 @@ import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import lombok.val;
 
 
 @Controller
@@ -66,7 +67,7 @@ public class CommunityController {
 	
 	
 	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
-	@GetMapping(value = "getBoard")
+	@RequestMapping (value = "getBoard")
 	public String getPostList(Model model) {
 		
 		List<Board> list = communityService.getPostList();
@@ -629,6 +630,8 @@ public class CommunityController {
 //		
 //		model.addAttribute("user", user);
 //		
+//		model.addAttribute("list", communityService.getMyMtmList(user));
+//		
 //		return "community/getMtmList.html";
 //	}
 	
@@ -692,50 +695,75 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-//	@GetMapping("getMtmList")
-//	public String getMtmList(HttpServletRequest request, Model model) {
-//		
-//		User user = (User)request.getSession(true).getAttribute("user");
-//		
-//		List<MtmQna> list = communityService.getMtmList(user);
-//		
-//		for (MtmQna mtmQna : list) {
-//			System.out.println(mtmQna);
-//		}
-//		
-//		model.addAttribute("list", list);
-//		
-//		
-//		
-//		
-//		return "community/getMtmList.html";
-//	}
-//	
+	@GetMapping("getMtmList")
+	public String getMtmList(HttpServletRequest request, Model model) {
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		List<MtmQna> list = communityService.getMyMtmList(user);
+		
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
+		
+		model.addAttribute("list", list);
+		
+		return "community/getMtmList.html";
+	}
+	
 	
 	@PostMapping(value = "delPost")
-	public String delPost(HttpSession session) {
+	public String delPost(@ModelAttribute Board board) {
+		
+		System.out.println(board + "delPost");
 		
 		
+		communityService.delPost(board);
 		
-		return null;
+		
+		return "redirect:/community/getBoard";
+	}
+	
+	@GetMapping(value = "getAddFaq")
+	public String getAddFaq() {
+		
+		return "community/addFaq.html";
+	}
+	
+	
+	@PostMapping(value = "updatePostView")
+	public String updatePostView(@ModelAttribute(value="board") Board board) {	
+		
+		System.out.println(board);
+		
+		return "community/updatePost.html";
+	}
+	
+	@RequestMapping(value = "getGroup", method = RequestMethod.GET)
+	public String getGroup(@ModelAttribute Group group, Model model) {
+		
+		group = communityService.getGroup(group);
+		
+		model.addAttribute("group", group);
+		
+		return "community/getGroup.html";
+		
+	}
+	
+	@GetMapping(value = "getGroupList")
+	public String getGroupList(Model model){
+		
+		List<Group> groups = communityService.getGroupList();
+		
+		model.addAttribute("list", groups);
+		
+		//model.addAttribute("list", communityService.getGroupList());
+		
+		return "community/getGroupList.html";
 	}
 
 
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

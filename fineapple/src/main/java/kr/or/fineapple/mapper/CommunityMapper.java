@@ -45,6 +45,8 @@ public interface CommunityMapper {
 	
 	public void updateCmnt(Cmnt cmnt);
 	
+	public void delPost(Board board);
+	
 	public void addGroup(Group group);
 	
 	public void addGroupUser(GroupUser groupUser);
@@ -102,23 +104,16 @@ public interface CommunityMapper {
 	public Board getPostReport(Board board);
 	
 	public void addMtmQna(MtmQna mtmQna);
-	
-	
 
-	//Faq
 	public void addFaq(MtmQna mtmQna);
+	
 	public List<MtmQna> getMyMtmList(User user);
 	
 	public void deleteFaq(int mtmQnaNo);
 	
 	public void addPostImg(Map<String, String> map);
 	
-
-	
-	
-	//블랙리스트
 	public void addUserBlc(User userId);
-	
 
 	public User getUserBattle(User user);
 	
@@ -127,6 +122,10 @@ public interface CommunityMapper {
 	public List<Battle> getMybattleInter(Battle battle);
 	
 	public List<Img> getPostImg(int postNo);
+	
+	
+	
+
 	
 	
 }

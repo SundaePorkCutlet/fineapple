@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+		
+		
+<div class="table-responsive">
+ <table class="table table-rounded table-row-bordered border gy-7 gs-7">
+  <thead>
+   <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+    <th>번호</th>
+    <th>소그룹명</th>
+    <th>소그룹 소개글</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr th:each="data, i : ${list}" th:onClick="javascript:fnGetGroup">
+   <input type="hidden" name="">
+    <td th:text="${i.count}"></td>
+    <td th:text=${data.groupName}></td>
+    <td th:text=${data.groupIntro}></td>
+   </tr>
+
+  </tbody>
+ </table>
+</div>
+ 
+ 
+ 
+ 
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
+	</body>
+	<!--end::Body-->
+</html>

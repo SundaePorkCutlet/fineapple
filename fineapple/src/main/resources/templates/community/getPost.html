@@ -16,29 +16,35 @@
 
 
 
-<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
+
 
 <div class="card card-dashed">
-
+<form id="post_form">
+<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
+<input type="hidden"  name = "title" th:value ="${map.board.title}">
+<input type="hidden"  name = "content" th:value ="${map.board.content}">
 	    <div class="card-header">
 	    		<div>
+	    		
 		        <h3 class="card-title" th:text="${map.board.title}"></h3>
 		        <div th:text="${map.board.postDate}" ></div>
-		       	<div th:text="${map.board.user.userId}" ></div>
+		       	<div name = "content" th:text="${map.board.user.userId}" ></div>
 		       	</div>
+
 		        <div class="card-toolbar">
 		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="javascript:fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light">
+		            <button type="button" class="btn btn-sm btn-light"  th:onClick="javascript:fcUpdatePostView()">
 		                수정하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light" >
+		            <button type="button" class="btn btn-sm btn-light"  th:onClick="javascript:fcDeletePost()">
 		                삭제하기
 		            </button>
 		        </div>
 		        
 	    </div>
+</form>
     <div class="card-body">
    		 <div th:if = "${map.board.img} != null">
 			<div th:each = "data : ${map.board.img}">
@@ -113,11 +119,18 @@ function fcReportPost(cate, id){
 
 
 
+fcDelectPost
 
 
 
 
+function fcDeletePost(){
+	$("#post_form").attr("method", "post").attr("action", "/community/delPost").submit();
+};
 
+function fcUpdatePostView(){
+	$("#post_form").attr("method", "post").attr("action", "/community/updatePostView").submit();
+};
 
 
 
