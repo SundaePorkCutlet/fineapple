@@ -17,29 +17,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
-@Configuration
+//@RequiredArgsConstructor
+//@Configuration
 public class MidnightBatchJobConfig extends DefaultBatchConfigurer {
 	
-	private final DataSource dataSource;
-	private final ApplicationContext applicationContext;
+//	private final DataSource dataSource;
+//	private final ApplicationContext applicationContext;
+//
+//	@Bean
+//	public SqlSessionFactory sqlSessionFactory() throws Exception {
+//		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+//		sqlSessionFactoryBean.setDataSource(dataSource);
+//		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mapper/BatchMapper.xml"));
+//
+//		return sqlSessionFactoryBean.getObject();
+//	}
 
-	@Bean
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-		sqlSessionFactoryBean.setDataSource(dataSource);
-		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mapper/BatchMapper.xml"));
-
-		return sqlSessionFactoryBean.getObject();
-	}
-	
-	@Bean
-	@StepScope
-    public MyBatisPagingItemReader<User> myBatisItemReader() throws Exception {
-    	return new MyBatisPagingItemReaderBuilder<User>()
-    			.pageSize(10)
-    			.sqlSessionFactory(sqlSessionFactory())
-    			.queryId("BatchMapper.getAllUsers")
-    			.build();
-    }
 }

@@ -10,13 +10,13 @@ import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.mapper.BatchMapper;
 
-@Component
+//@Component
 public class MidnightBatchJob {
 	
-	@Autowired
+	//@Autowired
 	private BatchMapper batchMapper;
 	
-	@Scheduled(cron="0 0 14 * * *") //매일 오후 2시 정각에(안정적으로 데이터가 쌓이는지 테스트위해 확인후 매일 자정으로 변경예정)
+	//@Scheduled(cron="0 0 14 * * *") //매일 오후 2시 정각에(안정적으로 데이터가 쌓이는지 테스트위해 확인후 매일 자정으로 변경예정)
 	public void updateUserBodyInfoTask() {
 		
 		Badge defaultBadge = new Badge();
