@@ -28,6 +28,7 @@
 		<result property="meal" 				column="MEAL" 		jdbcType="VARCHAR"/>
 		<result property="userFoodIntake" 	column="USER_FOOD_INTAKE" 		jdbcType="INTEGER"/>
   		<result property="userWtrIntake" 	column="USER_WTR_INTAKE" 		jdbcType="INTEGER"/>
+  		<result property="count"				column="CT"			jdbcType="INTEGER"/>
 		</resultMap>
 		
 		<resultMap id ="FoodMap" type="Food">
@@ -316,6 +317,17 @@
 	 DIET_BADGE_COUNT = 1
 	</update>
 	
+	<select id="FavIntake" parameterType="String" resultMap="IntakeRecordMap">
+	select ser.ct,ser.food_name,ser.ct from (select serv.ct,serv.food_name,serv.food_cd from intake_record ir,(select food_name,food_cd,count(food_cd) ct from intake_record
+	where user_id = #{value}
+	group by food_cd,food_name
+    ) serv
+	where ir.food_cd = serv.food_cd
+    group by ct,serv.food_name,serv.food_cd
+    order by  serv.ct desc) ser
+    where rownum&lt;4
+
+	</select>
 	
 	
 	
