@@ -25,6 +25,9 @@
  
 }
 
+td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
+
+
 
 </style>
 	<!--begin::Body-->
@@ -56,6 +59,11 @@
 				<br>
 				<br>
 				<br>
+				<br>	<br>
+				<br>
+				<br>
+				<br>
+				
 				<br>
 	<!-- 			<div align="right">  
 				 <iframe width="60%" height="200%"
@@ -64,23 +72,82 @@
                
 		<div data-text-content="true" style="font-weight:bold;font-size:32px;" class=""  th:text=${exer.exerName}></div>
       </div> -->
-  <div align="right">  
-      <div class="card shadow-sm" style=" width: 50%; ">
+
+  
+  <div class="row">
+    <div class="col-lg-4">
+    
+  <div align="center"class="card shadow-sm" style=" width: 100%; height:120%">
     <div class="card-header">
-        <h3 class="card-title" style="font-weight:bold;font-size:32px;"  th:text=${exer.exerName} ></h3>
+
+        <h4 class="card-title" style="font-weight:bold;">내가 제일 많이 섭취한 식품</h4>
+       
+    </div>
+    <div class="card-body card-scroll h-200px">
+       <table class="table table-striped gy-7 gs-7">
+    <thead>
+        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+			<th>번호</th>
+            <th>식품명</th>
+            <th>섭취횟수</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="data, i : ${list2}">
+            <td th:text="${i.count}"></td>
+            <td ><a href="#" data-attr="data-foodCd=${data.food.foodCd}" th:text="${data.food.foodName}"></a></td>
+            <td th:text="${data.count}"></td>
+        </tr>
+    </tbody>
+</table>
+    </div>
+   
+</div>
+  </div>
+  
+  <div class="col-lg-4"> 
+      <div class="card shadow-sm" style=" width: 100%; height:120%">
+    <div class="card-header">
+        <h4 class="card-title" style="font-weight:bold;"  >추천운동영상</h4>
         <div class="card-toolbar">
         </div>
     </div>
     <div class="card-body">
-        <iframe width="80%" height="350"
+        <iframe  height="105%" width="105%"
                th:src=${exer.exerLink}
                frameborder="0" ></iframe>
     </div>
-    
+    </div>
+</div>
+ <div class="col-lg-4"> 
+      <div class="card shadow-sm" style=" width: 100%; height:120%">
+    <div class="card-header">
+        <h4 class="card-title" style="font-weight:bold;"  >게시판 최근글</h4>
+        <div class="card-toolbar">
+        </div>
+    </div>
+      <div class="card-body card-scroll h-200px">
+       <table class="table table-striped gy-7 gs-7">
+    <thead>
+        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+			<th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="data, i : ${list3}">
+            <td th:text="${i.count}"></td>
+            <td ><a href="#"  th:text = "${data.title}"></a></td>
+            <td class="contents" th:text = "${data.content}"></td>
+        </tr>
+    </tbody>
+</table>
+    </div>
+    </div>
 </div>
       </div>
-      
-      
+
 			</div>
 		</div>
 
@@ -112,6 +179,47 @@
 		    $(function () {
 		        $("#alarm_button").on("click", function () {
 
+		        	
+		        	 alarm_button.onmousedown = function(event) {
+
+		        		 
+		        		 //좌표값
+				    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
+				    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
+
+				    	  alarm_button.style.position = 'absolute';
+				    	  alarm_button.style.zIndex = 1000;
+				    	  document.body.append(alarm_button);
+
+				    	  moveAt(event.pageX, event.pageY);
+
+				    	
+				    	  function moveAt(pageX, pageY) {
+				    		  alarm_button.style.left = pageX - shiftX + 'px';
+				    		  alarm_button.style.top = pageY - shiftY + 'px';
+				    	  }
+
+				    	  function onMouseMove(event) {
+				    	    moveAt(event.pageX, event.pageY);
+				    	  }
+
+				    	  // mousemove로 알림 움직이게 하고
+				    	  document.addEventListener('mousemove', onMouseMove);
+
+				    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+				    	  alarm_button.onmouseup = function() {
+				    	    document.removeEventListener('mousemove', onMouseMove);
+				    	    alarm_button.onmouseup = null;
+				    	  };
+
+				    	};
+
+				    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+				    	alarm_button.ondragstart = function() {
+				    	  return false;
+				    	}; 
+				    	
+				    	
 		            $.ajax({
 		                url: "../diet/getAlarm",
 		                success: function (data) {
@@ -147,6 +255,10 @@
         navigator.serviceWorker.register("/firebase-messaging-sw.js");
     });
 }
+		    
+		    
+		
+		    	
 		 </script>
 	
 	

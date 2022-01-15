@@ -35,7 +35,7 @@
 												<label class="fs-5 fw-bold mb-2">게시글 제목</label>
 												<!--end::Label-->
 												<!--begin::Input-->
-												<input  name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" >
+												<input  id="title" name = "title" class="form-control form-control-solid" placeholder="게시글 제목을 입력해주세요" required>
 												<!--end::Input-->
 											</div>
 											<div>
@@ -57,7 +57,7 @@
 											<!--begin::Input group-->
 											<div class="d-flex flex-column mb-10 fv-row fv-plugins-icon-container">
 												<label class="fs-6 fw-bold mb-2">게시글 내용</label>
-												<textarea name = "content" class="form-control form-control-solid" rows="6" placeholder="게시글 내용을 입력해주세요"></textarea>
+												<textarea if="content" name = "content" class="form-control form-control-solid" rows="6" placeholder="게시글 내용을 입력해주세요" required></textarea>
 											<div class="fv-plugins-message-container invalid-feedback"></div></div>
 											<!--end::Input group-->
 											<!--begin::Submit-->
@@ -119,6 +119,27 @@
                 
             });
         }
+        
+        $(function(){
+        	 $("#kt_contact_submit_button").on("click" , function() {
+        	
+        	var title=$("title").val();
+        	var content=$("content").val();
+        	
+        	if(title ==""){
+        		alert("제목이 입력되지 않았습니다.");
+        		return;
+        	}else if(content=""){
+        		alert("내용이 입력되지 않았습니다.");
+        		return;
+        	}
+      		 $("form").attr("method" , "POST").attr("action" , "/community/addPost").submit();
+        	 });
+        });
+        	
+        	
+
+        
 </script>
 
 		</body>

@@ -15,42 +15,42 @@
 <div align="center">
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중 관리 목적</label>
-    <input th:value="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" placeholder="ex)옥수수"/>
+    <input th:value="${user.serviceTrgt}" name="serviceTrgt" type="text" class="form-control form-control-solid" readonly/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">체중</label>
-    <input th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input th:value="${user.weight}" name="weight" type="number" step="0.1" class="form-control form-control-solid" readonly/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input  th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)111.1"/>
+    <input  th:value="${user.height}" name="height" type="number" step="0.1"  class="form-control form-control-solid" readonly/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >나이</label>
-    <input  th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" readonly/>
 </div>
 
        <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >성별</label>
-    <input readonly th:value="${user.gender}" name="gender" type="text"    class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  th:value="${user.gender}" name="gender" type="text"    class="form-control form-control-solid" readonly/>
 </div>
         	    
 
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
-    <input readonly th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input  th:value="${user.trgtWeight}" name="trgtWeight" type="number" step="0.1"  class="form-control form-control-solid" readonly/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >현재체지방율</label>
-    <input name="bodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input id="bodyFat" name="bodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체지방율</label>
-    <input name="trgtBodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input id="trgtBodyFat" name="trgtBodyFat" type="number" step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1" required/>
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >하루목표칼로리섭취량</label>
-    <input name="dailyTrgtIntakeKcal" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1"/>
+    <input id ="dailyTrgtIntakeKcal" name="dailyTrgtIntakeKcal" type="number"step="0.1"  class="form-control form-control-solid" placeholder="ex)11.1" required/>
 <span>현재 회원님의 적정 섭취 칼로리는<span th:text="${dailyIntakeKcal}"></span> Kcal 입니다.</span>
 </div>
 
@@ -65,11 +65,28 @@
 	</th:block>
 <script>
 $(function() {
-
+    
 	 
 	 $("button.btn.btn-success").on("click" , function() {
-		 $("form").attr("method" , "POST").attr("action" , "/diet/addDietService").submit();
 		
+		 
+		 var bodyFat = $("#bodyFat").val();
+	     var trgtBodyFat = $("#trgtBodyFat").val();
+	     var dailyTrgtIntakeKcal = $("#dailyTrgtIntakeKcal").val();
+	     
+	     if(bodyFat==""){
+	    	 alert("현재체지방률이 입력되지 않았습니다.");
+	    	 return;
+	     }else if(trgtBodyFat==""){
+	    	 alert("목표체지방율이 입력되지 않았습니다.");
+	    	 return;
+	     }else if(dailyTrgtIntakeKcal==""){
+	    	 alert("하루목표칼로리섭취량이 입력되지 않았습니다.");
+	    	 return;
+	     }
+	    
+
+	     $("form").attr("method" , "POST").attr("action" , "/diet/addDietService").submit();
 });
 });	
 </script>	
