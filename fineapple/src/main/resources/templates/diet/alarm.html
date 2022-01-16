@@ -59,16 +59,13 @@
      </div>
      	
      <script>
-   			console.log('gdgd')
 	        function alarm() {
 				var alarmNo = $(".delete").attr("data-alarmNo");
 	        	
-	        	console.log(alarmNo)
 	        	 $("#getalarm").modal("hide");
 	            $.ajax({
 	                url: "../diet/deleteAlarm?alarmNo="+alarmNo,
 	                success: function (data) {
-	                	console.log(data)
 	                    $("#loginModalHolder").html(data);
 	                    $("#getalarm").modal("show");
 	                }

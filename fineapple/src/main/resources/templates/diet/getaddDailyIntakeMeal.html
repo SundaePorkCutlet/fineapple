@@ -21,7 +21,6 @@
 
 <script>
 function fncGetUserList(currentPage) {
-	console.log('온다');
 	$("form").attr("method" , "POST").attr("action" , "/diet/postaddDailyIntakeMeal?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
    
 

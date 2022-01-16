@@ -318,7 +318,7 @@
 	</update>
 	
 	<select id="FavIntake" parameterType="String" resultMap="IntakeRecordMap">
-	select ser.ct,ser.food_name,ser.ct from (select serv.ct,serv.food_name,serv.food_cd from intake_record ir,(select food_name,food_cd,count(food_cd) ct from intake_record
+	select ser.food_cd,ser.food_name,ser.ct from (select serv.ct,serv.food_name,serv.food_cd from intake_record ir,(select food_name,food_cd,count(food_cd) ct from intake_record
 	where user_id = #{value}
 	group by food_cd,food_name
     ) serv

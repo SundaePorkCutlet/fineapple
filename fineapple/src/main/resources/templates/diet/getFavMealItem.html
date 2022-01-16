@@ -66,12 +66,10 @@ $(function () {
 
 
         if (fav_arr.length != 0) {
-            console.log(fav_arr);
         	$('#favMealItem').modal("hide");
        	 $.ajax({
        			url: "../diet/deleteFavMealItem?checkarray="+fav_arr.join(",")+"&favMealNo="+favNo+"&favMealName="+favName,
        			success:function(data){
-       				console.log(data)
        				$("#mmodalHolder").html(data);
        				$("#favMealItem").modal("show");			
        				
@@ -123,7 +121,6 @@ $(function () {
 
 
         if (fav_arr.length != 0) {
-            console.log(fav_arr);
             self.location="../diet/FavMealItemAddIntakeRecord?checkarray="+fav_arr.join(",")+"&meal="+meal;
             
 

@@ -401,6 +401,7 @@ public class DietController {
 	public String getFood(@RequestParam("foodCd") String foodCd, Model model) throws Exception {
 
 		Food food = new Food();
+		System.out.println(foodCd);
 		food = dietService.getFood(foodCd);
 		System.out.println(food);
 		model.addAttribute("food", food);
