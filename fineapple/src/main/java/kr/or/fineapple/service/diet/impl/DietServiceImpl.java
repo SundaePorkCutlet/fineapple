@@ -750,6 +750,15 @@ public class DietServiceImpl implements DietService{
 	public TotalRecord getTotalDietRecord(ViewDuration viewDuration) {
 		return dietMapper.getTotalDietRecord(viewDuration);
 	}
+
+
+
+	@Override
+	public List<IntakeRecord> FavIntake(String userId) {
+		return dietMapper.FavIntake(userId);
+	}
+	
+	
 	
 	
 }

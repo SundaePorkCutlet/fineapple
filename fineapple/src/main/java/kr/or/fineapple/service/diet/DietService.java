@@ -69,7 +69,8 @@ public interface DietService {
 	public JSONArray getrcpList(Search search);
 	
 	public Recipe getRcp(String rcpCd);
-
+	
+	public List<IntakeRecord> FavIntake(String userId);
 	////다이어리 진행자 하리니가 작성
 	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate date, int userServiceNo);
 	

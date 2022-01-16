@@ -246,7 +246,7 @@ public class UserRestController {
 		int numIndex=random.nextInt(9999)+1000; 
 		key+=numIndex;
 		System.out.println("여기까지 왔니");
-		message.setSubject("인증번호 입력을 위한 메일 전송");
+		message.setSubject("[FineApple] 이메일 인증번호");
 		message.setText(" FineApple에서 전송된 인증 번호 : "+key);
 		System.out.println("마지막 메세지: " + message);
 		emailSender.send(message);

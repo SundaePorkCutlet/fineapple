@@ -2,6 +2,7 @@ package kr.or.fineapple.mapper;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,7 @@ public interface DietMapper {
        
        void deleteIntakeRecord(int IntakeRecordNo);
        
+       List<IntakeRecord> FavIntake(String userId);     
        ////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
        List<IntakeRecord> getIntakeRecordListForDiary(Map map);
        
