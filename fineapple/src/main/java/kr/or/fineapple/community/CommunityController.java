@@ -564,14 +564,14 @@ public class CommunityController {
 		return "community/getReportList.html";
 	}
 	
-	@GetMapping(value = "{getReport}")
-	public String getReport(@RequestParam(name = "reportNo", required = false)String str, @PathVariable(value = "getReport") String pathVariable, Model model, HttpServletRequest request) {
+	@GetMapping(value = "getReport")
+	public String getReport(@RequestParam(name = "reportNo", required = false)String str, Model model, HttpServletRequest request) {
 		
 		System.out.println(request.getHeader("content-type"));
 		System.out.println(request.getHeader("accept-encoding"));
 		System.out.println(request.getHeader("accept"));
 		
-		System.out.println(pathVariable); //이건 학습용
+		
 		
 		System.out.println(str);
 		
