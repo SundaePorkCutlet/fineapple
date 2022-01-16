@@ -11,7 +11,7 @@
 
 
 
-										<div class="m-0">
+										<div class="m-0" align="center">
 											<!--begin::Heading-->
 											<div class="mb-9">
 												<!--begin::Title-->
@@ -23,9 +23,9 @@
 											</div>
 											<!--end::Heading-->
 											<!--begin::Members-->
-											<div class="d-flex flex-wrap w-100 mw-xxl-800px" th:each="data : ${group.groupUsers}">
+											<div class="d-flex flex-wrap w-100 mw-xxl-800px" >
 												<!--begin::Member-->
-												<div class="d-flex flex-column text-center mb-11 me-5 me-lg-15">
+												<div class="d-flex flex-column text-center mb-11 me-5 me-lg-15"th:each="data : ${group.groupUsers}">
 													<!--begin::Photo-->
 													<div class="symbol symbol-100px symbol-lg-150px mb-4">
 														<img src="/good/assets/media/avatars/300-11.jpg" class="" alt="">
@@ -34,10 +34,12 @@
 													<!--begin::Info-->
 													<div class="text-center">
 														<!--begin::Info-->
-														<a href="/good/pages/user-profile/overview.html" class="text-dark fw-bolder text-hover-primary fs-4">Paul Miles</a>
+														<div th:if = "${data.captainStt} == 1">그룹장</div>
+														<div th:if = "${data.captainStt} == 2">그룹회원</div>
+														<a href="/good/pages/user-profile/overview.html" class="text-dark fw-bolder text-hover-primary fs-4" th:text="${data.user.userName}"></a>
 														<!--end::Info-->
 														<!--begin::Position-->
-														<span class="text-muted d-block fw-bold">Development Lead</span>
+														<span class="text-muted d-block fw-bold" th:text="${data.user.userId}"></span>		
 														<!--end::Position-->
 													</div>
 													<!--end::Info-->

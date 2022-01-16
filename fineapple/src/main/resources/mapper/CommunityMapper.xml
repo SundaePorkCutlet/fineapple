@@ -428,6 +428,7 @@
 	SELECT
 	*
 	FROM
+	groups
 	<where>
 	group_no = #{groupNo}
 	</where>

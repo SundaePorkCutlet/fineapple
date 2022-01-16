@@ -105,6 +105,7 @@ function fcReportPost(cate, id){
 		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 		data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
 		contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+		//async: false, //async: true <== default
 		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 			console.log("성공" + data);
 			

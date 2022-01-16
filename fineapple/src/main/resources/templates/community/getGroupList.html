@@ -11,6 +11,7 @@
 		
 		
 <div class="table-responsive">
+<form id = "form"></form>
  <table class="table table-rounded table-row-bordered border gy-7 gs-7">
   <thead>
    <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -20,10 +21,10 @@
    </tr>
   </thead>
   <tbody>
-   <tr th:each="data, i : ${list}" th:onClick="javascript:fnGetGroup">
-   <input type="hidden" name="">
+   <tr th:each="data, i : ${list}" th:onclick="javascript:fnSubmiGroupNo(this.id)" th:id = "${i.count}+id" th:attr="data-groupNo=${data.groupNo}" value = "${data.groupNo}">
+  	<!-- <td th:value="${data.groupNo}" style="display: none;" ></td> -->	
     <td th:text="${i.count}"></td>
-    <td th:text=${data.groupName}></td>
+    <td th:text=${data.groupName} ></td>
     <td th:text=${data.groupIntro}></td>
    </tr>
 
@@ -38,7 +39,18 @@
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+<script type="text/javascript">
+function fnSubmiGroupNo(id){
+	
+	var data = $("#" + id).attr("data-groupNo");
+	
+	//$("#form").attr("method", "GET").attr("action", '/community/getGroup?groupNo='+ data ).submit();
+	location.href='/community/getGroup?groupNo='+ data;
 
+	 
+	
+}
+</script>
 <!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
 	</body>
 	<!--end::Body-->

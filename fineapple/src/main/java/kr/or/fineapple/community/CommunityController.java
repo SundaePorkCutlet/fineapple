@@ -740,7 +740,13 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value = "getGroup", method = RequestMethod.GET)
-	public String getGroup(@ModelAttribute Group group, Model model) {
+	public String getGroup(@RequestParam("groupNo") String no, Model model) {
+		
+		System.out.println("getGroup 컨트롤러");
+		
+		Group group = new Group();
+		
+		group.setGroupNo(Integer.parseInt(no));
 		
 		group = communityService.getGroup(group);
 		
