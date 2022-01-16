@@ -1,31 +1,21 @@
 package kr.or.fineapple.persistence;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.time.Period;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
 
 @SpringBootTest
 public class DiaryMapperTest {
-	/*
-	 * @Autowired
-	 * 
-	 * @Qualifier("diaryServiceImpl") private DiaryService diaryService;
-	 */
+	
+	  @Autowired
+	  @Qualifier("diaryServiceImpl") private DiaryService diaryService;
+	 
 	
 	@Test
 	public void contextLoads() {
@@ -101,8 +91,8 @@ public class DiaryMapperTest {
 //		LocalDate endDate = viewDuration.getDate().with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
 //		System.out.println(startDate.toString());
 //		System.out.println(endDate.toString());
-		LocalDate startDate = YearMonth.now().minusMonths(1).atDay(1);
-		LocalDate endDate = YearMonth.now().minusMonths(1).atEndOfMonth();
+//		LocalDate startDate = YearMonth.now().minusMonths(1).atDay(1);
+//		LocalDate endDate = YearMonth.now().minusMonths(1).atEndOfMonth();
 		//int week = startDate.get((TemporalField) WeekFields.WEEK_BASED_YEARS);
 //		System.out.println(startDate);
 //		System.out.println(endDate);
@@ -174,8 +164,15 @@ public class DiaryMapperTest {
 		
 //		System.out.println(weekDates);
 		
-		//System.out.println(1/0);
-		//System.out.println(0/1);
+		LocalDate today = LocalDate.now();
+		LocalDate theLatestDateUserBodyInfo = diaryService.getTheLatestDateUserBodyInfo("hc@gmail.com");
+		System.out.println(today);
+		System.out.println(theLatestDateUserBodyInfo);
+		//가장 마지막 날짜와 오늘 일자의 차 계산
+		int howManyDays = Period.between(theLatestDateUserBodyInfo, today).getDays();
+		
+		System.out.println(howManyDays);
+
 	}
 	
 }

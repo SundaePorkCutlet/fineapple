@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.diary;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import kr.or.fineapple.domain.Achievement;
@@ -40,5 +41,9 @@ public interface DiaryService {
 	public Integer getExerAchievement(ViewDuration viewDuration);
 	
 	public UserEvent getTheHighestIntakeKcalDayUserEvent(ViewDuration viewDuration);
+	
+	public LocalDate getTheLatestDateBadge(String userId);
+	
+	public LocalDate getTheLatestDateUserBodyInfo(String userId);
 
 }
