@@ -20,7 +20,6 @@
 
 <script>
 function fncGetUserList(currentPage) {
-	console.log('온다');
 	$("form").attr("method" , "POST").attr("action" , "/diet/addFavMealItem?foodCd="+$("#foodCd").attr("data-foodCd")).submit();
   
 	let self_ = self;
@@ -30,7 +29,6 @@ function fncGetUserList(currentPage) {
 	 $.ajax({
 			url: "/diet/getFavMealList?menu=0",
 			success:function(data){
-				console.log(data)
 				$("#mmodalHolder").html(data);
 				$("#favMealList").modal("show");			
 				
