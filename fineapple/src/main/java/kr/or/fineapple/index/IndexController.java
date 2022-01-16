@@ -63,12 +63,12 @@ public class IndexController {
      
      list = (List) map.get("list");
      
-     int exerNo = list.size()+1;
+     int exerNo = list.size()-1;
      
      
      System.out.println("exerNo:  "+rand.nextInt(exerNo));
      
-     exer = exerService.getExer(rand.nextInt(exerNo));
+     exer = exerService.getExer(rand.nextInt(exerNo)+1);
      
      
     // exer.setExerNo(exerNo);

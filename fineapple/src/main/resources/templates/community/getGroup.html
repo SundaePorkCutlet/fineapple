@@ -34,7 +34,7 @@
 													<!--begin::Info-->
 													<div class="text-center">
 														<!--begin::Info-->
-														<div th:if = "${data.captainStt} == 1">그룹장</div>
+														<div th:if = "${data.captainStt == 1}">그룹장</div>
 														<div th:if = "${data.captainStt} == 2">그룹회원</div>
 														<a href="/good/pages/user-profile/overview.html" class="text-dark fw-bolder text-hover-primary fs-4" th:text="${data.user.userName}"></a>
 														<!--end::Info-->
