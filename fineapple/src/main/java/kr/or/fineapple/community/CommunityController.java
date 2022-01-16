@@ -767,6 +767,12 @@ public class CommunityController {
 		
 		return "community/getGroupList.html";
 	}
+	
+	@GetMapping(value = "groupBoard")
+	public String groupBoard(Model model){
+		
+		return "community/groupBoard.html";
+	}
 
 
 
