@@ -1,5 +1,8 @@
 package kr.or.fineapple.index;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,7 @@ import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.service.community.CommunityService;
+import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.exer.ExerService;
 import kr.or.fineapple.service.user.UserService;
@@ -42,6 +46,10 @@ public class IndexController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
+	
+	@Autowired
+	@Qualifier("diaryServiceImpl")
+	private DiaryService diaryService;
 	
     @GetMapping("/")
     public String index(Model model,HttpSession session) throws Exception{
@@ -101,14 +109,27 @@ public class IndexController {
      model.addAttribute("list3",list4 );
      model.addAttribute("NavName1","Home");
      model.addAttribute("NavName2","Main");
+   
      
+     
+		//세션의 userId 정보 가져오기
+		//String userId = ((User)session.getAttribute("user")).getUserId();
+		//사용자 접속 일자
+//		LocalDate today = LocalDate.now();
+//		
+//		//사용자 신체 정보 테이블 가장 마지막 날짜 조회
+//		LocalDate theLatestDateUserBodyInfo = diaryService.getTheLatestDateUserBodyInfo(userId);
+//		//가장 마지막 날짜와 오늘 일자의 차 계산
+//		int howManyDays = Period.between(theLatestDateUserBodyInfo, today).getDays();
+//		
+//		
+//		//벳지 테이블 가장 마지막 날짜 조회
+//		LocalDate theLatestDateBadge = diaryService.getTheLatestDateBadge(userId);
+//     
      
      
      
     	return "index/index.html";
     }
     
-    
-    
-
 }

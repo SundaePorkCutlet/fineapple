@@ -1,5 +1,6 @@
 package kr.or.fineapple.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,12 @@ public interface DiaryMapper {
 	////기간 내 가장 섭취 칼로리가 큰 날과 그 날의 대표 이벤트 조회
 	UserEvent getTheHighestIntakeKcalDayUserEvent(ViewDuration viewDuration);
 
+	////뱃지 테이블에 기록된 가장 마지막 날짜 조회
+	LocalDate getTheLatestDateBadge(String userId);
+	
+	////사용자 신체 정보 테이블에 기록된 가장 마지막 날짜 조회
+	LocalDate getTheLatestDateUserBodyInfo(String userId);
+	
 	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
 	void addUserBodyInfo(String userId);
 	

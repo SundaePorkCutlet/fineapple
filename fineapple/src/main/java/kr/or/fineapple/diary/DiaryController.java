@@ -268,7 +268,11 @@ public class DiaryController {
 			
 			//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
 			List dailyRecordList = diaryService.getBadgeList(viewDuration);
-			Badge dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
+			Badge dailyRecord = new Badge();
+			if(dailyRecordList != null) {
+				dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
+				mav.addObject("dailyRecord", dailyRecord);
+			}
 			TotalRecord totalRecord = dietService.getTotalDietRecord(viewDuration); //하루 기간 내 총 섭취 영양소 정보 조회
 			
 			//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
@@ -285,13 +289,12 @@ public class DiaryController {
 				Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
 				System.out.println(burnningKcalInPercentage);
 				achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);
+				mav.addObject("achievement", achievement);
 				System.out.println(achievement);
 			}
 			
 			mav.addObject("userServ", userServ);
-			mav.addObject("dailyRecord", dailyRecord);
 			mav.addObject("totalRecord", totalRecord);
-			mav.addObject("achievement", achievement);
 			
 			System.out.println(achievement);
 			System.out.println(dailyRecord);

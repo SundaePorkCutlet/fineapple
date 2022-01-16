@@ -53,7 +53,7 @@
 	</resultMap>
 	
 	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
-	<insert id="addUserBodyInfo">
+<!-- 	<insert id="addUserBodyInfo">
 	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
 	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
 			TRUNC(SYSDATE),
@@ -74,9 +74,9 @@
 			FROM user_body_info
             WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
             AND user_id = #{userId:VARCHAR}))
-	</insert>
+	</insert> -->
 	
-	<insert id="addBadge">
+<!-- 	<insert id="addBadge">
 	INSERT INTO badge (badge_no, user_id, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, user_wtr_intake, daily_burnning_kcal, daily_intake_kcal)
 	VALUES (SEQ_BADGE_BADGE_NO.nextval,
             #{userId:VARCHAR},
@@ -88,7 +88,7 @@
             0,
             #{dailyBurnningKcal:DOUBLE},
             #{dailyIntakeKcal:DOUBLE})
-	</insert>
+	</insert> -->
 	
 		<!-- 다이어리 담당자 하리니가 작성 -->
 	<select id="getAllUsers" resultMap="userSelectMap">
