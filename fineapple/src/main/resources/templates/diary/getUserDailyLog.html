@@ -943,10 +943,10 @@
 			/* 사용자 이벤트 수정 모달 열기 */
 			$(".test-script").on("click",function(){
 				
-				var target = $(this).attr("data-target");
+				var userEventNo = $(this).attr("data-target");
 				
 				$.ajax({
-					url: "/diary/json/getUserEvent/"+target,
+					url: "/diary/json/getUserEvent/"+userEventNo,
 					type: "GET",
 					contentType: "application/json"
 				}).done(function(userEvent){
@@ -1005,10 +1005,10 @@
 			
 			/* 대표 이벤트 지정 */
 			$("div.ribbon-label.bg-warning > i").on("click", function(){
-				var target = $(this).attr("data-target");
+				var userEventNo = $(this).attr("data-target");
 				
 				$.ajax({
-					url: "/diary/json/updateKeyUserEventStt/"+target,
+					url: "/diary/json/updateKeyUserEventStt/"+userEventNo,
 					type: "GET",
 					contentType: "application/json"
 				}).done(function(){

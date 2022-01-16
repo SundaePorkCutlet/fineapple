@@ -72,9 +72,15 @@ public interface DietService {
 	
 	public List<IntakeRecord> FavIntake(String userId);
 	////다이어리 진행자 하리니가 작성
-	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate date, int userServiceNo);
+	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate startDate, LocalDate endDate, int userServiceNo);
 	
 	////다이어리 진행자 하리니가 작성: 특정 일자의 영양소별 하루 총 섭취정보
     public TotalRecord getTotalDietRecord(ViewDuration viewDuration);
+    
+    ////다이어리 진행자 하리니가 작성: 기간 내 기록일의 수(테이블 내 기록이 존재하는 일자의 갯수)
+    public int getDaysCount(ViewDuration viewDuration);
+    
+    ////다이어리 진행자 하리니가 작성: 기간 내 가장 섭취 칼로리가 큰 날과 그 날의 총 섭취 칼로리
+    public TotalRecord getTheHighestIntakeKcalDay(ViewDuration viewDuration);
 
 }

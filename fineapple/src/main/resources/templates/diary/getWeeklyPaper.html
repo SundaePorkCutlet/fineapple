@@ -1,0 +1,150 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
+
+ 
+ 
+ 
+				<div class="docs-content d-flex flex-column flex-column-fluid" id="kt_docs_content">
+						<!-- begin::Container -->
+						<div id="kt_content_container" class="container">
+							<!-- begin::바탕 card -->
+							<div class="card card-docs mb-2">
+								<!-- begin::바탕 card body -->
+								<div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 text-gray-700">
+									<!-- begin::Section -->
+									<div class="pb-10">
+										<!-- begin::Heading -->
+										<h1 class="anchor fw-bolder mb-5" id="overview">
+										<a href="#overview"></a>일별 상세 정보 조회</h1>
+										<!-- end::Heading -->
+										<!-- begin::Block -->
+										<div class="py-5">이부분은 카드써도될듯</div>
+										<!-- end::Block -->
+									</div>
+									<!-- end::Section -->
+									<!-- begin::Section -->
+									<div class="pb-10">
+										<!-- begin::Heading -->
+										<h1 class="anchor fw-bolder mb-5" id="overview">
+										<a href="#overview"></a>식단 기록</h1>
+										<!-- end::Heading -->
+										<!-- begin::Block -->
+										<div class="py-5">
+											<!-- begin::Row -->
+											<div class="row mb-7">
+												<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
+													<div class="fw-bold mb-1">
+													<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeCarb}g|"></span></div>
+													<div class="fw-bold fs-6 mb-2">일일 총 섭취 탄수화물</div>
+												</div>
+												<!--begin::Status-->
+												<div class="col-lg-7">
+													<!--begin::Text-->
+													<div class="d-flex text-muted fw-bolder fs-4 pb-3">
+														<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeCarbInPercentage}%|">섭취 탄수화물</span>
+														<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalRecord.totalIntakeCarb}g 섭취|"></span>
+													</div>
+													<!--end::Text-->
+													<!--begin::Progress-->
+													<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeCarbInPercentage}%|" th:aria-valuenow="${achievement.intakeCarbInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+													<!--end::Progress-->
+													<!--begin::Description-->
+													<div class="fw-bold fs-6 text-muted">코멘트</div>
+													<!--end::Description-->
+												</div>
+												<!--end::Status-->
+											</div>
+											<!--end::Row-->
+											<!--begin::Separator-->
+											<div class="separator separator-dashed my-6"></div>
+											<!--end::Separator-->
+											<!--begin::Row-->
+											<div class="row mb-7">
+												<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
+													<div class="fw-bold mb-1">
+													<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeProtein}g|"></span></div>
+													<div class="fw-bold fs-6 mb-2">일일 총 섭취 단백질</div>
+												</div>
+												<!--begin::Status-->
+												<div class="col-lg-7">
+													<!--begin::Text-->
+													<div class="d-flex text-muted fw-bolder fs-4 pb-3">
+														<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeProteinInPercentage}%|">섭취 단백질</span>
+														<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalRecord.totalIntakeProtein}g 섭취|"></span>
+													</div>
+													<!--end::Text-->
+													<!--begin::Progress-->
+													<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeProteinInPercentage}%|" th:aria-valuenow="${achievement.intakeProteinInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+													<!--end::Progress-->
+													<!--begin::Description-->
+													<div class="fw-bold fs-6 text-muted">코멘트</div>
+													<!--end::Description-->
+												</div>
+												<!--end::Status-->
+											</div>
+											<!--end::Row-->
+											<!--begin::Separator-->
+											<div class="separator separator-dashed my-6"></div>
+											<!--end::Separator-->
+											<!--begin::Row-->
+											<div class="row mb-7">
+												<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
+													<div class="fw-bold mb-1">
+													<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeFat}g|"></span></div>
+													<div class="fw-bold fs-6 mb-2">일일 총 섭취 지방</div>
+												</div>
+												<!--begin::Status-->
+												<div class="col-lg-7">
+													<!--begin::Text-->
+													<div class="d-flex text-muted fw-bolder fs-4 pb-3">
+														<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeFatInPercentage}%|"></span>
+														<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalRecord.totalIntakeFat}g 섭취|"></span>
+													</div>
+													<!--end::Text-->
+													<!--begin::Progress-->
+													<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeFatInPercentage}%|" th:aria-valuenow="${achievement.intakeFatInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+													<!--end::Progress-->
+													<!--begin::Description-->
+													<div class="fw-bold fs-6 text-muted">코멘트</div>
+													<!--end::Description-->
+												</div>
+												<!--end::Status-->
+											</div>
+											<!-- end::Row -->
+										</div>
+										<!-- end::Block -->
+									</div>
+									<!-- end::Section -->
+								</div>
+								<!-- end::바탕 card body -->
+							</div>
+							<!-- end::바탕 card -->
+						</div>
+						<!-- begin::Container -->
+					</div>
+
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+<!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
+
+<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 	
+	</body>
+	<!--end::Body-->
+</html>
