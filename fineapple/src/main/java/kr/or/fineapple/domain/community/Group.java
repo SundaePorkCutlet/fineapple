@@ -1,6 +1,7 @@
 package kr.or.fineapple.domain.community;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,8 @@ public class Group {
 	private String groupName;
 	private String groupIntro;
 	private int userCount;
-	private LocalDate groupBirth;	
+	private LocalDate groupBirth;
+	private List<GroupUser> groupUsers;
 	
 	public Group() {
 		System.out.println(getClass().getName()+  "»ý¼ºÇÔ");

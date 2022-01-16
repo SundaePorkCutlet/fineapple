@@ -90,4 +90,7 @@ public interface CommunityService {
 	public Group getGroup(Group group);
 	
 	public List<Group> getGroupList();
+	
+	
+	
 }

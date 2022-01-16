@@ -322,7 +322,14 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Group getGroup(Group group) {
 		// TODO Auto-generated method stub
-		return communityMapper.getGroup(group);
+		
+		group = communityMapper.getGroup(group);
+		
+		List<GroupUser> list = communityMapper.getGroupUserList(group);
+		
+		group.setGroupUsers(list);
+		
+		return group;
 		
 		
 		
@@ -333,6 +340,8 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getGroupList();
 	}
+
+
 	
 	
 	
