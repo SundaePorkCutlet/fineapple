@@ -264,4 +264,20 @@
 	FROM dual
 	</select>
 	
+	<!-- SELECT ONE : 기간 내 가장 섭취 칼로리가 큰 날과 그 날의 대표 이벤트 조회 -->
+	<select id="getTheHighestIntakeKcalDayUserEvent" resultMap="UserEventMap">
+	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
+	FROM user_event
+	WHERE user_id = #{userId:VARCHAR}
+	AND key_event_stt = 0
+	AND TRUNC(user_event_date) = (SELECT intake_record_date
+									FROM (SELECT TRUNC(intake_record_date) as intake_record_date, SUM(food_kcal)
+											FROM intake_record
+											WHERE user_id = #{userId:VARCHAR}
+											AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+											GROUP BY TRUNC(intake_record_date)
+											ORDER BY 2 DESC)
+									WHERE ROWNUM <![CDATA[<=]]> 1)
+	</select>
+	
 </mapper>

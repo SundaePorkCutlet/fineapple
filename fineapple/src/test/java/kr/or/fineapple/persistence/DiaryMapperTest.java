@@ -2,7 +2,13 @@ package kr.or.fineapple.persistence;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -15,10 +21,11 @@ import kr.or.fineapple.service.diary.DiaryService;
 
 @SpringBootTest
 public class DiaryMapperTest {
-	
-	@Autowired
-	@Qualifier("diaryServiceImpl")
-	private DiaryService diaryService;
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("diaryServiceImpl") private DiaryService diaryService;
+	 */
 	
 	@Test
 	public void contextLoads() {
@@ -94,6 +101,81 @@ public class DiaryMapperTest {
 //		LocalDate endDate = viewDuration.getDate().with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
 //		System.out.println(startDate.toString());
 //		System.out.println(endDate.toString());
+		LocalDate startDate = YearMonth.now().minusMonths(1).atDay(1);
+		LocalDate endDate = YearMonth.now().minusMonths(1).atEndOfMonth();
+		//int week = startDate.get((TemporalField) WeekFields.WEEK_BASED_YEARS);
+//		System.out.println(startDate);
+//		System.out.println(endDate);
+//		
+//		WeekFields weekFields = WeekFields.of(Locale.getDefault());
+//		String week1 = String.format("%d-%02d", startDate.getYear(), startDate.get(weekFields.weekOfYear()));
+//		String week2 = String.format("%d-%02d", endDate.getYear(), endDate.get(weekFields.weekOfYear()));
+//		System.out.println(week1);
+//		System.out.println(week2);
+//		
+//		LocalDate firstday = LocalDate.of(2022, 1, 1);
+//		String first1 = String.format("%d-%02d", firstday.getYear(), firstday.get(weekFields.weekOfYear()));
+//		String first2 = String.format("%d-%02d", firstday.getYear(), firstday.get(weekFields.weekOfYear()));
+//		System.out.println(first1);
+//		System.out.println(first2);
+//		int i = firstday.get(weekFields.weekOfWeekBasedYear());
+//		System.out.println(i);
+		
+//		LocalDate first = startDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+//		LocalDate last = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+		
+//		System.out.println(first);
+//		System.out.println(first.plusDays(6));
+//		System.out.println(last);
+//		
+//		LocalDate second = first.plusWeeks(1);
+//		LocalDate third = second.plusWeeks(1);
+//		
+//		System.out.println(second);
+//		System.out.println(third);
+//		
+//		ViewDuration firstWeek = new ViewDuration();
+//		ViewDuration secondWeek = new ViewDuration();
+//		ViewDuration thirdWeek = new ViewDuration();
+//		ViewDuration fourthWeek = new ViewDuration();
+//		ViewDuration fifthWeek = new ViewDuration();
+//		ViewDuration sixthWeek = new ViewDuration();
+//		List<ViewDuration> weekDates = new ArrayList<ViewDuration>();
+//		LocalDate weekStartDate = startDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+//		
+//		
+//		firstWeek.setStartDate(weekStartDate);
+//		firstWeek.setEndDate(weekStartDate.plusDays(6));
+//		weekDates.add(firstWeek);
+//		
+//		secondWeek.setStartDate(weekStartDate.plusDays(7));
+//		secondWeek.setEndDate(weekStartDate.plusDays(13));
+//		weekDates.add(secondWeek);
+//		
+//		thirdWeek.setStartDate(weekStartDate.plusDays(14));
+//		thirdWeek.setEndDate(weekStartDate.plusDays(20));
+//		weekDates.add(thirdWeek);
+//		
+//		fourthWeek.setStartDate(weekStartDate.plusDays(21));
+//		fourthWeek.setEndDate(weekStartDate.plusDays(27));
+//		weekDates.add(fourthWeek);
+//		
+//		if(weekStartDate.plusDays(28).isBefore(endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)))) {
+//			fifthWeek.setStartDate(weekStartDate.plusDays(28));
+//			fifthWeek.setEndDate(weekStartDate.plusDays(34));
+//			weekDates.add(fifthWeek);
+//			
+//			if(weekStartDate.plusDays(35).isBefore(endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)))) {
+//				sixthWeek.setStartDate(weekStartDate.plusDays(35));
+//				sixthWeek.setEndDate(weekStartDate.plusDays(41));
+//				weekDates.add(sixthWeek);
+//			}
+//		}
+		
+//		System.out.println(weekDates);
+		
+		//System.out.println(1/0);
+		//System.out.println(0/1);
 	}
-
+	
 }

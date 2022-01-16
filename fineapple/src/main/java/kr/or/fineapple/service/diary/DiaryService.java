@@ -38,5 +38,7 @@ public interface DiaryService {
 	public Achievement getDietAchievement(ViewDuration viewDuration);
 	
 	public Integer getExerAchievement(ViewDuration viewDuration);
+	
+	public UserEvent getTheHighestIntakeKcalDayUserEvent(ViewDuration viewDuration);
 
 }

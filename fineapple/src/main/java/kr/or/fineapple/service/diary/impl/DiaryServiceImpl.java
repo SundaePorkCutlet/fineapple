@@ -135,4 +135,10 @@ public class DiaryServiceImpl implements DiaryService {
 		return diaryMapper.getExerAchievement(viewDuration);
 	}
 
+	@Override
+	public UserEvent getTheHighestIntakeKcalDayUserEvent(ViewDuration viewDuration) {
+		////기간 내 가장 섭취 칼로리가 큰 날과 그 날의 대표 이벤트 조회
+		return diaryMapper.getTheHighestIntakeKcalDayUserEvent(viewDuration);
+	}
+	
 }
