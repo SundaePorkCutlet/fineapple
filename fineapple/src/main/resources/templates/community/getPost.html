@@ -20,7 +20,7 @@
 
 <div class="card card-dashed">
 <form id="post_form">
-<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
+<input th:if="${session.user != null}" id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
 <input type="hidden"  name = "title" th:value ="${map.board.title}">
 <input type="hidden"  name = "content" th:value ="${map.board.content}">
 	    <div class="card-header">
@@ -31,7 +31,7 @@
 		       	<div name = "content" th:text="${map.board.user.userId}" ></div>
 		       	</div>
 
-		        <div class="card-toolbar">
+		        <div th:if="${session.user != null}" class="card-toolbar">
 		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="javascript:fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
@@ -55,11 +55,11 @@
 		</div>
         <div class="card-body py-5" th:text="${map.board.content}">
     	</div>
-	    <div class="card-footer">
+	    <div th:if="${session.user != null}" class="card-footer">
 	    <button  class="btn btn-primary btn-hover-rise me-5" id ="postLikeCount" type="button"  th:text="${map.board.postLikeCount}" th:onClick="javascript:fnUpdatePostLike()"></button>		
 	    </div>
 	    <div class="separator border-5 my-10"></div>
-		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
+		<div th:if="${session.user != null}" style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
 		<div class="separator border-5 my-10"></div>
 		
 		

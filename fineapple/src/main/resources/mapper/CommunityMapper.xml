@@ -242,7 +242,7 @@
 	totals.counts AS post_like_count
 	FROM
 	board b,
-	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId} AND like_stt = 1 </trim>) ral,
+	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId:VARCHAR} AND like_stt = 1 </trim>) ral,
 	(SELECT COUNT(*) counts FROM  report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND like_stt = 1 </trim>) totals
 	<where>
 	b.post_no = #{postNo}
@@ -1061,25 +1061,7 @@
 	
 	
 	
-	
-<!-- Test
-<insert id="addUserBodyInfo" parameterType="user">
-INSERT into USER_BODY_INFO(
-USER_BODY_INFO_NO,
-USER_ID,WEIGHT,
-USER_BODY_INFO_DATE,
-HEIGHT)
-   VALUES(seq_user_body_info_no.nextval,
-      #{userId:VARCHAR},
-      #{weight:INTEGER},
-      SYSDATE,
-      #{height:INTEGER})
-</insert>
-위 주석을 치우로 서버를 내렸다가 올려봐라 어떤 애러가 발생하는지? 
-즉 WEIGHT이라는 컬럼에는 Not Null 조건이 걸려 있었다. 근데 #{weight:INTEGER} 처럼 Null이 들어갈 수 있다는 걸 :INTEGER, 또는 jdbcType = INTEGER 처럼 해주면 애러가 발생한다.
-서버가 올라가고 사용자 데이터를 넣는 과정에서 발생 할 것 같은 애러가 발생했다 그걸 견주어 보았으때 생각을 해봐야할 것 같다
- -->
-	
+
 	
 	
 </mapper>
