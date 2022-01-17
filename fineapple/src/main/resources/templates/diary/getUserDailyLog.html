@@ -322,7 +322,7 @@
 
 									
 									<!--begin::exer_record-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingExerServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
@@ -367,7 +367,7 @@
 									</div>
 									<!--end::exer_record-->
 									<!--begin::exer_record_details-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingExerServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record_details" aria-expanded="true" aria-controls="kt_account_connected_accounts">
 											<div class="card-title m-0">
@@ -465,7 +465,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingDietServ} == false">
 																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
-																	<td>이미지</td>
+																	<td th:if="${badgeCount.dietBadgeCount} >= 1"><img src='../assets/img/diet.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -478,7 +478,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingExerServ} == false">
 																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
-																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
+																	<td th:if="${badgeCount.exerBadgeCount} >= 1"><img src='../assets/img/exer.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -487,14 +487,14 @@
 															<tr>
 																<td>물 마시기 뱃지</td>
 																<td th:text="|총 ${badgeCount.wtrBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.wtrBadgeCount} >= 1"><img src='../assets/img/water.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
 																<td>승부 뱃지</td>
 																<td th:text="|총 ${badgeCount.bttlBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.bttlBadgeCount} >= 1"><img src='../assets/img/battle.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															
@@ -540,7 +540,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[0].eventTitle}" th:data-target="${userEventList[0].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[0].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[0].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[0].eventCntnt}|"></div>
@@ -554,7 +554,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[1].eventTitle}" th:data-target="${userEventList[1].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[1].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[1].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[1].eventCntnt}|"></div>
@@ -568,7 +568,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[2].eventTitle}" th:data-target="${userEventList[2].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[2].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[2].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[2].eventCntnt}|"></div>
@@ -586,7 +586,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[3].eventTitle}" th:data-target="${userEventList[3].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[3].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[3].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[3].eventCntnt}|"></div>
@@ -600,7 +600,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[4].eventTitle}" th:data-target="${userEventList[4].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[4].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[4].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[4].eventCntnt}|"></div>
@@ -621,12 +621,12 @@
 								<!--begin::Aside-->
 								<div class="flex-column flex-md-row-auto w-100 w-lg-250px w-xxl-275px">
 									<!--begin::Nav-->
-									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="account-settings" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
+									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="user_daily_log" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
 										<!--begin::Card body-->
 										<div class="card-body py-10 px-6">
 											<!--begin::Menu-->
-											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
-												<li class="menu-item px-3 pt-0 pb-1">
+											<ul id="user_daily_log_sticky" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingDietServ == true}">
 													<a href="#diet_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -634,7 +634,7 @@
 														<span class="menu-title">식단 기록</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingDietServ == true}">
 													<a href="#diet_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -642,7 +642,7 @@
 														<span class="menu-title">오늘 먹은 식단</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingExerServ == true}">
 													<a href="#exer_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -650,7 +650,7 @@
 														<span class="menu-title">운동 기록</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingExerServ == true}">
 													<a href="#exer_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -917,7 +917,7 @@
 	       
 	        /* 사용자 이벤트 등록 모달 열기 */
 	        $("#addUserEvent_bttn").on("click", function(){
-	        	$("input[name=user_event_date]").attr("placeholder", date);
+	        	$("input[name=user_event_date]").attr("placeholder", [[${viewDate}]]);
 	        	$("#kt_modal_add_event").modal("show");
 	        });
        
