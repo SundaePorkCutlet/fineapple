@@ -146,6 +146,7 @@ public class UserController {
 
 		user.setStrdWtrIntake(user.getWeight()*0.03);	//적정수분섭취량 계산식(몸무게*0.03L) 적용
 		userService.addUser(user);
+		userService.afterAddOrRestoreUser(user);		//userBodyInfo, Badge 테이블 데이터 생성
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");
 		if(user.getPassword().equals("kakaopassword")) {
@@ -268,6 +269,7 @@ public class UserController {
 		if (user.getPassword().equals(userDB.getPassword())) {
 			if(user.getUserId().equals(userDB.getUserId())) {
 				userService.restoreUser(user);
+				userService.afterAddOrRestoreUser(userDB);	//기존 기록을 default로 복구한 날의 userBodyInfo, Badge 테이블 데이터 생성
 				return "redirect:/";
 			}
 		}

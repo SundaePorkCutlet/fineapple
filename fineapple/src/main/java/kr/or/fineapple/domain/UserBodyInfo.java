@@ -21,8 +21,8 @@ public class UserBodyInfo {
 	LocalDate date;
 	
 	////회원의 체중, 체지방량, 골격근량
-	double weight;
+	Double weight;
 	Double bodyFat;	//null 허용 위해 wrapper class 사용
 	Double bodyMuscle;	//null 허용 위해 wrapper class 사용
-	double height;
+	Double height;
 }
