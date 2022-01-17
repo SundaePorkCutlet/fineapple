@@ -378,6 +378,21 @@
                                             <span class="menu-title">게시판</span>
                                         </a>
                                     </div>
+                                    
+                                    
+                                    <th:block th:if="${session.user}==null">
+                                    <div class="menu-item">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">소그룹</span>
+                                        </a>
+                                    </div>
+                                    </th:block>
+                                    
+                                    
+                                    <th:block th:if="${session.user}!=null">
                                     <div class="menu-item">
                                         <a class="menu-link" th:href="@{../community/getMyGroupList}">
                                     <span class="menu-bullet">
@@ -386,6 +401,21 @@
                                             <span class="menu-title">소그룹</span>
                                         </a>
                                     </div>
+                                    </th:block>
+                                    
+                                    
+                                    <th:block th:if="${session.user}==null">
+                                    <div class="menu-item">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">승부</span>
+                                        </a>
+                                    </div>
+                                    </th:block>
+                                    
+                                    <th:block th:if="${session.user}!=null">
                                     <div class="menu-item">
                                         <a class="menu-link" th:href="@{../community/getBattleList}">
                                     <span class="menu-bullet">
@@ -394,14 +424,22 @@
                                             <span class="menu-title">승부</span>
                                         </a>
                                     </div>
+                                    </th:block>
+                                    
+                                    <th:block th:if="${session.user}==null">
                                     <div class="menu-item">
-                                        <a class="menu-link" href="../dist/authentication/general/deactivation.html">
-                                    <span class="menu-bullet">
-                                       <span class="bullet bullet-dot"></span>
-                                    </span>
-                                            <span class="menu-title">팔로우</span>
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+
+                                            <span class="menu-title">검색</span>
                                         </a>
                                     </div>
+                                    </th:block>
+                                    
+                                    <th:block th:if="${session.user}!=null">
                                     <div class="menu-item">
                                         <a class="menu-link" th:href="@{../community/getUserSerach}">
 
@@ -412,6 +450,10 @@
                                             <span class="menu-title">검색</span>
                                         </a>
                                     </div>
+                                    
+                                    </th:block>
+                                    
+                                    
                                       <div class="menu-item">
                                         <a class="menu-link" th:href="@{../community/getFaq}">
 
