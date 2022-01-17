@@ -27,7 +27,8 @@
 
 
 <br>
-<div align="center">
+<div align="center" >
+<div th:if="${session.user != null}">
 							<a  th:if = "${session.user.role == 'admin'}" th:href="@{../community/getReportList}" class="btn btn-sm btn-light">
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 							<span class="svg-icon svg-icon-3">
@@ -88,10 +89,11 @@
 							</span>
 							<!--end::Svg Icon-->블랙리스트 조회(관리자)</a>
 							<!--end::Follow-->
-							
-	<div align="right" class="accordion-header">
+						
+	<div align="right" class="accordion-header" th:if = "${session.user.role == 'admin'}" >
 	<button type="button" id="add" class="btn btn-success">작성하기</button>
 	</div>
+	</div>	
 	<div th:each ="data ,i : ${list}" id="count" th:attr="data-i=${i.count}">
 		<div class="accordion" id="kt_accordion_1" style="max-width:800px" >
 		    <div class="accordion-item">
