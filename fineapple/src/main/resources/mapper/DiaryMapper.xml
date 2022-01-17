@@ -147,6 +147,27 @@
 		AND TRUNC(user_body_info_date) = TRUNC(#{date})
 	</update>
 	
+	<update id="updateBadgeByDiet">
+	UPDATE badge
+		<set>
+		diet_badge_count = #{badgeCount:INTEGER},
+		daily_intake_kcal = #{inputKcal:DOUBLE}
+		</set>
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(badge_date) = TRUNC(#{date})
+	</update>
+	
+	<update id="updateBadgeByExer">
+	UPDATE badge
+		<set>
+		exer_badge_count = #{badgeCount:INTEGER},
+		daily_burnning_kcal = #{inputKcal:DOUBLE}
+		</set>
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(badge_date) = TRUNC(#{date})
+	</update>
+	
+	
 	<!-- SELECT LIST : 다이어리 화면 출력을 위한 기간 내 뱃지 리스트 조회 -->
 	<select id="getBadgeList" parameterType="ViewDuration" resultMap="BadgeMap">
 	SELECT user_id, badge_no, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, daily_burnning_kcal, daily_intake_kcal

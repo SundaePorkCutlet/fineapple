@@ -465,7 +465,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingDietServ} == false">
 																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
-																	<td>이미지</td>
+																	<td th:if="${badgeCount.dietBadgeCount} >= 1"><img src='../assets/img/diet.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -478,7 +478,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingExerServ} == false">
 																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
-																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
+																	<td th:if="${badgeCount.exerBadgeCount} >= 1"><img src='../assets/img/exer.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -487,14 +487,14 @@
 															<tr>
 																<td>물 마시기 뱃지</td>
 																<td th:text="|총 ${badgeCount.wtrBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.wtrBadgeCount} >= 1"><img src='../assets/img/water.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
 																<td>승부 뱃지</td>
 																<td th:text="|총 ${badgeCount.bttlBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.bttlBadgeCount} >= 1"><img src='../assets/img/battle.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															
@@ -621,11 +621,11 @@
 								<!--begin::Aside-->
 								<div class="flex-column flex-md-row-auto w-100 w-lg-250px w-xxl-275px">
 									<!--begin::Nav-->
-									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="account-settings" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
+									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="user_daily_log" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
 										<!--begin::Card body-->
 										<div class="card-body py-10 px-6">
 											<!--begin::Menu-->
-											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
+											<ul id="user_daily_log_sticky" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
 												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingDietServ == true}">
 													<a href="#diet_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
@@ -917,7 +917,7 @@
 	       
 	        /* 사용자 이벤트 등록 모달 열기 */
 	        $("#addUserEvent_bttn").on("click", function(){
-	        	$("input[name=user_event_date]").attr("placeholder", date);
+	        	$("input[name=user_event_date]").attr("placeholder", [[${viewDate}]]);
 	        	$("#kt_modal_add_event").modal("show");
 	        });
        
