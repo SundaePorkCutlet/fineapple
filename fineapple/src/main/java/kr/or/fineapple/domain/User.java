@@ -36,6 +36,7 @@ public class User {
 	Double trgtBodyMuscle;
 	String serviceTrgt;
 	int kakaoStt;
+	Boolean pastUpdateStt = false;
 	
 	public User() {
 		System.out.println("User 도메인 객체 생성함");

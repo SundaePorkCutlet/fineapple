@@ -46,4 +46,8 @@ public interface DiaryService {
 	
 	public LocalDate getTheLatestDateUserBodyInfo(String userId);
 
+	public void addUserBodyInfo(String userId, int howManyDays);
+	
+	public void addBadge(Badge defaultBadge);
+	
 }

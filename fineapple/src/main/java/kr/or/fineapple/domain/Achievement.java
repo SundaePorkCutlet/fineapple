@@ -10,11 +10,11 @@ import lombok.ToString;
 public class Achievement {
 	
 	////식단 목표 달성률
-	Integer intakeKcalInPercentage;
-	Integer intakeCarbInPercentage;
-	Integer intakeProteinInPercentage;
-	Integer intakeFatInPercentage;
+	int intakeKcalInPercentage;
+	int intakeCarbInPercentage;
+	int intakeProteinInPercentage;
+	int intakeFatInPercentage;
 	
 	////운동 목표 달성률
-	Integer burnningKcalInPercentage;
+	int burnningKcalInPercentage;
 }

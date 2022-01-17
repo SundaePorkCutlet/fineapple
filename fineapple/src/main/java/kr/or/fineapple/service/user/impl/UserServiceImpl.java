@@ -1,11 +1,14 @@
 package kr.or.fineapple.service.user.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.fineapple.domain.Badge;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.mapper.UserMapper;
 import kr.or.fineapple.service.user.UserService;
 
@@ -15,12 +18,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 	
+	@Autowired
+	private DiaryMapper diaryMapper;
 	
 	@Override
 	public void addUser(User user) throws Exception {
 		userMapper.addUser(user);
 		userMapper.addUserBodyInfo(user);
-		
+		Badge defaultBadge = new Badge();
+		defaultBadge.setUserId(user.getUserId());
+		defaultBadge.setBadgeDate(LocalDate.now());
+		diaryMapper.addBadge(defaultBadge);
 	}
 
 	@Override

@@ -67,6 +67,11 @@
 		<result property="routineTime" 				column="ROUTINE_TIME" 					jdbcType="VARCHAR" />
 		<result property="routineKcal" 				column="ROUTINE_KCAL" 					jdbcType="FLOAT" />
 	</resultMap>
+	
+		<resultMap id="TotalRecordMap" type="TotalRecord">
+			<result property="totalExerTime" column="total_exer_time" jdbcType="INTEGER"/>
+			<result property="totalBurnningKcal" column="total_burnning_kcal" jdbcType="DOUBLE"/>
+		</resultMap>
 
 
 	<insert id="addUserService" parameterType="ExerServ">
@@ -428,6 +433,13 @@ ORDER BY 5 DESC
 	AND USER_SERVICE_NO = #{userServiceNo}
 	</select>	
 	
-
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getTotalExerRecord" resultMap="TotalRecordMap">
+	SELECT SUM(TO_NUMBER(TO_CHAR(TO_TIMESTAMP(an_exer_time, 'hh24:mi:ss'),'sssss'))/60) as "total_exer_time", SUM(user_exer_burnning) as "total_burnning_kcal"
+	FROM burnning_record
+	WHERE user_service_no = #{userServiceNo}
+	AND TRUNC(burnning_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	GROUP BY TRUNC(burnning_record_date)
+	</select>
 
 </mapper>

@@ -8,6 +8,7 @@ import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 
@@ -95,6 +96,8 @@ public interface ExerService {
 	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 운동량 정보 조회
 	public List<Object> getBurnningRecordListForDiary(LocalDate startDate, LocalDate endDate, int userServiceNo);
 	
+    ////다이어리 진행자 하리니가 작성: 기간 내 총 운동 칼로리, 총 운동 시간
+    public TotalRecord getTotalExerRecord(LocalDate startDate, LocalDate endDate, int userServiceNo);
 	
 	
 }

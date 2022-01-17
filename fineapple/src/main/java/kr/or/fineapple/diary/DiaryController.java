@@ -112,7 +112,13 @@ public class DiaryController {
 		
 		////리턴해줄 mav 생성
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("todayDate", date);
+		mav.addObject("viewDate", date);
+		
+		////각 서비스 정보의 존재 유무를 판단하기 위한 Flag 셋팅
+		Boolean isUsingDietServ = false;	//식단 서비스 이용 여부
+		Boolean isDietServInfo = false;		//식단 서비스를 이용한다면 조회할 정보가 존재하는지 여부
+		Boolean isUsingExerServ = false;	//운동 서비스 이용 여부
+		Boolean isExerServInfo = false;		//운동 서비스를 이용한다면 조회할 정보가 존재하는지 여부
 		
 		////해당 일자 기준 진행중인 목표 습관 관리 진행 정보 조회
 		//parameter : viewDuration 내 userId, date
@@ -125,179 +131,195 @@ public class DiaryController {
 		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
-			//해당 날짜 매 끼니 별로 식사 나눠서 담기
+			isUsingDietServ = true;
 			List<IntakeRecord> intakeRecordListAll = dietService.getIntakeRecordListForDiary(date, date, diet.getUserServiceNo());
-			List<IntakeRecord> breakfastIntakeRecordList = new ArrayList<IntakeRecord>();
-			List<IntakeRecord> lunchIntakeRecordList = new ArrayList<IntakeRecord>();
-			List<IntakeRecord> dinnerIntakeRecordList = new ArrayList<IntakeRecord>();
-			List<IntakeRecord> snackIntakeRecordList = new ArrayList<IntakeRecord>();
-			List<IntakeRecord> supperIntakeRecordList = new ArrayList<IntakeRecord>();
-			for (IntakeRecord intakeRecord : intakeRecordListAll) {
-				if(intakeRecord.getMeal().equals("아침")) {
-					breakfastIntakeRecordList.add(intakeRecord);
-				}else if(intakeRecord.getMeal().equals("점심")) {
-					lunchIntakeRecordList.add(intakeRecord);
-				}else if(intakeRecord.getMeal().equals("저녁")) {
-					dinnerIntakeRecordList.add(intakeRecord);
-				}else if(intakeRecord.getMeal().equals("간식")) {
-					snackIntakeRecordList.add(intakeRecord);
-				}else if(intakeRecord.getMeal().equals("야식")) {
-					supperIntakeRecordList.add(intakeRecord);
-				}
-			}
-			mav.addObject("breakfast", breakfastIntakeRecordList);
-			mav.addObject("lunch", lunchIntakeRecordList);
-			mav.addObject("dinner", dinnerIntakeRecordList);
-			mav.addObject("snack", snackIntakeRecordList);
-			mav.addObject("supper", supperIntakeRecordList);
 			
-			if(breakfastIntakeRecordList != null) {
-				double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
-				double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
-				double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
-				double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-				Map<String, Object> bfTotal = new HashMap<>();
-				for(IntakeRecord item : breakfastIntakeRecordList) {
-					totalIntakeKcal += item.getFoodKcal();
-					totalIntakeCarb += item.getFoodCarb();
-					totalIntakeProtein += item.getFoodProtein();
-					totalIntakeFat += item.getFoodFat();
+			//식단 기록이 존재하는 경우
+			if(!intakeRecordListAll.isEmpty()) { 
+				isDietServInfo = true;
+				//해당 날짜 매 끼니 별로 식사 나눠서 담기
+				List<IntakeRecord> breakfastIntakeRecordList = new ArrayList<IntakeRecord>();
+				List<IntakeRecord> lunchIntakeRecordList = new ArrayList<IntakeRecord>();
+				List<IntakeRecord> dinnerIntakeRecordList = new ArrayList<IntakeRecord>();
+				List<IntakeRecord> snackIntakeRecordList = new ArrayList<IntakeRecord>();
+				List<IntakeRecord> supperIntakeRecordList = new ArrayList<IntakeRecord>();
+				for (IntakeRecord intakeRecord : intakeRecordListAll) {
+					if(intakeRecord.getMeal().equals("아침")) {
+						breakfastIntakeRecordList.add(intakeRecord);
+					}else if(intakeRecord.getMeal().equals("점심")) {
+						lunchIntakeRecordList.add(intakeRecord);
+					}else if(intakeRecord.getMeal().equals("저녁")) {
+						dinnerIntakeRecordList.add(intakeRecord);
+					}else if(intakeRecord.getMeal().equals("간식")) {
+						snackIntakeRecordList.add(intakeRecord);
+					}else if(intakeRecord.getMeal().equals("야식")) {
+						supperIntakeRecordList.add(intakeRecord);
+					}
 				}
-				bfTotal.put("totalIntakeKcal", totalIntakeKcal);
-				bfTotal.put("totalIntakeCarb", totalIntakeCarb);
-				bfTotal.put("totalIntakeProtein", totalIntakeProtein);
-				bfTotal.put("totalIntakeFat", totalIntakeFat);
-				mav.addObject("bfTotal", bfTotal);
-			}
-			if(lunchIntakeRecordList != null) {
-				double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
-				double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
-				double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
-				double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-				Map<String, Object> lunchTotal = new HashMap<>();
-				for(IntakeRecord item : lunchIntakeRecordList) {
-					totalIntakeKcal += item.getFoodKcal();
-					totalIntakeCarb += item.getFoodCarb();
-					totalIntakeProtein += item.getFoodProtein();
-					totalIntakeFat += item.getFoodFat();
+				mav.addObject("breakfast", breakfastIntakeRecordList);
+				mav.addObject("lunch", lunchIntakeRecordList);
+				mav.addObject("dinner", dinnerIntakeRecordList);
+				mav.addObject("snack", snackIntakeRecordList);
+				mav.addObject("supper", supperIntakeRecordList);
+				
+				if(breakfastIntakeRecordList != null) {
+					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
+					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
+					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
+					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
+					Map<String, Object> bfTotal = new HashMap<>();
+					for(IntakeRecord item : breakfastIntakeRecordList) {
+						totalIntakeKcal += item.getFoodKcal();
+						totalIntakeCarb += item.getFoodCarb();
+						totalIntakeProtein += item.getFoodProtein();
+						totalIntakeFat += item.getFoodFat();
+					}
+					bfTotal.put("totalIntakeKcal", totalIntakeKcal);
+					bfTotal.put("totalIntakeCarb", totalIntakeCarb);
+					bfTotal.put("totalIntakeProtein", totalIntakeProtein);
+					bfTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("bfTotal", bfTotal);
 				}
-				lunchTotal.put("totalIntakeKcal", totalIntakeKcal);
-				lunchTotal.put("totalIntakeCarb", totalIntakeCarb);
-				lunchTotal.put("totalIntakeProtein", totalIntakeProtein);
-				lunchTotal.put("totalIntakeFat", totalIntakeFat);
-				mav.addObject("lunchTotal", lunchTotal);
-			}
-			if(dinnerIntakeRecordList != null) {
-				double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
-				double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
-				double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
-				double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-				Map<String, Object> dinnerTotal = new HashMap<>();
-				for(IntakeRecord item : dinnerIntakeRecordList) {
-					totalIntakeKcal += item.getFoodKcal();
-					totalIntakeCarb += item.getFoodCarb();
-					totalIntakeProtein += item.getFoodProtein();
-					totalIntakeFat += item.getFoodFat();
+				if(lunchIntakeRecordList != null) {
+					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
+					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
+					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
+					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
+					Map<String, Object> lunchTotal = new HashMap<>();
+					for(IntakeRecord item : lunchIntakeRecordList) {
+						totalIntakeKcal += item.getFoodKcal();
+						totalIntakeCarb += item.getFoodCarb();
+						totalIntakeProtein += item.getFoodProtein();
+						totalIntakeFat += item.getFoodFat();
+					}
+					lunchTotal.put("totalIntakeKcal", totalIntakeKcal);
+					lunchTotal.put("totalIntakeCarb", totalIntakeCarb);
+					lunchTotal.put("totalIntakeProtein", totalIntakeProtein);
+					lunchTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("lunchTotal", lunchTotal);
 				}
-				dinnerTotal.put("totalIntakeKcal", totalIntakeKcal);
-				dinnerTotal.put("totalIntakeCarb", totalIntakeCarb);
-				dinnerTotal.put("totalIntakeProtein", totalIntakeProtein);
-				dinnerTotal.put("totalIntakeFat", totalIntakeFat);
-				mav.addObject("dinnerTotal", dinnerTotal);
-			}
-			if(snackIntakeRecordList != null) {
-				double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
-				double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
-				double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
-				double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-				Map<String, Object> sncakTotal = new HashMap<>();
-				for(IntakeRecord item : snackIntakeRecordList) {
-					totalIntakeKcal += item.getFoodKcal();
-					totalIntakeCarb += item.getFoodCarb();
-					totalIntakeProtein += item.getFoodProtein();
-					totalIntakeFat += item.getFoodFat();
+				if(dinnerIntakeRecordList != null) {
+					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
+					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
+					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
+					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
+					Map<String, Object> dinnerTotal = new HashMap<>();
+					for(IntakeRecord item : dinnerIntakeRecordList) {
+						totalIntakeKcal += item.getFoodKcal();
+						totalIntakeCarb += item.getFoodCarb();
+						totalIntakeProtein += item.getFoodProtein();
+						totalIntakeFat += item.getFoodFat();
+					}
+					dinnerTotal.put("totalIntakeKcal", totalIntakeKcal);
+					dinnerTotal.put("totalIntakeCarb", totalIntakeCarb);
+					dinnerTotal.put("totalIntakeProtein", totalIntakeProtein);
+					dinnerTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("dinnerTotal", dinnerTotal);
 				}
-				sncakTotal.put("totalIntakeKcal", totalIntakeKcal);
-				sncakTotal.put("totalIntakeCarb", totalIntakeCarb);
-				sncakTotal.put("totalIntakeProtein", totalIntakeProtein);
-				sncakTotal.put("totalIntakeFat", totalIntakeFat);
-				mav.addObject("sncakTotal", sncakTotal);
-			}
-			if(supperIntakeRecordList != null) {
-				double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
-				double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
-				double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
-				double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-				Map<String, Object> supperTotal = new HashMap<>();
-				for(IntakeRecord item : supperIntakeRecordList) {
-					totalIntakeKcal += item.getFoodKcal();
-					totalIntakeCarb += item.getFoodCarb();
-					totalIntakeProtein += item.getFoodProtein();
-					totalIntakeFat += item.getFoodFat();
+				if(snackIntakeRecordList != null) {
+					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
+					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
+					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
+					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
+					Map<String, Object> sncakTotal = new HashMap<>();
+					for(IntakeRecord item : snackIntakeRecordList) {
+						totalIntakeKcal += item.getFoodKcal();
+						totalIntakeCarb += item.getFoodCarb();
+						totalIntakeProtein += item.getFoodProtein();
+						totalIntakeFat += item.getFoodFat();
+					}
+					sncakTotal.put("totalIntakeKcal", totalIntakeKcal);
+					sncakTotal.put("totalIntakeCarb", totalIntakeCarb);
+					sncakTotal.put("totalIntakeProtein", totalIntakeProtein);
+					sncakTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("sncakTotal", sncakTotal);
 				}
-				supperTotal.put("totalIntakeKcal", totalIntakeKcal);
-				supperTotal.put("totalIntakeCarb", totalIntakeCarb);
-				supperTotal.put("totalIntakeProtein", totalIntakeProtein);
-				supperTotal.put("totalIntakeFat", totalIntakeFat);
-				mav.addObject("supperTotal", supperTotal);
+				if(supperIntakeRecordList != null) {
+					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리
+					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
+					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
+					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
+					Map<String, Object> supperTotal = new HashMap<>();
+					for(IntakeRecord item : supperIntakeRecordList) {
+						totalIntakeKcal += item.getFoodKcal();
+						totalIntakeCarb += item.getFoodCarb();
+						totalIntakeProtein += item.getFoodProtein();
+						totalIntakeFat += item.getFoodFat();
+					}
+					supperTotal.put("totalIntakeKcal", totalIntakeKcal);
+					supperTotal.put("totalIntakeCarb", totalIntakeCarb);
+					supperTotal.put("totalIntakeProtein", totalIntakeProtein);
+					supperTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("supperTotal", supperTotal);
+				}				
+				System.out.println(breakfastIntakeRecordList);
+				System.out.println(lunchIntakeRecordList);
+				System.out.println(dinnerIntakeRecordList);
+				System.out.println(snackIntakeRecordList);
+				System.out.println(supperIntakeRecordList);
+
 			}
-	
-			System.out.println(breakfastIntakeRecordList);
-			System.out.println(lunchIntakeRecordList);
-			System.out.println(dinnerIntakeRecordList);
-			System.out.println(snackIntakeRecordList);
-			System.out.println(supperIntakeRecordList);
 		}
 
 		////getBurnningRecordList
 		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
 		ExerServ exer = exerService.getUserService(userId);
 		if(exer != null) {
+			isUsingExerServ = true;
 			List burnningRecordList = exerService.getBurnningRecordListForDiary(date, date, exer.getUserServiceNo());
-			mav.addObject("burnningRecordList", burnningRecordList);
-			System.out.println(burnningRecordList);
+			//운동 기록이 존재하는 경우
+			if(!burnningRecordList.isEmpty()) { 
+				isExerServInfo = true;
+				mav.addObject("burnningRecordList", burnningRecordList);
+				System.out.println(burnningRecordList);
+			}
 		}
 		
 		////diet 또는 exer 서비스를 이용하는 경우
-		//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
-		//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
+		//1. 회원의 식단 서비스/운동 서비스 목표 정보 조회
+		//2. 해당일 총 섭취 칼로리와 소모 칼로리 조회
 		//3. 회원의 서비스 이용 목표달성률 산출 및 조회
 		if(diet != null || exer != null) {
 			viewDuration.setStartDate(date);
 			viewDuration.setEndDate(date);
-			
-			//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
-			List dailyRecordList = diaryService.getBadgeList(viewDuration);
-			Badge dailyRecord = new Badge();
-			if(dailyRecordList != null) {
-				dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
-				mav.addObject("dailyRecord", dailyRecord);
-			}
-			TotalRecord totalRecord = dietService.getTotalDietRecord(viewDuration); //하루 기간 내 총 섭취 영양소 정보 조회
-			
-			//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
+			Achievement achievement = new Achievement();
+
+			//1. 회원의 식단 서비스/운동 서비스 목표 정보 조회
 			UserServ userServ = diaryService.getUserServiceDetails(userId);
 			
-			//3. 회원의 서비스 이용 목표달성률 산출 및 조회
-			Achievement achievement = new Achievement();
-			
 			if(diet != null) {
-				achievement = diaryService.getDietAchievement(viewDuration);
-				System.out.println(achievement);
+				//2. 해당일 총 섭취 칼로리 조회
+				TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
+				mav.addObject("totalDietRecord", totalDietRecord);
+				//3. 회원의 서비스 이용 목표달성률 산출 및 조회
+				if(totalDietRecord != null) {
+					achievement = diaryService.getDietAchievement(viewDuration);
+					System.out.println(achievement);
+				} else {
+					achievement.setIntakeKcalInPercentage(0);
+					achievement.setIntakeCarbInPercentage(0);
+					achievement.setIntakeProteinInPercentage(0);
+					achievement.setIntakeFatInPercentage(0);
+				}
 			}
-			if(exer !=null) {
-				Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
-				System.out.println(burnningKcalInPercentage);
-				achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);
-				mav.addObject("achievement", achievement);
-				System.out.println(achievement);
+			if(exer != null) {
+				//2. 해당일 총 소모 칼로리 조회
+				TotalRecord totalExerRecord = exerService.getTotalExerRecord(date, date, userServ.getUserServiceNo());
+				mav.addObject("totalExerRecord", totalExerRecord);
+				//3. 회원의 서비스 이용 목표달성률 산출 및 조회
+				if(totalExerRecord != null ) {
+					Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
+					achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);					
+					System.out.println(burnningKcalInPercentage);
+					System.out.println(achievement);					
+				} else {
+					achievement.setBurnningKcalInPercentage(0);
+				}
 			}
-			
+			mav.addObject("achievement", achievement);
 			mav.addObject("userServ", userServ);
-			mav.addObject("totalRecord", totalRecord);
 			
 			System.out.println(achievement);
-			System.out.println(dailyRecord);
 			System.out.println(userServ);
 		}
 
@@ -309,12 +331,18 @@ public class DiaryController {
 		viewDuration.setEndDate(endDate);
 		Badge badgeCount = diaryService.getBadgeTotalCount(viewDuration);
 		
+		////View에서 조회할 Flag
+		mav.addObject("isUsingDietServ", isUsingDietServ);
+		mav.addObject("isDietServInfo", isDietServInfo);
+		mav.addObject("isUsingExerServ", isUsingExerServ);
+		mav.addObject("isExerServInfo", isExerServInfo);
+		
+		
 		mav.addObject("trgtHabitList", trgtHabitList);
 		mav.addObject("userEventList", userEventList);
 		mav.addObject("badgeCount", badgeCount);
-		mav.addObject("NavName1", "다이어리");
-		mav.addObject("NavName2", "다이어리 조회");
-		mav.addObject("NavName3", "일별 상세 정보 조회");
+		mav.addObject("NavName1", "다이어리 조회");
+		mav.addObject("NavName2", "일별 상세 정보 조회");
 		mav.addObject("user", session.getAttribute("user"));
 		mav.setViewName("diary/getUserDailyLog.html");
 		
@@ -373,7 +401,7 @@ public class DiaryController {
 		System.out.println(userBodyInfoList);
 		
 		//코멘트***
-		
+
 		mav.addObject("NavName1", "다이어리");
 		mav.addObject("NavName2", "주간 레포트");
 		mav.setViewName("diary/getWeeklyPaper.html");
