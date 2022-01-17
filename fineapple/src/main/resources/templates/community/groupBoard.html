@@ -10,9 +10,61 @@
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 		
 									
-									
-											<!--begin::Card header-->
-											<div  class="card-header pt-9">
+
+
+
+
+								<form id="addGroupBoardForm">
+									<div class="card card-flush mb-10">
+										<!--begin::Header-->
+										<div class="card-header justify-content-start align-items-center pt-4">
+											<!--begin::Photo-->
+											<div class="symbol symbol-45px me-5">
+												<img src="/good/assets/media/avatars/300-3.jpg" class="" alt="">
+											</div>
+											<!--end::Photo-->
+											<span class="text-gray-400 fw-bold fs-6" th:text = "${session.user.userName}"></span>
+										</div>
+										<!--end::Header-->
+										<!--begin::Body-->
+										<div class="card-body pt-2 pb-0">
+											<div>
+										        <h2><b>이미지 미리보기</b></h2>
+										        <div class="input_wrap">
+										            <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일 업로드</a>
+										            <input type="file" id="input_imgs" name = "files" multiple/>
+										        </div>
+										    </div>
+										 
+										    <div>
+										        <div class="imgs_wrap">
+										            <img id="img" />
+										        </div>
+										    </div>
+										 
+										    
+											<!--begin::Input-->
+											<input  class="form-control bg-transparent border-0 px-0" id="kt_social_feeds_post_input" name="message" data-kt-autosize="true"  th:placeholder = "|무슨일이 있는 공유해주세요! ${session.user.userName}님!|"  style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 41px;"></input>
+											<!--end::Input-->
+										</div>
+										<!--end::Body-->
+										<!--begin::Footer-->
+										<div class="card-footer d-flex justify-content-end pt-0">
+											<!--begin::Post action-->
+											<a  class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
+												<!--begin::Indicator-->
+												<span class="indicator-label">업로드</span>
+												<!--end::Indicator-->
+											</a>
+											<!--end::Post action-->
+										</div>
+										<!--end::Footer-->
+									</div>
+									</form>
+
+
+										<div th:each = " data : ${list}">
+											<div  class="card-header pt-9" >
 												<!--begin::Author-->
 												<div class="d-flex align-items-center">
 													<!--begin::Avatar-->
@@ -211,42 +263,121 @@
 														<!--begin::Input-->
 														<textarea type="text" class="form-control form-control-solid border ps-5" rows="1" name="search" value="" data-kt-autosize="true" placeholder="Write your comment.." style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 59.9907px;"></textarea>
 														<!--end::Input-->
-														<!--begin::Actions-->
-														<div class="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
-															<!--begin::Btn-->
-															<button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-																<i class="fonticon-attach fs-2"></i>
-															</button>
-															<!--end::Btn-->
-															<!--begin::Btn-->
-															<button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-																<i class="fonticon-smile fs-2"></i>
-															</button>
-															<!--end::Btn-->
-															<!--begin::Btn-->
-															<button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-																<i class="fonticon-gallery fs-2"></i>
-															</button>
-															<!--end::Btn-->
-															<!--begin::Btn-->
-															<button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-																<i class="fonticon-location fs-2"></i>
-															</button>
-															<!--end::Btn-->
-														</div>
-														<!--end::Actions-->
 													</div>
 													<!--end::Input group-->
 												</div>
 												<!--end::Comment form-->
 											</div>
-											<!--end::Card footer-->
-									
-									
-		
+											<!--end::Card footer-->								
+										</div>
 
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+<script type="text/javascript">
+ 
+	// 이미지 정보들을 담을 배열
+	var sel_files = [];
+	
+	
+	$(document).ready(function() {
+	    $("#input_imgs").on("change", handleImgFileSelect);
+	}); 
+	
+	function fileUploadAction() {
+	    console.log("fileUploadAction");
+	    $("#input_imgs").trigger('click');
+	}
+	
+	function handleImgFileSelect(e) {
+	
+	    // 이미지 정보들을 초기화
+	    sel_files = [];
+	    $(".imgs_wrap").empty();
+	
+	    var files = e.target.files;
+	    var filesArr = Array.prototype.slice.call(files);
+	
+	    var index = 0;
+	    filesArr.forEach(function(f) {
+	        if(!f.type.match("image.*")) {
+	            alert("확장자는 이미지 확장자만 가능합니다.");
+	            return;
+	        }
+	
+	        sel_files.push(f);
+	
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	        	var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+	       
+	
+	            $(".imgs_wrap").append(html);
+	            index++;
+	
+	        }
+	        reader.readAsDataURL(f);
+	        
+	    });
+	}
+        
+        $(function(){
+        	 $("#kt_social_feeds_post_btn").on("click" , function() {
+        		//var form = $('#addGroupBoardForm')[0]; // [0] 있고 없고 차이는?
+        		//console.log(form);
+        		var data = new FormData(); 
+        		console.log(data);
+        		var inputFile = $('input[name="files"]');
+        		console.log(inputFile+"1");
+        		console.log(inputFile[0] + "2");
+        		console.log(inputFile[0].files + "3");   // FileList object 파일을로드하는 가장 간단한 방법은 표준 <input type="file">요소 를 사용하는 것 입니다. 
+        		//JavaScript는 선택한 File객체 의 목록을 FileList 로 반환합니다.
+        		//https://developer.mozilla.org/ko/docs/Web/API/File/Using_files_from_web_applications
+        		
+        		var files = inputFile[0].files;
+        		
+        		data.append('key','value');
+        		data.append('content',$("#kt_social_feeds_post_input").val());
+        		for(var i = 0; i < files.length; i ++){
+        			data.append('uploadFile', files[i])
+        		}
+        		
+
+        		
+        		
+
+        	var content= $("#kt_social_feeds_post_input").val();
+        	if(content=""){
+        		alert("내용이 입력되지 않았습니다.");
+        		return;
+        	}
+        	
+        	$.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/community/json/addGroupPost",
+                data: data,
+                processData: false, //false로 선언 시 formData를 string으로 변환하지 않음 기본값은 true다
+                contentType: false, //contentType : false 로 선언 시 content-type 헤더가 multipart/form-data로 전송되게 함
+                cache: false, //ajax 캐리 처리(?) ajax 로 통신 중 cache 가 남아서 갱신된 데이터를 받아오지 못할 경우
+                timeout: 600000, //ajax 대기 시간
+                //async : false //true가 default, false시 동기로 처리
+                success: function (data) {
+                	alert('success')
+                },
+                error: function (e) {
+                    alert('fail');
+                }
+            });
+        });
+        });
+        
+        
+        	
+        	
+
+        
+</script>
+
 
 	</body>
 	<!--end::Body-->

@@ -773,6 +773,16 @@ public class CommunityController {
 		
 		return "community/groupBoard.html";
 	}
+	
+	@GetMapping(value = "getBlackList")
+	public String getBlackList() {
+		return "community/getBlackList";
+	}
+	
+	@PostMapping(value = "getBlack")
+	public String getBlack() {
+		return null;
+	}
 
 
 
