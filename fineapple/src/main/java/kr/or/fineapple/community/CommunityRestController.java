@@ -1,5 +1,9 @@
 package kr.or.fineapple.community;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,13 +14,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -45,7 +51,8 @@ public class CommunityRestController {
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
 	
-	
+	@Value("${file.upload.directory.mtmQna}")
+	private String mtmFilePath;
 	
 	
 	
@@ -359,6 +366,25 @@ public class CommunityRestController {
 		communityService.addBattleInter(battle, rivalUserId);
 		 
 		
+	}
+	
+	@PostMapping(value = "addGroupPost")
+	public void addGroupPost(@RequestParam("content") String str, @RequestParam("uploadFile") MultipartFile[] files) throws IllegalStateException, IOException {
+			String[] times = new String[files.length];
+			
+			System.out.println(str);
+			
+			int i = 0;
+			for (MultipartFile multipartFile : files) {
+			
+			
+			System.out.println(multipartFile.getOriginalFilename());
+			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
+			multipartFile.transferTo(new File(mtmFilePath, time));
+			times[i] = time; 
+			i += 1;
+		}
+		System.out.println(str);
 	}
 	
 	

@@ -77,11 +77,11 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">휴대폰번호</label>
-    <input name="cellphone" id="cellphone" type="text" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
+    <input name="cellphone" id="cellphone" type="number" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
 </div>
 <div class="mb-10" style="max-width:300px;" th:if="${user.userId == null}">
     <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
-    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호를 입력해주세요." maxlength="11" required/>
+    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="최소 5자,하나 이상의 문자와 숫자로 입력해주세요." maxlength="11" required/>
     <div id="changeone" name="changeone"></div>
     <br>
     <label for="exampleFormControlInput1" class="required form-label">비밀번호 확인</label>
@@ -91,7 +91,7 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">몸무게</label>
-    <input name="weight" id="weight" type="text" class="form-control form-control-solid" placeholder="ex)60" maxlength ="4"required/>
+    <input name="weight" id="weight" type="number" class="form-control form-control-solid" placeholder="ex)60" maxlength ="4"required/>
     <div id="changethree" name="changethree"></div>
 </div>
 <div class="mb-10" style="max-width:300px;">
@@ -101,13 +101,13 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input name="height" id="height" type="text" class="form-control form-control-solid" placeholder="ex)170" maxlength="4" required/>
+    <input name="height" id="height" type="number" class="form-control form-control-solid" placeholder="ex)170" maxlength="4" required/>
     <div id="changefour" name="changefour"></div>
     
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">나이</label>
-    <input name="age" id="age" type="text" class="form-control form-control-solid" placeholder="ex)20" maxlength ="3" required/>
+    <input name="age" id="age" type="number" class="form-control form-control-solid" placeholder="ex)20" maxlength ="3" required/>
     <div id="changefive" name="changefive"></div>
     
 </div>
@@ -146,7 +146,7 @@
 	$(function(){
 		$("#password").on("keyup",function(){
 			var password = $("#password").val();
-			if(password.length == 11 ){
+			if(password.length >= 11 ){
 				$("#changeone").html("<p>비밀번호는 11자까지 입력이 가능합니다.</p>");
 				   	$("#changeone").css('color','red');
 			}else{
@@ -155,7 +155,7 @@
 		});
 		$("#userName").on("keyup",function(){
 			var userName = $("#userName").val();
-			if(userName.length == 10 ){
+			if(userName.length >= 10 ){
 				$("#changetwo").html("<p>닉네임(이름)은 10자까지 입력이 가능합니다.</p>");
 			   	$("#changetwo").css('color','red');
 			}else{
@@ -164,7 +164,7 @@
 		});
 		$("#weight").on("keyup",function(){
 			var weight = $("#weight").val();
-			if(weight.length == 4 ){
+			if(weight.length >= 4 ){
 				$("#changethree").html("<p>입력된 몸무게를 다시 확인해주세요.</p>");
 			    $("#changethree").css('color','red');
 			}else{
@@ -173,7 +173,7 @@
 		});
 		$("#height").on("keyup",function(){
 			var height = $("#height").val();
-			if(height.length == 4 ){
+			if(height.length >= 4 ){
 				$("#changefour").html("<p>입력된 키를 다시 확인해주세요.</p>");
 			    $("#changefour").css('color','red');
 			}else{
@@ -182,7 +182,7 @@
 		});
 		$("#age").on("keyup",function(){
 			var age = $("#age").val();
-			if(age.length == 3 ){
+			if(age.length >= 3 ){
 				$("#changefive").html("<p>입력된 나이를 다시 확인해주세요.</p>");
 			    $("#changefive").css('color','red');
 			}else{
@@ -191,7 +191,7 @@
 		});
 		$("#trgtWeight").on("keyup",function(){
 			var trgtWeight = $("#trgtWeight").val();
-			if(trgtWeight.length == 4 ){
+			if(trgtWeight.length >= 4 ){
 				$("#changesix").html("<p>입력된 목표체중을 다시 확인해주세요.</p>");
 			    $("#changesix").css('color','red');
 			}else{
@@ -207,24 +207,7 @@
       });
    });
    
-  $(function(){
-	  $("#checkPassword").keyup(function(){
-	  var password= $("#password").val();
-	  var checkPassword = $("#checkPassword").val();
-	 
-		console.log(checkPassword);
-		  if(password == checkPassword){
-			  $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
-			  $("#changePassword").attr('color', '#31B404');
-
-		  }
-		  else if(password != checkPassword){
-			  $("#changePassword").html("<div>비밀번호가 일치하지 않습니다.</div>");
-			  $("#changePassword").attr('color', '#FF0000');
-		  }
-	  })
-		  
-  })
+ 
   
   
    $(function(){
@@ -270,74 +253,8 @@
       });
    });
    
-   $(function(){
-      $("#submit").on("click",function(){
-         fncAddUser();
-      });
-   });
-   
-   function fncAddUser(){
-     console.log("fncAddUser시작");
-      var userName=$("#userName").val();
-      console.log(userName);
-      var password=$("#password").val();
-      var cellphone=$("#cellphone").val();
-      var age =$("#age").val();
-      var height = $("height").val();
-      var weight = $("#weight").val();
-      var trgtWeight=$("trgtWeight").val();
-      var userId = $("#userId").val();
-      var compareEmail = $("compareEmail").val();
-      var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-      if($("#male").val() == 'male'){
-         var gender=$("#male").val();
-      }
-      if($("#female").val() == 'female'){
-         var gender=$("#female").val();
-      }
-/*       if(userName == ""){
-         alert("닉네임을 입력하지 않으셨습니다.");
-         return; */
-      /* }else */ if(userId == ""){
-         alert("이메일을 입력하지 않으셨습니다.");
-         return;
-      }else if(textTest.test(userId) == false){
-         alert("이메일 형식으로 입력해주세요.")
-         return;
-      }
-      else if(password == ""){
-         alert("비밀번호를 입력하지 않으셨습니다.");
-         return;
-      }else if(compareEmail == ""){
-    	alert("인증번호를 입력하지 않으셨습니다.");
-    	return;
-      }else if(cellphone == ""){
-         alert("전화번호를 입력하지 않으셨습니다.");
-         return;
-      }else if(age == ""){
-         alert("나이를 입력하지 않으셨습니다.");
-         return;
-      }else if(weight == ""){
-         alert("몸무게를 입력하지 않으셨습니다.");
-         return;
-      }else if(height == ""){
-         alert("키를 입력하지 않으셨습니다.");
-         return;
-      }else if(trgtWeight == ""){
-         alert("목표체중을 입력하지 않으셨습니다.");
-         return;
-      }
-      else{
-         alert("회원가입에 성공하셨습니다.");
-          $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
-      }
-       console.log(gender);
-      console.log("fncAddUser끝");
 
-      }
-
-
-   $(function(){
+  $(function(){
 
 	      $("#sendMail").on("click",function(){
 	    	  
@@ -360,7 +277,7 @@
 	         		 isCertifidation = true;
 	         		 var key = data;
 	         		   $("#compare").on("keyup",function(){
-	         			   console.log("인증번호 올라갔닝")
+	         		//	   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
 	         			   console.log(compare)
 	         			   if(compare == key){
@@ -378,9 +295,104 @@
 	  
 	          }
 
-          })
-   })
+         })
+  })
+  
+	
    
+  
+	  
+	  $(function(){
+		  $("#checkPassword").keyup(function(){
+		  var password= $("#password").val();
+		  var checkPassword = $("#checkPassword").val();
+		 
+			console.log(checkPassword);
+			  if(password == checkPassword){
+				  $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
+				  $("#changePassword").attr('color', '#31B404');
+				  passwordResult=true;
+
+			  }
+			  else if(password != checkPassword){
+				  $("#changePassword").html("<div>비밀번호가 일치하지 않습니다.</div>");
+				  $("#changePassword").attr('color', '#FF0000');
+				  passwordResult=false;
+			  }
+		  })
+			  
+	  
+	   
+	   $("#submit").on("click",function(){
+      var userName=$("#userName").val();
+      var password=$("#password").val();
+      var cellphone=$("#cellphone").val();
+      var age =$("#age").val();
+      var height = $("height").val();
+      var weight = $("#weight").val();
+      var trgtWeight=$("trgtWeight").val();
+      var userId = $("#userId").val();
+      var compareEmail = $("compareEmail").val();
+      var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+      var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+      if($("#male").val() == 'male'){
+         var gender=$("#male").val();
+      }
+      if($("#female").val() == 'female'){
+         var gender=$("#female").val();
+      }
+/*       if(userName == ""){
+         alert("닉네임을 입력하지 않으셨습니다.");
+         return; */
+      /* }else */ if(userId == ""){
+         alert("이메일을 입력하지 않으셨습니다.");
+         return;
+      }else if(textTest.test(userId)){
+         alert("이메일 형식으로 입력해주세요.")
+         return;
+      }
+      else if(password == ""){
+         alert("비밀번호를 입력하지 않으셨습니다.");
+         return;
+      }else if(!reg.test(password)){
+    	  alert("비밀번호 규칙 위반입니다.");
+    	  return;
+      }else if(compareEmail == ""){
+    	alert("인증번호를 입력하지 않으셨습니다.");
+    	return;
+      }else if(cellphone == ""){
+         alert("전화번호를 입력하지 않으셨습니다.");
+         return;
+      }else if(age == ""){
+         alert("나이를 입력하지 않으셨습니다.");
+         return;
+      }else if(weight == ""){
+         alert("몸무게를 입력하지 않으셨습니다.");
+         return;
+      }else if(height == ""){
+         alert("키를 입력하지 않으셨습니다.");
+         return;
+      }else if(trgtWeight == ""){
+         alert("목표체중을 입력하지 않으셨습니다.");
+         return;
+      }else if(isCertification == false){
+    	  alert("인증번호가 일치하지 않습니다.");
+    	  return;
+      }else if(passwordResult==false){
+    	  alert("비밀번호가 일치하지 않습니다.");
+    	  return;
+      }
+      else{
+         alert("회원가입에 성공하셨습니다.");
+          $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
+      }
+   //    console.log(gender);
+  //    console.log("fncAddUser끝");
+
+      });
+
+	  });
+	  
 
       
 

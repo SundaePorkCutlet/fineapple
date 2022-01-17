@@ -90,7 +90,7 @@
 					accept : "application/json",
 					contentType : "application/json"	
 				}).done(function(JSONData){
-					console.log(JSONData);
+				//	console.log(JSONData);
 					if(JSONData.length == 0){
 						alert("아이디가 없습니다.");
 					}else{
@@ -110,7 +110,7 @@
 				let target = document.getElementById("kt_clipboard_1");
 				let button = target.nextElementSibling;
 				
-				console.log(button , target );
+				//console.log(button , target );
 				
 				var clipboard = new ClipboardJS(button, {
 				    target: target,

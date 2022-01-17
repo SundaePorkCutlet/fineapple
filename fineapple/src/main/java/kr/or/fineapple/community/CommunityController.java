@@ -564,14 +564,14 @@ public class CommunityController {
 		return "community/getReportList.html";
 	}
 	
-	@GetMapping(value = "{getReport}")
-	public String getReport(@RequestParam(name = "reportNo", required = false)String str, @PathVariable(value = "getReport") String pathVariable, Model model, HttpServletRequest request) {
+	@GetMapping(value = "getReport")
+	public String getReport(@RequestParam(name = "reportNo", required = false)String str, Model model, HttpServletRequest request) {
 		
 		System.out.println(request.getHeader("content-type"));
 		System.out.println(request.getHeader("accept-encoding"));
 		System.out.println(request.getHeader("accept"));
 		
-		System.out.println(pathVariable); //이건 학습용
+		
 		
 		System.out.println(str);
 		
@@ -766,6 +766,22 @@ public class CommunityController {
 		//model.addAttribute("list", communityService.getGroupList());
 		
 		return "community/getGroupList.html";
+	}
+	
+	@GetMapping(value = "groupBoard")
+	public String groupBoard(Model model){
+		
+		return "community/groupBoard.html";
+	}
+	
+	@GetMapping(value = "getBlackList")
+	public String getBlackList() {
+		return "community/getBlackList";
+	}
+	
+	@PostMapping(value = "getBlack")
+	public String getBlack() {
+		return null;
 	}
 
 

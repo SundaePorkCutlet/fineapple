@@ -53,8 +53,7 @@ function count(type)  {
 
    function sports(selectCal){
       var exerKcal = [[${exer.exerKcal}]]; 
-      console.log(exerKcal);
-      console.log($("#sporttime").val());
+     
       
       
       $("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
@@ -62,9 +61,7 @@ function count(type)  {
 
    function sportsTime(){
       var exerKcal = [[${exer.exerKcal}]]; 
-      console.log(exerKcal);
-      console.log($("#sporttime").val());
-      
+    
       
       $("#sportsKcal").text((exerKcal*$("#sporttime").val()*0.1).toFixed(0)+" kcal");
       //document.getElementById('sportsCal').innerText = $("select[name=order]").val()*obj.query.value;
@@ -161,8 +158,8 @@ function count(type)  {
          <div style="text-align:right;">
          
          <!--Manager로 로그인 시에만 출력  -->
-         <a th:href="@{../exer/getUpdateExer?exerNo=}+${exer.exerNo}" >수정하기</a>
-         <a th:href="@{../exer/deleteExer?exerNo=}+${exer.exerNo}" >삭제하기</a>
+         <a  th:if = "${session.user.role == 'admin'}" th:href="@{../exer/getUpdateExer?exerNo=}+${exer.exerNo}" >수정하기</a>
+         <a  th:if = "${session.user.role == 'admin'}" th:href="@{../exer/deleteExer?exerNo=}+${exer.exerNo}" >삭제하기</a>
          
          </div>
          

@@ -34,7 +34,9 @@ public class ExerServiceImpl implements ExerService {
 			exerMapper.updateServiceTrgt(service);
 			exerMapper.updateBodyInfo(service);
 			exerMapper.getUserService(service.getUserId());
-						
+			//exerMapper.updateUserService(service);
+			
+			
 			return exerMapper.addUserService(service);
 			
 	}
@@ -60,7 +62,7 @@ public class ExerServiceImpl implements ExerService {
 	@Override
 	public int updateUserService(ExerServ service) throws Exception {
 		
-		//exerMapper.updateServiceTrgt(service);
+		exerMapper.updateExerServiceNo(service);
 		exerMapper.updateBodyInfo(service);
 		
 

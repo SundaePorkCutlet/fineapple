@@ -30,38 +30,10 @@
     <input  readonly th:value="${user.age}" name="age" type="number"    class="form-control form-control-solid" placeholder="ex)11.1"/>
 </div>
 
-        <label class="required fw-bold fs-6 mb-5">성별</label>
-		<div align="center">
-		      <div class="d-flex flex-column fv-row" align="center">
-            <!--begin::Radio-->
-            <div class="form-check form-check-custom form-check-solid mb-5">
-                <!--begin::Input-->
-                <input th:checked="${user.gender}==male" readonly class="form-check-input me-3" name="radio_input" type="radio" value="0" id="kt_docs_formvalidation_radio_option_1" />
-                <!--end::Input-->
-
-                <!--begin::Label-->
-                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_1">
-                    <div class="fw-bolder text-gray-800" align="center">남자</div>
-                </label>
-                <!--end::Label-->
-            </div>
-            <!--end::Radio-->
-
-            <!--begin::Radio-->
-            <div class="form-check form-check-custom form-check-solid mb-5">
-                <!--begin::Input-->
-                <input th:checked="${user.gender}==female" readonly  class="form-check-input me-3" name="radio_input" type="radio" value="1" id="kt_docs_formvalidation_radio_option_2" />
-                <!--end::Input-->
-
-                <!--begin::Label-->
-                <label class="form-check-label" for="kt_docs_formvalidation_radio_option_2">
-                    <div class="fw-bolder text-gray-800">여자</div>
-                </label>
-                <!--end::Label-->
-            </div>
-            </div>
-        	</div>
-        	    
+         <div class="mb-10" style="max-width:300px;">
+    <label for="exampleFormControlInput1" >성별</label>
+    <input th:value="${user.gender}" name="gender" type="text"    class="form-control form-control-solid" readonly/>
+</div>
 
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" >목표체중</label>
