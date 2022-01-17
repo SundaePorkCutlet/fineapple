@@ -3,7 +3,28 @@
 <meta charset="utf-8">
 
 <th:block th:fragment="sidebar">
+<style>
 
+	.ban{
+	width:110%;
+	height:110%;
+	}
+
+@media(max-width:991.98px){
+	.ban{
+	width:240px;
+	height:60px;
+	}
+}
+/* @media(max-width:767.98px){ */
+/* 	.ban{ */
+/* 	width:80%; */
+/* 		height:30%; */
+/* 	} */
+/* } */
+
+
+</style>
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -314,7 +335,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="../dist/authentication/general/password-confirmation.html">
+                                        <a class="menu-link" th:href="@{../diary/getWeeklyPaper}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
@@ -322,7 +343,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="../dist/authentication/general/deactivation.html">
+                                        <a class="menu-link" th:href="@{../diary/getMonthlyPaper}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
@@ -598,7 +619,12 @@
                     <div class="header-brand" >
                         <!--begin::Logo-->
                         
-                        <a href="../" style="text-decoration:none; color:black;"><img alt="Logo" src="../assets/img/banner.png" style="max-width:100%;max-height:100%;" class="banner"/></a>
+                        <a href="../" style="text-decoration:none; color:black;">
+ 
+                        
+                        <img alt="Logo" src="../assets/img/banner.png" class="ban" /></a>
+                        
+                        
                         <!--end::Logo-->
                         <!--begin::Aside toggle-->
                         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">

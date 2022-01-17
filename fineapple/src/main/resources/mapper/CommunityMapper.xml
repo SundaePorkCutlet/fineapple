@@ -242,7 +242,7 @@
 	totals.counts AS post_like_count
 	FROM
 	board b,
-	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId} AND like_stt = 1 </trim>) ral,
+	(SELECT post_no, like_stt FROM report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND user_id = #{user.userId:VARCHAR} AND like_stt = 1 </trim>) ral,
 	(SELECT COUNT(*) counts FROM  report_and_like <trim prefix="WHERE"> post_no = #{postNo} AND like_stt = 1 </trim>) totals
 	<where>
 	b.post_no = #{postNo}
@@ -315,6 +315,18 @@
 	AND
 	like_Stt = 1
 	</where>
+	</delete>
+	
+	<!-- //////////////////////////////////////////////////////// -->
+	
+	
+	<delete id="delPost" parameterType="board">
+	DELETE
+	FROM
+	board
+	<trim prefix="WHERE" prefixOverrides="WHERE | OR">
+	post_no = #{postNo}
+	</trim>
 	</delete>
 	
 	<!-- //////////////////////////////////////////////////////// -->
@@ -416,6 +428,7 @@
 	SELECT
 	*
 	FROM
+	groups
 	<where>
 	group_no = #{groupNo}
 	</where>
@@ -930,7 +943,14 @@
 	
 	
 	
-	<select id="getMyMtmQna" parameterType="mtmQna" >
+	<select id="getMyMtmList" parameterType="user" resultMap="mtmQnaMap">
+	 SELECT
+	 *
+	 FROM
+	 mtm_qna
+	 <where>
+	 user_id = #{userId}
+	 </where>
 	</select>
 	
 	<select id="getAdminMtmList">
@@ -1037,8 +1057,11 @@
 	</select>
 	
 	
+
 	
 	
+	
+
 	
 	
 </mapper>

@@ -28,6 +28,7 @@
 		<result property="meal" 				column="MEAL" 		jdbcType="VARCHAR"/>
 		<result property="userFoodIntake" 	column="USER_FOOD_INTAKE" 		jdbcType="INTEGER"/>
   		<result property="userWtrIntake" 	column="USER_WTR_INTAKE" 		jdbcType="INTEGER"/>
+  		<result property="count"				column="CT"			jdbcType="INTEGER"/>
 		</resultMap>
 		
 		<resultMap id ="FoodMap" type="Food">
@@ -63,6 +64,7 @@
 		</resultMap>
 		
 		<resultMap id="TotalRecordMap" type="TotalRecord">
+			<result property="theHighestIntakeDate" column="total_intake_date" javaType="java.time.LocalDate" jdbcType="DATE"/>
 			<result property="totalIntakeKcal" column="total_intake_kcal" jdbcType="DOUBLE"/>
 			<result property="totalIntakeCarb" column="total_intake_carb" jdbcType="DOUBLE"/>
 			<result property="totalIntakeProtein" column="total_intake_protein" jdbcType="DOUBLE"/>
@@ -137,21 +139,7 @@
 	 AND USER_SERVICE_NO = #{userServiceNo}
 	</select>
 	
-	<!-- 다이어리 담당자 하리니가 작성함 -->
-	<select id="getIntakeRecordListForDiary" resultMap="IntakeRecordMap">
-	SELECT * FROM INTAKE_RECORD 
-	WHERE TO_CHAR(INTAKE_RECORD_DATE,'YYYYMMDD') = TO_CHAR(#{date},'YYYYMMDD')
-	 AND USER_SERVICE_NO = #{userServiceNo}
-	</select>
 	
-	<!-- 다이어리 담당자 하리니가 작성함 -->
-	<select id="getTotalDietRecord" resultMap="TotalRecordMap">
-	SELECT SUM(food_kcal) as "total_intake_kcal", SUM(food_carb) as "total_intake_carb", SUM(food_protein) as "total_intake_protein", SUM(food_fat) as "total_intake_fat"
-	FROM intake_record
-	WHERE user_id = #{userId:VARCHAR}
-	AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
-	GROUP BY TRUNC(intake_record_date)
-	</select>
 	
 	<update id="updateIntakeRecord" parameterType="IntakeRecord">
 	UPDATE INTAKE_RECORD SET
@@ -316,19 +304,55 @@
 	 DIET_BADGE_COUNT = 1
 	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<select id="FavIntake" parameterType="String" resultMap="IntakeRecordMap">
+	select ser.food_cd,ser.food_name,ser.ct from (select serv.ct,serv.food_name,serv.food_cd from intake_record ir,(select food_name,food_cd,count(food_cd) ct from intake_record
+	where user_id = #{value}
+	group by food_cd,food_name
+    ) serv
+	where ir.food_cd = serv.food_cd
+    group by ct,serv.food_name,serv.food_cd
+    order by  serv.ct desc) ser
+    where rownum&lt;4
 
+	</select>
+	
+	
+	
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getIntakeRecordListForDiary" resultMap="IntakeRecordMap">
+	SELECT * FROM INTAKE_RECORD 
+	WHERE TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	 AND USER_SERVICE_NO = #{userServiceNo}
+	</select>
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getTotalDietRecord" resultMap="TotalRecordMap">
+	SELECT SUM(food_kcal) as "total_intake_kcal", SUM(food_carb) as "total_intake_carb", SUM(food_protein) as "total_intake_protein", SUM(food_fat) as "total_intake_fat"
+	FROM intake_record
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	GROUP BY TRUNC(intake_record_date)
+	</select>
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getDaysCount" resultType="int">
+	SELECT COUNT(DISTINCT(intake_record_date))
+	FROM intake_record
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+	</select>
+	
+	<!-- 다이어리 담당자 하리니가 작성함 -->
+	<select id="getTheHighestIntakeKcalDay" resultMap="TotalRecordMap">
+	SELECT total_intake_date, total_intake_kcal
+	FROM (SELECT TRUNC(intake_record_date) as "total_intake_date", SUM(food_kcal), as "total_intake_kcal"
+			FROM intake_record
+			WHERE user_id = #{userId:VARCHAR}
+			AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+			GROUP BY TRUNC(intake_record_date)
+			ORDER BY 2 DESC)
+	WHERE ROWNUM <![CDATA[<=]]> 1
+	</select>
+	
 </mapper>

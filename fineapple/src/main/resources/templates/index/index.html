@@ -13,9 +13,7 @@
     top: 60px;
     right: 30px;
     opacity:0.5;
-    
-    
-    
+
 
 }
 .button,i {
@@ -25,6 +23,55 @@
  
 }
 
+td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
+
+.card .card-body {
+    padding: 0;
+}
+.card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    min-height: 70px;
+    padding: 0 1rem;
+    background-color: transparent;
+    border-bottom: 1px dashed #e8e5dd;
+}
+
+ .bdg{ 
+ 	width:5%; 
+ 	height:5%; 
+
+ } 
+ @media(max-width:991.98px){
+ .bdg{ 
+ 	width:10%; 
+ 	height:10%; 
+
+ } 
+
+ } 
+
+@media (max-width: 991.98px) {
+    .row>* {
+    width:30%;
+    height:10%;}
+}
+
+  .card shadow-sm {
+    width:80%;
+    height:100%;}
+
+@media (max-width: 991.98px) {
+    .card shadow-sm {
+    width:40%;
+    height:50%;}
+}
+
+@media (max-width: 767.98px) {
+    .col-lg-4 {display:none}
+}
 
 </style>
 	<!--begin::Body-->
@@ -48,39 +95,104 @@
 
 		<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 			<div id="kt_content_container" class="container-fluid">
-				<span id="kt_typedjs_example_1" class="fs-1 fw-bolder"></span>
+				<span id="kt_typedjs_example_1" class="fs-1 fw-bolder">
 				
+				</span>
 				<br>
 				<br>
+				
+				  <div>
+  <img class="bdg" src="../assets/img/diet.png" >&nbsp;&nbsp;
+  <img class="bdg"  src="../assets/img/exer.png" >&nbsp;&nbsp;
+  <img class="bdg"  src="../assets/img/water.png" >&nbsp;&nbsp;
+  <img class="bdg"  src="../assets/img/habbit.png" >&nbsp;&nbsp;
+  <img class="bdg"  src="../assets/img/battle.png" >&nbsp;&nbsp;
+  <img class="bdg"  src="../assets/img/group.png" >
+  </div>
 				<br>
 				<br>
+				  <br>
 				<br>
 				<br>
-				<br>
-	<!-- 			<div align="right">  
-				 <iframe width="60%" height="200%"
-               th:src=${exer.exerLink}
-               frameborder="0" ></iframe>
-               
-		<div data-text-content="true" style="font-weight:bold;font-size:32px;" class=""  th:text=${exer.exerName}></div>
-      </div> -->
-  <div align="right">  
-      <div class="card shadow-sm" style=" width: 50%; ">
+  <div class="row">
+    <div class="col-lg-4">
+    
+  <div align="center"class="card shadow-sm" >
     <div class="card-header">
-        <h3 class="card-title" style="font-weight:bold;font-size:32px;"  th:text=${exer.exerName} ></h3>
-        <div class="card-toolbar">
+
+        <h4 class="card-title" style="font-weight:bold;">내가 제일 많이 섭취한 식품</h4>
+       
+    </div>
+    <div class="card-body card-scroll h-200px">
+       <table class="table table-striped gy-7 gs-7">
+    <thead>
+        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+			<th>번호</th>
+            <th>식품명</th>
+            <th>섭취횟수</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="data, i : ${list2}">
+            <td th:text="${i.count}"></td>
+            <td ><a href="#" class="foodCd" th:attr="data-foodCd=${data.food.foodCd}" th:text="${data.food.foodName}" th:onclick="|javascript:getFood()|"></a></td>
+            <td th:text="${data.count}"></td>
+        </tr>
+    </tbody>
+</table>
+    </div>
+   
+</div>
+  </div>
+  
+  <div class="col-lg-4"> 
+      <div class="card shadow-sm" style="height:100%;" >
+    <div class="card-header">
+        <h4 class="card-title" style="font-weight:bold;" th:text="|추천운동영상 : ${exer.exerName}|" ></h4>
+          <div class="card-toolbar">
+           <th:block th:if="${session.user}!=null">
+            <button type="button" class="btn btn-sm btn-light" th:attr="data-exerNo=${exer.exerNo}">
+                상세정보
+            </button>
+        	</th:block>
         </div>
     </div>
     <div class="card-body">
-        <iframe width="80%" height="350"
+        <iframe  height="100%" width="100%"
                th:src=${exer.exerLink}
                frameborder="0" ></iframe>
     </div>
-    
+    </div>
+</div>
+ <div class="col-lg-4"> 
+      <div class="card shadow-sm"  >
+    <div class="card-header">
+        <h4 class="card-title" style="font-weight:bold;"  >게시판 최근글</h4>
+        <div class="card-toolbar">
+        </div>
+    </div>
+      <div class="card-body card-scroll h-200px">
+       <table class="table table-striped gy-7 gs-7">
+    <thead>
+        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+			<th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="data, i : ${list3}">
+            <td th:text="${i.count}"></td>
+            <td ><a href="#" class="postNo" th:attr="data-postNo=${data.postNo}" th:text = "${data.title}" th:onclick="|javascript:getPost()|"></a></td>
+            <td class="contents" th:text = "${data.content}"></td>
+        </tr>
+    </tbody>
+</table>
+    </div>
+    </div>
 </div>
       </div>
-      
-      
+
 			</div>
 		</div>
 
@@ -112,6 +224,47 @@
 		    $(function () {
 		        $("#alarm_button").on("click", function () {
 
+		        	
+		        	 alarm_button.onmousedown = function(event) {
+
+		        		 
+		        		 //좌표값
+				    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
+				    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
+
+				    	  alarm_button.style.position = 'absolute';
+				    	  alarm_button.style.zIndex = 1000;
+				    	  document.body.append(alarm_button);
+
+				    	  moveAt(event.pageX, event.pageY);
+
+				    	
+				    	  function moveAt(pageX, pageY) {
+				    		  alarm_button.style.left = pageX - shiftX + 'px';
+				    		  alarm_button.style.top = pageY - shiftY + 'px';
+				    	  }
+
+				    	  function onMouseMove(event) {
+				    	    moveAt(event.pageX, event.pageY);
+				    	  }
+
+				    	  // mousemove로 알림 움직이게 하고
+				    	  document.addEventListener('mousemove', onMouseMove);
+
+				    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+				    	  alarm_button.onmouseup = function() {
+				    	    document.removeEventListener('mousemove', onMouseMove);
+				    	    alarm_button.onmouseup = null;
+				    	  };
+
+				    	};
+
+				    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+				    	alarm_button.ondragstart = function() {
+				    	  return false;
+				    	}; 
+				    	
+				    	
 		            $.ajax({
 		                url: "../diet/getAlarm",
 		                success: function (data) {
@@ -147,6 +300,27 @@
         navigator.serviceWorker.register("/firebase-messaging-sw.js");
     });
 }
+		    
+		    function getFood(){
+		    	
+		    	self.location="../diet/getFood?foodCd="+$(".foodCd").attr("data-foodCd");
+		    }
+		    
+		    $(function () {
+		        $(".btn.btn-sm.btn-light").on("click", function () {
+					
+		        self.location="../exer/getExer?exerNo="+$(this).attr("data-exerNo");
+		        })
+		    });
+		    
+		    function getPost(){
+		    	
+		    	self.location="../community/getPost?postNo="+$(".postNo").attr("data-postNo");
+		    	
+		    	
+		    }	
+		
+		    	
 		 </script>
 	
 	

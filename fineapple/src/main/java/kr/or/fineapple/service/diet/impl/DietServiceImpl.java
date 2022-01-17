@@ -738,10 +738,11 @@ public class DietServiceImpl implements DietService{
 	
 	////다이어리 진행자 하리니가 작성: 특정 일자의 일일 식단 정보 조회
 	@Override
-	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate date, int userServiceNo) {
+	public List<IntakeRecord> getIntakeRecordListForDiary(LocalDate startDate, LocalDate endDate, int userServiceNo) {
 		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
 		Map<String, Object> map = new HashMap<>();
-		map.put("date", date);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
 		map.put("userServiceNo", userServiceNo);
 		return dietMapper.getIntakeRecordListForDiary(map);
 	}
@@ -750,7 +751,27 @@ public class DietServiceImpl implements DietService{
 	public TotalRecord getTotalDietRecord(ViewDuration viewDuration) {
 		return dietMapper.getTotalDietRecord(viewDuration);
 	}
+
+
+
+	@Override
+	public List<IntakeRecord> FavIntake(String userId) {
+		return dietMapper.FavIntake(userId);
+	}
 	
+	
+	
+	////다이어리 진행자 하리니가 작성: 기간 내 기록일의 수(테이블 내 기록이 존재하는 일자의 갯수)
+	@Override
+	public int getDaysCount(ViewDuration viewDuration) {
+		return dietMapper.getDaysCount(viewDuration);
+	}
+
+	////다이어리 진행자 하리니가 작성: 기간 내 가장 섭취 칼로리가 큰 날과 그 날의 총 섭취 칼로리
+	@Override
+	public TotalRecord getTheHighestIntakeKcalDay(ViewDuration viewDuration) {
+		return dietMapper.getTheHighestIntakeKcalDay(viewDuration);
+	}
 	
 }
 	

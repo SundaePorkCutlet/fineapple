@@ -62,16 +62,10 @@ var type = "type1";
 
 var lastScrollTop = 0;
 $(window).scroll(function () {
-	  console.log($(window).scrollTop());
-      console.log($(document).height());
-      console.log($(window).height());
 	
 	
 // 	if((window.innerHeight + window.scrollY+1) >= document.body.offsetHeight)
 	if($(window).scrollTop()+1 >= $(document).height() - $(window).height()){
-      console.log($(window).scrollTop());
-      console.log($(document).height());
-      console.log($(window).height());
 		
 		++page; 
       
@@ -79,21 +73,10 @@ $(window).scroll(function () {
     }
 });
 
-// window.onscroll = function(ev) {
-// 	console.log(window.innerHeight)
-// 	console.log(window.scrollY)
-// 	console.log(document.body.offsetHeight)
-//     if ( window.scrollY >= (window.innerHeight + document.body.offsetHeight)) {
-    
-//         ++page; 
-        
-//         select_list();
-//     }
-// };
+
 
 
 function select_list() {
-	console.log($("#searchKeyword").val());
 	
 	var searchKeyword = $("#searchKeyword").val();
 $.ajax( 
@@ -105,7 +88,6 @@ $.ajax(
 		dataType : "JSON" ,
 		contentType: "application/json; charset=utf-8",
 		success : function(data){
-			console.log(data.list)
 			if(data.list.length > 0 ){
 				$.each(data.list, function (idx, val){
 					
@@ -122,7 +104,6 @@ $.ajax(
 			});
 				
 			}else{
-			console.log("실패")
             	// 더이상 조회할 데이터가 없을 시 temp를 true로 만들어 더이상의 ajax호출을 막음.
 				temp = true;
 			}

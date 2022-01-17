@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.fineapple.mapper.BatchMapper">
+	<resultMap id = "userSelectMap"	type = "kr.or.fineapple.domain.User">
+		<result property="userId" column ="user_id" jdbcType="VARCHAR"/>
+		<result property="userName" column = "user_name" jdbcType = "VARCHAR"/>
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result	property="userImg"	column="user_img"	jdbcType="VARCHAR"/>
+		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
+		<result property="gender"	column="gender"	jdbcType="VARCHAR"/>
+		<result property="cellphone"	column="cellphone"	jdbcType="VARCHAR"/>
+		<result property="age"	column="age"	jdbcType="INTEGER"/>
+		<result property="height"	column="height"	jdbcType="INTEGER"/>
+		<result property="blcRgsStt" column="blc_rgs_stt" jdbcType="INTEGER"/>
+		<result property="userLeaveStt" column="user_leave_stt"	jdbcType="INTEGER"/>
+		<result property="lastConTime"	column="last_con_time"	jdbcType="DATE"/>
+		<result property="regDate"	column="reg_date"	jdbcType="DATE"/>
+		<result property="strdWtrIntake"	column="strd_wtr_intake"	jdbcType="DOUBLE"/>
+		<result	property="userSttMsg"	column="user_stt_msg"	jdbcType="VARCHAR"/>
+		<result property="blcAddDate"	column="blc_add_date"	jdbcType="DATE"/>
+		<result property="blcAddWhy"	column="blc_add_why"	jdbcType="VARCHAR"/>
+		<result property="dietServiceNo"	column="diet_service_no"	jdbcType="INTEGER"/>
+		<result property="exerServiceNo"	column="exer_service_no"	jdbcType="INTEGER"/>
+		<result property="trgtWeight"		column="trgt_weight"		jdbcType="DOUBLE"/>
+		<result property="trgtBodyFat"		column="trgt_body_fat"		jdbcType="DOUBLE"/>
+		<result	property="serviceTrgt"	column="service_trgt"	jdbcType="VARCHAR"/>
+		<result property="weight"	column="weight"		jdbcType="DOUBLE"/>
+		<result property="kakaoStt" column="kakao_stt" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<resultMap id="UserBodyInfoMap" type="kr.or.fineapple.domain.UserBodyInfo">	
+		<result property="userBodyInfoNo" column="USER_BODY_INFO_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="date" column="USER_BODY_INFO_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="weight" column="WEIGHT" jdbcType="DOUBLE"/>
+		<result property="bodyFat" column="BODY_FAT" jdbcType="DOUBLE"/>
+		<result property="bodyMuscle" column="BODY_MUSCLE" jdbcType="DOUBLE"/>
+		<result property="height" column="HEIGHT" jdbcType="DOUBLE"/>
+	</resultMap>
+
+	<resultMap id="BadgeMap" type="kr.or.fineapple.domain.Badge">
+		<result property="badgeNo" column="BADGE_NO" jdbcType="INTEGER"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="badgeDate" column="BADGE_DATE" javaType="java.time.LocalDate" jdbcType="DATE"/>
+		<result property="dietBadgeCount" column="DIET_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="exerBadgeCount" column="EXER_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="wtrBadgeCount" column="WTR_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="bttlBadgeCount" column="BTTL_BADGE_COUNT" jdbcType="INTEGER"/>
+		<result property="dailyIntakeKcal" column="DAILY_INTAKE_KCAL" jdbcType="DOUBLE"/>
+		<result property="dailyBurnningKcal" column="DAILY_BURNNING_KCAL" jdbcType="DOUBLE"/>
+		<result property="userWtrIntake" column="USER_WTR_INTAKE" jdbcType="DOUBLE"/>
+	</resultMap>
+	
+	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
+<!-- 	<insert id="addUserBodyInfo">
+	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
+	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
+			TRUNC(SYSDATE),
+			#{userId:VARCHAR},
+            (SELECT weight
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT body_fat
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT body_muscle
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT height
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}))
+	</insert> -->
+	
+<!-- 	<insert id="addBadge">
+	INSERT INTO badge (badge_no, user_id, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, user_wtr_intake, daily_burnning_kcal, daily_intake_kcal)
+	VALUES (SEQ_BADGE_BADGE_NO.nextval,
+            #{userId:VARCHAR},
+            SYSDATE,
+            0,
+            0,
+            0,
+            0,
+            0,
+            #{dailyBurnningKcal:DOUBLE},
+            #{dailyIntakeKcal:DOUBLE})
+	</insert> -->
+	
+		<!-- 다이어리 담당자 하리니가 작성 -->
+	<select id="getAllUsers" resultMap="userSelectMap">
+		SELECT user_id, diet_service_no, exer_service_no
+		FROM users
+		WHERE user_leave_stt = 0
+	</select>
+
+	
+</mapper>

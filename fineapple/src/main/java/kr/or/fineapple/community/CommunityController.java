@@ -41,6 +41,7 @@ import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import lombok.val;
 
 
 @Controller
@@ -66,7 +67,7 @@ public class CommunityController {
 	
 	
 	//@RequestMapping(value = "getBoard", method = RequestMethod.GET)
-	@GetMapping(value = "getBoard")
+	@RequestMapping (value = "getBoard")
 	public String getPostList(Model model) {
 		
 		List<Board> list = communityService.getPostList();
@@ -563,14 +564,14 @@ public class CommunityController {
 		return "community/getReportList.html";
 	}
 	
-	@GetMapping(value = "{getReport}")
-	public String getReport(@RequestParam(name = "reportNo", required = false)String str, @PathVariable(value = "getReport") String pathVariable, Model model, HttpServletRequest request) {
+	@GetMapping(value = "getReport")
+	public String getReport(@RequestParam(name = "reportNo", required = false)String str, Model model, HttpServletRequest request) {
 		
 		System.out.println(request.getHeader("content-type"));
 		System.out.println(request.getHeader("accept-encoding"));
 		System.out.println(request.getHeader("accept"));
 		
-		System.out.println(pathVariable); //이건 학습용
+		
 		
 		System.out.println(str);
 		
@@ -628,6 +629,8 @@ public class CommunityController {
 //		user = (User)request.getSession(true).getAttribute("user");
 //		
 //		model.addAttribute("user", user);
+//		
+//		model.addAttribute("list", communityService.getMyMtmList(user));
 //		
 //		return "community/getMtmList.html";
 //	}
@@ -692,50 +695,87 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-//	@GetMapping("getMtmList")
-//	public String getMtmList(HttpServletRequest request, Model model) {
-//		
-//		User user = (User)request.getSession(true).getAttribute("user");
-//		
-//		List<MtmQna> list = communityService.getMtmList(user);
-//		
-//		for (MtmQna mtmQna : list) {
-//			System.out.println(mtmQna);
-//		}
-//		
-//		model.addAttribute("list", list);
-//		
-//		
-//		
-//		
-//		return "community/getMtmList.html";
-//	}
-//	
+	@GetMapping("getMtmList")
+	public String getMtmList(HttpServletRequest request, Model model) {
+		
+		User user = (User)request.getSession(true).getAttribute("user");
+		
+		List<MtmQna> list = communityService.getMyMtmList(user);
+		
+		for (MtmQna mtmQna : list) {
+			System.out.println(mtmQna);
+		}
+		
+		model.addAttribute("list", list);
+		
+		return "community/getMtmList.html";
+	}
+	
 	
 	@PostMapping(value = "delPost")
-	public String delPost(HttpSession session) {
+	public String delPost(@ModelAttribute Board board) {
+		
+		System.out.println(board + "delPost");
 		
 		
+		communityService.delPost(board);
 		
-		return null;
+		
+		return "redirect:/community/getBoard";
+	}
+	
+	@GetMapping(value = "getAddFaq")
+	public String getAddFaq() {
+		
+		return "community/addFaq.html";
+	}
+	
+	
+	@PostMapping(value = "updatePostView")
+	public String updatePostView(@ModelAttribute(value="board") Board board) {	
+		
+		System.out.println(board);
+		
+		return "community/updatePost.html";
+	}
+	
+	@RequestMapping(value = "getGroup", method = RequestMethod.GET)
+	public String getGroup(@RequestParam("groupNo") String no, Model model) {
+		
+		System.out.println("getGroup 컨트롤러");
+		
+		Group group = new Group();
+		
+		group.setGroupNo(Integer.parseInt(no));
+		
+		group = communityService.getGroup(group);
+		
+		model.addAttribute("group", group);
+		
+		return "community/getGroup.html";
+		
+	}
+	
+	@GetMapping(value = "getGroupList")
+	public String getGroupList(Model model){
+		
+		List<Group> groups = communityService.getGroupList();
+		
+		model.addAttribute("list", groups);
+		
+		//model.addAttribute("list", communityService.getGroupList());
+		
+		return "community/getGroupList.html";
+	}
+	
+	@GetMapping(value = "groupBoard")
+	public String groupBoard(Model model){
+		
+		return "community/groupBoard.html";
 	}
 
 
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

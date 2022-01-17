@@ -1,5 +1,6 @@
 package kr.or.fineapple.service.diary.impl;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,4 +136,20 @@ public class DiaryServiceImpl implements DiaryService {
 		return diaryMapper.getExerAchievement(viewDuration);
 	}
 
+	@Override
+	public UserEvent getTheHighestIntakeKcalDayUserEvent(ViewDuration viewDuration) {
+		////기간 내 가장 섭취 칼로리가 큰 날과 그 날의 대표 이벤트 조회
+		return diaryMapper.getTheHighestIntakeKcalDayUserEvent(viewDuration);
+	}
+
+	@Override
+	public LocalDate getTheLatestDateBadge(String userId) {
+		return diaryMapper.getTheLatestDateBadge(userId);
+	}
+
+	@Override
+	public LocalDate getTheLatestDateUserBodyInfo(String userId) {
+		return diaryMapper.getTheLatestDateUserBodyInfo(userId);
+	}
+	
 }

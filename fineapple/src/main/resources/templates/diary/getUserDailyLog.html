@@ -51,8 +51,11 @@
 										<!--end::Content-->
 									</div>
 									<!--end::user_daily_log-->
+									
+									<th:block th:if="${userServ != null && achievement != null}">
+									
 									<!--begin::diet_record-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtIntakeKcal == null}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="diet_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
 											<div class="card-title">
@@ -68,7 +71,7 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="|${dailyRecord.dailyIntakeKcal}Kcal|"></span></div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${dailyRecord}==null ? '입력한 정보가 없습니다' : |${dailyRecord.dailyIntakeKcal}Kcal|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 칼로리</div>
 													</div>
 													<!--begin::Status-->
@@ -188,7 +191,7 @@
 									</div>
 									<!--end::diet_record-->
 									<!--begin::diet_record_details-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtIntakeKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtIntakeKcal == null}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="diet_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record_details">
 											<div class="card-title m-0">
@@ -317,8 +320,11 @@
 										<!--end::Content-->
 									</div>
 									<!--end::diet_record_details-->
+									</th:block>
+									
+									<th:block th:if="${userServ != null && achievement != null}">
 									<!--begin::exer_record-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
@@ -363,7 +369,7 @@
 									</div>
 									<!--end::exer_record-->
 									<!--begin::exer_record_details-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record_details" aria-expanded="true" aria-controls="kt_account_connected_accounts">
 											<div class="card-title m-0">
@@ -433,6 +439,8 @@
 										<!--end::Content-->
 									</div>
 									<!--end::exer_record_details-->
+									</th:block>
+									
 									<!--begin::Notifications-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
@@ -450,14 +458,16 @@
 												<div class="table-responsive">
 													<table class="table table-row-dashed border-gray-300 align-middle gy-6">
 														<tbody class="fs-6 fw-bold">
+														
+															<th:block th:if="${userServ != null}">
 															<!--begin::Table row-->
 															<tr>
 																<td>식단 뱃지</td>
-																<th:block th:if="${userServ.dailyTrgtIntakeKcal == null}">
+																<th:block th:if="${userServ == null || userServ.dailyTrgtIntakeKcal == null}">
 																	<td>서비스 활성화 전입니다</td>
 																	<td></td>
 																</th:block>
-																<th:block th:unless="${userServ.dailyTrgtIntakeKcal == null}">
+																<th:block th:unless="${userServ == null || userServ.dailyTrgtIntakeKcal == null}">
 																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
 																	<td>이미지</td>
 																</th:block>
@@ -466,16 +476,19 @@
 															<!--begin::Table row-->
 															<tr>
 																<td>운동 뱃지</td>
-																<th:block th:if="${userServ.dailyTrgtBurnningKcal == null}">
+																<th:block th:if="${userServ == null || userServ.dailyTrgtBurnningKcal == null}">
 																	<td>서비스 활성화 전입니다</td>
 																	<td></td>
 																</th:block>
-																<th:block th:unless="${userServ.dailyTrgtBurnningKcal == null}">
+																<th:block th:unless="${userServ == null || userServ.dailyTrgtBurnningKcal == null}">
 																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
 																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
+															</th:block>
+															
+															<th:block th:if="${badgeCount != null}">
 															<!--begin::Table row-->
 															<tr>
 																<td>물 마시기 뱃지</td>
@@ -490,6 +503,7 @@
 																<td>이미지</td>
 															</tr>
 															<!--end::Table row-->
+															</th:block>
 														</tbody>
 													</table>
 												</div>
@@ -533,7 +547,7 @@
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[0].eventTitle}" th:data-target="${userEventList[0].userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}">대표</div>
-																<div class="ribbon-label bg-warning" th:if="${userEventList[0].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[0].userEventNo}"></i></div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[0].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[0].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[0].eventCntnt}|"></div>
 														</div>
@@ -547,7 +561,7 @@
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[1].eventTitle}" th:data-target="${userEventList[1].userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}">대표</div>
-																<div class="ribbon-label bg-warning" th:if="${userEventList[1].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[1].userEventNo}"></i></div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[1].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[1].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[1].eventCntnt}|"></div>
 														</div>
@@ -561,7 +575,7 @@
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[2].eventTitle}" th:data-target="${userEventList[2].userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}">대표</div>
-																<div class="ribbon-label bg-warning" th:if="${userEventList[2].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[2].userEventNo}"></i></div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[2].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[2].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[2].eventCntnt}|"></div>
 														</div>
@@ -579,7 +593,7 @@
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[3].eventTitle}" th:data-target="${userEventList[3].userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}">대표</div>
-																<div class="ribbon-label bg-warning" th:if="${userEventList[3].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[3].userEventNo}"></i></div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[3].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[3].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[3].eventCntnt}|"></div>
 														</div>
@@ -593,7 +607,7 @@
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[4].eventTitle}" th:data-target="${userEventList[4].userEventNo}"></div>
 																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}">대표</div>
-																<div class="ribbon-label bg-warning" th:if="${userEventList[4].keyEventStt == 1}"><i class="bi bi-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[4].userEventNo}"></i></div>
+																<div class="ribbon-label bg-warning" th:if="${userEventList[4].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[4].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[4].eventCntnt}|"></div>
 														</div>
@@ -943,10 +957,10 @@
 			/* 사용자 이벤트 수정 모달 열기 */
 			$(".test-script").on("click",function(){
 				
-				var target = $(this).attr("data-target");
+				var userEventNo = $(this).attr("data-target");
 				
 				$.ajax({
-					url: "/diary/json/getUserEvent/"+target,
+					url: "/diary/json/getUserEvent/"+userEventNo,
 					type: "GET",
 					contentType: "application/json"
 				}).done(function(userEvent){
@@ -1005,10 +1019,10 @@
 			
 			/* 대표 이벤트 지정 */
 			$("div.ribbon-label.bg-warning > i").on("click", function(){
-				var target = $(this).attr("data-target");
+				var userEventNo = $(this).attr("data-target");
 				
 				$.ajax({
-					url: "/diary/json/updateKeyUserEventStt/"+target,
+					url: "/diary/json/updateKeyUserEventStt/"+userEventNo,
 					type: "GET",
 					contentType: "application/json"
 				}).done(function(){

@@ -16,29 +16,35 @@
 
 
 
-<input id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
+
 
 <div class="card card-dashed">
-
+<form id="post_form">
+<input th:if="${session.user != null}" id="postNo" type="hidden" name="postNo" th:value="${map.board.postNo}" th:attr="data-postLikeStt=${map.board.postLikeStt},data-cmntList=${map.list}">
+<input type="hidden"  name = "title" th:value ="${map.board.title}">
+<input type="hidden"  name = "content" th:value ="${map.board.content}">
 	    <div class="card-header">
 	    		<div>
+	    		
 		        <h3 class="card-title" th:text="${map.board.title}"></h3>
 		        <div th:text="${map.board.postDate}" ></div>
-		       	<div th:text="${map.board.user.userId}" ></div>
+		       	<div name = "content" th:text="${map.board.user.userId}" ></div>
 		       	</div>
-		        <div class="card-toolbar">
+
+		        <div th:if="${session.user != null}" class="card-toolbar">
 		            <button th:id="postReport" type="button" th:attr="data-trgtNo=${map.board.postNo},data-userId=${map.board.user.userId}" class="btn btn-sm btn-light" th:onClick="javascript:fcReportPost(1,this.id)">
 		                신고하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light">
+		            <button type="button" class="btn btn-sm btn-light"  th:onClick="javascript:fcUpdatePostView()">
 		                수정하기
 		            </button>
-		            <button type="button" class="btn btn-sm btn-light" >
+		            <button type="button" class="btn btn-sm btn-light"  th:onClick="javascript:fcDeletePost()">
 		                삭제하기
 		            </button>
 		        </div>
 		        
 	    </div>
+</form>
     <div class="card-body">
    		 <div th:if = "${map.board.img} != null">
 			<div th:each = "data : ${map.board.img}">
@@ -49,11 +55,11 @@
 		</div>
         <div class="card-body py-5" th:text="${map.board.content}">
     	</div>
-	    <div class="card-footer">
+	    <div th:if="${session.user != null}" class="card-footer">
 	    <button  class="btn btn-primary btn-hover-rise me-5" id ="postLikeCount" type="button"  th:text="${map.board.postLikeCount}" th:onClick="javascript:fnUpdatePostLike()"></button>		
 	    </div>
 	    <div class="separator border-5 my-10"></div>
-		<div style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
+		<div th:if="${session.user != null}" style="text-align: left;" th:insert="community/addcmnt :: addCmnt"></div>
 		<div class="separator border-5 my-10"></div>
 		
 		
@@ -99,6 +105,7 @@ function fcReportPost(cate, id){
 		dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
 		data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
 		contentType: "application/json",  // 서버에 보내는 데이터의 타입이다.
+		//async: false, //async: true <== default
 		success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
 			console.log("성공" + data);
 			
@@ -113,11 +120,18 @@ function fcReportPost(cate, id){
 
 
 
+fcDelectPost
 
 
 
 
+function fcDeletePost(){
+	$("#post_form").attr("method", "post").attr("action", "/community/delPost").submit();
+};
 
+function fcUpdatePostView(){
+	$("#post_form").attr("method", "post").attr("action", "/community/updatePostView").submit();
+};
 
 
 

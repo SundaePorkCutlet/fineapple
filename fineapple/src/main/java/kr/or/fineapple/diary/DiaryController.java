@@ -6,9 +6,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +33,7 @@ import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.UserEvent;
 import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.service.diary.DiaryService;
@@ -120,7 +126,7 @@ public class DiaryController {
 		DietServ diet = dietService.getDietService(userId);
 		if(diet != null) {
 			//해당 날짜 매 끼니 별로 식사 나눠서 담기
-			List<IntakeRecord> intakeRecordListAll = dietService.getIntakeRecordListForDiary(date, diet.getUserServiceNo());
+			List<IntakeRecord> intakeRecordListAll = dietService.getIntakeRecordListForDiary(date, date, diet.getUserServiceNo());
 			List<IntakeRecord> breakfastIntakeRecordList = new ArrayList<IntakeRecord>();
 			List<IntakeRecord> lunchIntakeRecordList = new ArrayList<IntakeRecord>();
 			List<IntakeRecord> dinnerIntakeRecordList = new ArrayList<IntakeRecord>();
@@ -247,7 +253,7 @@ public class DiaryController {
 		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
 		ExerServ exer = exerService.getUserService(userId);
 		if(exer != null) {
-			List burnningRecordList = exerService.getBurnningRecordListForDiary(date, exer.getUserServiceNo());
+			List burnningRecordList = exerService.getBurnningRecordListForDiary(date, date, exer.getUserServiceNo());
 			mav.addObject("burnningRecordList", burnningRecordList);
 			System.out.println(burnningRecordList);
 		}
@@ -262,7 +268,11 @@ public class DiaryController {
 			
 			//1. 뱃지 테이블에서 해당 일 총 섭취 칼로리와 소모 칼로리 조회
 			List dailyRecordList = diaryService.getBadgeList(viewDuration);
-			Badge dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
+			Badge dailyRecord = new Badge();
+			if(dailyRecordList != null) {
+				dailyRecord = (Badge) dailyRecordList.get(0);	//무조건 하나의 레코드만 조회되므로(하루 1개)
+				mav.addObject("dailyRecord", dailyRecord);
+			}
 			TotalRecord totalRecord = dietService.getTotalDietRecord(viewDuration); //하루 기간 내 총 섭취 영양소 정보 조회
 			
 			//2. 회원의 식단 서비스/운동 서비스 목표 정보 조회
@@ -279,13 +289,12 @@ public class DiaryController {
 				Integer burnningKcalInPercentage = diaryService.getExerAchievement(viewDuration);
 				System.out.println(burnningKcalInPercentage);
 				achievement.setBurnningKcalInPercentage(burnningKcalInPercentage);
+				mav.addObject("achievement", achievement);
 				System.out.println(achievement);
 			}
 			
 			mav.addObject("userServ", userServ);
-			mav.addObject("dailyRecord", dailyRecord);
 			mav.addObject("totalRecord", totalRecord);
-			mav.addObject("achievement", achievement);
 			
 			System.out.println(achievement);
 			System.out.println(dailyRecord);
@@ -317,10 +326,226 @@ public class DiaryController {
 		return mav;
 	}
 	
+	@RequestMapping(value="getWeeklyPaper")
+	public ModelAndView getWeeklyPaper(HttpSession session) throws Exception {
+		System.out.println("/diary/getWeeklyPaper");
+		
+		////사용자에게 보여지는 첫 화면에 필요한 정보 조회 위한 parameter
+		//조회 일자 기준 전주 기록 조회를 위해 viewDuration 내 userId, startDate, endDate 셋팅
+		String userId = ((User)session.getAttribute("user")).getUserId();
+		LocalDate startDate = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+		LocalDate endDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
+		ViewDuration viewDuration = new ViewDuration();
+		viewDuration.setUserId(userId);
+		viewDuration.setStartDate(startDate);
+		viewDuration.setEndDate(endDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		
+		////리턴해줄 mav 생성
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("startDate", startDate);
+		mav.addObject("endDate", endDate);
+		
+		//해당 주의 일별 섭취 칼로리
+		////getIntakeRecordList
+		//식단서비스를 이용하는지 여부 확인 후 이용한다면 일일 식단 기록 조회
+		DietServ diet = dietService.getDietService(userId);
+		if(diet != null) {
+			List intakeRecordList = dietService.getIntakeRecordListForDiary(startDate, endDate, diet.getUserServiceNo());
+			mav.addObject("intakeRecordList", intakeRecordList);
+			System.out.println(intakeRecordList);
+		}
+		//해당 주의 일별 소모 칼로리
+		////getBurnningRecordList
+		//운동서비스를 이용하는지 여부 확인 후 이용한다면 일일 운동량 기록 조회
+		ExerServ exer = exerService.getUserService(userId);
+		if(exer != null) {
+			List burnningRecordList = exerService.getBurnningRecordListForDiary(startDate, endDate, exer.getUserServiceNo());
+			mav.addObject("burnningRecordList", burnningRecordList);
+			System.out.println(burnningRecordList);
+		}
+
+		//해당 주의 골격근량/체지방량/체중 변화
+		//getUserBodyInfoList
+		List<Object> userBodyInfoList = diaryService.getUserBodyInfoList(viewDuration);
+		mav.addObject("userBodyInfoList", userBodyInfoList);
+		System.out.println(userBodyInfoList);
+		
+		//코멘트***
+		
+		mav.addObject("NavName1", "다이어리");
+		mav.addObject("NavName2", "주간 레포트");
+		mav.setViewName("diary/getWeeklyPaper.html");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="getMontlyPaper")
+	public ModelAndView getMontlyPaper(HttpSession session) throws Exception {
+		System.out.println("/diary/getMonthlyPaper");
+		
+		////사용자에게 보여지는 첫 화면에 필요한 정보조회 위한 parameter 설정
+		//조회 일자 기준 전월 기록 조회 위해 viewDuration 내 userId, startDate, endDate 셋팅
+		String userId = ((User)session.getAttribute("user")).getUserId();
+		LocalDate startDate = YearMonth.now().minusMonths(1).atDay(1);
+		LocalDate endDate = YearMonth.now().minusMonths(1).atEndOfMonth();
+		ViewDuration viewDuration = new ViewDuration();
+		viewDuration.setUserId(userId);
+		viewDuration.setStartDate(startDate);
+		viewDuration.setEndDate(endDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		
+		////리턴해줄 mav 생성
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("startDate", startDate);
+		mav.addObject("endDate", endDate);
+		
+		////각 서비스 정보의 존재 유무를 판단하기 위한 Flag 셋팅
+		Boolean isUsingDietServ = false;	//식단 서비스 이용 여부
+		Boolean isDietServInfo = false;		//식단 서비스를 이용한다면 조회할 정보가 존재하는지 여부
+		Boolean isUsingExerServ = false;	//운동 서비스 이용 여부
+		Boolean isExerServInfo = false;		//운동 서비스를 이용한다면 조회할 정보가 존재하는지 여부
+		
+		////식단 서비스 정보 조회
+		//해당 월의 주별 일평균 섭취 칼로리, 해당 월 일평균 섭취 칼로리
+		//총 섭취 칼로리가 가장 높은 주와 그 주의 일평균 섭취 칼로리
+		//해당 월 중 섭취 칼로리가 가장 높은 날과 그 날의 대표 이벤트
+		DietServ diet = dietService.getDietService(userId);
+		if(diet != null) {
+			//1. 식단서비스를 이용하는지 여부 확인 후
+			isUsingDietServ = true;
+			//2. 해당 월의 일 정보 조회
+			double totalIntakeKcal = dietService.getTotalDietRecord(viewDuration).getTotalIntakeKcal();
+			int daysCount = dietService.getDaysCount(viewDuration);
+			
+			//기록이 1개라도 존재할 경우에만 실행
+			if(totalIntakeKcal != 0 && daysCount != 0) {
+				isDietServInfo = true;
+
+				//해당 월 일평균 섭취 칼로리 계산
+				double avgDailyIntakeKcalOfMonth = totalIntakeKcal/daysCount;
+				mav.addObject("avgDailyIntakeKcalOfMonth", avgDailyIntakeKcalOfMonth);
+				System.out.println(avgDailyIntakeKcalOfMonth);
+				
+				//해당 월 중 섭취 칼로리가 가장 높은 날과 그 날의 대표 이벤트 조회
+				TotalRecord theHighestIntakeKcalDayInfo = dietService.getTheHighestIntakeKcalDay(viewDuration);		//일자, 칼로리
+				UserEvent theHighestIntakeKcalDayUserEvent = diaryService.getTheHighestIntakeKcalDayUserEvent(viewDuration);	//해당 일의 대표 이벤트
+				mav.addObject("theHighestIntakeKcalDayInfo", theHighestIntakeKcalDayInfo);
+				mav.addObject("theHighestIntakeKcalDayUserEvent", theHighestIntakeKcalDayUserEvent);
+				System.out.println(theHighestIntakeKcalDayInfo);
+				System.out.println(theHighestIntakeKcalDayUserEvent);
+						
+				//3. 해당 월의 주 정보 조회
+				//주차 별 날짜 할당
+				ViewDuration firstWeek = new ViewDuration();
+				ViewDuration secondWeek = new ViewDuration();
+				ViewDuration thirdWeek = new ViewDuration();
+				ViewDuration fourthWeek = new ViewDuration();
+				ViewDuration fifthWeek = new ViewDuration();
+				ViewDuration sixthWeek = new ViewDuration();
+				List<ViewDuration> weekDates = new ArrayList<ViewDuration>();
+				LocalDate weekStartDate = startDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+				
+				firstWeek.setUserId(userId);
+				firstWeek.setStartDate(weekStartDate);
+				firstWeek.setEndDate(weekStartDate.plusDays(6));
+				weekDates.add(firstWeek);
+				
+				secondWeek.setUserId(userId);
+				secondWeek.setStartDate(weekStartDate.plusDays(7));
+				secondWeek.setEndDate(weekStartDate.plusDays(13));
+				weekDates.add(secondWeek);
+				
+				thirdWeek.setUserId(userId);
+				thirdWeek.setStartDate(weekStartDate.plusDays(14));
+				thirdWeek.setEndDate(weekStartDate.plusDays(20));
+				weekDates.add(thirdWeek);
+				
+				fourthWeek.setUserId(userId);
+				fourthWeek.setStartDate(weekStartDate.plusDays(21));
+				fourthWeek.setEndDate(weekStartDate.plusDays(27));
+				weekDates.add(fourthWeek);
+				
+				if(weekStartDate.plusDays(28).isBefore(endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)))) {
+					fifthWeek.setUserId(userId);
+					fifthWeek.setStartDate(weekStartDate.plusDays(28));
+					fifthWeek.setEndDate(weekStartDate.plusDays(34));
+					weekDates.add(fifthWeek);
+					
+					if(weekStartDate.plusDays(35).isBefore(endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY)))) {
+						sixthWeek.setUserId(userId);
+						sixthWeek.setStartDate(weekStartDate.plusDays(35));
+						sixthWeek.setEndDate(weekStartDate.plusDays(41));
+						weekDates.add(sixthWeek);
+					}
+				}
+				
+				Map avgDailyIntakeKcalOfWeekMap = new HashMap<ViewDuration, Double>();
+				//해당 월의 주별 일평균 섭취 칼로리 계산
+				for(ViewDuration week:weekDates) {
+					totalIntakeKcal = dietService.getTotalDietRecord(week).getTotalIntakeKcal();
+					daysCount = dietService.getDaysCount(week);
+					
+					if(daysCount == 0) {
+						double avgDailyIntakeKcalOfWeek = 0.0;
+						avgDailyIntakeKcalOfWeekMap.put(week, avgDailyIntakeKcalOfWeek);
+					}
+					double avgDailyIntakeKcalOfWeek = totalIntakeKcal/daysCount;						
+					avgDailyIntakeKcalOfWeekMap.put(week, avgDailyIntakeKcalOfWeek);
+				}
+				mav.addObject("avgDailyIntakeKcalOfWeekMap", avgDailyIntakeKcalOfWeekMap);
+		
+				////총 섭취 칼로리가 가장 높은 주와 그 주의 일평균 섭취 칼로리(JavaScript에서 처리)
+			}//월에 1개라도 정보가 존재할시 실행 end
+		}//식단 서비스 정보 조회 end
+		
+		////운동 서비스 정보 조회
+		//해당 월의 주별 일평균 소모 칼로리, 해당 월 일평균 소모 칼로리
+		//총 소모 칼로리가 가장 높은 주와 그 주의 일평균 소모 칼로리
+		//해당 월 중 소모 칼로리가 가장 높은 날과 그 날의 대표 이벤트
+		ExerServ exer = exerService.getUserService(userId);
+		if(exer != null) {
+			//1. 운동서비스를 이용하는지 여부 확인 후
+			isUsingExerServ = true;
+			//2. 해당 월의 일 정보 조회
+			double totalBurnningKcal = dietService.getTotalDietRecord(viewDuration).getTotalIntakeKcal();
+			int daysCount = dietService.getDaysCount(viewDuration);
+			
+			//기록이 1개라도 존재할 경우에만 실행
+			if(totalBurnningKcal != 0 && daysCount != 0) {
+			}
+			
+			
+			//해당 월의 주별 일평균 소모 칼로리
+			//해당 월 일평균 소모 칼로리
+			//총 소모 칼로리가 가장 높은 주와 그 주의 일평균 소모 칼로리
+			//해당 월 중 소모 칼로리가 가장 높은 날과 그 날의 대표 이벤트
+		}		
+		
+		
+		
+		////해당 월의 뱃지 획득 갯수
+		//parameter : viewDuration 내 userId, startDate, endDate
+		//getBadgeTotalCount
+		//해당 월의 골격근량/체지방량/체중 변화
+		//parameter : viewDuration 내 userId, startDate, endDate
+		//getUserBodyInfoList
+		//코멘트***
+		
+		mav.addObject("NavName1", "다이어리");
+		mav.addObject("NavName2", "월간 레포트");
+		
+		mav.setViewName("diary/getMonthlyPaper.html");
+		
+		return mav;
+	}
+	
 	@RequestMapping(value="getUserBodyInfo")
 	public ModelAndView getUserBodyInfo(HttpSession session) {
 		
-		System.out.println("diary/getUserBodyInfo");
+		System.out.println("/diary/getUserBodyInfo");
 		
 		////사용자 신체 변화 정보 입력 출력를 위한 parameter
 		//session 내 userId와 오늘 일자 기준 주간 기록 조회

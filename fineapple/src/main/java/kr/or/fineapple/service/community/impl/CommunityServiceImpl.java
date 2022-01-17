@@ -300,6 +300,50 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getMybattleInter(battle);
 	}
+
+	@Override
+	public void delPost(Board board) {
+		communityMapper.delPost(board);
+		
+	}
+
+	@Override
+	public List<MtmQna> getMyMtmList(User user) {
+		// TODO Auto-generated method stub
+		return communityMapper.getMyMtmList(user);
+	}
+
+	@Override
+	public Board updatePostView(Board board) {
+		// TODO Auto-generated method stub
+		return communityMapper.getPost(board);
+	}
+
+	@Override
+	public Group getGroup(Group group) {
+		// TODO Auto-generated method stub
+		
+		group = communityMapper.getGroup(group);
+		
+		List<GroupUser> list = communityMapper.getGroupUserList(group);
+		
+		group.setGroupUsers(list);
+		
+		return group;
+		
+		
+		
+	}
+
+	@Override
+	public List<Group> getGroupList() {
+		// TODO Auto-generated method stub
+		return communityMapper.getGroupList();
+	}
+
+
+	
+	
 	
 	
 	

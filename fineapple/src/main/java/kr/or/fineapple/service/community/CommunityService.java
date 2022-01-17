@@ -31,6 +31,8 @@ public interface CommunityService {
 	
 	public void updateCmntLike(Cmnt cmnt);
 	
+	public void delPost(Board board);
+	
 	public List<Group> getGroupInterGroup(GroupUser groupUser);
 	
 	public List<User> getGroupInterUser(GroupUser groupUser);
@@ -67,16 +69,12 @@ public interface CommunityService {
 	
 	public void addMtmQna(MtmQna mtmQna);
 	
-
-	//Faq
 	public void addFqa(MtmQna mtmQna);
 	
 	public void deleteFaq(int mtmQnaNo);
-	
-	//블랙리스트
+
 	public void addUserBlc(User userId);
-	
-	//신고 처리 완료
+
 	public void updateReportStt(Report report);
 	
 	public User getUserBattle(User user);
@@ -84,4 +82,15 @@ public interface CommunityService {
 	public void addBattleInter(Battle battle, String rivalUserId);
 	
 	public List<Battle> getMybattleInter(Battle battle);
+	
+	public List<MtmQna> getMyMtmList(User user);
+	
+	public Board updatePostView (Board board);
+	
+	public Group getGroup(Group group);
+	
+	public List<Group> getGroupList();
+	
+	
+	
 }

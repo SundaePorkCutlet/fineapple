@@ -55,44 +55,6 @@
 		<result property="intakeFatInPercentage" column="intake_fat" jdbcType="INTEGER"/>
 	</resultMap> 
 	
-	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
-	<insert id="addUserBodyInfo">
-	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
-	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
-			TRUNC(SYSDATE),
-			#{userId:VARCHAR},
-            (SELECT weight
-			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
-            AND user_id = #{userId:VARCHAR}),
-            (SELECT body_fat
-			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
-            AND user_id = #{userId:VARCHAR}),
-            (SELECT body_muscle
-			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
-            AND user_id = #{userId:VARCHAR}),
-            (SELECT height
-			FROM user_body_info
-            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
-            AND user_id = #{userId:VARCHAR}))
-	</insert>
-	
-	<insert id="addBadge">
-	INSERT INTO badge (badge_no, user_id, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, user_wtr_intake, daily_burnnin_kcal, daily_intake_kcal)
-	VALUES (SEQ_BADGE_BADGE_NO.nextval,
-            #{userId:VARCHAR},
-            SYSDATE,
-            0,
-            0,
-            0,
-            0,
-            0
-            #{dailyBurnningKcal:DOUBLE},
-            #{dailyIntakeKcal:DOUBLE})
-	</insert>
-	
 	<!-- INSERT : 사용자이벤트 등록 -->
 	<insert id="addUserEvent" parameterType="UserEvent">
 	INSERT INTO user_event (user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt)
@@ -263,5 +225,79 @@
 															WHERE user_id = #{userId:VARCHAR})*100) as "burnning_kcal"
 	FROM dual
 	</select>
+	
+	<!-- SELECT ONE : 기간 내 가장 섭취 칼로리가 큰 날과 그 날의 대표 이벤트 조회 -->
+	<select id="getTheHighestIntakeKcalDayUserEvent" resultMap="UserEventMap">
+	SELECT user_event_no, user_id, key_event_stt, user_event_date, event_title, event_cntnt
+	FROM user_event
+	WHERE user_id = #{userId:VARCHAR}
+	AND key_event_stt = 0
+	AND TRUNC(user_event_date) = (SELECT intake_record_date
+									FROM (SELECT TRUNC(intake_record_date) as intake_record_date, SUM(food_kcal)
+											FROM intake_record
+											WHERE user_id = #{userId:VARCHAR}
+											AND TRUNC(intake_record_date) BETWEEN TRUNC(#{startDate}) AND TRUNC(#{endDate})
+											GROUP BY TRUNC(intake_record_date)
+											ORDER BY 2 DESC)
+									WHERE ROWNUM <![CDATA[<=]]> 1)
+	</select>
+	
+	<!-- SELECT ONE : 뱃지 테이블에 기록된 가장 마지막 날짜 조회 -->
+	<select id="getTheLatestDateBadge" resultType="java.time.LocalDate">
+	SELECT badge_date
+	FROM(SELECT badge_date
+		FROM badge
+		WHERE user_id = #{userId:VARCHAR}
+		ORDER BY TRUNC(badge_date) DESC)
+	WHERE ROWNUM <![CDATA[<=]]> 1
+	</select>
+	
+	<!-- SELECT ONE : 사용자 신체 정보 테이블에 기록된 가장 마지막 날짜 조회 -->
+	<select id="getTheLatestDateUserBodyInfo" resultType="java.time.LocalDate">
+	SELECT *
+	FROM(SELECT TRUNC(user_body_info_date)
+		FROM user_body_info
+		WHERE user_id = #{userId:VARCHAR}
+		ORDER BY TRUNC(user_body_info_date) DESC)
+	WHERE ROWNUM <![CDATA[<=]]> 1
+	</select>
+	
+	<!-- INSERT : 전일 데이터대로 신체변화 정보 기록 / 배치 프로그램 실행 -->
+	<insert id="addUserBodyInfo">
+	INSERT INTO user_body_info (user_body_info_no, user_body_info_date, user_id, weight, body_fat, body_muscle, height)
+	VALUES (SEQ_USER_BODY_INFO_NO.nextval,
+			TRUNC(SYSDATE),
+			#{userId:VARCHAR},
+            (SELECT weight
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT body_fat
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT body_muscle
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}),
+            (SELECT height
+			FROM user_body_info
+            WHERE TRUNC(user_body_info_date) = TRUNC(SYSDATE-1)
+            AND user_id = #{userId:VARCHAR}))
+	</insert>
+	
+	<insert id="addBadge">
+	INSERT INTO badge (badge_no, user_id, badge_date, diet_badge_count, exer_badge_count, wtr_badge_count, bttl_badge_count, user_wtr_intake, daily_burnning_kcal, daily_intake_kcal)
+	VALUES (SEQ_BADGE_BADGE_NO.nextval,
+            #{userId:VARCHAR},
+            SYSDATE,
+            0,
+            0,
+            0,
+            0,
+            0,
+            #{dailyBurnningKcal:DOUBLE},
+            #{dailyIntakeKcal:DOUBLE})
+	</insert>
 	
 </mapper>

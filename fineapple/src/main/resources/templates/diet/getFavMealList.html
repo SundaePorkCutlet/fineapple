@@ -40,7 +40,6 @@ $(function() {
 	  $.ajax({
 			url: "/diet/getFavMealItem?favMealNo="+$(this).attr("data-favMealNo")+"&favMealName="+$(this).attr("data-favMealName"),
 			success:function(data){
-				console.log(data)
 				$("#loginModalHolder").html(data);
 				$("#favMealItem").modal("show");			
 			}  
@@ -114,7 +113,7 @@ $(function() {
 
 	 var FavMealNo = $("input[name=chek]:checked").attr("data-favMealNo");
 	 
-		if(userInput2.length>10){
+		if(userInput2.length>11){
 			alert('10글자까지만 가능합니다')
 			
 		}else{
@@ -124,7 +123,6 @@ $(function() {
 			url: "/diet/updateFavMeal?favMealName="+userInput2+"&favMealNo="+FavMealNo+"&menu=1",
 			type : 'post',
 			success:function(data){
-				console.log(data)
 				$("#loginModalHolder").html(data);
 				$("#favMealList").modal("show");			
 				

@@ -28,12 +28,65 @@
 
 <br>
 <div align="center">
+							<a  th:if = "${session.user.role == 'admin'}" th:href="@{../community/getReportList}" class="btn btn-sm btn-light">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->신고리스트 조회</a>
+							<!--end::Follow-->
+							
+							
+							<!--begin::Follow-->
+							<a th:if = "${session.user.role == 'user'}" th:href="@{../community/getMyMtmList}" class="btn btn-sm btn-light">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->문의 리스트 조회</a>
+							<!--end::Follow-->
+							
+							<!--begin::Follow-->
+							<a th:if = "${session.user.role == 'admin'}" th:href="@{../community/getMtmList}" class="btn btn-sm btn-light">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->문의 리스트 조회(관리자)</a>
+							<!--end::Follow-->
+							
+							<!--begin::Follow-->
+							<a th:href="@{../community/addMtmView}" class="btn btn-sm btn-light">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+							<span class="svg-icon svg-icon-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
+									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->1대1 문의 하기</a>
+							<!--end::Follow-->
+							
 	<div align="right" class="accordion-header">
 	<button type="button" id="add" class="btn btn-success">작성하기</button>
 	</div>
 	<div th:each ="data ,i : ${list}" id="count" th:attr="data-i=${i.count}">
 		<div class="accordion" id="kt_accordion_1" style="max-width:800px" >
 		    <div class="accordion-item">
+		    <!--begin::Follow-->
+							
+							
+							
+							
 		    <!-- th:attr="|data-bs-target=#kt_accordion_1_body_${i.count}|" -->
 		    <!-- data-bs-target="#kt_accordion_1_body_1" -->
 		        <h2 class="accordion-header" id="kt_accordion_1_header_1">
