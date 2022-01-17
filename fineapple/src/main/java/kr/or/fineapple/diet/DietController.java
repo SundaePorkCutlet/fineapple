@@ -208,17 +208,23 @@ public class DietController {
 			throws Exception {
 		System.out.println("post:addDietService");
 		System.out.println(serv);
-
+		DietServ serv2 = new DietServ();
 		User user = (User) request.getSession(true).getAttribute("user");
 		System.out.println(user);
 		
 		String userId = user.getUserId();
 		serv.setUserId(userId);
 				
-		
-			
+		if(dietService.getDietService(userId)==null) {		
 			dietService.addDietService(serv);
-		
+		}else {
+			serv2 = dietService.getDietService(userId);
+			serv2.setBodyFat(serv.getBodyFat());
+			serv2.setTrgtBodyFat(serv.getTrgtBodyFat());
+			serv2.setDailyTrgtIntakeKcal(serv.getDailyTrgtIntakeKcal());
+			
+			dietService.updateDietService(serv2);
+		}
 			
 			
 		
