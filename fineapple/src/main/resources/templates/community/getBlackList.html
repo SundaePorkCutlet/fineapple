@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+<meta charset="utf-8">
+<!-- 공통 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+
+	<!--begin::Body-->
+	<body id="kt_body" class="aside-enabled">
+		<!-- 공통 SideBar -->
+		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+<div class="table-responsive">
+ <table class="table">
+  <thead>
+   <tr class="fw-bolder fs-6 text-gray-800">
+    <th>번호</th>
+    <th>아이디</th>
+    <th>이름</th>
+    <th>추가날짜</th>
+    <th>자세히</th>
+
+   </tr>
+  </thead>
+  <tbody>
+   <tr th:each = "data, i : ${list}">
+    <td th:text="${data.userNo}"></td>
+    <td th:text="${data.userId}"></td>
+    <td th:text="${data.userName}"></td>
+    <td th:text="${data.blcAddDate}"></td>
+    <td th:value="${data.userId}" th:id = "|${i.count}id|" th:onClick="javascript:fnGetBlackList(this.id)"> 자세히 </td>
+   </tr>
+  </tbody>
+ </table>
+</div>
+		<!-- 공통 하단 footer -->
+		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+		<script type="text/javascript">
+		function fnGetBlackList(id){
+			var data = $("#" + id).val();
+			
+		};
+		</script>
+
+	</body>
+	<!--end::Body-->
+</html>
