@@ -8,33 +8,27 @@
 	<body id="kt_body" class="aside-enabled">
 		<!-- 공통 SideBar -->
 		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
-<!-- ////////////////////////////////////여기까지 절대 고정 건드리지마셈//////////////////////////////////// -->
-
-
-		<!-- 예시를 보고 싶다면 diary 아래 getDiary.html 보셈  -->
-		<!-- 얘들아 여기서부터 내가 넣고 싶은 바디 내용을 넣는거야!!!! 헤드는 건드릴거 없음 XXXXXXX -->
-
-<!-- 
-
-		이런식으로 걍 냅다 넣으면돼 아래가 예시
-		
-		<div class="container">
-		
-			<div class="row mb-3">
-			    <div class="col-md-2 themed-grid-col"></div>
-			    <div class="col-md-8 themed-grid-col"><div id='calendar'></div></div>
-			    <div class="col-md-2 themed-grid-col"></div>
-			</div>
-			
-		</div>
-
--->
- 
- 
- 
- 
-
-<!-- ////////////////////////////////////여기부터 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 
+											<div class="card card-flush bg-transparent card-p-0 border-0 shadow-0 mb-9">
+												<!--begin::Card header-->
+												<div class="card-header">
+													<h4 class="card-title fw-bolder text-dark">Categories</h4>
+												</div>
+												<!--end::Card header-->
+												<!--begin::Card body-->
+												<div class="card-body pt-2">
+													<!--begin::Item-->
+													<div class="d-flex flex-stack fw-bold fs-5 text-gray-500 mb-4">
+														<!--begin::Text-->
+														<a href="#" class="text-gray-500 text-hover-primary pe-2">SaaS Solutions</a>
+														<!--end::Text-->
+														<!--begin::Number-->
+														<div class="m-0">24</div>
+														<!--end::Number-->
+													</div>
+													<!--end::Item-->
+												</div>
+												<!--end::Card body-->
+											</div>
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <!-- ////////////////////////////////////여기까지 다시 절대 고정 건드리지마셈//////////////////////////////////// --> 		
