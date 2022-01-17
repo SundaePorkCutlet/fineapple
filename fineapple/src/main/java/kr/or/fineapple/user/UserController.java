@@ -115,6 +115,7 @@ public class UserController {
 		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
 			 System.out.println("여기 들어왔니");
+			 user.setPassword("kakao11");
 			 mav.addObject(user);
 		 }
 		System.out.println();
@@ -130,7 +131,7 @@ public class UserController {
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		if(user.getPassword() == null) {
-			user.setPassword("kakaopassword");
+			user.setPassword("kakao!!");
 			user.setKakaoStt(1);
 		}
 		if(!file.getOriginalFilename().isEmpty()) {
@@ -148,7 +149,7 @@ public class UserController {
 		userService.addUser(user);
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");
-		if(user.getPassword().equals("kakaopassword")) {
+		if(user.getPassword().equals("kakao!!")) {
 			session.setAttribute("user",user);
 		}
 		return "redirect:/";

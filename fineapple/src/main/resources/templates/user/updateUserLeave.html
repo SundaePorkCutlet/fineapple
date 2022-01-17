@@ -58,16 +58,16 @@
 </div>
 
 
-<div th:if="${session.user.password.equals('kakaopassword')}">
+<div th:if="${session.user.password.equals('kakao!!')}">
 <div class="mb-10" style="max-width:300px;">
        <div class="d-flex flex-stack input-with-btn">
-                <input  type="hidden" id = "password"  name = "password" value="kakaopassword" class="form-control form-control-solid" placeholder="비밀번호를 입력해주세요." required/>
+                <input  type="hidden" id = "password"  name = "password" value="kakao!!" class="form-control form-control-solid" placeholder="비밀번호를 입력해주세요." required/>
             
             </div>
 </div>
        
 </div>
-<div th:unless="${session.user.password.equals('kakaopassword')}">
+<div th:unless="${session.user.password.equals('kakao!!')}">
 <div class="mb-10" style="max-width:300px;">
             <label for="userId" class="required form-label">비밀번호</label>
             <div class="d-flex flex-stack input-with-btn">
