@@ -385,6 +385,8 @@ public class CommunityRestController {
 			i += 1;
 		}
 		System.out.println(str);
+		
+		
 	}
 	
 	

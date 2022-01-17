@@ -769,9 +769,11 @@ public class CommunityController {
 	}
 	
 	@GetMapping(value = "groupBoard")
-	public String groupBoard(Model model){
+	public String groupBoard(Model model, @RequestParam("groupNo") String str){
 		
-		return "community/sample.html";
+		
+		
+		return "community/groupBoard.html";
 	}
 	
 	@GetMapping(value = "getBlackList")
@@ -782,6 +784,30 @@ public class CommunityController {
 	@PostMapping(value = "getBlack")
 	public String getBlack() {
 		return null;
+	}
+	
+	@RequestMapping(value = "getMyGroupBoardList", method = RequestMethod.GET)
+	public ModelAndView getMyGroupBoardList(HttpServletRequest request) {
+		
+		GroupUser groupUser = new GroupUser();
+		
+		groupUser.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		groupUser.setGroupStt(4);
+		
+		List<Group> list =   communityService.getGroupInterGroup(groupUser);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("community/getMyGroupBoardList.html");
+		
+		modelAndView.addObject("list", list);
+		
+		modelAndView.addObject("NavName1", "소그룹");
+		
+		modelAndView.addObject("NavName1", "소그룹 게시글 리스트");
+
+		return modelAndView;
 	}
 
 
