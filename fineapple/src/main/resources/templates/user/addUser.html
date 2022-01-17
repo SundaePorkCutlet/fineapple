@@ -117,7 +117,7 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1"class="required form-label" >목표체중</label>
-    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" oninput='handleOnInput(this, 3)' placeholder="ex)57" required/>
+    <input id="trgtWeight" name="trgtWeight" type="number" class="form-control form-control-solid" oninput='handleOnInput(this, 3)' placeholder="ex)57" required/>
     <div id="changesix" name="changesix"></div>
     
 </div>
@@ -238,7 +238,7 @@ var passwordResult = true;
                   accept : "application/json",
                   contentType : "application/json"
          }).done(function(result){
-            console.log(result);
+          //  console.log(result);
             if(result == 0){
                if(userId != ""){
                   if(userId.indexOf('@') <1 || userId.indexOf('.') == -1){
@@ -351,7 +351,7 @@ var passwordResult = true;
       var compareEmail = $("compareEmail").val();
       var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
       var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
-     alert("어")
+   
       if($("#male").val() == 'male'){
          var gender=$("#male").val();
       }
@@ -363,43 +363,42 @@ var passwordResult = true;
          return; */
       /* }else */ if(userId == ""){
          alert("이메일을 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(textTest.test(userId)==false){
          alert("이메일 형식으로 입력해주세요.")
-         return;
+         return false;
       }
       else if(password == ""){
          alert("비밀번호를 입력하지 않으셨습니다.");
-         return;
-      }else if(!reg.test(password)){
-    	  alert("비밀번호 규칙 위반입니다.");
-    	  return;
+         return false;
       }else if(compareEmail == ""){
     	alert("인증번호를 입력하지 않으셨습니다.");
-    	return;
+        return false;
       }else if(cellphone == ""){
          alert("전화번호를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(age == ""){
          alert("나이를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(weight == ""){
          alert("몸무게를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(height == ""){
          alert("키를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(trgtWeight == ""){
          alert("목표체중을 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(isCertification == false){
     	  alert("인증번호가 일치하지 않습니다.");
-    	  return;
+          return false;
       }else if(passwordResult==false){
     	  alert("비밀번호가 일치하지 않습니다.");
-    	  return;
-      }
-      else{
+          return false;
+      }else if(!reg.test(password)){
+    	  alert("비밀번호 규칙 위반입니다.");
+          return false;
+      }else{
          alert("회원가입에 성공하셨습니다.");
           $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
       }
