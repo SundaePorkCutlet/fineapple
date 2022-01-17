@@ -8,13 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import kr.or.fineapple.domain.Badge;
+import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.service.diary.DiaryService;
 
 @SpringBootTest
 public class DiaryMapperTest {
 	
 	  @Autowired
-	  @Qualifier("diaryServiceImpl") private DiaryService diaryService;
+	  @Qualifier("diaryServiceImpl")
+	  private DiaryService diaryService;
+	  
+	  @Autowired
+	private DiaryMapper diaryMapper;
 	 
 	
 	@Test
@@ -164,15 +170,19 @@ public class DiaryMapperTest {
 		
 //		System.out.println(weekDates);
 		
-		LocalDate today = LocalDate.now();
-		LocalDate theLatestDateUserBodyInfo = diaryService.getTheLatestDateUserBodyInfo("hc@gmail.com");
-		System.out.println(today);
-		System.out.println(theLatestDateUserBodyInfo);
-		//가장 마지막 날짜와 오늘 일자의 차 계산
-		int howManyDays = Period.between(theLatestDateUserBodyInfo, today).getDays();
-		
-		System.out.println(howManyDays);
-
+//		LocalDate today = LocalDate.now();
+//		LocalDate theLatestDateUserBodyInfo = diaryService.getTheLatestDateUserBodyInfo("hc@gmail.com");
+//		System.out.println(today);
+//		System.out.println(theLatestDateUserBodyInfo);
+//		//가장 마지막 날짜와 오늘 일자의 차 계산
+//		int howManyDays = Period.between(theLatestDateUserBodyInfo, today).getDays();
+//		
+//		System.out.println(howManyDays);
+//
+//		Badge defaultBadge = new Badge();
+//		defaultBadge.setUserId("romi@gmail.com");
+//		defaultBadge.setBadgeDate(LocalDate.now());
+//		diaryMapper.addBadge(defaultBadge);
 	}
 	
 }

@@ -2,6 +2,7 @@ package kr.or.fineapple.exer;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.startup.SetAllPropertiesRule;
-import org.omg.PortableServer.Servant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.exer.ExerService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -44,6 +44,10 @@ public class ExerController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("diaryServiceImpl")
+	private DiaryService diaryService;
 	
 	
 	public ExerController() {
@@ -763,6 +767,14 @@ record.setDailyExerTime(resultTime2);
 System.out.println("입력되는 일일 운동량~~~"+record);
 
 exerService.addDailyBurnning(record);
+
+//뱃지기록 갱신되는 부분
+LocalDate startDate = LocalDate.now();
+LocalDate endDate = LocalDate.now();
+
+//exerService.getTotalExerRecord(startDate, endDate, serv.getUserServiceNo());
+	
+
 
 model.addAttribute("NavName1","운동관리");
 model.addAttribute("NavName2","일일 운동량 정보 조회");
