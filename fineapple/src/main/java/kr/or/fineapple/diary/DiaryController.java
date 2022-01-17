@@ -113,6 +113,7 @@ public class DiaryController {
 		////리턴해줄 mav 생성
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("viewDate", date);
+		mav.addObject("todayDate", LocalDate.now());
 		
 		////각 서비스 정보의 존재 유무를 판단하기 위한 Flag 셋팅
 		Boolean isUsingDietServ = false;	//식단 서비스 이용 여부

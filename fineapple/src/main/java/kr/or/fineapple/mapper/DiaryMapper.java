@@ -81,7 +81,6 @@ public interface DiaryMapper {
 	////뱃지 테이블 기록 동기화(운동)
 	void updateBadgeByExer(Map map);
 	
-	
 	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
 	void addUserBodyInfo(Map map);
 	

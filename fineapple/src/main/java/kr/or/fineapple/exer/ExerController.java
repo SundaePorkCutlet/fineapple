@@ -26,7 +26,9 @@ import kr.or.fineapple.domain.BurnningRecord;
 import kr.or.fineapple.domain.Exer;
 import kr.or.fineapple.domain.ExerServ;
 import kr.or.fineapple.domain.Routine;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.exer.ExerService;
@@ -783,12 +785,25 @@ System.out.println("입력되는 일일 운동량~~~"+record);
 
 exerService.addDailyBurnning(record);
 
-//뱃지기록 갱신되는 부분
+////뱃지기록 갱신 시작
+
+//필요한 parameter
+String userId = user.getUserId();
 LocalDate startDate = LocalDate.now();
 LocalDate endDate = LocalDate.now();
+LocalDate date = LocalDate.now();
 
-//exerService.getTotalExerRecord(startDate, endDate, serv.getUserServiceNo());
-	
+//오늘의 총 소모 칼로리 조회
+TotalRecord totalExerRecord = exerService.getTotalExerRecord(startDate, endDate, serv.getUserServiceNo());
+//사용자의 목표 소모 칼로리 조회
+UserServ userServ = diaryService.getUserServiceDetails(userId);
+
+if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+//오늘의 총 소모 칼로리가 목표 소모 칼로리 이상일시
+	diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+} else {
+	diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+}
 
 
 model.addAttribute("NavName1","운동관리");
@@ -831,6 +846,27 @@ public String deleteDailyBurnning(Model model, HttpServletRequest request, @Requ
 	System.out.println(list);
 	
 	System.out.println(radio);
+	
+	
+	////뱃지기록 갱신 시작
+	
+	//필요한 parameter
+	String userId = user.getUserId();
+	LocalDate startDate = LocalDate.now();
+	LocalDate endDate = LocalDate.now();
+	LocalDate date = LocalDate.now();
+	
+	//오늘의 총 소모 칼로리 조회
+	TotalRecord totalExerRecord = exerService.getTotalExerRecord(startDate, endDate, exerServ.getUserServiceNo());
+	//사용자의 목표 소모 칼로리 조회
+	UserServ userServ = diaryService.getUserServiceDetails(userId);
+	
+	if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+	//오늘의 총 소모 칼로리가 목표 소모 칼로리 이상일시
+		diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+	} else {
+		diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+	}
 	
 	
 	model.addAttribute("list", list);
@@ -1323,6 +1359,26 @@ public String routineInfoAddBurnningRecord(Model model, @RequestParam("routineIn
 		System.out.println("루틴에서 입력되는 일일 운동량~~~"+record);
 		
 		exerService.addDailyBurnning(record);
+		
+		////뱃지기록 갱신 시작
+		
+		//필요한 parameter
+		String userId = user.getUserId();
+		LocalDate startDate = LocalDate.now();
+		LocalDate endDate = LocalDate.now();
+		LocalDate date = LocalDate.now();
+		
+		//오늘의 총 소모 칼로리 조회
+		TotalRecord totalExerRecord = exerService.getTotalExerRecord(startDate, endDate, exerServ.getUserServiceNo());
+		//사용자의 목표 소모 칼로리 조회
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
+		
+		if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+		//오늘의 총 소모 칼로리가 목표 소모 칼로리 이상일시
+			diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+		} else {
+			diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+		}
 
 
 	return "redirect:../exer/getDailyBurnning";
