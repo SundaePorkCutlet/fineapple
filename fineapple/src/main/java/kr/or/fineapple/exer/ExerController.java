@@ -146,17 +146,28 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	
 	System.out.println(serv);
 	
+	
 	User user =(User)request.getSession(true).getAttribute("user");
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
 	
-	if(serv.getExerServiceNo() == 0) {
+	if(exerService.getUserService(userId)==null) {
 		
 		exerService.addUserService(serv);
+
 		
+	 }else {
+		 ExerServ serv11 = exerService.getUserService(userId);
+		 serv11.setBodyMuscle(serv.getBodyMuscle());
+		 serv11.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
+		 serv11.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
+		 
+		 exerService.updateUserService(serv11);
 	 }
 	
+	
+
 
 	serv = exerService.getUserService(userId);
 	
@@ -231,31 +242,34 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 	
 	
 	 System.out.println("post:updateUserService");
-	
+	 ExerServ serv11 = new ExerServ();
 	
 	 System.out.println(serv);
      User user =(User)request.getSession(true).getAttribute("user");
      String userId = user.getUserId();
  	 serv.setUserId(userId);
  	 
- 	// serv = exerService.getUserService(userId);
- 	
- 	
- 	System.out.println(serv.getUserServiceNo());
- 	
-	serv.setExerServiceNo(serv.getUserServiceNo());
-	/*
-	 * serv.setBodyMuscle(serv.getBodyMuscle());
-	 * serv.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
-	 * serv.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
-	 */
+	if(exerService.getUserService(userId)==null) {
+		
+		exerService.addUserService(serv);
+		
+	 }else {
+
+		 System.out.println("111111111111111:  " + serv.getUserServiceNo());
+		 	
+	     serv11.setExerServiceNo(user.getDietServiceNo());
+		 System.out.println(user.getDietServiceNo());
+		 serv11.setBodyMuscle(serv.getBodyMuscle());
+		 serv11.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
+		 serv11.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
+		 System.out.println(serv11);
+		 exerService.updateUserService(serv11);
+	 }
 	
-	
-     
- 	 exerService.updateUserService(serv);
- 	 //exerService.updateExerServiceNo(serv);
+ 
+ 	 exerService.updateExerServiceNo(serv);
  	
- 	 System.out.println("업데이트 된 후의 서비스활성화 정보:  "+serv);
+ 	 System.out.println("업데이트 된 후의 서비스활성화 정보:  "+serv11);
 
  	 
 		/*

@@ -347,7 +347,7 @@
       /* }else */ if(userId == ""){
          alert("이메일을 입력하지 않으셨습니다.");
          return;
-      }else if(textTest.test(userId)){
+      }else if(textTest.test(userId)==false){
          alert("이메일 형식으로 입력해주세요.")
          return;
       }

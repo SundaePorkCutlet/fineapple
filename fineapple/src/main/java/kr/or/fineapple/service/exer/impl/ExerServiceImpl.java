@@ -34,9 +34,8 @@ public class ExerServiceImpl implements ExerService {
 			exerMapper.updateServiceTrgt(service);
 			exerMapper.updateBodyInfo(service);
 			exerMapper.getUserService(service.getUserId());
-			//exerMapper.updateUserService(service);
 			
-			
+		
 			return exerMapper.addUserService(service);
 			
 	}
