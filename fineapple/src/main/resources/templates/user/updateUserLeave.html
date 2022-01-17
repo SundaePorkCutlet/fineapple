@@ -91,6 +91,7 @@
 
 	
 	 $(function(){
+		 
 
 	      $("#sendMail").on("click",function(){
 	    	 
@@ -115,7 +116,7 @@
 	         		   $("#sendNum").on("click",function(){
 	         			   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
-	         			   console.log(compare)
+	         			 //  console.log(compare)
 	         			   
 	         			   if(compare == key){
 	         				   $("#compareEmail").html("<p>인증성공!</p>")
@@ -143,11 +144,11 @@
 	var userId=$("#userId").val();
 	$("#updateUserLeave").on("click",function(){
 	var compare = $("#compare").val()
-		console.log(compare);
-		console.log(comparedPassword);
+	//	console.log(compare);
+		//console.log(comparedPassword);
 	var password = $("#password").val()
-		console.log(password)
-		console.log("클릭이벤트 ")
+	//	console.log(password)
+	//	console.log("클릭이벤트 ")
 		if(compare==""){
 			alert("인증을 해주세요.");
 			self.location="/user/updateUserLeave?userId="+userId

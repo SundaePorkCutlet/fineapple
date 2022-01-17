@@ -277,9 +277,9 @@
    });
    
    function fncAddUser(){
-     console.log("fncAddUser시작");
+   //  console.log("fncAddUser시작");
       var userName=$("#userName").val();
-      console.log(userName);
+ //     console.log(userName);
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
       var age =$("#age").val();
@@ -331,8 +331,8 @@
          alert("회원가입에 성공하셨습니다.");
           $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
       }
-       console.log(gender);
-      console.log("fncAddUser끝");
+   //    console.log(gender);
+  //    console.log("fncAddUser끝");
 
       }
 
@@ -360,7 +360,7 @@
 	         		 isCertifidation = true;
 	         		 var key = data;
 	         		   $("#compare").on("keyup",function(){
-	         			   console.log("인증번호 올라갔닝")
+	         		//	   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
 	         			   console.log(compare)
 	         			   if(compare == key){
