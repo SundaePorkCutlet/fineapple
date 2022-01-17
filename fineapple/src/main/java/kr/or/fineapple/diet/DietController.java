@@ -1,6 +1,7 @@
 package kr.or.fineapple.diet;
 
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +28,14 @@ import kr.or.fineapple.domain.FavMeal;
 import kr.or.fineapple.domain.Food;
 import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.Recipe;
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.User;
+import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.Search;
+import kr.or.fineapple.domain.common.ViewDuration;
 import kr.or.fineapple.domain.community.Alarm;
 import kr.or.fineapple.service.community.CommunityService;
+import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.diet.DietService;
 import kr.or.fineapple.service.user.UserService;
 
@@ -49,6 +54,10 @@ public class DietController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
+	
+	@Autowired
+	@Qualifier("diaryServiceImpl")
+	private DiaryService diaryService;
 
 	@GetMapping("addDietService")
 	public String addDietServiceget(HttpServletRequest request, Model model) throws Exception {
@@ -612,6 +621,28 @@ public class DietController {
 
 		DietServ serv = dietService.getDietService(user.getUserId());
 		list = dietService.getIntakeRecordList(serv.getUserServiceNo());
+		
+		////¹îÁö±â·Ï °»½Å ½ÃÀÛ
+		//ÇÊ¿äÇÑ parameter
+		String userId = user.getUserId();
+		ViewDuration viewDuration = new ViewDuration();
+		viewDuration.setUserId(userId);
+		viewDuration.setStartDate(LocalDate.now());
+		viewDuration.setEndDate(LocalDate.now());
+		LocalDate date = LocalDate.now();
+		//¿À´ÃÀÇ ÃÑ ¼·Ãë Ä®·Î¸® Á¶È¸
+		TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
+		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
+		
+		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
+			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+		} else {
+			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
 		model.addAttribute("radio", radio);
@@ -657,6 +688,29 @@ public class DietController {
 
 		DietServ serv = dietService.getDietService(user.getUserId());
 		list = dietService.getIntakeRecordList(serv.getUserServiceNo());
+		
+		////¹îÁö±â·Ï °»½Å ½ÃÀÛ
+		//ÇÊ¿äÇÑ parameter
+		String userId = user.getUserId();
+		ViewDuration viewDuration = new ViewDuration();
+		viewDuration.setUserId(userId);
+		viewDuration.setStartDate(LocalDate.now());
+		viewDuration.setEndDate(LocalDate.now());
+		LocalDate date = LocalDate.now();
+		//¿À´ÃÀÇ ÃÑ ¼·Ãë Ä®·Î¸® Á¶È¸
+		TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
+		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
+		
+		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
+			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+		} else {
+			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+		}
+		
+		
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
 		model.addAttribute("radio", radio);
@@ -758,9 +812,29 @@ public class DietController {
 			record.setMeal(meal);
 
 			dietService.addIntakeRecord(record);
-
 		}
 
+		////¹îÁö±â·Ï °»½Å ½ÃÀÛ
+		//ÇÊ¿äÇÑ parameter
+		String userId = user.getUserId();
+		ViewDuration viewDuration = new ViewDuration();
+		viewDuration.setUserId(userId);
+		viewDuration.setStartDate(LocalDate.now());
+		viewDuration.setEndDate(LocalDate.now());
+		LocalDate date = LocalDate.now();
+		//¿À´ÃÀÇ ÃÑ ¼·Ãë Ä®·Î¸® Á¶È¸
+		TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
+		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
+		UserServ userServ = diaryService.getUserServiceDetails(userId);
+		
+		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
+			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+		} else {
+			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+		}
+		
 		return "redirect:../diet/getDailyIntakeMeal?radio=0";
 	}
 

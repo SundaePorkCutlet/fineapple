@@ -2,6 +2,7 @@ package kr.or.fineapple.service.diary;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.fineapple.domain.Achievement;
 import kr.or.fineapple.domain.Badge;
@@ -46,6 +47,10 @@ public interface DiaryService {
 	
 	public LocalDate getTheLatestDateUserBodyInfo(String userId);
 
+	public void updateBadgeByDiet(String userId, int badgeCount, double inputKcal, LocalDate date);
+
+	public void updateBadgeByExer(String userId, int badgeCount, double inputKcal, LocalDate date);
+	
 	public void addUserBodyInfo(String userId, int howManyDays);
 	
 	public void addBadge(Badge defaultBadge);
