@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.startup.SetAllPropertiesRule;
+import org.omg.PortableServer.Servant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -139,6 +141,7 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 							HttpServletRequest request,
 							Model model,HttpSession session) throws Exception{
 	
+
 	System.out.println("post:addUserService");
 	
 	System.out.println(serv);
@@ -147,11 +150,12 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 	String userId = user.getUserId();
 	serv.setUserId(userId);
 	
+	
 	if(serv.getExerServiceNo() == 0) {
 		
 		exerService.addUserService(serv);
 		
-		}
+	 }
 	
 
 	serv = exerService.getUserService(userId);
@@ -180,9 +184,8 @@ public String addUserService(@ModelAttribute("ExerServ")ExerServ serv,
 
 
 	return "exer/getUserService.html";
+
 }
-
-
 
 
 @GetMapping("getUserService")
@@ -209,6 +212,7 @@ public String getUpdateUserService(Model model, HttpServletRequest request) thro
 	ExerServ serv = exerService.getUserService(user.getUserId());
 	
 	
+	
 	model.addAttribute("user",user);
 	model.addAttribute("exerServ",serv);
 	model.addAttribute("NavName1","운동관리");
@@ -233,11 +237,34 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
      User user =(User)request.getSession(true).getAttribute("user");
      String userId = user.getUserId();
  	 serv.setUserId(userId);
+ 	 
+ 	// serv = exerService.getUserService(userId);
+ 	
+ 	
+ 	System.out.println(serv.getUserServiceNo());
+ 	
+	serv.setExerServiceNo(serv.getUserServiceNo());
+	/*
+	 * serv.setBodyMuscle(serv.getBodyMuscle());
+	 * serv.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
+	 * serv.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
+	 */
+	
+	
      
  	 exerService.updateUserService(serv);
- 	 
+ 	 //exerService.updateExerServiceNo(serv);
+ 	
  	 System.out.println("업데이트 된 후의 서비스활성화 정보:  "+serv);
 
+ 	 
+		/*
+		 * user = userService.getUser(userId);
+		 * 
+		 * exerService.updateExerServiceNo(serv);
+		 */
+		 
+		
 	model.addAttribute("exerServ",serv);	
 	model.addAttribute("user",user);
 	model.addAttribute("NavName1","운동관리");
