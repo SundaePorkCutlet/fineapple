@@ -151,5 +151,19 @@ public class DiaryServiceImpl implements DiaryService {
 	public LocalDate getTheLatestDateUserBodyInfo(String userId) {
 		return diaryMapper.getTheLatestDateUserBodyInfo(userId);
 	}
+
+	@Override
+	public void addUserBodyInfo(String userId, int howManyDays) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("inputDays", howManyDays-1);
+		map.put("howManyDays", howManyDays);
+		diaryMapper.addUserBodyInfo(map);
+	}
+
+	@Override
+	public void addBadge(Badge defaultBadge) {
+		diaryMapper.addBadge(defaultBadge);
+	}
 	
 }

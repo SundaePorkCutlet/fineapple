@@ -11,16 +11,16 @@ import kr.or.fineapple.domain.User;
 import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.mapper.UserMapper;
 
-@Component
+//@Component
 public class MidnightBatchJob {
 	
-	@Autowired
+	//@Autowired
 	private DiaryMapper diaryMapper;
 	
-	@Autowired
+	//@Autowired
 	private UserMapper userMapper;
 	
-	@Scheduled(cron="0 * * * * *")
+	//@Scheduled(cron="0 * * * * *")
 	public void updateUserBodyInfoTask() {
 		
 		Badge defaultBadge = new Badge();
@@ -29,7 +29,7 @@ public class MidnightBatchJob {
 		for(User user : allUserList) {
 			
 			////UserBodyInfo 테이블 로우 추가
-			diaryMapper.addUserBodyInfo(user.getUserId());
+			//diaryMapper.addUserBodyInfo(user.getUserId());
 			System.out.println(user);
 			////Badge 테이블 로우 추가
 			if(user.getDietServiceNo() != 0 && user.getExerServiceNo() != 0) {

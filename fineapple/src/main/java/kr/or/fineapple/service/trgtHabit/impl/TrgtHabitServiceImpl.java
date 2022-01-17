@@ -77,7 +77,7 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 		
 		Double userWtrIntake = trgtHabitMapper.getWtrIntake(map);
 		
-		////해당일자 기록이 없는 경우 생성
+		////해당일자 기록이 없는 경우 생성(==>사용자 로그인 시 기록이 생성되므로 실행되지 않음(userWtrIntake가 null인 경우 없음))
 		if(userWtrIntake == null) {
 			trgtHabitMapper.addWtrIntake(userId);
 			userWtrIntake = 0.0;

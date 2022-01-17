@@ -39,7 +39,7 @@
 							                                 </div>
 															<div class="d-flex flex-column">
 							                                    <span class="fs-6 fw-bold text-gray-400">일자 선택</span>
-							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${todayDate}" id="kt_daterangepicker_3"/>
+							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${viewDate}" id="kt_daterangepicker_3"/>
 							                                 </div>
 														</div>
 														<!--end::Profile-->
@@ -52,10 +52,9 @@
 									</div>
 									<!--end::user_daily_log-->
 									
-									<th:block th:if="${userServ != null && achievement != null}">
-									
+			
 									<!--begin::diet_record-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ.dailyTrgtIntakeKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingDietServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="diet_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record">
 											<div class="card-title">
@@ -71,15 +70,15 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="${dailyRecord}==null ? '입력한 정보가 없습니다' : |${dailyRecord.dailyIntakeKcal}Kcal|"></span></div>
-														<div class="fw-bold fs-6 mb-2">일일 총 섭취 칼로리</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${isDietServInfo}==false ? '입력한 정보가 없습니다' : |${totalDietRecord.totalIntakeKcal}Kcal|"></span></div>
+														<div class="fw-bold fs-6 mb-2" th:if="${isDietServInfo}!=false">일일 총 섭취 칼로리</div>
 													</div>
 													<!--begin::Status-->
-													<div class="col-lg-7">
+													<div class="col-lg-7" th:if="${isDietServInfo}==true">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeKcalInPercentage}%|">섭취 칼로리</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeKcal}Kcal 중 ${totalRecord.totalIntakeKcal}Kcal 섭취|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeKcal}Kcal 중 ${totalDietRecord.totalIntakeKcal}Kcal 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -101,15 +100,15 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeCarb}g|"></span></div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${isDietServInfo}==false ? '입력한 정보가 없습니다' : |${totalDietRecord.totalIntakeCarb}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 탄수화물</div>
 													</div>
 													<!--begin::Status-->
-													<div class="col-lg-7">
+													<div class="col-lg-7" th:if="${isDietServInfo}==true">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeCarbInPercentage}%|">섭취 탄수화물</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalRecord.totalIntakeCarb}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalDietRecord.totalIntakeCarb}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -131,15 +130,15 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeProtein}g|"></span></div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${isDietServInfo}==false ? '입력한 정보가 없습니다' : |${totalDietRecord.totalIntakeProtein}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 단백질</div>
 													</div>
 													<!--begin::Status-->
-													<div class="col-lg-7">
+													<div class="col-lg-7" th:if="${isDietServInfo}==true">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeProteinInPercentage}%|">섭취 단백질</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalRecord.totalIntakeProtein}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalDietRecord.totalIntakeProtein}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -161,15 +160,15 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="|${totalRecord.totalIntakeFat}g|"></span></div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${isDietServInfo}==false ? '입력한 정보가 없습니다' : |${totalDietRecord.totalIntakeFat}g|"></span></div>
 														<div class="fw-bold fs-6 mb-2">일일 총 섭취 지방</div>
 													</div>
 													<!--begin::Status-->
-													<div class="col-lg-7">
+													<div class="col-lg-7" th:if="${isDietServInfo}==true">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeFatInPercentage}%|"></span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalRecord.totalIntakeFat}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalDietRecord.totalIntakeFat}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -191,7 +190,7 @@
 									</div>
 									<!--end::diet_record-->
 									<!--begin::diet_record_details-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtIntakeKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingDietServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="diet_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#diet_record_details">
 											<div class="card-title m-0">
@@ -208,7 +207,7 @@
 													<!--begin::Label-->
 													<div id="breakfast">
 														<div class="fs-6 fw-bolder mb-1">아침</div>
-														<th:block th:if="${#lists.size(breakfast) == 0}">
+														<th:block th:if="${isDietServInfo == false || #lists.size(breakfast) == 0}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
@@ -226,7 +225,7 @@
 													<!--begin::Label-->
 													<div id="lunch">
 														<div class="fs-6 fw-bolder mb-1">점심</div>
-														<th:block th:if="${#lists.size(lunch) == 0}">
+														<th:block th:if="${isDietServInfo == false || #lists.size(lunch) == 0}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
@@ -244,7 +243,7 @@
 													<!--begin::Label-->
 													<div id="dinner">
 														<div class="fs-6 fw-bolder mb-1">저녁</div>
-														<th:block th:if="${#lists.size(dinner) == 0}">
+														<th:block th:if="${isDietServInfo == false || #lists.size(dinner) == 0}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
@@ -262,7 +261,7 @@
 													<!--begin::Label-->
 													<div id="snack">
 														<div class="fs-6 fw-bolder mb-1">간식</div>
-														<th:block th:if="${#lists.size(snack) == 0}">
+														<th:block th:if="${isDietServInfo == false || #lists.size(snack) == 0}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
@@ -280,7 +279,7 @@
 													<!--begin::Label-->
 													<div id="supper">
 														<div class="fs-6 fw-bolder mb-1">야식</div>
-														<th:block th:if="${#lists.size(supper) == 0}">
+														<th:block th:if="${isDietServInfo == false || #lists.size(supper) == 0}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
@@ -320,9 +319,8 @@
 										<!--end::Content-->
 									</div>
 									<!--end::diet_record_details-->
-									</th:block>
+
 									
-									<th:block th:if="${userServ != null && achievement != null}">
 									<!--begin::exer_record-->
 									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
 										<!--begin::Card header-->
@@ -342,15 +340,15 @@
 												<div class="row mb-7">
 													<div class="col-lg-5 text-gray-600 fs-4 mb-6 mb-lg-0">
 														<div class="fw-bold mb-1">
-														<span class="fw-bolder text-gray-800 me-1" th:text="|${dailyRecord.dailyBurnningKcal}Kcal|"></span></div>
-														<div class="fw-bold fs-6 mb-2">일일 총 소모 칼로리</div>
+														<span class="fw-bolder text-gray-800 me-1" th:text="${isExerServInfo}==false ? '입력한 정보가 없습니다' : |${totalExerRecord.totalBurnningKcal}Kcal|"></span></div>
+														<div class="fw-bold fs-6 mb-2" th:if="${isExerServInfo}!=false">일일 총 소모 칼로리</div>
 													</div>
 													<!--begin::Status-->
-													<div class="col-lg-7">
+													<div class="col-lg-7" th:if="${isExerServInfo}==true">
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.burnningKcalInPercentage}%|">총 소모 칼로리</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtBurnningKcal}Kcal 중 ${dailyRecord.dailyBurnningKcal}Kcal 소모|"></span>
+															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtBurnningKcal}Kcal 중 ${totalExerRecord.totalBurnningKcal}Kcal 소모|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -382,7 +380,7 @@
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::exer_item-->
-												<div class="d-flex flex-wrap align-items-center" th:if="${#lists.size(burnningRecordList) == 0}">
+												<div class="d-flex flex-wrap align-items-center" th:if="${isExerServInfo == false || #lists.size(burnningRecordList) == 0}">
 													<!--begin::Label-->
 													<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt">
 														<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
@@ -439,7 +437,6 @@
 										<!--end::Content-->
 									</div>
 									<!--end::exer_record_details-->
-									</th:block>
 									
 									<!--begin::Notifications-->
 									<div class="card mb-5 mb-xl-10">
@@ -458,16 +455,15 @@
 												<div class="table-responsive">
 													<table class="table table-row-dashed border-gray-300 align-middle gy-6">
 														<tbody class="fs-6 fw-bold">
-														
-															<th:block th:if="${userServ != null}">
+													
 															<!--begin::Table row-->
 															<tr>
 																<td>식단 뱃지</td>
-																<th:block th:if="${userServ == null || userServ.dailyTrgtIntakeKcal == null}">
+																<th:block th:if="${isUsingDietServ} == false">
 																	<td>서비스 활성화 전입니다</td>
 																	<td></td>
 																</th:block>
-																<th:block th:unless="${userServ == null || userServ.dailyTrgtIntakeKcal == null}">
+																<th:block th:unless="${isUsingDietServ} == false">
 																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
 																	<td>이미지</td>
 																</th:block>
@@ -476,19 +472,17 @@
 															<!--begin::Table row-->
 															<tr>
 																<td>운동 뱃지</td>
-																<th:block th:if="${userServ == null || userServ.dailyTrgtBurnningKcal == null}">
+																<th:block th:if="${isUsingExerServ} == false">
 																	<td>서비스 활성화 전입니다</td>
 																	<td></td>
 																</th:block>
-																<th:block th:unless="${userServ == null || userServ.dailyTrgtBurnningKcal == null}">
+																<th:block th:unless="${isUsingExerServ} == false">
 																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
 																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
-															</th:block>
-															
-															<th:block th:if="${badgeCount != null}">
+														
 															<!--begin::Table row-->
 															<tr>
 																<td>물 마시기 뱃지</td>
@@ -503,7 +497,7 @@
 																<td>이미지</td>
 															</tr>
 															<!--end::Table row-->
-															</th:block>
+															
 														</tbody>
 													</table>
 												</div>
@@ -881,15 +875,15 @@
 		var badgeCount = [[${badgeCount}]];
 		
 		//서비스 이용 시
-		var dailyRecord = [[${dailyRecord}]];
-		var totalRecord = [[${totalRecord}]];
+		var totalDietRecord = [[${totalDietRecord}]];
+		var totalExerRecord = [[${totalExerRecord}]];
 		var userServ = [[${userServ}]];
 		var achievement = [[${achievement}]];
-		var breakfast = [[${breakfast}]];
+/* 		var breakfast = [[${breakfast}]];
 		var lunch = [[${lunch}]];
 		var dinner = [[${dinner}]];
 		var snack = [[${snack}]];
-		var supper = [[${supper}]];
+		var supper = [[${supper}]]; */
 		var burnningRecordList = [[${burnningRecordList}]];
 		
 		$(function() {

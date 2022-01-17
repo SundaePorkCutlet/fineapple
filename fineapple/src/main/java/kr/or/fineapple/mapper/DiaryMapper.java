@@ -76,8 +76,9 @@ public interface DiaryMapper {
 	LocalDate getTheLatestDateUserBodyInfo(String userId);
 	
 	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
-	void addUserBodyInfo(String userId);
+	void addUserBodyInfo(Map map);
 	
 	////배치프로그램 실행: 매일 뱃지 기록 insert
 	void addBadge(Badge defaultBadge);
+	
 }

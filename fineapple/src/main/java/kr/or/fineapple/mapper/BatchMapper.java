@@ -14,8 +14,8 @@ import kr.or.fineapple.domain.UserEvent;
 import kr.or.fineapple.domain.UserServ;
 import kr.or.fineapple.domain.common.ViewDuration;
 
-@Mapper
-@Repository
+//@Mapper
+//@Repository
 public interface BatchMapper {
 
 	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
