@@ -155,6 +155,7 @@
 		GROUP_NO,
 		POST_CATE,
 		UPDATE_STT,
+		GROUP_NO,
 		TITLE, 
 		CONTENT,
 		POST_DATE
@@ -171,7 +172,13 @@
 		</if>
 		#{cateName},
 		#{updateStt},
-		#{title},
+		<if test="groupNo == 0">
+		null,
+		</if>
+		<if test="groupNo != 0">
+		group_no = #{group.groupNo},
+		</if>
+		#{title:VARCHAR},
 		#{content},
 		SYSDATE
 		)
@@ -1057,7 +1064,7 @@
 	</select>
 	
 	
-
+	
 	
 	
 	

@@ -372,7 +372,7 @@ public class CommunityRestController {
 	public void addGroupPost(@RequestParam("content") String str, @RequestParam("uploadFile") MultipartFile[] files) throws IllegalStateException, IOException {
 			String[] times = new String[files.length];
 			
-			System.out.println(str);
+		
 			
 			int i = 0;
 			for (MultipartFile multipartFile : files) {

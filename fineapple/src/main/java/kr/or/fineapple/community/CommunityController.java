@@ -771,7 +771,7 @@ public class CommunityController {
 	@GetMapping(value = "groupBoard")
 	public String groupBoard(Model model){
 		
-		return "community/groupBoard.html";
+		return "community/sample.html";
 	}
 	
 	@GetMapping(value = "getBlackList")
