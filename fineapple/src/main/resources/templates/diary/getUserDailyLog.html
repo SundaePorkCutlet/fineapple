@@ -224,12 +224,16 @@
 													<!--begin::Label-->
 													<div id="breakfast">
 														<div class="fs-6 fw-bolder mb-1">아침</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(breakfast) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) == 0}"></div>
 															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(breakfast) > 0}" th:each="item, i : ${breakfast}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) > 0}" th:text="|총 칼로리 ${bfTotal.totalIntakeKcal}Kcal, 탄수화물 ${bfTotal.totalIntakeCarb}g, 단백질 ${bfTotal.totalIntakeProtein}g, 지방 ${bfTotal.totalIntakeFat}g|"></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) > 0}" th:text="|총 칼로리 ${bfTotal.totalIntakeKcal}Kcal, 탄수화물 ${bfTotal.totalIntakeCarb}g, 단백질 ${bfTotal.totalIntakeProtein}g, 지방 ${bfTotal.totalIntakeFat}g|"></div>
+														</th:block>	
 													</div>
 													<!--end::Label-->
 												</div>
@@ -242,12 +246,16 @@
 													<!--begin::Label-->
 													<div id="lunch">
 														<div class="fs-6 fw-bolder mb-1">점심</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(lunch) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) > 0}" th:text="|총 칼로리 ${lunchTotal.totalIntakeKcal}Kcal, 탄수화물 ${lunchTotal.totalIntakeCarb}g, 단백질 ${lunchTotal.totalIntakeProtein}g, 지방 ${lunchTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) == 0}"></div>											
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) > 0}" th:text="|총 칼로리 ${lunchTotal.totalIntakeKcal}Kcal, 탄수화물 ${lunchTotal.totalIntakeCarb}g, 단백질 ${lunchTotal.totalIntakeProtein}g, 지방 ${lunchTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -260,12 +268,16 @@
 													<!--begin::Label-->
 													<div id="dinner">
 														<div class="fs-6 fw-bolder mb-1">저녁</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(dinner) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(dinner) > 0}" th:each="item, i : ${dinner}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) > 0}" th:text="|총 칼로리 ${dinnerTotal.totalIntakeKcal}Kcal, 탄수화물 ${dinnerTotal.totalIntakeCarb}g, 단백질 ${dinnerTotal.totalIntakeProtein}g, 지방 ${dinnerTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(dinner) > 0}" th:each="item, i : ${dinner}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) > 0}" th:text="|총 칼로리 ${dinnerTotal.totalIntakeKcal}Kcal, 탄수화물 ${dinnerTotal.totalIntakeCarb}g, 단백질 ${dinnerTotal.totalIntakeProtein}g, 지방 ${dinnerTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -278,12 +290,16 @@
 													<!--begin::Label-->
 													<div id="snack">
 														<div class="fs-6 fw-bolder mb-1">간식</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(snack) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(snack) > 0}" th:each="item, i : ${snack}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(snack) > 0}" th:text="|총 칼로리 ${snackTotal.totalIntakeKcal}Kcal, 탄수화물 ${snackTotal.totalIntakeCarb}g, 단백질 ${snackTotal.totalIntakeProtein}g, 지방 ${snackTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600"  th:if="${#lists.size(snack) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"  th:if="${#lists.size(snack) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(snack) > 0}" th:each="item, i : ${snack}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(snack) > 0}" th:text="|총 칼로리 ${snackTotal.totalIntakeKcal}Kcal, 탄수화물 ${snackTotal.totalIntakeCarb}g, 단백질 ${snackTotal.totalIntakeProtein}g, 지방 ${snackTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -296,16 +312,92 @@
 													<!--begin::Label-->
 													<div id="supper">
 														<div class="fs-6 fw-bolder mb-1">야식</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(supper) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(supper) > 0}" th:each="item, i : ${supper}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) > 0}" th:text="|총 칼로리 ${supperTotal.totalIntakeKcal}Kcal, 탄수화물 ${supperTotal.totalIntakeCarb}g, 단백질 ${supperTotal.totalIntakeProtein}g, 지방 ${supperTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(supper) > 0}" th:each="item, i : ${supper}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) > 0}" th:text="|총 칼로리 ${supperTotal.totalIntakeKcal}Kcal, 탄수화물 ${supperTotal.totalIntakeCarb}g, 단백질 ${supperTotal.totalIntakeProtein}g, 지방 ${supperTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
 												<!--end::supper-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} > 110">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal가 훨씬 넘는 섭취량!"></h4>
+															<div class="fs-6 text-gray-700 pe-7">과식하셨네요..신나게 먹은만큼 몸을 움직여봐요!</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} <= 110 and ${achievement.intakeKcalInPercentage} >= 90">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal에 알맞게 드셨네요!|"></h4>
+															<div class="fs-6 text-gray-700 pe-7">나 자신과의 약속을 지키는 멋진 모습! 최고에요!</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} < 90">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder" th:text="|세상에, ${totalDietRecord.totalIntakeKcal}Kcal밖에 못 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal에 한참 모자라요|"></h4>
+															<div class="fs-6 text-gray-700 pe-7">혹시 식이조절을 너무 무리하게 하고 계신 게 아닌가요?</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
 											</div>
 											<!--end::Card body-->
 										</div>
@@ -381,7 +473,7 @@
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::exer_item-->
-												<div class="d-flex flex-wrap align-items-center" th:if="${isExerServInfo == false || #lists.size(burnningRecordList) == 0}">
+												<div class="d-flex flex-wrap align-items-center" th:if="${isExerServInfo == false}">
 													<!--begin::Label-->
 													<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt">
 														<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
@@ -406,7 +498,7 @@
 													<!--end::Separator-->
 												</th:block>
 												<!--begin::Notice-->
-												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isExerServInfo == false || #lists.size(burnningRecordList) == 0}">
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isExerServInfo == false}">
 													<!--begin::Icon-->
 													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
 													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
@@ -421,7 +513,7 @@
 													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
 														<!--begin::Content-->
 														<div class="mb-3 mb-md-0 fw-bold">
-															<h4 class="text-gray-900 fw-bolder">운동이 필요해요!</h4>
+															<h4 class="text-gray-900 fw-bolder">운동 부족! 운동이 필요해요!!</h4>
 															<div class="fs-6 text-gray-700 pe-7">엘레베이터 대신 계단을 이용해보는 건 어떨까요?</div>
 														</div>
 														<!--end::Content-->
@@ -445,7 +537,7 @@
 													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
 														<!--begin::Content-->
 														<div class="mb-3 mb-md-0 fw-bold">
-															<h4 class="text-gray-900 fw-bolder" th:text="|${totalExerRecord.totalExerTime}분 동안 총 ${totalExerRecord.totalBurnningKcal}Kcal를 소모했어요!|"></h4>
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalExerRecord.totalExerTime}분 간 ${totalExerRecord.totalBurnningKcal}Kcal를 소모했어요!|"></h4>
 														</div>
 														<!--end::Content-->
 													</div>
