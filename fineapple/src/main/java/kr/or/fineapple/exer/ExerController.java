@@ -251,7 +251,7 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 	 System.out.println(serv);
      User user =(User)request.getSession(true).getAttribute("user");
      String userId = user.getUserId();
- 	 serv.setUserId(userId);
+ 	 serv11.setUserId(userId);
  	 
 	if(exerService.getUserService(userId)==null) {
 		
@@ -259,7 +259,7 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 		
 	 }else {
 
-		 System.out.println("111111111111111:  " + serv.getUserServiceNo());
+		 System.out.println("111111111111111" );
 		 	
 	     serv11.setExerServiceNo(user.getDietServiceNo());
 		 System.out.println(user.getDietServiceNo());
@@ -267,11 +267,12 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 		 serv11.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
 		 serv11.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
 		 System.out.println(serv11);
+		 
 		 exerService.updateUserService(serv11);
 	 }
 	
  
- 	 exerService.updateExerServiceNo(serv);
+ 	 exerService.updateExerServiceNo(serv11);
  	
  	 System.out.println("업데이트 된 후의 서비스활성화 정보:  "+serv11);
 

@@ -228,14 +228,43 @@ td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-
 	            popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 	        }
 		   
+		    
+	
+		    
 		    $(function () {
+		    	
 		        $("#alarm_button").on("click", function () {
+			    	
+		            $.ajax({
+		                url: "../diet/getAlarm",
+		                success: function (data) {
+		                	console.log(data)
+		                    $("#dModalHolder").html(data);
+		                    $("#getalarm").modal("show");
+		                }
+		            });
+		        });
+		    });
+		    
+		    
+			    
+		    $(document).ready(function () {
+		    	
+		    	$.ajax({
+		    		url: "../diet/rest/getAlarmCount",
+		    		success:function(data){
+		    			var Count = data;
+		    			console.log(data)
+		    			$("#count").text(Count);
+		    		}
+		    		
+		    		
+		    	});
+		    })
+		    
+		     alarm_button.onmousedown = function(event) {
 
-		        	
-		        	 alarm_button.onmousedown = function(event) {
-
-		        		 
-		        		 //좌표값
+	        		 //좌표값
 				    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
 				    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
 
@@ -271,35 +300,6 @@ td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-
 				    	  return false;
 				    	}; 
 				    	
-				    	
-		            $.ajax({
-		                url: "../diet/getAlarm",
-		                success: function (data) {
-		                	console.log(data)
-		                    $("#dModalHolder").html(data);
-		                    $("#getalarm").modal("show");
-		                }
-		            });
-		        });
-		    });
-		    
-		    
-		
-		
-		    
-		    
-		    $(document).ready(function () {
-		    	$.ajax({
-		    		url: "../diet/rest/getAlarmCount",
-		    		success:function(data){
-		    			var Count = data;
-		    			console.log(data)
-		    			$("#count").text(Count);
-		    		}
-		    		
-		    		
-		    	});
-		    })
 		    
 		    
 		    if ("serviceWorker" in navigator) {
