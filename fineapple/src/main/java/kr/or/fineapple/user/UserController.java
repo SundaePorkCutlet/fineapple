@@ -107,11 +107,15 @@ public class UserController {
 	
 	@RequestMapping(value="addUser")
 	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session,Model model){
+		ModelAndView mav = new ModelAndView();
+		
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		/*
+		 * if(user.getPassword().equals("kakao11")) { mav.clear(); }
+		 */
 		model.addAttribute("NavName1", "회원관리");
 		model.addAttribute("NavName2","회원가입");
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
 			 System.out.println("여기 들어왔니");
@@ -119,7 +123,6 @@ public class UserController {
 			 mav.addObject(user);
 		 }
 		System.out.println();
-		
 		System.out.println(user);
 		return mav;
 	}
@@ -131,7 +134,7 @@ public class UserController {
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		if(user.getPassword() == null) {
-			user.setPassword("kakao!!");
+			user.setPassword("kakao11");
 			user.setKakaoStt(1);
 		}
 		if(!file.getOriginalFilename().isEmpty()) {
