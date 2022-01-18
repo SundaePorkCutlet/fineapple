@@ -192,6 +192,11 @@
    <div class="col-xs-10">
       <form role="form">
          
+         <div align="right" >
+         
+         <a th:href="@{../exer/getAddExer}" th:if = "${session.user.role == 'admin'}"  class="btn btn-primary btn-hover-rise me-5">등록하기</a>
+         </div>
+         
          <!-- 상단 Start -->
          <div class="row">  
             <h1 class="col-sm-2 mb-0">&nbsp;&nbsp;&nbsp;&nbsp;운동리스트</h1>           

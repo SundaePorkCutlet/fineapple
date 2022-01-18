@@ -1,6 +1,5 @@
 package kr.or.fineapple.index;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import kr.or.fineapple.domain.IntakeRecord;
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
 import kr.or.fineapple.domain.community.Board;
-import kr.or.fineapple.mapper.DiaryMapper;
 import kr.or.fineapple.service.community.CommunityService;
 import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.diet.DietService;
@@ -88,6 +86,9 @@ public class IndexController {
     //내가 가장 많이 섭취한 식품 시작
     
     User user = (User)session.getAttribute("user");
+    	
+
+    
     
     List<IntakeRecord> list2 = new ArrayList<IntakeRecord>();
     if(user!=null) {
