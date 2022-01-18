@@ -778,11 +778,11 @@ public class CommunityController {
 		groupBorad.setGroup(group);
 		
 		
+		List<GroupBorad> list = communityService.getGroupBoard(groupBorad);
 		
+		model.addAttribute("list", list);
 		
-	
-		
-		
+		model.addAttribute("group", group);
 		
 		return "community/groupBoard.html";
 	}

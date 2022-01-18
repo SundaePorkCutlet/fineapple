@@ -127,6 +127,8 @@ public interface CommunityMapper {
 	
 	public List getGroupPostList(GroupBorad groupBorad);
 	
+	public List<Cmnt> getGroupCmntList(GroupBorad groupBorad);
+	
 	
 	
 	

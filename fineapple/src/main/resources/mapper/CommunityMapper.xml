@@ -139,7 +139,7 @@
 	<result property="postNo" column="post_no"/>
 	</resultMap>
 	
-	<resultMap type="groupBoard" id="groupBoardMap">
+	<resultMap type="groupBorad" id="groupBoardMap">
 	<result property="postNo" column="post_no"/>
 	<result property="user.userId" column="user_id"/>
 	<result property="group.groupNo" column="group_no"/>
@@ -1075,7 +1075,7 @@
 	ORDER BY img_no
 	</select>
 	
-	<select id="getGroupPostList" parameterType="groupBoard" resultMap="groupBoardMap">
+	<select id="getGroupPostList" parameterType="groupBorad" resultMap="groupBoardMap">
 	SELECT
 	b.*,
 	ral.likes,
@@ -1089,8 +1089,20 @@
 	AND
 	b. post_no = ral.post_no(+)
 	AND
-	b. post_no = c.post_no(+);
+	b. post_no = c.post_no(+)
 	</select>
+	
+	
+	<select id="getGroupCmntList" parameterType="groupBorad" resultMap="cmntMap">
+	SELECT
+	*
+	FROM
+	comments
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	post_no = #{postNo}
+	</trim>
+	</select>
+	
 	
 	
 	
