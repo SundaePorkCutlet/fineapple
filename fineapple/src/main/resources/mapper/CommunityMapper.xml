@@ -139,6 +139,18 @@
 	<result property="postNo" column="post_no"/>
 	</resultMap>
 	
+	<resultMap type="groupBoard" id="groupBoardMap">
+	<result property="postNo" column="post_no"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="group.groupNo" column="group_no"/>
+	<result property="content" column="content"/>
+	<result property="postDate" column="post_date"/>
+	<result property="postLikeCount" column="post_like_count"/>
+	<result property="cmntCount" column="cmnt_count"/>
+
+	
+	</resultMap>
+	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
@@ -1062,6 +1074,25 @@
 	</where>
 	ORDER BY img_no
 	</select>
+	
+	<select id="getGroupPostList" parameterType="groupBoard" resultMap="groupBoardMap">
+	SELECT
+	b.*,
+	ral.likes,
+	c.cmnts
+	FROM
+	board b,
+	(SELECT COUNT(*) likes, b.post_no FROM report_and_like ral, board b WHERE b.post_no = ral.post_no GROUP BY b.post_no ) ral,
+	(SELECT COUNT(*) cmnts, b.post_no post_no FROM comments c, board b WHERE c.post_no = b.post_no GROUP BY b.post_no) c
+	WHERE
+	b.group_no = #{group.groupNo}
+	AND
+	b. post_no = ral.post_no(+)
+	AND
+	b. post_no = c.post_no(+);
+	</select>
+	
+	
 	
 	
 	

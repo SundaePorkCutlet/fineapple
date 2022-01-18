@@ -11,6 +11,7 @@ import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
@@ -90,6 +91,8 @@ public interface CommunityService {
 	public Group getGroup(Group group);
 	
 	public List<Group> getGroupList();
+	
+	public List getGroupBoard(GroupBorad groupBorad);
 	
 	
 	

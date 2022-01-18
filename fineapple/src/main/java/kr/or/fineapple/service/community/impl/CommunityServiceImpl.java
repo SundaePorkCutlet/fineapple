@@ -14,6 +14,7 @@ import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
@@ -340,6 +341,20 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getGroupList();
 	}
+
+	@Override
+	public List getGroupBoard(GroupBorad groupBorad) {
+		
+		List list = communityMapper.getGroupPostList(groupBorad);
+		
+		for (Object object : list) {
+			System.out.println(object);
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 
 	

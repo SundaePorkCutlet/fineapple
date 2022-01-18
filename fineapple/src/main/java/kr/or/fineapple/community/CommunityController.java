@@ -1,4 +1,4 @@
- package kr.or.fineapple.community;
+package kr.or.fineapple.community;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +35,11 @@ import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
-import lombok.val;
 
 
 @Controller
@@ -770,6 +768,19 @@ public class CommunityController {
 	
 	@GetMapping(value = "groupBoard")
 	public String groupBoard(Model model, @RequestParam("groupNo") String str){
+		
+		GroupBorad groupBorad = new GroupBorad();
+		
+		Group group = new Group();
+		
+		group.setGroupNo(Integer.parseInt(str));
+		
+		groupBorad.setGroup(group);
+		
+		
+		
+		
+	
 		
 		
 		
