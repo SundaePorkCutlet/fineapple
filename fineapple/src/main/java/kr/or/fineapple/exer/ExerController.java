@@ -254,6 +254,7 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
      User user =(User)request.getSession(true).getAttribute("user");
      String userId = user.getUserId();
  	 serv11.setUserId(userId);
+ 	 //serv11.setUserServiceNo();
  	 
 	if(exerService.getUserService(userId)==null) {
 		
@@ -264,7 +265,17 @@ public String postUpdateUserService(@ModelAttribute("ExerServ")ExerServ serv, Mo
 		 System.out.println("111111111111111" );
 		 	
 	     serv11.setExerServiceNo(user.getDietServiceNo());
+	     
+	     if(user.getDietServiceNo() == 0) {
+	    	 
+	    	 serv11.setExerServiceNo(user.getExerServiceNo());
+	    	    	 
+	     }
+	  
 		 System.out.println(user.getDietServiceNo());
+		 System.out.println(user.getExerServiceNo());
+		 
+		 
 		 serv11.setBodyMuscle(serv.getBodyMuscle());
 		 serv11.setDailyTrgtBurnningKcal(serv.getDailyTrgtBurnningKcal());
 		 serv11.setTrgtBodyMuscle(serv.getTrgtBodyMuscle());
