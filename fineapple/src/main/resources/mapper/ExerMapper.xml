@@ -84,7 +84,8 @@
 	
 	
 	<update id="updateUserService" parameterType="ExerServ">
-	UPDATE USER_SERVICE SET 
+	UPDATE USER_SERVICE 
+	SET 
 	DAILY_TRGT_BURNNING_KCAL=#{dailyTrgtBurnningKcal:DOUBLE},
 	TRGT_BODY_MUSCLE=#{trgtBodyMuscle:DOUBLE}
 	WHERE USER_ID=#{userId:VARCHAR}

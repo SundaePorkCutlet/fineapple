@@ -138,13 +138,33 @@
 	<update id="updateUserBodyInfo" parameterType="UserBodyInfo">
 	UPDATE user_body_info
 		<trim prefix="SET" suffixOverrides=",">
-			weight = #{weight:DOUBLE},
-			body_fat = #{bodyFat:DOUBLE},
-			body_muscle = #{bodyMuscle:DOUBLE},
-			height = #{height:DOUBLE},
+			<if test="weight != null">weight = #{weight:DOUBLE},</if> 
+			<if test="bodyFat != null">body_fat = #{bodyFat:DOUBLE},</if> 
+			<if test="bodyMuscle != null">body_muscle = #{bodyMuscle:DOUBLE},</if> 
+			<if test="height != null">height = #{height:DOUBLE},</if> 
 		</trim>
 	WHERE user_id = #{userId:VARCHAR}
 		AND TRUNC(user_body_info_date) = TRUNC(#{date})
+	</update>
+	
+	<update id="updateBadgeByDiet">
+	UPDATE badge
+		<set>
+		diet_badge_count = #{badgeCount:INTEGER},
+		daily_intake_kcal = #{inputKcal:DOUBLE}
+		</set>
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(badge_date) = TRUNC(#{date})
+	</update>
+	
+	<update id="updateBadgeByExer">
+	UPDATE badge
+		<set>
+		exer_badge_count = #{badgeCount:INTEGER},
+		daily_burnning_kcal = #{inputKcal:DOUBLE}
+		</set>
+	WHERE user_id = #{userId:VARCHAR}
+	AND TRUNC(badge_date) = TRUNC(#{date})
 	</update>
 	
 	<!-- SELECT LIST : 다이어리 화면 출력을 위한 기간 내 뱃지 리스트 조회 -->

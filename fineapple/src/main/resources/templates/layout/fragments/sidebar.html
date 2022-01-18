@@ -207,8 +207,10 @@
                                     
                                     
                                     
-                                    
-                                    <div class="menu-item" >
+                                 
+                                          
+                                  <!--    <th:block th:if="${session.user}!=null">          
+                                    <div class="menu-item">
                                       <th:block th:if="${session.user}!=null">
                                         <a class="menu-link"  th:href="@{../exer/getAddExer}">
                                     <span class="menu-bullet">
@@ -226,8 +228,8 @@
                                             <span class="menu-title">운동등록</span>
                                         </a>
                                         </th:block>
-                                       
-                                    </div>
+                                    </div> -->
+                               
                                     
                                     
                                     
@@ -287,7 +289,9 @@
                                     </div>
                                </div>
                             </div>
+                            
                             <div class="menu-item">
+                            <th:block th:if="${session.user}!=null">
                                 <a class="menu-link" th:href="@{../trgtHabit/getTrgtHabit}">
                               <span class="menu-icon">
                                  <!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
@@ -301,6 +305,22 @@
                               </span>
                                     <span class="menu-title">습관관리</span>
                                 </a>
+                            </th:block>   
+                            <th:block th:if="${session.user}==null">
+                              <a class="menu-link" th:onclick="|javascript:nologin()|">
+                              <span class="menu-icon">
+                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
+                                 <span class="svg-icon svg-icon-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                       <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z" fill="black"/>
+                                       <path opacity="0.3" d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z" fill="black"/>
+                                    </svg>
+                                 </span>
+                                            <!--end::Svg Icon-->
+                              </span>
+                                    <span class="menu-title">습관관리</span>
+                                </a>
+                            </th:block>  
                             </div>
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                            <span class="menu-link">
@@ -319,20 +339,40 @@
                            </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
+                                    <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../diary/getDiary}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">다이어리 조회</span>
                                         </a>
+                                    </th:block>    
+                                    <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">다이어리 조회</span>
+                                        </a>
+                                    </th:block>    
                                     </div>
                                     <div class="menu-item">
+                                    <th:block th:if="${session.user}!=null">
                                         <a class="menu-link" th:href="@{../diary/getUserBodyInfo}">
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>
                                     </span>
                                             <span class="menu-title">신체 변화 추이 조회</span>
                                         </a>
+                                    </th:block>    
+                                    <th:block th:if="${session.user}==null">
+                                        <a class="menu-link" th:onclick="|javascript:nologin()|">
+                                    <span class="menu-bullet">
+                                       <span class="bullet bullet-dot"></span>
+                                    </span>
+                                            <span class="menu-title">신체 변화 추이 조회</span>
+                                        </a>
+                                    </th:block>    
                                     </div>
                                     <!-- <div class="menu-item">
                                         <a class="menu-link" th:href="@{../diary/getWeeklyPaper}">
@@ -352,6 +392,7 @@
                                     </div> -->
                                 </div>
                             </div>
+                           
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                            <span class="menu-link">
                               <span class="menu-icon">
@@ -497,7 +538,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="menu-item" th:if="${session.user.password} != kakaopassword">
+                                    <div class="menu-item" th:if="${session.user.password} != kakao11">
                                         <a class="menu-link" >
                                     <span class="menu-bullet">
                                        <span class="bullet bullet-dot"></span>

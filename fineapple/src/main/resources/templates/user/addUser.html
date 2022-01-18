@@ -77,21 +77,25 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">휴대폰번호</label>
-    <input name="cellphone" id="cellphone" type="number" class="form-control form-control-solid" placeholder="ex)01012345678"required/>
+    <input name="cellphone" id="cellphone" type="number" oninput='handleOnInput(this, 11)' class="form-control form-control-solid" placeholder="ex)01012345678"required/>
 </div>
 <div class="mb-10" style="max-width:300px;" th:if="${user.userId == null}">
     <label for="exampleFormControlInput1" class="required form-label">비밀번호</label>
-    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="최소 5자,하나 이상의 문자와 숫자로 입력해주세요." maxlength="11" required/>
+    <input name="password" id="password" type="password" class="form-control form-control-solid" placeholder="최소 5자,하나 이상의 문자와 숫자로 입력해주세요." oninput='handleOnInput(this, 11)' required/>
     <div id="changeone" name="changeone"></div>
     <br>
     <label for="exampleFormControlInput1" class="required form-label">비밀번호 확인</label>
-    <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" placeholder="ex)비밀번호 확인"required/>
+    <input name="checkPassword" id="checkPassword" type="password" class="form-control form-control-solid" oninput='handleOnInput(this, 11)' placeholder="ex)비밀번호 확인"required/>
     <p> <span align="center" id = "changePassword" name ="changePassword"></span>
     
 </div>
+<div class="mb-10" style="max-width:300px;" th:if="${user.userId != null}">
+    <input name="password" id="password" type="hidden" th:value="${user.password}" class="form-control form-control-solid"  required/>
+    <input name="checkPassword" id="checkPassword" type="hidden" th:value="${user.password}" class="form-control form-control-solid" required/>
+</div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">몸무게</label>
-    <input name="weight" id="weight" type="number" class="form-control form-control-solid" placeholder="ex)60" maxlength ="4"required/>
+    <input name="weight" id="weight" type="number" class="form-control form-control-solid" placeholder="ex)60" oninput='handleOnInput(this, 3)' required/>
     <div id="changethree" name="changethree"></div>
 </div>
 <div class="mb-10" style="max-width:300px;">
@@ -101,19 +105,19 @@
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">키</label>
-    <input name="height" id="height" type="number" class="form-control form-control-solid" placeholder="ex)170" maxlength="4" required/>
+    <input name="height" id="height" type="number" class="form-control form-control-solid" oninput='handleOnInput(this, 3)' placeholder="ex)170" maxlength="4" required/>
     <div id="changefour" name="changefour"></div>
     
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1" class="required form-label">나이</label>
-    <input name="age" id="age" type="number" class="form-control form-control-solid" placeholder="ex)20" maxlength ="3" required/>
+    <input name="age" id="age" type="number" class="form-control form-control-solid" oninput='handleOnInput(this, 2)' placeholder="ex)20" required/>
     <div id="changefive" name="changefive"></div>
     
 </div>
 <div class="mb-10" style="max-width:300px;">
     <label for="exampleFormControlInput1"class="required form-label" >목표체중</label>
-    <input id="trgtWeight" name="trgtWeight" type="text" class="form-control form-control-solid" placeholder="ex)57" required/>
+    <input id="trgtWeight" name="trgtWeight" type="number" class="form-control form-control-solid" oninput='handleOnInput(this, 3)' placeholder="ex)57" required/>
     <div id="changesix" name="changesix"></div>
     
 </div>
@@ -143,6 +147,14 @@
 <th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script th:inline="javascript">
+
+var passwordResult = true;
+	function handleOnInput(el, maxlength) {
+	  if(el.value.length > maxlength)  {
+	    el.value 
+	      = el.value.substr(0, maxlength);
+	  }
+	}
 	$(function(){
 		$("#password").on("keyup",function(){
 			var password = $("#password").val();
@@ -162,7 +174,7 @@
 				$("#changetwo").empty();
 			}
 		});
-		$("#weight").on("keyup",function(){
+/* 		$("#weight").on("keyup",function(){
 			var weight = $("#weight").val();
 			if(weight.length >= 4 ){
 				$("#changethree").html("<p>입력된 몸무게를 다시 확인해주세요.</p>");
@@ -198,7 +210,7 @@
 				$("#changesix").empty();
 			}
 		});
-		
+		 */
 	})
 
    $(function(){
@@ -212,9 +224,9 @@
   
    $(function(){
       $("#userId").on("keyup",function(){
-         console.log("올라갔닝")
+        // console.log("올라갔닝")
          var userId = $("#userId").val()
-         console.log(userId);
+       //  console.log(userId);
          data = { 
                userId : userId
                }
@@ -226,7 +238,7 @@
                   accept : "application/json",
                   contentType : "application/json"
          }).done(function(result){
-            console.log(result);
+          //  console.log(result);
             if(result == 0){
                if(userId != ""){
                   if(userId.indexOf('@') <1 || userId.indexOf('.') == -1){
@@ -279,7 +291,7 @@
 	         		   $("#compare").on("keyup",function(){
 	         		//	   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
-	         			   console.log(compare)
+	         			 //  console.log(compare)
 	         			   if(compare == key){
 	         				   $("#compareEmail").html("<p>인증성공!</p>")
 	         				   $("#compareEmail").css('color','green');
@@ -301,13 +313,16 @@
 	
    
   
-	  
 	  $(function(){
+
+		   
+		   
 		  $("#checkPassword").keyup(function(){
 		  var password= $("#password").val();
 		  var checkPassword = $("#checkPassword").val();
 		 
-			console.log(checkPassword);
+		 
+			//console.log(checkPassword);
 			  if(password == checkPassword){
 				  $("#changePassword").html("<div>비밀번호가 일치합니다.</div>");
 				  $("#changePassword").attr('color', '#31B404');
@@ -324,6 +339,7 @@
 	  
 	   
 	   $("#submit").on("click",function(){
+		
       var userName=$("#userName").val();
       var password=$("#password").val();
       var cellphone=$("#cellphone").val();
@@ -335,6 +351,7 @@
       var compareEmail = $("compareEmail").val();
       var textTest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
       var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+   
       if($("#male").val() == 'male'){
          var gender=$("#male").val();
       }
@@ -346,43 +363,42 @@
          return; */
       /* }else */ if(userId == ""){
          alert("이메일을 입력하지 않으셨습니다.");
-         return;
-      }else if(textTest.test(userId)){
+         return false;
+      }else if(textTest.test(userId)==false){
          alert("이메일 형식으로 입력해주세요.")
-         return;
+         return false;
       }
       else if(password == ""){
          alert("비밀번호를 입력하지 않으셨습니다.");
-         return;
-      }else if(!reg.test(password)){
-    	  alert("비밀번호 규칙 위반입니다.");
-    	  return;
+         return false;
       }else if(compareEmail == ""){
     	alert("인증번호를 입력하지 않으셨습니다.");
-    	return;
+        return false;
       }else if(cellphone == ""){
          alert("전화번호를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(age == ""){
          alert("나이를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(weight == ""){
          alert("몸무게를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(height == ""){
          alert("키를 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(trgtWeight == ""){
          alert("목표체중을 입력하지 않으셨습니다.");
-         return;
+         return false;
       }else if(isCertification == false){
     	  alert("인증번호가 일치하지 않습니다.");
-    	  return;
+          return false;
       }else if(passwordResult==false){
     	  alert("비밀번호가 일치하지 않습니다.");
-    	  return;
-      }
-      else{
+          return false;
+      }else if(!reg.test(password)){
+    	  alert("비밀번호 규칙 위반입니다.");
+          return false;
+      }else{
          alert("회원가입에 성공하셨습니다.");
           $("form").attr("method","POST").attr("action","/user/addUser/redirect").submit();
       }

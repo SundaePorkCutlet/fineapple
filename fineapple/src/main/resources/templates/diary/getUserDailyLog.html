@@ -52,6 +52,7 @@
 									</div>
 									<!--end::user_daily_log-->
 									
+									<th:block th:if="${viewDate} <= ${todayDate} and ${viewDate} >= ${session.user.regDate}">
 			
 									<!--begin::diet_record-->
 									<div class="card mb-5 mb-xl-10" th:if="${isUsingDietServ == true}">
@@ -82,12 +83,16 @@
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress h-8px bg-light-primary mb-3" th:if="${achievement.intakeKcalInPercentage} <= 110">
 															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeKcalInPercentage}%|" th:aria-valuenow="${achievement.intakeKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+														<div class="progress h-8px bg-light-danger mb-3" th:if="${achievement.intakeKcalInPercentage} > 110">
+															<div class="progress-bar bg-danger" role="progressbar" th:style="|width: ${achievement.intakeKcalInPercentage}%|" th:aria-valuenow="${achievement.intakeKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
-														<div class="fw-bold fs-6 text-muted">코멘트</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeKcalInPercentage} <= 110">잘하고 있어요!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeKcalInPercentage} > 110">과식은 건강에 좋지 않아요:(</div>
 														<!--end::Description-->
 													</div>
 													<!--end::Status-->
@@ -112,12 +117,16 @@
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress h-8px bg-light-primary mb-3" th:if="${achievement.intakeCarbInPercentage} <= 100">
 															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeCarbInPercentage}%|" th:aria-valuenow="${achievement.intakeCarbInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+														<div class="progress h-8px bg-light-danger mb-3" th:if="${achievement.intakeCarbInPercentage} > 100">
+															<div class="progress-bar bg-danger" role="progressbar" th:style="|width: ${achievement.intakeCarbInPercentage}%|" th:aria-valuenow="${achievement.intakeCarbInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
-														<div class="fw-bold fs-6 text-muted">코멘트</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeCarbInPercentage} <= 100">최고에요!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeCarbInPercentage} > 100">밥떡빵은 맛있지만 건강을 위해선 줄여야해요</div>
 														<!--end::Description-->
 													</div>
 													<!--end::Status-->
@@ -142,12 +151,16 @@
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress h-8px bg-light-primary mb-3" th:if="${achievement.intakeProteinInPercentage} >= 50">
 															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeProteinInPercentage}%|" th:aria-valuenow="${achievement.intakeProteinInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+														<div class="progress h-8px bg-light-danger mb-3" th:if="${achievement.intakeProteinInPercentage} < 50">
+															<div class="progress-bar bg-danger" role="progressbar" th:style="|width: ${achievement.intakeProteinInPercentage}%|" th:aria-valuenow="${achievement.intakeProteinInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
-														<div class="fw-bold fs-6 text-muted">코멘트</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeProteinInPercentage} >= 50">잘하고 있어요!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeProteinInPercentage} < 50">단백질을 충분히 섭취하세요!</div>
 														<!--end::Description-->
 													</div>
 													<!--end::Status-->
@@ -172,12 +185,16 @@
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-primary mb-3">
+														<div class="progress h-8px bg-light-primary mb-3" th:if="${achievement.intakeFatInPercentage} <= 100">
 															<div class="progress-bar bg-primary" role="progressbar" th:style="|width: ${achievement.intakeFatInPercentage}%|" th:aria-valuenow="${achievement.intakeFatInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+														<div class="progress h-8px bg-light-danger mb-3" th:if="${achievement.intakeFatInPercentage} > 100">
+															<div class="progress-bar bg-danger" role="progressbar" th:style="|width: ${achievement.intakeFatInPercentage}%|" th:aria-valuenow="${achievement.intakeFatInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 														<!--end::Progress-->
 														<!--begin::Description-->
-														<div class="fw-bold fs-6 text-muted">코멘트</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeFatInPercentage} <= 100">너무 좋아요!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.intakeFatInPercentage} > 100">기름진 음식을 많이 드셨네요</div>
 														<!--end::Description-->
 													</div>
 													<!--end::Status-->
@@ -207,12 +224,16 @@
 													<!--begin::Label-->
 													<div id="breakfast">
 														<div class="fs-6 fw-bolder mb-1">아침</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(breakfast) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) == 0}"></div>
 															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(breakfast) > 0}" th:each="item, i : ${breakfast}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) > 0}" th:text="|총 칼로리 ${bfTotal.totalIntakeKcal}Kcal, 탄수화물 ${bfTotal.totalIntakeCarb}g, 단백질 ${bfTotal.totalIntakeProtein}g, 지방 ${bfTotal.totalIntakeFat}g|"></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(breakfast) > 0}" th:text="|총 칼로리 ${bfTotal.totalIntakeKcal}Kcal, 탄수화물 ${bfTotal.totalIntakeCarb}g, 단백질 ${bfTotal.totalIntakeProtein}g, 지방 ${bfTotal.totalIntakeFat}g|"></div>
+														</th:block>	
 													</div>
 													<!--end::Label-->
 												</div>
@@ -225,12 +246,16 @@
 													<!--begin::Label-->
 													<div id="lunch">
 														<div class="fs-6 fw-bolder mb-1">점심</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(lunch) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) > 0}" th:text="|총 칼로리 ${lunchTotal.totalIntakeKcal}Kcal, 탄수화물 ${lunchTotal.totalIntakeCarb}g, 단백질 ${lunchTotal.totalIntakeProtein}g, 지방 ${lunchTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) == 0}"></div>											
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(lunch) > 0}" th:each="item, i : ${lunch}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(lunch) > 0}" th:text="|총 칼로리 ${lunchTotal.totalIntakeKcal}Kcal, 탄수화물 ${lunchTotal.totalIntakeCarb}g, 단백질 ${lunchTotal.totalIntakeProtein}g, 지방 ${lunchTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -243,12 +268,16 @@
 													<!--begin::Label-->
 													<div id="dinner">
 														<div class="fs-6 fw-bolder mb-1">저녁</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(dinner) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(dinner) > 0}" th:each="item, i : ${dinner}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) > 0}" th:text="|총 칼로리 ${dinnerTotal.totalIntakeKcal}Kcal, 탄수화물 ${dinnerTotal.totalIntakeCarb}g, 단백질 ${dinnerTotal.totalIntakeProtein}g, 지방 ${dinnerTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(dinner) > 0}" th:each="item, i : ${dinner}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(dinner) > 0}" th:text="|총 칼로리 ${dinnerTotal.totalIntakeKcal}Kcal, 탄수화물 ${dinnerTotal.totalIntakeCarb}g, 단백질 ${dinnerTotal.totalIntakeProtein}g, 지방 ${dinnerTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -261,12 +290,16 @@
 													<!--begin::Label-->
 													<div id="snack">
 														<div class="fs-6 fw-bolder mb-1">간식</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(snack) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(snack) > 0}" th:each="item, i : ${snack}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(snack) > 0}" th:text="|총 칼로리 ${snackTotal.totalIntakeKcal}Kcal, 탄수화물 ${snackTotal.totalIntakeCarb}g, 단백질 ${snackTotal.totalIntakeProtein}g, 지방 ${snackTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600"  th:if="${#lists.size(snack) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600"  th:if="${#lists.size(snack) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(snack) > 0}" th:each="item, i : ${snack}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(snack) > 0}" th:text="|총 칼로리 ${snackTotal.totalIntakeKcal}Kcal, 탄수화물 ${snackTotal.totalIntakeCarb}g, 단백질 ${snackTotal.totalIntakeProtein}g, 지방 ${snackTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -279,18 +312,46 @@
 													<!--begin::Label-->
 													<div id="supper">
 														<div class="fs-6 fw-bolder mb-1">야식</div>
-														<th:block th:if="${isDietServInfo == false || #lists.size(supper) == 0}">
+														<th:block th:if="${isDietServInfo == false}">
 															<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
 															<div class="fw-bold text-gray-600"></div>													
 														</th:block>
-														<div class="fw-bold text-gray-600"><span th:if="${#lists.size(supper) > 0}" th:each="item, i : ${supper}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
-														<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) > 0}" th:text="|총 칼로리 ${supperTotal.totalIntakeKcal}Kcal, 탄수화물 ${supperTotal.totalIntakeCarb}g, 단백질 ${supperTotal.totalIntakeProtein}g, 지방 ${supperTotal.totalIntakeFat}g|"></div>
+														<th:block th:unless="${isDietServInfo == false}">
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) == 0}">입력한 정보가 없습니다</div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) == 0}"></div>													
+															<div class="fw-bold text-gray-600"><span th:if="${#lists.size(supper) > 0}" th:each="item, i : ${supper}" th:text="${i.count eq i.size} ? ${item.food.foodName} : |${item.food.foodName}, |" th:value="${item.food.foodCd}"></span></div>
+															<div class="fw-bold text-gray-600" th:if="${#lists.size(supper) > 0}" th:text="|총 칼로리 ${supperTotal.totalIntakeKcal}Kcal, 탄수화물 ${supperTotal.totalIntakeCarb}g, 단백질 ${supperTotal.totalIntakeProtein}g, 지방 ${supperTotal.totalIntakeFat}g|"></div>
+														</th:block>
 													</div>
 													<!--end::Label-->
 												</div>
 												<!--end::supper-->
 												<!--begin::Notice-->
-												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} > 110">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal가 훨씬 넘는 섭취량!|"></h4>
+															<div class="fs-6 text-gray-700 pe-7">과식하셨네요..신나게 먹은만큼 몸을 움직여봐요!</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} <= 110 and ${achievement.intakeKcalInPercentage} >= 90">
 													<!--begin::Icon-->
 													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
 													<span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
@@ -305,8 +366,32 @@
 													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
 														<!--begin::Content-->
 														<div class="mb-3 mb-md-0 fw-bold">
-															<h4 class="text-gray-900 fw-bolder">오늘 섭취한 총 내용 써머리 한고,,</h4>
-															<div class="fs-6 text-gray-700 pe-7">Two-factor authentication adds an extra layer of security to your account. To log in, in addition you'll need to provide a 6 digit code</div>
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal에 알맞게 드셨네요!|"></h4>
+															<div class="fs-6 text-gray-700 pe-7">나 자신과의 약속을 지키는 멋진 모습! 최고에요!</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isDietServInfo} == true and ${achievement.intakeKcalInPercentage} < 90">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder" th:text="|세상에, ${totalDietRecord.totalIntakeKcal}Kcal밖에 못 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal에 한참 모자라요|"></h4>
+															<div class="fs-6 text-gray-700 pe-7">혹시 식이조절을 너무 무리하게 하고 계신 게 아닌가요?</div>
 														</div>
 														<!--end::Content-->
 													</div>
@@ -322,7 +407,7 @@
 
 									
 									<!--begin::exer_record-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingExerServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
@@ -352,10 +437,18 @@
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
-														<div class="progress h-8px bg-light-info mb-3">
+														<div class="progress h-8px bg-light-info mb-3" th:if="${achievement.burnningKcalInPercentage} >= 70">
 															<div class="progress-bar bg-info" role="progressbar" th:style="|width: ${achievement.burnningKcalInPercentage}%|" th:aria-valuenow="${achievement.burnningKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
+														<div class="progress h-8px bg-light-danger mb-3" th:if="${achievement.burnningKcalInPercentage} < 70">
+															<div class="progress-bar bg-danger" role="progressbar" th:style="|width: ${achievement.burnningKcalInPercentage}%|" th:aria-valuenow="${achievement.burnningKcalInPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
 														<!--end::Progress-->
+														<!--begin::Description-->
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.burnningKcalInPercentage} >= 100">오늘의 운동 목표 달성 성공!!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.burnningKcalInPercentage} >= 70 and ${achievement.burnningKcalInPercentage} < 100">조금만 더 화이팅 해봐요!</div>
+														<div class="fw-bold fs-6 text-muted" th:if="${achievement.burnningKcalInPercentage} < 70">운동 부족! 제발 움직이세요!!</div>
+														<!--end::Description-->
 													</div>
 													<!--end::Status-->
 												</div>
@@ -367,7 +460,7 @@
 									</div>
 									<!--end::exer_record-->
 									<!--begin::exer_record_details-->
-									<div class="card mb-5 mb-xl-10" th:unless="${userServ != null && userServ.dailyTrgtBurnningKcal == null}">
+									<div class="card mb-5 mb-xl-10" th:if="${isUsingExerServ == true}">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" id="exer_record_details_title" role="button" data-bs-toggle="collapse" data-bs-target="#exer_record_details" aria-expanded="true" aria-controls="kt_account_connected_accounts">
 											<div class="card-title m-0">
@@ -380,7 +473,7 @@
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::exer_item-->
-												<div class="d-flex flex-wrap align-items-center" th:if="${isExerServInfo == false || #lists.size(burnningRecordList) == 0}">
+												<div class="d-flex flex-wrap align-items-center" th:if="${isExerServInfo == false}">
 													<!--begin::Label-->
 													<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt">
 														<div class="fw-bold text-gray-600">입력한 정보가 없습니다</div>
@@ -390,7 +483,7 @@
 												<!--end::exer_item-->
 												<th:block th:if="${#lists.size(burnningRecordList) > 0}" th:each="item, i : ${burnningRecordList}">
 													<!--begin::exer_item-->
-													<div class="d-flex flex-wrap align-items-center" >
+													<div class="d-flex flex-wrap align-items-center mb-10">
 														<!--begin::Label-->
 														<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt" >
 															<div class="fs-6 fw-bolder mb-1" th:text="${item.exerName}" th:value="${item.exer.exerNo}"></div>
@@ -405,7 +498,31 @@
 													<!--end::Separator-->
 												</th:block>
 												<!--begin::Notice-->
-												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+												<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6" th:if="${isExerServInfo == false}">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+													<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="black"></path>
+															<path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="black"></path>
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Wrapper-->
+													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+														<!--begin::Content-->
+														<div class="mb-3 mb-md-0 fw-bold">
+															<h4 class="text-gray-900 fw-bolder">운동 부족! 운동이 필요해요!!</h4>
+															<div class="fs-6 text-gray-700 pe-7">엘레베이터 대신 계단을 이용해보는 건 어떨까요?</div>
+														</div>
+														<!--end::Content-->
+													</div>
+													<!--end::Wrapper-->
+												</div>
+												<!--end::Notice-->
+												<!--begin::Notice-->
+												<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6" th:unless="${isExerServInfo == false || #lists.size(burnningRecordList) == 0}">
 													<!--begin::Icon-->
 													<!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
 													<span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
@@ -420,13 +537,9 @@
 													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
 														<!--begin::Content-->
 														<div class="mb-3 mb-md-0 fw-bold">
-															<h4 class="text-gray-900 fw-bolder">오늘 운동 총 소모 칼로리 내용 써머리 한고,,</h4>
-															<div class="fs-6 text-gray-700 pe-7">오늘 소모한 총 칼로리: 344KCal 총 운동시간 12:30:00</div>
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalExerRecord.totalExerTime}분 간 ${totalExerRecord.totalBurnningKcal}Kcal를 소모했어요!|"></h4>
 														</div>
 														<!--end::Content-->
-														<!--begin::Action-->
-														<a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_two_factor_authentication">Enable</a>
-														<!--end::Action-->
 													</div>
 													<!--end::Wrapper-->
 												</div>
@@ -465,7 +578,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingDietServ} == false">
 																	<td th:text="|총 ${badgeCount.dietBadgeCount}개|"></td>
-																	<td>이미지</td>
+																	<td th:if="${badgeCount.dietBadgeCount} >= 1"><img src='../assets/img/diet.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -478,7 +591,7 @@
 																</th:block>
 																<th:block th:unless="${isUsingExerServ} == false">
 																	<td th:text="|총 ${badgeCount.exerBadgeCount}개|"></td>
-																	<td><img src='../assets/img/exer_badge.png' style='width:45px; height:45px;'/></td>
+																	<td th:if="${badgeCount.exerBadgeCount} >= 1"><img src='../assets/img/exer.png' style='width:45px; height:45px;'/></td>
 																</th:block>
 															</tr>
 															<!--end::Table row-->
@@ -487,14 +600,14 @@
 															<tr>
 																<td>물 마시기 뱃지</td>
 																<td th:text="|총 ${badgeCount.wtrBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.wtrBadgeCount} >= 1"><img src='../assets/img/water.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															<!--begin::Table row-->
 															<tr>
 																<td>승부 뱃지</td>
 																<td th:text="|총 ${badgeCount.bttlBadgeCount}개|"></td>
-																<td>이미지</td>
+																<td th:if="${badgeCount.bttlBadgeCount} >= 1"><img src='../assets/img/battle.png' style='width:45px; height:45px;'/></td>
 															</tr>
 															<!--end::Table row-->
 															
@@ -508,6 +621,9 @@
 										<!--end::Content-->
 									</div>
 									<!--end::Notifications-->
+									
+									</th:block>
+									
 									<!--begin::Deactivate Account-->
 									<div class="card">
 										<!--begin::Card header-->
@@ -540,7 +656,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[0].eventTitle}" th:data-target="${userEventList[0].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[0].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[0].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[0].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[0].eventCntnt}|"></div>
@@ -554,7 +670,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[1].eventTitle}" th:data-target="${userEventList[1].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[1].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[1].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[1].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[1].eventCntnt}|"></div>
@@ -568,7 +684,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[2].eventTitle}" th:data-target="${userEventList[2].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[2].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[2].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[2].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[2].eventCntnt}|"></div>
@@ -586,7 +702,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[3].eventTitle}" th:data-target="${userEventList[3].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[3].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[3].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[3].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[3].eventCntnt}|"></div>
@@ -600,7 +716,7 @@
 														<div class="card card-bordered">
 															<div class="card-header ribbon ribbon-end">
 																<div class="card-title test-script cursor-pointer" th:text="${userEventList[4].eventTitle}" th:data-target="${userEventList[4].userEventNo}"></div>
-																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}">대표</div>
+																<div class="ribbon-label bg-danger" th:if="${userEventList[4].keyEventStt == 0}"><i class="bi bi-suit-heart-fill fs-2 text-white"></i></div>
 																<div class="ribbon-label bg-warning" th:if="${userEventList[4].keyEventStt == 1}"><i class="bi bi-suit-heart-fill fs-2 text-white cursor-pointer" th:data-target="${userEventList[4].userEventNo}"></i></div>
 															</div>
 															<div class="card-body" th:text="|${userEventList[4].eventCntnt}|"></div>
@@ -621,12 +737,14 @@
 								<!--begin::Aside-->
 								<div class="flex-column flex-md-row-auto w-100 w-lg-250px w-xxl-275px">
 									<!--begin::Nav-->
-									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="account-settings" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
+									<div class="card mb-6 mb-xl-9" data-kt-sticky="true" data-kt-sticky-name="user_daily_log" data-kt-sticky-offset="{default: false, lg: 300}" data-kt-sticky-width="{lg: '250px', xxl: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-zindex="95" style="animation-duration: 0.3s;">
 										<!--begin::Card body-->
 										<div class="card-body py-10 px-6">
 											<!--begin::Menu-->
-											<ul id="kt_account_settings" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
-												<li class="menu-item px-3 pt-0 pb-1">
+											<ul id="user_daily_log_sticky" class="nav nav-flush menu menu-column menu-rounded menu-title-gray-600 menu-bullet-gray-300 menu-state-bg menu-state-bullet-primary fw-bold fs-6 mb-2">
+												
+												<th:block th:if="${viewDate} <= ${todayDate} and ${viewDate} >= ${session.user.regDate}">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingDietServ == true}">
 													<a href="#diet_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link active">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -634,7 +752,7 @@
 														<span class="menu-title">식단 기록</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingDietServ == true}">
 													<a href="#diet_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -642,7 +760,7 @@
 														<span class="menu-title">오늘 먹은 식단</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingExerServ == true}">
 													<a href="#exer_record_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -650,7 +768,7 @@
 														<span class="menu-title">운동 기록</span>
 													</a>
 												</li>
-												<li class="menu-item px-3 pt-0 pb-1">
+												<li class="menu-item px-3 pt-0 pb-1" th:if="${isUsingExerServ == true}">
 													<a href="#exer_record_details_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
 															<span class="bullet bullet-vertical"></span>
@@ -666,6 +784,8 @@
 														<span class="menu-title">이주의 획득 뱃지</span>
 													</a>
 												</li>
+												</th:block>
+												
 												<li class="menu-item px-3 pt-0">
 													<a href="#user_event_title" data-kt-scroll-toggle="true" class="menu-link px-3 nav-link">
 														<span class="menu-bullet">
@@ -917,7 +1037,7 @@
 	       
 	        /* 사용자 이벤트 등록 모달 열기 */
 	        $("#addUserEvent_bttn").on("click", function(){
-	        	$("input[name=user_event_date]").attr("placeholder", date);
+	        	$("input[name=user_event_date]").attr("placeholder", [[${viewDate}]]);
 	        	$("#kt_modal_add_event").modal("show");
 	        });
        

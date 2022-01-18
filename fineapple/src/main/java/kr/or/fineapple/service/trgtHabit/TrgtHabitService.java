@@ -13,6 +13,8 @@ public interface TrgtHabitService {
 	public List<Object> getTrgtHabitList(ViewDuration viewDuration);
 	
 	public int getUsingTrgtHabit(String userId, int trgtHabitCateNo);
+	
+	public LocalDate getTheLatestInitDate(String userId, int trgtHabitCateNo);
 
 	public TrgtHabit getTrgtHabit(String userId, LocalDate date, int trgtHabitCateNo);
 	

@@ -107,18 +107,22 @@ public class UserController {
 	
 	@RequestMapping(value="addUser")
 	public ModelAndView addUser(@ModelAttribute("user") User user, HttpSession session,Model model){
+		ModelAndView mav = new ModelAndView();
+		
 		System.out.println("찐UserController:addUser()");
 		System.out.println(user);
+		/*
+		 * if(user.getPassword().equals("kakao11")) { mav.clear(); }
+		 */
 		model.addAttribute("NavName1", "회원관리");
 		model.addAttribute("NavName2","회원가입");
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/addUser.html");
 		 if(user.getUserId() != null) {
 			 System.out.println("여기 들어왔니");
+			 user.setPassword("kakao11");
 			 mav.addObject(user);
 		 }
 		System.out.println();
-		
 		System.out.println(user);
 		return mav;
 	}
@@ -130,7 +134,7 @@ public class UserController {
 		System.out.println("addUserRedirect");
 		System.out.println("user잘 들어갔나용" + user);
 		if(user.getPassword() == null) {
-			user.setPassword("kakaopassword");
+			user.setPassword("kakao11");
 			user.setKakaoStt(1);
 		}
 		if(!file.getOriginalFilename().isEmpty()) {
@@ -146,9 +150,10 @@ public class UserController {
 
 		user.setStrdWtrIntake(user.getWeight()*0.03);	//적정수분섭취량 계산식(몸무게*0.03L) 적용
 		userService.addUser(user);
+		userService.afterAddOrRestoreUser(user);		//userBodyInfo, Badge 테이블 데이터 생성
 		System.out.println("user:"+user.toString());
 		System.out.println("회원가입 됐나용");
-		if(user.getPassword().equals("kakaopassword")) {
+		if(user.getPassword().equals("kakao!!")) {
 			session.setAttribute("user",user);
 		}
 		return "redirect:/";
@@ -268,6 +273,7 @@ public class UserController {
 		if (user.getPassword().equals(userDB.getPassword())) {
 			if(user.getUserId().equals(userDB.getUserId())) {
 				userService.restoreUser(user);
+				userService.afterAddOrRestoreUser(userDB);	//기존 기록을 default로 복구한 날의 userBodyInfo, Badge 테이블 데이터 생성
 				return "redirect:/";
 			}
 		}

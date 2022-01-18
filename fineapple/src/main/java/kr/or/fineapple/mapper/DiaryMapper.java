@@ -75,6 +75,12 @@ public interface DiaryMapper {
 	////사용자 신체 정보 테이블에 기록된 가장 마지막 날짜 조회
 	LocalDate getTheLatestDateUserBodyInfo(String userId);
 	
+	////뱃지 테이블 기록 동기화(식단)
+	void updateBadgeByDiet(Map map);
+
+	////뱃지 테이블 기록 동기화(운동)
+	void updateBadgeByExer(Map map);
+	
 	////배치프로그램 실행: 매일 전일의 기록을 디폴트로 userBodyInfo 생성
 	void addUserBodyInfo(Map map);
 	

@@ -113,6 +113,7 @@ public class DiaryController {
 		////리턴해줄 mav 생성
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("viewDate", date);
+		mav.addObject("todayDate", LocalDate.now());
 		
 		////각 서비스 정보의 존재 유무를 판단하기 위한 Flag 셋팅
 		Boolean isUsingDietServ = false;	//식단 서비스 이용 여부
@@ -221,18 +222,18 @@ public class DiaryController {
 					double totalIntakeCarb = 0.0;	//해당 끼니의 총 섭취 탄수화물
 					double totalIntakeProtein = 0.0;	//해당 끼니의 총 섭취 딘벡질
 					double totalIntakeFat = 0.0;	//해당 끼니의 총 섭취 지방
-					Map<String, Object> sncakTotal = new HashMap<>();
+					Map<String, Object> snackTotal = new HashMap<>();
 					for(IntakeRecord item : snackIntakeRecordList) {
 						totalIntakeKcal += item.getFoodKcal();
 						totalIntakeCarb += item.getFoodCarb();
 						totalIntakeProtein += item.getFoodProtein();
 						totalIntakeFat += item.getFoodFat();
 					}
-					sncakTotal.put("totalIntakeKcal", totalIntakeKcal);
-					sncakTotal.put("totalIntakeCarb", totalIntakeCarb);
-					sncakTotal.put("totalIntakeProtein", totalIntakeProtein);
-					sncakTotal.put("totalIntakeFat", totalIntakeFat);
-					mav.addObject("sncakTotal", sncakTotal);
+					snackTotal.put("totalIntakeKcal", totalIntakeKcal);
+					snackTotal.put("totalIntakeCarb", totalIntakeCarb);
+					snackTotal.put("totalIntakeProtein", totalIntakeProtein);
+					snackTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("snackTotal", snackTotal);
 				}
 				if(supperIntakeRecordList != null) {
 					double totalIntakeKcal = 0.0;	//해당 끼니의 총 섭취 칼로리

@@ -55,6 +55,7 @@
 		var year = new Date().getFullYear();
 		var month = new Date().getMonth();
 		var firstDay = new Date(year, month, 1);
+		var today = new Date();
 		
 		/* 일자 포맷 관련 함수 */
 		function convertDateFormat(date) {
@@ -106,36 +107,36 @@
 					var htmlCntnt="<div>"
 					if(event.slice(0,3) == "b01"){
 						//식단, 운동, 물
-						htmlCntnt+="<i class='bi bi-trophy-fill text-success fs-5'></i>";
-						htmlCntnt+="<img src='../assets/img/exer_badge.png' style='width:30px; height:30px;'/>";
-						htmlCntnt+="<i class='bi bi-trophy-fill text-primary fs-5'></i>";
+						htmlCntnt+="<img src='../assets/img/diet.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/exer.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/water.png' style='width:30px; height:30px;'/>";
 					
 					}else if(event.slice(0,3) == "b02"){
 						//식단, 운동
-						htmlCntnt+="<i class='bi bi-trophy-fill text-success fs-5'></i>";
-						htmlCntnt+="<img src='../assets/img/exer_badge.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/diet.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/exer.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b03"){
 						//식단, 물
-						htmlCntnt+="<i class='bi bi-trophy-fill text-success fs-5'></i>";
-						htmlCntnt+="<i class='bi bi-trophy-fill text-primary fs-5'></i>";
+						htmlCntnt+="<img src='../assets/img/diet.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/water.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b04"){
 						//식단
-						htmlCntnt+="<i class='bi bi-trophy-fill text-success fs-5'></i>";
+						htmlCntnt+="<img src='../assets/img/diet.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b05"){
 						//운동, 물
-						htmlCntnt+="<img src='../assets/img/exer_badge.png' style='width:30px; height:30px;'/>";
-						htmlCntnt+="<i class='bi bi-trophy-fill text-primary fs-5'></i>";
+						htmlCntnt+="<img src='../assets/img/exer.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/water.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b06"){
 						//운동
-						htmlCntnt+="<img src='../assets/img/exer_badge.png' style='width:30px; height:30px;'/>";
+						htmlCntnt+="<img src='../assets/img/exer.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b07"){
 						//물
-						htmlCntnt+="<i class='bi bi-trophy-fill text-primary fs-5'></i>";
+						htmlCntnt+="<img src='../assets/img/water.png' style='width:30px; height:30px;'/>";
 						
 					}else if(event.slice(0,3) == "b08"){
 						//배틀뱃지만 존재
@@ -145,7 +146,7 @@
 						//배틀 뱃지가 존재하는경우
 						var bttlBadgeCount = event.slice(-1);
  						for(var i=0; i<event.slice(-1); i++){
-							htmlCntnt+="<i class='bi bi-trophy-fill text-muted fs-5'></i>";
+							htmlCntnt+="<img src='../assets/img/battle.png' style='width:30px; height:30px;'/>";
 						}
 					}
 					return { html: htmlCntnt+"</div>" };

@@ -30,8 +30,8 @@ $(function(){
    $("#login").on("click",function(){
       var userId = $("#userId").val();
       var password =$("#password").val();
-      console.log(userId);
-      console.log(password);
+     // console.log(userId);
+     // console.log(password);
       
       if(userId == null || userId.length< 1){
          alert("ID를 입력해주세요.")
@@ -96,25 +96,25 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
    window.Kakao.Auth.login({
       scope:'profile_nickname, profile_image,account_email,gender',
       success : function(authObj){
-         console.log(authObj);
+      //   console.log(authObj);
          window.Kakao.API.request({
             url:'/v2/user/me',
             success:res => {      
                const kakao_account = res.kakao_account;
-               console.log(kakao_account);
+         //      console.log(kakao_account);
                var userId =kakao_account.email;
                var gender = kakao_account.gender;
                var userName = kakao_account.profile.nickname;
                var profile = kakao_account.profile.profile_image_url;
-               console.log(userId);
-               console.log(gender);
-               console.log(profile);
-               console.log(name);
+         //      console.log(userId);
+         //      console.log(gender);
+          //     console.log(profile);
+          //     console.log(name);
                var data ={
                      userName :userName,
                      userId: userId,
                      gender : gender,
-                     password : "kakaopassword"
+                     password : "kakao11"
                }
                $.ajax({
                   type:"POST",
@@ -129,7 +129,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                      var data ={
                            userId: userId,
                            gender : gender,
-                           password : "kakaopassword"};
+                           password : "kakao11"};
                      if(map.result == 0){
                         var userId = map.user.userId;
                         var gender = map.user.gender;
@@ -137,7 +137,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                               userId: userId,
                               gender : gender,
                               userName: 'ㄹㄹㄹㄹ',
-                              password : "kakaopassword"};
+                              password : "kakao11"};
                         
                         $.ajax({
                            type :"POST",
@@ -154,7 +154,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                               url :"/user/addUser/rest",
                               data :JSON.stringify({userId : user.userId,
                                     gender : user.gender,
-                                    password : "kakaopassword"}
+                                    password : "kakao11"}
                               		),
                               accept:"application/json",
                               contentType : "application/json",
@@ -169,7 +169,7 @@ window.Kakao.init("3255273f04f93853debcbfbac9b7ff4c");
                      }else {
                         var data = {
                            userId : map.user.userId,
-                           password : "kakaopassword"
+                           password : "kakao11"
                         }
                         $.ajax({
                            type :"POST",

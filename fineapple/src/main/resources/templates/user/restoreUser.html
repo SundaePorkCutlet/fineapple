@@ -67,7 +67,7 @@
 </div>
 <div th:unless="${session.kakao == null}">
 <div class="mb-10" style="max-width:300px;">
-    <input name="password" id="password" type="hidden"  value="kakaopassword" class = "form-control form-control-solid"/>
+    <input name="password" id="password" type="hidden"  value="kakao!!" class = "form-control form-control-solid"/>
 </div>
 </div>
 </form>
@@ -138,9 +138,9 @@
 	         		 isCertifidation = true;
 	         		 var key = data;
 	         		 $("#sendNum").on("click",function(){
-	         			   console.log("인증번호 올라갔닝")
+	         			//   console.log("인증번호 올라갔닝")
 	         			   var compare = $("#compare").val();
-	         			   console.log(compare)
+	         			//   console.log(compare)
 	         			   if(compare == key){
 	         				   $("#compareEmail").html("<p>인증성공!</p>")
 	         				   $("#compareEmail").css('color','green');

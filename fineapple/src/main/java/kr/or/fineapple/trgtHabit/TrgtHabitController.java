@@ -70,6 +70,7 @@ public class TrgtHabitController {
 				//사용자가 아직 시작하지 않아 null인 습관인 경우 빈 trgtHabit 객체 생성
 				TrgtHabit emptyTrgtHabit = new TrgtHabit();
 				emptyTrgtHabit.setTrgtHabitCateNo(i);
+				emptyTrgtHabit.setTrgtHabitServiceNo(0);
 				emptyTrgtHabit.setTrgtHabitSuccDayCount(0);
 				
 				//model에 담을 keyName 셋팅
@@ -94,26 +95,4 @@ public class TrgtHabitController {
 		return mav;
 	}
 	
-	@RequestMapping(value="addUserHabitCateName", method=RequestMethod.POST)
-	public TrgtHabit addUserHabitCateName(@RequestBody TrgtHabit userHabit) {
-		System.out.println(userHabit.getTrgtHabitCateName());
-		return userHabit;
-	}
-	
-	@RequestMapping(value="addTrgtHabit", method=RequestMethod.POST)
-	public ModelAndView addTrgtHabit(@ModelAttribute TrgtHabit trgtHabit) {
-		
-		System.out.println("/trgtHabit/addTrgtHabit : POST");
-
-		trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
-//		
-		ModelAndView mav = new ModelAndView();
-//		mav.addObject("trgtHabit", trgtHabit);
-//		mav.addObject("date", LocalDate.now());
-		mav.setViewName("redirect:/trgtHabit/json/getTrgtHabit");
-		
-		return mav;
-	}
-	
-
 }

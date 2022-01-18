@@ -54,7 +54,7 @@
                               <div class="card-header py-5">
                                  <!--begin::Title-->
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-dark">체중/체지방률(선택)/골격근량(선택) 기록</span>
+                                    <span class="card-label fw-bolder text-dark">체중/체지방률(선택)/골격근량(선택)/키 기록</span>
                                     <span class="text-gray-400 mt-1 fw-bold fs-6">매일 매일 변화하는 자신의 신체 변화 정보를 기록하세요!</span>
                                  </h3>
                                  <!--end::Title-->
@@ -77,7 +77,7 @@
                                            <label for="weight" class="fs-6 fw-bold text-gray-400">체중</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="weight" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].weight}"/>
+                                           <input type="text" id="weight" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[0].weight}kg|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="weight_bttn" class="btn btn-primary">입력</a>
@@ -88,7 +88,7 @@
                                            <label for="bodyFat" class="fs-6 fw-bold text-gray-400">체지방률(선택)</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}|"/>
+                                           <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyFat}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}%|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="bodyFat_bttn" class="btn btn-primary">입력</a>
@@ -99,10 +99,21 @@
                                            <label for="bodyMuscle" class="fs-6 fw-bold text-gray-400">골격근량(선택)</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}|"/>
+                                           <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}g|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="bodyMuscle_bttn" class="btn btn-primary">입력</a>
+                                       </div>
+                                    </div>
+                                    <div class="row" style="padding-bottom:1rem">
+                                       <div class="col-md-3">
+                                           <label for="height" class="fs-6 fw-bold text-gray-400">키</label>
+                                       </div>
+                                       <div class="col-md-7">
+                                           <input type="text" id="height" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[0].height}cm|"/>
+                                       </div>
+                                       <div class="col-md-2">
+                                           <a href="#" id="height_bttn" class="btn btn-primary">입력</a>
                                        </div>
                                     </div>
                                  </form>
@@ -370,6 +381,7 @@
                                  ),
                   contentType: "application/json"
                }).done(function(){
+            	   alert("수정이 완료되었습니다");
                   $.ajax({
                      url: "/diary/json/getUserBodyInfo",
                      type: "POST",
@@ -381,6 +393,7 @@
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
                        $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       $("#height").attr("placeholder", userBodyInfo[0].height);
                        
                        if(userBodyInfo[0].bodyFat != null){
                           $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
@@ -407,6 +420,7 @@
                                  ),
                   contentType: "application/json"
                }).done(function(){
+            	   alert("수정이 완료되었습니다");
                   $.ajax({
                      url: "/diary/json/getUserBodyInfo",
                      type: "POST",
@@ -418,6 +432,7 @@
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
                        $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       $("#height").attr("placeholder", userBodyInfo[0].height);
                        
                        if(userBodyInfo[0].bodyFat != null){
                           $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
@@ -444,6 +459,7 @@
                                  ),
                   contentType: "application/json"
                }).done(function(){
+            	   alert("수정이 완료되었습니다");
                   $.ajax({
                      url: "/diary/json/getUserBodyInfo",
                      type: "POST",
@@ -455,6 +471,46 @@
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
                        $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       $("#height").attr("placeholder", userBodyInfo[0].height);
+                       
+                       if(userBodyInfo[0].bodyFat != null){
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                       }
+                       if(userBodyInfo[0].bodyMuscle != null){
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                       }
+                       
+                    })
+               })
+            })
+            
+            $("#height_bttn").on("click", function(){
+               
+               var date = $("#kt_daterangepicker_3").val();
+               console.log(date);
+               
+               $.ajax({
+                  url: "/diary/json/updateUserBodyInfo",
+                  type: "POST",
+                  data: JSON.stringify({userId : [[${session.user.userId}]],
+                                 date : date,
+                                 height : $("#height").val()}
+                                 ),
+                  contentType: "application/json"
+               }).done(function(){
+            	   alert("수정이 완료되었습니다");
+                  $.ajax({
+                     url: "/diary/json/getUserBodyInfo",
+                     type: "POST",
+                     data: JSON.stringify({userId : [[${session.user.userId}]],
+                                    startDate : date,
+                                    endDate : date}
+                                    ),
+                     contentType: "application/json"
+                  }).done(function(userBodyInfo){
+                       console.log(userBodyInfo);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                       $("#height").attr("placeholder", userBodyInfo[0].height);
                        
                        if(userBodyInfo[0].bodyFat != null){
                           $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);

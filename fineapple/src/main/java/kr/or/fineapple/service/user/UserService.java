@@ -27,5 +27,6 @@ public interface UserService {
 	
 	public String kakaoStt(User user) throws Exception;
 
+	public void afterAddOrRestoreUser(User user) throws Exception;
 
 }
