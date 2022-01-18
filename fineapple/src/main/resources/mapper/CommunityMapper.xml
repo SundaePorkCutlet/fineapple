@@ -1130,12 +1130,37 @@
 		)
 	</insert>
 	
+	<delete id="delRequestBattle" parameterType="battle">
+	DELETE
+	FROM
+	battle
+	<where>
+	battle_no = #{battleNo}
+	</where>
+	</delete>
 	
 	
+	<select id="getBattle" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<trim prefix="WHERE" prefixOverrides="WHERE | OR" suffixOverrides=",">
+	battle_no = #{battleNo}
+	</trim>
+	</select>
 	
 	
-	
-	
+	<update id="updateBattle" parameterType="battle">
+	UPDATE battle
+	<trim prefix="SET" suffixOverrides=",">
+	battling_stt = #{battleStt},
+	rival_user_trgt_kcal = #{rivalTrgtKcal}
+	</trim>
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	battle_no = #{battleNo}
+	</trim>
+	</update>
 	
 	
 

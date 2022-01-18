@@ -828,6 +828,21 @@ public class CommunityController {
 
 		return modelAndView;
 	}
+	
+	@PostMapping(value = "delReceviedBattleAccept")
+	public String delReceviedBattleAccept(@RequestBody Battle battle, Model model) {
+		
+		
+		battle = communityService.getBattle(battle);
+		
+		model.addAttribute("battle", battle);
+		
+		String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:mm"));
+		
+		model.addAttribute("time", time);
+		
+		return "community/battleReceived :: battleReceived";
+	}
 
 
 

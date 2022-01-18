@@ -129,8 +129,13 @@ public interface CommunityMapper {
 	
 	public List<Cmnt> getGroupCmntList(GroupBorad groupBorad);
 	
-	
 	public void addGroupPost(GroupBorad groupBorad);
+	
+	public void delRequestBattle(Battle battle);
+	
+	public Battle getBattle(Battle battle);
+	
+	public void updateBattle(Battle battle);
 	
 
 	

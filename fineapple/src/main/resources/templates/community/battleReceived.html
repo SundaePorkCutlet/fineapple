@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<meta charset="utf-8">
+<th:block th:replace="/layout/fragments/header.html :: header"></th:block>
+<body>
+	<div id="battleReceivedModal" class="modal fade" role="dialog"  th:fragment ="battleReceived">
+		<div  class="modal-dialog " style="height:1300px;">
+			<div class="modal-content">
+				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+	            	<span class="svg-icon svg-icon-2x"></span>
+	            </div>
+	            <h1 class="modal-title" align="center">승부 수락</h1>
+				<div class="modal-header">
+				</div>
+				<div class="modal-body" style="height:500px;">
+						
+						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
+							<span>승부 수락 날짜</span>
+							<span id="time" th:value ="${time}" th:text="${time}"></span>
+						</label>
+						<div>
+							<span>승부 신청 회원 : </span>
+							<span id = "battleUserId" th:value ="${battle.user.userId}" th:text="${battle.user.userId}"></span>
+						</div>
+						<div>
+							<span>승부 신청 회원 목표 칼로리 : </span>
+							<span id = "battleUserTrgtKcal" th:value ="${battle.userTrgtKcal}" th:text="${battle.userTrgtKcal}"></span>
+						</div>
+						<div>
+						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
+							<span class="required">목표 칼로리</span>
+						</label>
+						</div>
+						<input id = "rivalTrgtKcal" type="number" name = "rivalTrgtKcal" class="form-control form-control-solid" placeholder="목표 칼로리를 입력하세요" >
+					
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger btn-hover-scale me-5" th:onclick="|javascript:fnAddReport(${battle.battleNo})|">승부수락</button>
+					<button type="button" class="btn btn-default" data-bs-dismiss="modal">이전</button>
+				</div>
+			</div>
+		</div>
+	
+		<script>
+		function fnAddReport(battleNo){
+			
+			
+			var userId = $("#battleUserId").text(); //span은 value가 안먹는다.
+			console.log(userId)
+			var rivalTrgtKcal = $("#rivalTrgtKcal").val();
+			var data = {"battleNo" : battleNo, "userId" : userId, "rivalTrgtKcal" : rivalTrgtKcal};
+			
+			
+			$.ajax({
+				url: "/community/json/addBattleAccept", //url : 요청 Url
+				type: "POST", //type : 데이터를 전송하는 방법 (get, post)
+				dataType: "json", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
+				data: JSON.stringify(data), //요청과 함께 서버로 데이터를 전송 할 string 또는 map
+				contentType: "application/json", // 서버에 보내는 데이터의 타입이다.
+				success: function(data){ //  요청이 성공 했을 때 호출할 콜백 함수
+					console.log("성공");
+					
+
+					
+				}
+				
+			})
+			
+			//input DOM과 같이 value 속성에 값이 적용되는 DOM은 val() 함수를 사용하고
+			//div와 같이 <div></div> 사이에 text가 값이 적용되는 DOM은 text()함수를 사용합니다.
+
+
+
+			
+			$('#battleReceivedModal').modal("hide");
+		};
+		</script>
+	</div>
+</body>
+</html>

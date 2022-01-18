@@ -38,6 +38,7 @@ import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
+import oracle.net.aso.b;
 
 
 
@@ -386,6 +387,7 @@ public class CommunityRestController {
 			i += 1;
 		}
 		System.out.println(str + "내용");
+		
 		System.out.println(str2 + "소그룹 번호");
 		
 		
@@ -405,21 +407,107 @@ public class CommunityRestController {
 		
 		communityService.addGroupPost(groupBorad, times);
 		
-		
-		
-		
-		
+
 		
 		
 	}
 	
 	
+	@PostMapping(value = "delRequestBattle")
+	public void delRequestBattle(@RequestBody Battle battle) {
+		
+		System.out.println(battle);
+
+		communityService.delRequestBattle(battle);
+	}
+	
+
+	
+	@PostMapping(value = "delReceviedBattleReject")
+	public void delReceviedBattleReject(@RequestBody Battle battle) {
+		
+		System.out.println(battle);
+
+		communityService.delRequestBattle(battle);
+
+	}
 	
 	
-	
-	
+	@PostMapping(value = "addBattleAccept")
+	public void addBattleAccept(@RequestBody String str, HttpServletRequest request) {
+		
+		
+		System.out.println(str);
+		
+		JSONObject jsonObject = (JSONObject)JSONValue.parse(str);
+		
+		
+		Battle battle = new Battle();
+		
+		battle.setBattleNo(Integer.parseInt(jsonObject.get("battleNo").toString()));
+		
+		battle.setRivalTrgtKcal(Integer.parseInt(jsonObject.get("rivalTrgtKcal").toString()));
+		
+		System.out.println(battle);
+		
+		battle.setBattleStt(2);
+		
+		communityService.updateBattle(battle);
+		
+	}
 	
 	
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

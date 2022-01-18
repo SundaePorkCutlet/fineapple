@@ -392,6 +392,31 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		
 	}
+
+	@Override
+	public void delRequestBattle(Battle battle) {
+		communityMapper.delRequestBattle(battle);
+		
+	}
+
+	@Override
+	public Battle getBattle(Battle battle) {
+		// TODO Auto-generated method stub
+		return communityMapper.getBattle(battle);
+	}
+
+	@Override
+	public void updateBattle(Battle battle) {
+		communityMapper.updateBattle(battle);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
