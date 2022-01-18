@@ -1104,13 +1104,63 @@
 	</select>
 	
 	
+	<insert id="addGroupPost" parameterType="groupBorad">
+		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
+		SELECT seq_board_post_no.CURRVAL FROM dual
+		</selectKey>
+		
+		INSERT INTO BOARD (
+		POST_NO,
+		USER_ID,
+		GROUP_NO,
+		POST_CATE,
+		UPDATE_STT,
+		CONTENT,
+		POST_DATE
+		)
+		VALUES 
+		(
+		seq_board_post_no.NEXTVAL,
+		#{user.userId},
+		#{group.groupNo},
+		0,
+		#{updateStt},
+		#{content},
+		SYSDATE
+		)
+	</insert>
+	
+	<delete id="delRequestBattle" parameterType="battle">
+	DELETE
+	FROM
+	battle
+	<where>
+	battle_no = #{battleNo}
+	</where>
+	</delete>
 	
 	
+	<select id="getBattle" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<trim prefix="WHERE" prefixOverrides="WHERE | OR" suffixOverrides=",">
+	battle_no = #{battleNo}
+	</trim>
+	</select>
 	
 	
-	
-	
-	
+	<update id="updateBattle" parameterType="battle">
+	UPDATE battle
+	<trim prefix="SET" suffixOverrides=",">
+	battling_stt = #{battleStt},
+	rival_user_trgt_kcal = #{rivalTrgtKcal}
+	</trim>
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+	battle_no = #{battleNo}
+	</trim>
+	</update>
 	
 	
 

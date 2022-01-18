@@ -94,6 +94,11 @@ public interface CommunityService {
 	
 	public List getGroupBoard(GroupBorad groupBorad);
 	
+	public void addGroupPost(GroupBorad groupBorad, String[] times);
 	
+	public void delRequestBattle(Battle battle);
 	
+	public Battle getBattle(Battle battle);
+	
+	public void updateBattle(Battle battle);
 }
