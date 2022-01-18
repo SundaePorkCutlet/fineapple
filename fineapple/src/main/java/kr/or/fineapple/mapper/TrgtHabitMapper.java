@@ -1,5 +1,6 @@
 package kr.or.fineapple.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,9 @@ public interface TrgtHabitMapper {
 	
 	////해당 습관 이미 진행중인지 여부 조회
 	int getUsingTrgtHabit(Map map);
+	
+	////가장 최신의 습관 초기화 일자 조회
+	LocalDate getTheLatestInitDate(Map map);
 	
 	////목표 습관 관리 진행 확인
 	TrgtHabit getTrgtHabit(Map map);

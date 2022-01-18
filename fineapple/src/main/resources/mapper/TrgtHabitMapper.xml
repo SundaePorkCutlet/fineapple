@@ -47,6 +47,17 @@
 		AND trgt_habit_cate_no = #{trgtHabitCateNo:INTEGER}
 		AND trgt_habit_init_date IS NULL
 	</select>
+	
+	<!-- SELECT ONE : 가장 최신의 습관 초기화 일자 조회 -->
+	<select id="getTheLatestInitDate" resultType="java.time.LocalDate">
+	SELECT trgt_habit_init_date
+	FROM (SELECT trgt_habit_init_date
+			FROM trgt_habit_service
+			WHERE user_id = #{userId:VARCHAR}
+			AND trgt_habit_cate_no = #{trgtHabitCateNo:INTEGER}
+			ORDER BY TRUNC(trgt_habit_init_date) DESC)
+	WHERE ROWNUM <![CDATA[<=]]> 1
+	</select>
 
 	<!-- SELECT : 목표습관관리 조회 -->
 	<select id="getTrgtHabit" resultMap="TrgtHabitMap">

@@ -222,18 +222,18 @@ public class DiaryController {
 					double totalIntakeCarb = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ≈∫ºˆ»≠π∞
 					double totalIntakeProtein = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î µÚ∫§¡˙
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
-					Map<String, Object> sncakTotal = new HashMap<>();
+					Map<String, Object> snackTotal = new HashMap<>();
 					for(IntakeRecord item : snackIntakeRecordList) {
 						totalIntakeKcal += item.getFoodKcal();
 						totalIntakeCarb += item.getFoodCarb();
 						totalIntakeProtein += item.getFoodProtein();
 						totalIntakeFat += item.getFoodFat();
 					}
-					sncakTotal.put("totalIntakeKcal", totalIntakeKcal);
-					sncakTotal.put("totalIntakeCarb", totalIntakeCarb);
-					sncakTotal.put("totalIntakeProtein", totalIntakeProtein);
-					sncakTotal.put("totalIntakeFat", totalIntakeFat);
-					mav.addObject("sncakTotal", sncakTotal);
+					snackTotal.put("totalIntakeKcal", totalIntakeKcal);
+					snackTotal.put("totalIntakeCarb", totalIntakeCarb);
+					snackTotal.put("totalIntakeProtein", totalIntakeProtein);
+					snackTotal.put("totalIntakeFat", totalIntakeFat);
+					mav.addObject("snackTotal", snackTotal);
 				}
 				if(supperIntakeRecordList != null) {
 					double totalIntakeKcal = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ƒÆ∑Œ∏Æ

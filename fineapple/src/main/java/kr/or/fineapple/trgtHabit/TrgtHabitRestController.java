@@ -56,26 +56,32 @@ public class TrgtHabitRestController {
 	public TrgtHabit addTrgtHabit(@RequestBody TrgtHabit trgtHabit) {
 		  
 		System.out.println("/trgtHabit/json/addTrgtHabit : POST");
+
+		//오늘 초기화한 습관의 경우 시작 불가
+		LocalDate theLatestInitDate = trgtHabitService.getTheLatestInitDate(trgtHabit.getUserId(), trgtHabit.getTrgtHabitCateNo());
 		
-		//서비스 시작 전 현재 진행 중인지 여부 확인(0개 리턴경우 시작 가능/1 리턴경우 이미 진행중으로 시작불가)
-		int usingStt = trgtHabitService.getUsingTrgtHabit(trgtHabit.getUserId(), trgtHabit.getTrgtHabitCateNo());
+		if(theLatestInitDate == null || !theLatestInitDate.isEqual(LocalDate.now())) {
+			//서비스 시작 전 현재 진행 중인지 여부 확인(0개 리턴경우 시작 가능/1 리턴경우 이미 진행중으로 시작불가)
+			int usingStt = trgtHabitService.getUsingTrgtHabit(trgtHabit.getUserId(), trgtHabit.getTrgtHabitCateNo());
+			if(usingStt == 0) {
+				trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
+				//시작된 목표 관리 정보 조회를 위한 service 호출
+				TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), LocalDate.now(), trgtHabit.getTrgtHabitCateNo());
 		
-		//서비스 시작을 위한 service 호출	  
-		if(usingStt == 0) {
-			trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
-			//시작된 목표 관리 정보 조회를 위한 service 호출
-			TrgtHabit returnTrgtHabit = trgtHabitService.getTrgtHabit(trgtHabit.getUserId(), LocalDate.now(), trgtHabit.getTrgtHabitCateNo());
-	
-			////성공일수 출력 위한 연산 Logic
-			//시작일자와 오늘일자의 차
-			LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
-			int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
-			returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
-			System.out.println(returnTrgtHabit);
-		
-			return returnTrgtHabit;
+				////성공일수 출력 위한 연산 Logic
+				//시작일자와 오늘일자의 차
+				LocalDateTime trgtHabitStartDate = returnTrgtHabit.getTrgtHabitStartDate().atStartOfDay();
+				int trgtHabitSuccDayCount = (int)Duration.between(trgtHabitStartDate, LocalDate.now().atStartOfDay()).toDays();
+				returnTrgtHabit.setTrgtHabitSuccDayCount(trgtHabitSuccDayCount+1);
+				System.out.println(returnTrgtHabit);
+				
+				return returnTrgtHabit;	
+			} else {
+				return null;
+			}
+		} else {
+			return null;
 		}
-		return null;
 	}
 	 
 	@RequestMapping(value="json/endTrgtHabit", method=RequestMethod.POST)
