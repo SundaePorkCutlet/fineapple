@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+
 	<!-- 怨듯넻 header -->
 	<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
@@ -228,24 +230,74 @@ td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-
 	            popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 	        }
 		   
+	     
 		    
-	
-		    
-		    $(function () {
+		   
 		    	
-		        $("#alarm_button").on("click", function () {
-			    	
-		            $.ajax({
-		                url: "../diet/getAlarm",
-		                success: function (data) {
-		                	console.log(data)
-		                    $("#dModalHolder").html(data);
-		                    $("#getalarm").modal("show");
-		                }
-		            });
-		        });
-		    });
-		    
+		    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+		    	
+			        $("#alarm_button").on("click", function () {
+			        	/*  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+				    	  alarm_button.onmouseup = function() {
+				    	    document.removeEventListener('mousemove', onMouseMove);
+				    	    alarm_button.onmouseup = null;
+				    	  };
+
+			        	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+				    	alarm_button.ondragstart = function() {
+				    	  return false;
+				    	};  
+				    	
+			        	 $(".bi.bi-bell-fill").on("mousedown", function () {
+	        
+			        		 //좌표값
+						    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
+						    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
+
+						    	  alarm_button.style.position = 'absolute';
+						    	  alarm_button.style.zIndex = 1000;
+						    	  document.body.append(alarm_button);
+
+						    	  moveAt(event.pageX, event.pageY);
+
+						    	
+						    	  function moveAt(pageX, pageY) {
+						    		  alarm_button.style.left = pageX - shiftX + 'px';
+						    		  alarm_button.style.top = pageY - shiftY + 'px';
+						    	  }
+
+						    	  function onMouseMove(event) {
+						    	    moveAt(event.pageX, event.pageY);
+						    	  }
+
+						    	  // mousemove로 알림 움직이게 하고
+						    	  document.addEventListener('mousemove', onMouseMove);
+
+						    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+						    	  alarm_button.onmouseup = function() {
+						    	    document.removeEventListener('mousemove', onMouseMove);
+						    	    alarm_button.onmouseup = null;
+						    	  };
+
+						    	
+						    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+						    	alarm_button.ondragstart = function() {
+						    	  return false;
+						    	};  
+						    	})  */
+						    	
+					      
+			            $.ajax({
+			                url: "../diet/getAlarm",
+			                success: function (data) {
+			                	
+			                    $("#dModalHolder").html(data);
+			                    $("#getalarm").modal("show");
+			                }
+			            });
+			        });
+			        
+			    
 		    
 			    
 		    $(document).ready(function () {
@@ -254,7 +306,7 @@ td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-
 		    		url: "../diet/rest/getAlarmCount",
 		    		success:function(data){
 		    			var Count = data;
-		    			console.log(data)
+		    		
 		    			$("#count").text(Count);
 		    		}
 		    		
@@ -262,48 +314,9 @@ td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-
 		    	});
 		    })
 		    
-		     alarm_button.onmousedown = function(event) {
-
-	        		 //좌표값
-				    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
-				    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
-
-				    	  alarm_button.style.position = 'absolute';
-				    	  alarm_button.style.zIndex = 1000;
-				    	  document.body.append(alarm_button);
-
-				    	  moveAt(event.pageX, event.pageY);
-
-				    	
-				    	  function moveAt(pageX, pageY) {
-				    		  alarm_button.style.left = pageX - shiftX + 'px';
-				    		  alarm_button.style.top = pageY - shiftY + 'px';
-				    	  }
-
-				    	  function onMouseMove(event) {
-				    	    moveAt(event.pageX, event.pageY);
-				    	  }
-
-				    	  // mousemove로 알림 움직이게 하고
-				    	  document.addEventListener('mousemove', onMouseMove);
-
-				    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
-				    	  alarm_button.onmouseup = function() {
-				    	    document.removeEventListener('mousemove', onMouseMove);
-				    	    alarm_button.onmouseup = null;
-				    	  };
-
-				    	};
-
-				    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
-				    	alarm_button.ondragstart = function() {
-				    	  return false;
-				    	}; 
-				    	
-		    
 		    
 		    if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
+    	window.addEventListener("load", () => {
         navigator.serviceWorker.register("/firebase-messaging-sw.js");
     });
 }
