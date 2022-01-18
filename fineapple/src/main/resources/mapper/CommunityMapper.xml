@@ -1104,6 +1104,31 @@
 	</select>
 	
 	
+	<insert id="addGroupPost" parameterType="groupBorad">
+		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
+		SELECT seq_board_post_no.CURRVAL FROM dual
+		</selectKey>
+		
+		INSERT INTO BOARD (
+		POST_NO,
+		USER_ID,
+		GROUP_NO,
+		POST_CATE,
+		UPDATE_STT,
+		CONTENT,
+		POST_DATE
+		)
+		VALUES 
+		(
+		seq_board_post_no.NEXTVAL,
+		#{user.userId},
+		#{group.groupNo},
+		0,
+		#{updateStt},
+		#{content},
+		SYSDATE
+		)
+	</insert>
 	
 	
 	

@@ -130,7 +130,7 @@ public interface CommunityMapper {
 	public List<Cmnt> getGroupCmntList(GroupBorad groupBorad);
 	
 	
-	
+	public void addGroupPost(GroupBorad groupBorad);
 	
 
 	

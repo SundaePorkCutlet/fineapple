@@ -139,10 +139,12 @@ public class CommunityController {
 		
 		board.setGroup(group);
 		
+		board.setCateName(1);
+		
 		for (String string : times) {
 			System.out.println(string);
 		}
-			
+		
 		communityService.addPost(board, times);
 		
 		return "redirect:/community/getBoard";
@@ -779,6 +781,12 @@ public class CommunityController {
 		
 		
 		List<GroupBorad> list = communityService.getGroupBoard(groupBorad);
+		
+		System.out.println("Model에 담기전");
+		
+		for (GroupBorad groupBorad2 : list) {
+			System.out.println(groupBorad2);
+		}
 		
 		model.addAttribute("list", list);
 		

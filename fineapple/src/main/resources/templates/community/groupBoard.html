@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html> -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
 <meta charset="utf-8">
 <!-- 공통 header -->
@@ -63,8 +63,8 @@
 									</div>
 									</form>
 
-
-										<div th:each = " data : ${list}">
+										<div th:each = " data : ${list}"> 
+										<div >
 											<div  class="card-header pt-9" >
 												<!--begin::Author-->
 												<div class="d-flex align-items-center">
@@ -143,26 +143,20 @@
 												<div class="fs-6 fw-normal text-gray-700 mb-5" th:text = ${data.content}></div>
 												<!--end::Post content-->
 												<!--begin::Post media-->
-												<div th:if="${data.Img.size != 0}" class="row g-7 h-250px h-md-375px">
+<!-- 												<div th:if="${data.Img.size != 0}" class="row g-7 h-250px h-md-375px"> -->
 													<!--begin::Col-->
-													<div >
+													<div th:if = "${data.img.size()} != 0" >
 														<!--begin::Row-->
 														<div  class="row g-7 h-250px h-md-375px">
 															<!--begin::Col-->
 															<div class="col-lg-12">
-																<!--begin::Item-->
-																<a   class="d-block card-rounded overlay h-100" data-fslightbox="lightbox-projects" href="/good/assets/media/stock/600x600/img-22.jpg">
-																	<!--begin::Image-->
-																	<div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" style="background-image:url('/good/assets/media/stock/600x400/img-71.jpg')"></div>
-																	<!--end::Image-->
-																	<!--begin::Action-->
-																	<div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-																	
-																		<i class="bi bi-eye-fill fs-3x text-white"></i>
+																<div>
+																	<div th:each = "dataa : ${data.img}">
+																	<div align="center">
+																		<img th:src="@{../assets/community/}+${dataa.imgName}" style="width: 30%;  height: 60%;">
 																	</div>
-																	<!--end::Action-->
-																</a>
-																<!--end::Item-->
+																	</div>
+																</div>
 															</div>
 															<!--end::Col-->
 														</div>
@@ -206,7 +200,7 @@
 													<div class="separator separator-solid mb-1"></div>
 													<!--end::Separator-->
 													<!--begin::Comments-->
-													<div class="collapse show" id="kt_social_feeds_comments_1">
+													<div class="collapse show" id="kt_social_feeds_comments_1" th:if = "${data.cmnt.size()} != 0">
 														<!--begin::Comment-->
 														<div th:each="dataa :${data.cmnt}" class="d-flex pt-6">
 															<!--begin::Avatar-->
@@ -256,7 +250,7 @@
 											</div>
 											<!--end::Card footer-->								
 										</div>
-
+									
 		<!-- 공통 하단 footer -->
 		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 <script type="text/javascript">
@@ -350,6 +344,7 @@
                 //async : false //true가 default, false시 동기로 처리
                 success: function (data) {
                 	alert('success');
+                	window.location.reload();
                 	
                 },
                 error: function (e) {

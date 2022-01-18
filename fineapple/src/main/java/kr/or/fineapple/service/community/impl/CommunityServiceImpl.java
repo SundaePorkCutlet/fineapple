@@ -378,6 +378,22 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return list;
 	}
+
+	@Override
+	public void addGroupPost(GroupBorad groupBorad, String[] times) {
+		
+		communityMapper.addGroupPost(groupBorad);
+		for (String time : times) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("postNo", groupBorad.getPostNo() + "");
+			map.put("time", time);
+			communityMapper.addPostImg(map);
+		}
+		
+		
+	}
+	
+	
 	
 	
 

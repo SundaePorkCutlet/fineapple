@@ -95,5 +95,5 @@ public interface CommunityService {
 	public List getGroupBoard(GroupBorad groupBorad);
 	
 	
-	
+	public void addGroupPost(GroupBorad groupBorad, String[] times);
 }

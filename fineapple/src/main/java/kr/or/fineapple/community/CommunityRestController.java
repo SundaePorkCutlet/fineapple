@@ -34,6 +34,7 @@ import kr.or.fineapple.domain.community.BlackList;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.service.community.CommunityService;
@@ -369,7 +370,7 @@ public class CommunityRestController {
 	}
 	
 	@PostMapping(value = "addGroupPost")
-	public void addGroupPost(@RequestParam("content") String str, @RequestParam("uploadFile") MultipartFile[] files) throws IllegalStateException, IOException {
+	public void addGroupPost(@RequestParam("content") String str, @RequestParam("uploadFile") MultipartFile[] files, @RequestParam("groupNo") String str2, HttpServletRequest request) throws IllegalStateException, IOException {
 			String[] times = new String[files.length];
 			
 		
@@ -384,7 +385,30 @@ public class CommunityRestController {
 			times[i] = time; 
 			i += 1;
 		}
-		System.out.println(str);
+		System.out.println(str + "내용");
+		System.out.println(str2 + "소그룹 번호");
+		
+		
+		GroupBorad groupBorad = new GroupBorad();
+		
+		groupBorad.setUser((User)request.getSession(true).getAttribute("user"));
+		
+		groupBorad.setContent(str);
+		
+		Group group = new Group();
+		
+		group.setGroupNo(Integer.parseInt(str2));
+		
+		groupBorad.setGroup(group);
+		
+		
+		
+		communityService.addGroupPost(groupBorad, times);
+		
+		
+		
+		
+		
 		
 		
 	}
