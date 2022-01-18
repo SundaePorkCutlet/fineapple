@@ -21,6 +21,7 @@
 
 											<!--begin::Col-->
 											<div class="col-md-4" th:each="data:${list}">
+											
 												<!--begin::Feature post-->
 												<div class="card-xl-stretch me-md-6">						
 													<!--begin::Body-->
@@ -107,7 +108,7 @@ function fnSubmiGroupNo(data){
 	//var data = $("#" + id).attr("data-groupNo");
 	
 	//$("#form").attr("method", "GET").attr("action", '/community/getGroup?groupNo='+ data ).submit();
-	location.href='/community/getGroup?groupNo='+ data;
+	location.href='/community/groupBoard?groupNo='+ data;
 
 	 
 	

@@ -14,7 +14,9 @@ import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
+import kr.or.fineapple.domain.community.Img;
 import kr.or.fineapple.domain.community.MtmQna;
 import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
@@ -340,6 +342,44 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return communityMapper.getGroupList();
 	}
+
+	@Override
+	public List getGroupBoard(GroupBorad groupBorad) {
+		
+		List<GroupBorad> list = communityMapper.getGroupPostList(groupBorad);
+		
+		for (Object object : list) {
+			System.out.println(object);
+		}
+		
+		for (GroupBorad groupBorad2 : list) {
+			
+			List<Cmnt> list1 = communityMapper.getGroupCmntList(groupBorad2);
+			
+			groupBorad2.setCmnt(list1);
+			
+		}
+		
+		for (GroupBorad groupBorad2 : list) {
+			System.out.println(groupBorad2);
+		}
+		
+		for (GroupBorad groupBorad2 : list) {
+			 List<Img> list1 = communityMapper.getPostImg(groupBorad2.getPostNo());
+			 
+			 groupBorad2.setImg(list1);
+		}
+		
+		for (GroupBorad groupBorad2 : list) {
+			System.out.println(groupBorad2);
+		}
+		
+		
+		
+		return list;
+	}
+	
+	
 
 
 	

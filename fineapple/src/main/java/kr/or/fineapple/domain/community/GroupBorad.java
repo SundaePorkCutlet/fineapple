@@ -19,12 +19,10 @@ public class GroupBorad {
 	private Group group;
 	private String content;
 	private LocalDate postDate;
-	private int viewCount;
 	private int cmntCount;
 	private int postLikeCount;
 	private int postLikeStt;
 	private int updateStt;
-	private int cateName;
 	private List<Cmnt> cmnt;
 	private List<Img> img;
 	

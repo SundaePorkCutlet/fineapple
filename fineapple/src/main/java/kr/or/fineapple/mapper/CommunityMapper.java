@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.or.fineapple.domain.User;
 import kr.or.fineapple.domain.common.Search;
@@ -14,6 +15,7 @@ import kr.or.fineapple.domain.community.Battle;
 import kr.or.fineapple.domain.community.Board;
 import kr.or.fineapple.domain.community.Cmnt;
 import kr.or.fineapple.domain.community.Group;
+import kr.or.fineapple.domain.community.GroupBorad;
 import kr.or.fineapple.domain.community.GroupUser;
 import kr.or.fineapple.domain.community.Img;
 import kr.or.fineapple.domain.community.MtmQna;
@@ -122,6 +124,11 @@ public interface CommunityMapper {
 	public List<Battle> getMybattleInter(Battle battle);
 	
 	public List<Img> getPostImg(int postNo);
+	
+	public List getGroupPostList(GroupBorad groupBorad);
+	
+	public List<Cmnt> getGroupCmntList(GroupBorad groupBorad);
+	
 	
 	
 	
