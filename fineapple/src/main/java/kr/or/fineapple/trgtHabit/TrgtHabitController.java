@@ -95,26 +95,4 @@ public class TrgtHabitController {
 		return mav;
 	}
 	
-	@RequestMapping(value="addUserHabitCateName", method=RequestMethod.POST)
-	public TrgtHabit addUserHabitCateName(@RequestBody TrgtHabit userHabit) {
-		System.out.println(userHabit.getTrgtHabitCateName());
-		return userHabit;
-	}
-	
-	@RequestMapping(value="addTrgtHabit", method=RequestMethod.POST)
-	public ModelAndView addTrgtHabit(@ModelAttribute TrgtHabit trgtHabit) {
-		
-		System.out.println("/trgtHabit/addTrgtHabit : POST");
-
-		trgtHabitService.addTrgtHabit(trgtHabit.getUserId(), trgtHabit);
-//		
-		ModelAndView mav = new ModelAndView();
-//		mav.addObject("trgtHabit", trgtHabit);
-//		mav.addObject("date", LocalDate.now());
-		mav.setViewName("redirect:/trgtHabit/json/getTrgtHabit");
-		
-		return mav;
-	}
-	
-
 }
