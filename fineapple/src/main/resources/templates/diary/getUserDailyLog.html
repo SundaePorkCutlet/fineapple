@@ -342,7 +342,7 @@
 													<div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
 														<!--begin::Content-->
 														<div class="mb-3 mb-md-0 fw-bold">
-															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal가 훨씬 넘는 섭취량!"></h4>
+															<h4 class="text-gray-900 fw-bolder" th:text="|총 ${totalDietRecord.totalIntakeKcal}Kcal를 드셨어요! 나의 목표 섭취 칼로리 ${userServ.dailyTrgtIntakeKcal}Kcal가 훨씬 넘는 섭취량!|"></h4>
 															<div class="fs-6 text-gray-700 pe-7">과식하셨네요..신나게 먹은만큼 몸을 움직여봐요!</div>
 														</div>
 														<!--end::Content-->
@@ -483,7 +483,7 @@
 												<!--end::exer_item-->
 												<th:block th:if="${#lists.size(burnningRecordList) > 0}" th:each="item, i : ${burnningRecordList}">
 													<!--begin::exer_item-->
-													<div class="d-flex flex-wrap align-items-center mb-1">
+													<div class="d-flex flex-wrap align-items-center mb-10">
 														<!--begin::Label-->
 														<div class="fs-6 fw-bolder mb-1" id="exer_record_details_cntnt" >
 															<div class="fs-6 fw-bolder mb-1" th:text="${item.exerName}" th:value="${item.exer.exerNo}"></div>

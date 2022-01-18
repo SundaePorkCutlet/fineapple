@@ -47,6 +47,15 @@ public class TrgtHabitServiceImpl implements TrgtHabitService {
 	}
 
 	@Override
+	public LocalDate getTheLatestInitDate(String userId, int trgtHabitCateNo) {
+		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("trgtHabitCateNo", trgtHabitCateNo);
+		return trgtHabitMapper.getTheLatestInitDate(map);
+	}
+
+	@Override
 	public TrgtHabit getTrgtHabit(String userId, LocalDate viewDate, int trgtHabitCateNo) {
 		///SELECT을 위한 WHERE 조건을 map에 넣어 전달
 		Map<String, Object> map = new HashMap<>();

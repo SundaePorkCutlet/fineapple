@@ -70,6 +70,7 @@ public class TrgtHabitController {
 				//사용자가 아직 시작하지 않아 null인 습관인 경우 빈 trgtHabit 객체 생성
 				TrgtHabit emptyTrgtHabit = new TrgtHabit();
 				emptyTrgtHabit.setTrgtHabitCateNo(i);
+				emptyTrgtHabit.setTrgtHabitServiceNo(0);
 				emptyTrgtHabit.setTrgtHabitSuccDayCount(0);
 				
 				//model에 담을 keyName 셋팅
