@@ -46,8 +46,7 @@ public class DiaryRestController {
 	@Autowired
 	@Qualifier("trgtHabitServiceImpl")
 	private TrgtHabitService trgtHabitService;
-	
-	
+
 	public DiaryRestController() {
 		System.out.println(this.getClass());
 	}
@@ -166,42 +165,42 @@ public class DiaryRestController {
 		diaryService.updateUserBodyInfo(userBodyInfo);
 	}
 	
-	@RequestMapping(value="json/getWeeklyPaper", method=RequestMethod.POST)
-	public WeeklyPaper getWeeklyPaper(@RequestBody ViewDuration viewDuration) {
-		//viewDuration 내 userId, startDate, endDate
-		
-		//해당 주의 일별 섭취 칼로리
-		//해당 주의 일별 소모 칼로리
-
-		
-		//해당 주의 골격근량/체지방량/체중 변화
-		//parameter : viewDuration 내 userId, startDate, endDate
-		//getUserBodyInfoList
-		//코멘트***
-		return null;
-	}
+//	@RequestMapping(value="json/getWeeklyPaper", method=RequestMethod.POST)
+//	public WeeklyPaper getWeeklyPaper(@RequestBody ViewDuration viewDuration) {
+//		//viewDuration 내 userId, startDate, endDate
+//		
+//		//해당 주의 일별 섭취 칼로리
+//		//해당 주의 일별 소모 칼로리
+//
+//		
+//		//해당 주의 골격근량/체지방량/체중 변화
+//		//parameter : viewDuration 내 userId, startDate, endDate
+//		//getUserBodyInfoList
+//		//코멘트***
+//		return null;
+//	}
 	
-	@RequestMapping(value="json/getMonthlyPaper", method=RequestMethod.POST)
-	public MonthlyPaper getMonthlyPaper(@RequestBody ViewDuration viewDuration) {
-		//viewDuration 내 userId, startDate, endDate
-		//해당 월의 주별 일평균 섭취 칼로리
-		//해당 월의 주별 일평균 소모 칼로리
-		//해당 월 일평균 섭취 칼로리
-		//해당 월 일평균 소모 칼로리
-		//총 섭취 칼로리가 가장 높은 주와 그 주의 일평균 섭취 칼로리
-		//총 소모 칼로리가 가장 높은 주와 그 주의 일평균 소모 칼로리
-		//해당 월 중 섭취 칼로리가 가장 높은 날과 그 날의 대표 이벤트
-		//해당 월 중 소모 칼로리가 가장 높은 날과 그 날의 대표 이벤트
-		
-		////해당 월의 뱃지 획득 갯수
-		//parameter : viewDuration 내 userId, startDate, endDate
-		//getBadgeTotalCount
-		//해당 월의 골격근량/체지방량/체중 변화
-		//parameter : viewDuration 내 userId, startDate, endDate
-		//getUserBodyInfoList
-		//코멘트***
-		return null;
-	}
+//	@RequestMapping(value="json/getMonthlyPaper", method=RequestMethod.POST)
+//	public MonthlyPaper getMonthlyPaper(@RequestBody ViewDuration viewDuration) {
+//		//viewDuration 내 userId, startDate, endDate
+//		//해당 월의 주별 일평균 섭취 칼로리
+//		//해당 월의 주별 일평균 소모 칼로리
+//		//해당 월 일평균 섭취 칼로리
+//		//해당 월 일평균 소모 칼로리
+//		//총 섭취 칼로리가 가장 높은 주와 그 주의 일평균 섭취 칼로리
+//		//총 소모 칼로리가 가장 높은 주와 그 주의 일평균 소모 칼로리
+//		//해당 월 중 섭취 칼로리가 가장 높은 날과 그 날의 대표 이벤트
+//		//해당 월 중 소모 칼로리가 가장 높은 날과 그 날의 대표 이벤트
+//		
+//		////해당 월의 뱃지 획득 갯수
+//		//parameter : viewDuration 내 userId, startDate, endDate
+//		//getBadgeTotalCount
+//		//해당 월의 골격근량/체지방량/체중 변화
+//		//parameter : viewDuration 내 userId, startDate, endDate
+//		//getUserBodyInfoList
+//		//코멘트***
+//		return null;
+//	}
 	
 	//update식단기록
 	//update운동기록

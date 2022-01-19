@@ -113,7 +113,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeCarbInPercentage}%|">섭취 탄수화물</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalDietRecord.totalIntakeCarb}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 권장 섭취량 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalDietRecord.totalIntakeCarb}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -147,7 +147,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeProteinInPercentage}%|">섭취 단백질</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalDietRecord.totalIntakeProtein}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 최소 권장 섭취량 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalDietRecord.totalIntakeProtein}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -181,7 +181,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeFatInPercentage}%|"></span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalDietRecord.totalIntakeFat}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 권장 섭취량 ${userServ.dailyTrgtIntakeFat}g 중 ${totalDietRecord.totalIntakeFat}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->

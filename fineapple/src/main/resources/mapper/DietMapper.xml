@@ -71,14 +71,16 @@
 			<result property="totalIntakeFat" column="total_intake_fat" jdbcType="DOUBLE"/>
 		</resultMap>
 
+
+	<!-- 2020년 식약처 발표 한국인 영양 섭취 기준 탄수화물 130g 단백질 남자 60~65 여자 50~55 / 식약처가 정한 권장 섭취량 지방 51g -->
 	<insert id="insertDietService" parameterType="DietServ">
 	INSERT INTO USER_SERVICE (USER_SERVICE_NO,USER_ID,DAILY_TRGT_INTAKE_KCAL,DAILY_TRGT_INTAKE_CARB,DAILY_TRGT_INTAKE_PROTEIN,DAILY_TRGT_INTAKE_FAT,TRGT_BODY_FAT)
 	VALUES (seq_user_service_no.NEXTVAL,
 			#{userId:DOUBLE},
 			#{dailyTrgtIntakeKcal:DOUBLE},
-			#{dailyTrgtIntakeCarb:DOUBLE},
-			#{dailyTrgtIntakeProtein:DOUBLE},
-			#{dailyTrgtIntakeFat:DOUBLE},
+			130,
+			60,
+			51,
 			#{trgtBodyFat:DOUBLE})
 	
 	</insert>
