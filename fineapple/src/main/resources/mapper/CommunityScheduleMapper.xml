@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.fineapple.mapper.CommunityScheduleMapper">
+
+	<resultMap type="battle" id="battleMap">
+	<result property="battleNo" column="battle_no"/>
+	<result property="battleResultCate" column="battle_result_cate"/>
+	<result property="battleItemCate" column="battle_item_cate"/>
+	<result property="battleStartDate" column="battle_start_date"/>
+	<result property="battleEndDate" column="battle_end_date"/>
+	<result property="battlePeriod" column="battle_period"/>
+	<result property="userScore" column="user_score"/>
+	<result property="rivalUserScore" column="rival_user_score"/>
+	<result property="battleStt" column="battling_stt"/>
+	<result property="userTrgtKcal" column="user_trgt_kcal"/>
+	<result property="rivalTrgtKcal" column="rival_user_trgt_kcal"/>
+	<result property="user.userId" column="user_id"/>
+	<result property="rivalUser.userId" column="rival_user_id"/>
+	</resultMap>
+
+
+	<select id="getAllBattle" resultMap="battleMap">
+		SELECT
+		*
+		FROM
+		battle
+		<where>
+		battling_stt = 2
+		</where>
+	</select>
+	
+	<select id="getUserBurningRecord" parameterType="battle" resultType="Integer">
+	SELECT
+	SUM(br.user_exer_burnning)
+	FROM
+	user_service us,
+	burnning_record br
+	<where>
+	us.user_id = #{user.userId}
+	AND
+	us.user_service_no = br.user_service_no
+	AND TRUNC(br.burnning_record_date) = TRUNC(SYSDATE) - 1
+	GROUP BY (br.burnning_record_date)
+	</where>
+	</select>
+	
+	<select id="getRivalUserBurningRecord" parameterType="battle" resultType="Integer">
+	SELECT
+	SUM(br.user_exer_burnning)
+	FROM
+	user_service us,
+	burnning_record br
+	<where>
+	us.user_id = #{rivalUser.userId}
+	AND
+	us.user_service_no = br.user_service_no
+	AND TRUNC(br.burnning_record_date) = TRUNC(SYSDATE) - 1
+	GROUP BY  (TRUNC(br.burnning_record_date))
+	</where>
+	</select>
+	
+	<select id="getUserIntakeRecord" parameterType="battle" resultType="Integer">
+	SELECT
+	SUM(ir.food_kcal)
+	FROM
+	user_service us,
+	intake_record ir
+	<where>
+	us.user_id = #{user.userId}
+	AND
+	us.user_service_no = ir.user_service_no
+	AND TRUNC(ir.intake_record_date) = TRUNC(SYSDATE) -1 
+	</where>
+	GROUP BY (TRUNC(ir.intake_record_date))
+	</select>
+	
+	<select id="getRivalUserIntakeRecord" parameterType="battle" resultType="Integer">
+	SELECT
+	SUM(ir.food_kcal)
+	FROM
+	user_service us,
+	intake_record ir
+	<where>
+	us.user_id = #{rivalUser.userId}
+	AND
+	us.user_service_no = ir.user_service_no
+	AND TRUNC(ir.intake_record_date) = TRUNC(SYSDATE) -1 
+	</where>
+	GROUP BY (TRUNC(ir.intake_record_date))
+	</select>
+	
+	<update id="updateBattleStt" parameterType="battle">
+	UPDATE
+	battle
+	<set>
+	battling_stt = 3
+	</set>
+	<where>
+	battle_no = #{battleNo}
+	</where>
+	</update>
+	
+	
+	
+	
+	
+	
+</mapper>

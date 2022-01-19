@@ -407,6 +407,12 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void updateBattle(Battle battle) {
+		
+		Battle bbattle = new Battle();
+		
+		bbattle = communityMapper.getBattle(battle);
+		
+		battle.setBattlePeriod(bbattle.getBattlePeriod());
 		communityMapper.updateBattle(battle);
 		
 	}
