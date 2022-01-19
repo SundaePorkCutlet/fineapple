@@ -77,7 +77,7 @@
                                            <label for="weight" class="fs-6 fw-bold text-gray-400">체중</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="weight" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[0].weight}kg|"/>
+                                           <input type="text" id="weight" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[6].weight}kg|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="weight_bttn" class="btn btn-primary">입력</a>
@@ -88,7 +88,7 @@
                                            <label for="bodyFat" class="fs-6 fw-bold text-gray-400">체지방률(선택)</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyFat}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}%|"/>
+                                           <input type="text" id="bodyFat" class="form-control form-control-solid" th:placeholder="${userBodyInfo[6].bodyFat}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyFat}%|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="bodyFat_bttn" class="btn btn-primary">입력</a>
@@ -99,7 +99,7 @@
                                            <label for="bodyMuscle" class="fs-6 fw-bold text-gray-400">골격근량(선택)</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[0].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}g|"/>
+                                           <input type="text" id="bodyMuscle" class="form-control form-control-solid" th:placeholder="${userBodyInfo[6].bodyMuscle}==null ? '입력한 정보가 없습니다' : |${userBodyInfo[0].bodyMuscle}g|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="bodyMuscle_bttn" class="btn btn-primary">입력</a>
@@ -110,7 +110,7 @@
                                            <label for="height" class="fs-6 fw-bold text-gray-400">키</label>
                                        </div>
                                        <div class="col-md-7">
-                                           <input type="text" id="height" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[0].height}cm|"/>
+                                           <input type="text" id="height" class="form-control form-control-solid" th:placeholder="|${userBodyInfo[6].height}cm|"/>
                                        </div>
                                        <div class="col-md-2">
                                            <a href="#" id="height_bttn" class="btn btn-primary">입력</a>
@@ -392,14 +392,14 @@
                      contentType: "application/json"
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
-                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
-                       $("#height").attr("placeholder", userBodyInfo[0].height);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight+"kg");
+                       $("#height").attr("placeholder", userBodyInfo[0].height+"cm");
                        
                        if(userBodyInfo[0].bodyFat != null){
-                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat+"%");
                        }
                        if(userBodyInfo[0].bodyMuscle != null){
-                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle+"g");
                        }
                        
                     })
@@ -431,14 +431,14 @@
                      contentType: "application/json"
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
-                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
-                       $("#height").attr("placeholder", userBodyInfo[0].height);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight+"kg");
+                       $("#height").attr("placeholder", userBodyInfo[0].height+"cm");
                        
                        if(userBodyInfo[0].bodyFat != null){
-                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat+"%");
                        }
                        if(userBodyInfo[0].bodyMuscle != null){
-                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle+"g");
                        }
                        
                     })
@@ -470,14 +470,14 @@
                      contentType: "application/json"
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
-                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
-                       $("#height").attr("placeholder", userBodyInfo[0].height);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight+"kg");
+                       $("#height").attr("placeholder", userBodyInfo[0].height+"cm");
                        
                        if(userBodyInfo[0].bodyFat != null){
-                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat+"%");
                        }
                        if(userBodyInfo[0].bodyMuscle != null){
-                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle+"%");
                        }
                        
                     })
@@ -509,14 +509,14 @@
                      contentType: "application/json"
                   }).done(function(userBodyInfo){
                        console.log(userBodyInfo);
-                       $("#weight").attr("placeholder", userBodyInfo[0].weight);
-                       $("#height").attr("placeholder", userBodyInfo[0].height);
+                       $("#weight").attr("placeholder", userBodyInfo[0].weight+"kg");
+                       $("#height").attr("placeholder", userBodyInfo[0].height+"cm");
                        
                        if(userBodyInfo[0].bodyFat != null){
-                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                          $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat+"%");
                        }
                        if(userBodyInfo[0].bodyMuscle != null){
-                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                          $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle+"g");
                        }
                        
                     })
@@ -556,13 +556,18 @@
                  contentType: "application/json"
               }).done(function(userBodyInfo){
                  console.log(userBodyInfo);
-                 $("#weight").attr("placeholder", userBodyInfo[0].weight);
+                 $("#weight").attr("placeholder", userBodyInfo[0].weight+"kg");
+                 $("#height").attr("placeholder", userBodyInfo[0].height+"cm");
                  
                  if(userBodyInfo[0].bodyFat != null){
-                    $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat);
+                    $("#bodyFat").attr("placeholder", userBodyInfo[0].bodyFat+"%");
+                 }else{
+                	 $("#bodyFat").attr("placeholder", "입력한 정보가 없습니다");
                  }
                  if(userBodyInfo[0].bodyMuscle != null){
-                    $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle);
+                    $("#bodyMuscle").attr("placeholder", userBodyInfo[0].bodyMuscle+"g");
+                 }else{
+                	$("#bodyMuscle").attr("placeholder", "입력한 정보가 없습니다");
                  }
                  
               })
