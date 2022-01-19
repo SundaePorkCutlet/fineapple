@@ -377,6 +377,8 @@ public String getExer(@ModelAttribute("exer") Exer exer, Model model) throws Exc
 		System.out.println("exerVideoName이 null체크" + exer);
 		
 		model.addAttribute("exer", exer);
+		model.addAttribute("NavName1","운동관리");
+		model.addAttribute("NavName2","운동 상세 정보");
 		
 	}else {
 	

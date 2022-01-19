@@ -29,46 +29,42 @@ function fncUpdateProduct(){
 	//var manuDate = document.detailForm.manuDate.value;
 	//var price = document.detailForm.price.value;
 	
-	var name = $("input[name='prodName']").val();
-	var video = $("input[name='prodDetail']").val();
-	var kcal = $("input[name='manuDate']").val();
-	var time = $("input[name='price']").val();
-	var lv = $("input[name='price']").val();
-	var link = $("input[name='price']").val();
-	var cate = $("input[name='price']").val();
+	var name = $("input[name='exerName']").val();
+	var kcal = $("input[name='exerKcal']").val();
+	var time = $("input[name='exerVideoTime']").val();
+	//var lv = $("input[name='exerLv']").val();
+	var link = $("input[name='exerLv']").val();
+	var cate = $("input[name='exerCate']").val();
 	
 	
-	/*  if(name == null || name.length<1){
-		alert("상품명은 반드시 입력하여야 합니다.");
+	  if(name == null || name.length<1){
+		alert("운동이름은 반드시 입력하여야 합니다.");
 		return;
 	}
 	
 	if(kcal == null || kcal.length<1){
-		alert("제조일자는 반드시 입력하셔야 합니다.");
+		alert("소모 칼로리는 반드시 입력하셔야 합니다.");
 		return;
 	}
 	
-	if( time  == null || time .length<1){
-		alert("가격은 반드시 입력하셔야 합니다.");
-		return;
-	}
 	
 	if( lv == null ||  lv.length<1){
-		alert("가격은 반드시 입력하셔야 합니다.");
+		alert("운동 강도는 반드시 입력하셔야 합니다.");
 		return;
 	}
 	
 	
 	if( cate == null || cate.length<1){
-		alert("가격은 반드시 입력하셔야 합니다.");
+		alert("운동 종류는 반드시 입력하셔야 합니다.");
 		return;
 	}
 	
-	if( link == null || video == null || link.length < 1 || video.length < 1 ){
+	
+	if( link == null || link.length < 1 ){
 		alert("둘 중에 하나는 반드시 입력하셔야 합니다.");
 		return;
 	} 
-	 */
+	 
 	
 	$("form").attr("method" , "POST").attr("action" , "/exer/postUpdateExer").attr('enctype','multipart/form-data').submit();
 	
@@ -125,13 +121,13 @@ $(function() {
 		    </div>
 		  </div>
 			
-			<div class="form-group" align="center">
+		<!-- 	<div class="form-group" align="center">
 		    <label for="exerLv" class="col-sm-offset-1 col-sm-3 control-label" style="font-weight:bold;font-size:32px;" >운동강도</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="exerLv" name="exerLv" th:value=${exer.exerLv} placeholder="운동강도 변경">
 		    </div>
 		  </div>
-			
+			 -->
 			<div class="form-group" align="center">
 		    <label for="exerKcal" class="col-sm-offset-1 col-sm-3 control-label" style="font-weight:bold;font-size:32px;" >소모칼로리</label>
 		    <div class="col-sm-4">
