@@ -19,7 +19,7 @@
 									<!--begin::user_daily_log-->
 									<div class="card mb-5 mb-xl-10" id="user_daily_log" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#user_daily_log">
+										<div class="card-header border-0" data-bs-target="#user_daily_log">
 											<div class="card-title">
 												<h2 class="fw-bolder m-0">일별 상세 정보 조회</h2>
 											</div>
@@ -39,7 +39,7 @@
 							                                 </div>
 															<div class="d-flex flex-column">
 							                                    <span class="fs-6 fw-bold text-gray-400">일자 선택</span>
-							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${viewDate}" id="kt_daterangepicker_3"/>
+							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${viewDate}" th:value="${viewDate}" id="kt_daterangepicker_3"/>
 							                                 </div>
 														</div>
 														<!--end::Profile-->
@@ -1023,14 +1023,8 @@
 	        }, function(start, end, label) {
 				var startDate = start.toJSON().substring(0,10);
 				var endDate = end.toJSON().substring(0,10);
-				console.log(startDate , endDate);
-				
-				$.ajax({
-				    url: "/diary/getUserDailyLog?date="+endDate,
-				    type: "GET"
-				 }).done(function(info){
-				  self.location = "/diary/getUserDailyLog?date="+info.date;
-				 })
+				self.location = "/diary/getUserDailyLog?date="+endDate;
+
 	        });
 	         
 	       /* ///////////////////Date Picker End/////////////////// */

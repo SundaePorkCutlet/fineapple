@@ -85,11 +85,11 @@
 			eventAdd: function(obj) { 	//사용자 이벤트 추가
 			},
 			eventChange: function(obj) { //사용자 이벤트 수정
-				console.log(obj);
+				//console.log(obj);
 			
 			},
 			eventRemove: function(obj){ //사용자 이벤트 삭제
-				console.log(obj);
+				//console.log(obj);
 			
 			},
 			eventClick: function(obj){
@@ -210,7 +210,7 @@
 		
 		//섭취칼로리&소모칼로리&뱃지
  		for(var i=0; i<badgeList.length; i++){
-			console.log(badgeList[i]);
+			//console.log(badgeList[i]);
 			//식단 서비스를 이용하는 경우에만
 			if(userServ.dailyTrgtIntakeKcal != null){
 			
@@ -430,7 +430,7 @@
 
 		//습관 관리 정보
 		for(var i=0; i<trgtHabitList.length; i++){
-			console.log(trgtHabitList[i]);
+			//console.log(trgtHabitList[i]);
 			
 			//목표를 해당 월에 시작했을 경우
 			if(trgtHabitList[i].trgtHabitStartDate >= firstDay){
@@ -462,7 +462,7 @@
 		
 		//대표 이벤트 제목
 		for(var i=0; i<keyEventTitleList.length; i++){
-			console.log(keyEventTitleList[i]);
+			//console.log(keyEventTitleList[i]);
 			calendar.addEvent({
 				title: keyEventTitleList[i].eventTitle,
 				start: keyEventTitleList[i].eventDate,
@@ -476,7 +476,7 @@
 		$(function(){
 			
 			$("#kt_docs_fullcalendar_locales > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1)").on("click", function(){
-				console.log("prev");
+				//console.log("prev");
 				
 				if(month == 0){
 					month = 12;
@@ -510,7 +510,7 @@
 					
 					//섭취칼로리&소모칼로리&뱃지
 			 		for(var i=0; i<badgeList.length; i++){
-						console.log(badgeList[i]);
+						//console.log(badgeList[i]);
 						//식단 서비스를 이용하는 경우에만
 						if(userServ.dailyTrgtIntakeKcal != null){
 						
@@ -730,7 +730,7 @@
 
 					//습관 관리 정보
 					for(var i=0; i<trgtHabitList.length; i++){
-						console.log(trgtHabitList[i]);
+						//console.log(trgtHabitList[i]);
 						
 						//목표를 해당 월에 시작했을 경우
 						if(trgtHabitList[i].trgtHabitStartDate >= firstDay){
@@ -762,7 +762,7 @@
 					
 					//대표 이벤트 제목
 					for(var i=0; i<keyEventTitleList.length; i++){
-						console.log(keyEventTitleList[i]);
+						//console.log(keyEventTitleList[i]);
 						calendar.addEvent({
 							title: keyEventTitleList[i].eventTitle,
 							start: keyEventTitleList[i].eventDate,
@@ -776,7 +776,7 @@
 			});
 			
 			$("#kt_docs_fullcalendar_locales > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3)").on("click", function(){
-				console.log("next");
+				//console.log("next");
 				if(month == 12){
 					month = 1;
 					year += 1;
@@ -811,7 +811,7 @@
 					
 					//섭취칼로리&소모칼로리&뱃지
 			 		for(var i=0; i<badgeList.length; i++){
-						console.log(badgeList[i]);
+						//console.log(badgeList[i]);
 						//식단 서비스를 이용하는 경우에만
 						if(userServ.dailyTrgtIntakeKcal != null){
 						
@@ -1031,7 +1031,7 @@
 
 					//습관 관리 정보
 					for(var i=0; i<trgtHabitList.length; i++){
-						console.log(trgtHabitList[i]);
+						//console.log(trgtHabitList[i]);
 						
 						//목표를 해당 월에 시작했을 경우
 						if(trgtHabitList[i].trgtHabitStartDate >= firstDay){
@@ -1063,7 +1063,7 @@
 					
 					//대표 이벤트 제목
 					for(var i=0; i<keyEventTitleList.length; i++){
-						console.log(keyEventTitleList[i]);
+						//console.log(keyEventTitleList[i]);
 						calendar.addEvent({
 							title: keyEventTitleList[i].eventTitle,
 							start: keyEventTitleList[i].eventDate,
