@@ -101,4 +101,6 @@ public interface CommunityService {
 	public Battle getBattle(Battle battle);
 	
 	public void updateBattle(Battle battle);
+	
+	public List<Battle> getMyBattleList(User user);
 }

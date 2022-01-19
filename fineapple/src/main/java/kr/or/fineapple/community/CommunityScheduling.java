@@ -20,7 +20,7 @@ public class CommunityScheduling {
 	@Autowired
 	private CommunityScheduleMapper mapper;
 	
-	@Scheduled(cron = "* * * * * *") 
+	@Scheduled(cron = "0 0 0 * * *") 
 	   public void updateBattle() {
 	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	      Date now = new Date();
@@ -31,16 +31,14 @@ public class CommunityScheduling {
 	      for (Battle battle : list) {
 	    	  
 	    	  
-	    	if (battle.getBattleItemCate() == 1) {
+	    	if (battle.getBattleItemCate() == 2) {
 	    		
+	    		System.out.println("섭취");
 	    		
 	    		Integer resultUser = mapper.getUserBurningRecord(battle);
 				
-				//System.out.println(resultUser);
-			
 				Integer resultRivalUser = mapper.getRivalUserBurningRecord(battle);
 				
-				//System.out.println(resultRivalUser);
 				
 				int resultUserInt = 0;
 				
@@ -73,25 +71,15 @@ public class CommunityScheduling {
 
 				battle.setRivalUserScore(rivalUserScore);
 			}
+
 	    	
 	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	if (battle.getBattleItemCate() == 2) {
+	    	if (battle.getBattleItemCate() == 1) {
+	    		System.out.println("소모");
 	    		Integer resultUser = mapper.getUserIntakeRecord(battle);
-				
-				//System.out.println(resultUser1);
 			
 				Integer resultRivalUser = mapper.getRivalUserIntakeRecord(battle);
 				
-				//System.out.println(resultRivalUser1);
 				
 				int resultUserInt = 0;
 				
@@ -128,7 +116,10 @@ public class CommunityScheduling {
 				
 			}
 	    	  
-
+	    	
+	    	
+	    	mapper.updateBattleScore(battle);
+	    	
 			
 			System.out.println(battle);
 			
@@ -140,11 +131,35 @@ public class CommunityScheduling {
 			
 			if (sysdate.equals(date)) {
 				System.out.println("배틀끝~~~~!!!!");
-				mapper.updateBattleStt(battle);
+				
+				battle = mapper.getBattle(battle);
+				
+				System.out.println(battle);
+				
+				
+				
+				if (battle.getUserScore() >= battle.getRivalUserScore()) {
+					battle.setBattleResultCate(1);
+					mapper.updateBattleStt(battle);
+				}
+				
+				if (battle.getUserScore() <= battle.getRivalUserScore()) {
+					battle.setBattleResultCate(3);
+					mapper.updateBattleStt(battle);
+				}
+				
+				if (battle.getUserScore() == battle.getRivalUserScore()) {
+					battle.setBattleResultCate(2);
+					mapper.updateBattleStt(battle);
+				}
+				
+				
+
+				
 				
 			}
 			
-			/////////////////////////////////////////////////////////////////////
+			
 			
 		}
 	      

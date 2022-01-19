@@ -71,9 +71,9 @@
         </div>
     </div>
 </div>
- <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
+<!--  <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
             <h3 class="fw-bolder my-2">승부 기록<span class="fs-6 text-gray-400 fw-bold ms-1">(3)</span></h3>
-            <!-- 필터 -->
+            필터
             <div class="d-flex my-2">
                 <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-transparent form-select-sm w-125px">
                     <option value="Active" selected="selected">전체</option>
@@ -82,7 +82,7 @@
                     <option value="Approved">패배</option>
                 </select>
             </div>
-        </div>
+        </div> -->
         
         
         
@@ -95,7 +95,7 @@
         </div>
         
         
-			<div th:each="num : ${#numbers.sequence(1,10)}" >
+			<div th:each="data : ${list}" >
 			       <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
 			        <div>
 			            <div class="col-md-6 col-xxl-4" >

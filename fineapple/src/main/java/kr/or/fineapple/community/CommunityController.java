@@ -409,6 +409,14 @@ public class CommunityController {
 	@GetMapping("getBattleList")
 	public String getBattleList(HttpServletRequest request, Model model){
 		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		List<Battle> list = communityService.getMyBattleList(user);
+		
+		model.addAttribute("list", list);
+		
 		model.addAttribute("NavName1","½ÂºÎ");
 		model.addAttribute("NavName2","½ÂºÎ¸®½ºÆ®");
 		

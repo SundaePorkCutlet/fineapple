@@ -90,11 +90,38 @@
 	GROUP BY (TRUNC(ir.intake_record_date))
 	</select>
 	
+	
+	<update id="updateBattleScore" parameterType="battle">
+	UPDATE
+	battle
+	<set>
+	user_score = NVL(user_score,0) + #{userScore},
+	rival_user_score = NVL(rival_user_score,0) + #{rivalUserScore}
+	</set>
+	<where>
+	battle_no = #{battleNo}
+	</where>
+	</update>
+
+
+	<select id="getBattle" parameterType="battle" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	battle_no = #{battleNo}
+	</where>
+	</select>
+
+	
 	<update id="updateBattleStt" parameterType="battle">
+	<selectKey></selectKey>
 	UPDATE
 	battle
 	<set>
 	battling_stt = 3
+	battle_result_cate = #{battle}
 	</set>
 	<where>
 	battle_no = #{battleNo}

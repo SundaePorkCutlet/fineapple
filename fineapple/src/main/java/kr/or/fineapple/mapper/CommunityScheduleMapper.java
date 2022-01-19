@@ -23,4 +23,8 @@ public interface CommunityScheduleMapper {
 	
 	public void updateBattleStt(Battle battle);
 	
+	public void updateBattleScore(Battle battle);
+	
+	public Battle getBattle(Battle battle);
+	
 }

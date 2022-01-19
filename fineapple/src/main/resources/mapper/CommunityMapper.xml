@@ -1164,8 +1164,24 @@
 	</trim>
 	</update>
 	
+	<select id="getMyBattleList" parameterType="user" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	(battling_stt = 2
+	OR
+	battling_Stt = 3)
+	AND
+	(user_id = #{userId}
+	OR
+	rival_user_id = #{userId})
+	</where>
+	</select>
 	
-
+	
+	
 	
 	
 </mapper>
