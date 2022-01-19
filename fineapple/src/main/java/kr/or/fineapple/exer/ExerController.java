@@ -798,11 +798,15 @@ TotalRecord totalExerRecord = exerService.getTotalExerRecord(startDate, endDate,
 //»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® Á¶È¸
 UserServ userServ = diaryService.getUserServiceDetails(userId);
 
-if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
-//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
-	diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+if(totalExerRecord != null) {
+	if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+	//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
+		diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+	} else {
+		diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+	}
 } else {
-	diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+	diaryService.updateBadgeByExer(userId, 0, 0, date);
 }
 
 
@@ -861,11 +865,15 @@ public String deleteDailyBurnning(Model model, HttpServletRequest request, @Requ
 	//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® Á¶È¸
 	UserServ userServ = diaryService.getUserServiceDetails(userId);
 	
-	if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
-	//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
-		diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+	if(totalExerRecord != null) {
+		if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+		//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
+			diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+		} else {
+			diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+		}
 	} else {
-		diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+		diaryService.updateBadgeByExer(userId, 0, 0, date);
 	}
 	
 	
@@ -1373,11 +1381,15 @@ public String routineInfoAddBurnningRecord(Model model, @RequestParam("routineIn
 		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® Á¶È¸
 		UserServ userServ = diaryService.getUserServiceDetails(userId);
 		
-		if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
-		//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
-			diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+		if(totalExerRecord != null) {
+			if(totalExerRecord.getTotalBurnningKcal() >= userServ.getDailyTrgtBurnningKcal()) {	
+			//¿À´ÃÀÇ ÃÑ ¼Ò¸ð Ä®·Î¸®°¡ ¸ñÇ¥ ¼Ò¸ð Ä®·Î¸® ÀÌ»óÀÏ½Ã
+				diaryService.updateBadgeByExer(userId, 1, totalExerRecord.getTotalBurnningKcal(), date);
+			} else {
+				diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+			}
 		} else {
-			diaryService.updateBadgeByExer(userId, 0, totalExerRecord.getTotalBurnningKcal(), date);
+			diaryService.updateBadgeByExer(userId, 0, 0, date);
 		}
 
 

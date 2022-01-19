@@ -240,9 +240,9 @@
 												FROM user_service
 												WHERE user_id = #{userId:VARCHAR})
 					AND TRUNC(burnning_record_date) = TRUNC(#{date})
-					GROUP BY TRUNC(burnning_record_date))/(SELECT daily_trgt_burnning_kcal
-															FROM user_service
-															WHERE user_id = #{userId:VARCHAR})*100) as "burnning_kcal"
+	GROUP BY TRUNC(burnning_record_date))/(SELECT daily_trgt_burnning_kcal
+											FROM user_service
+											WHERE user_id = #{userId:VARCHAR})*100) as "burnning_kcal"
 	FROM dual
 	</select>
 	
