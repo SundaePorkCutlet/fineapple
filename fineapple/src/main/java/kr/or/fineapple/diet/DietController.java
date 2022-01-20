@@ -702,6 +702,8 @@ public class DietController {
 		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
 		UserServ userServ = diaryService.getUserServiceDetails(userId);
 		
+		
+		if(totalDietRecord!=null && userServ!=null) {
 		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
 				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
 			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
@@ -709,7 +711,7 @@ public class DietController {
 		} else {
 			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
 		}
-		
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
