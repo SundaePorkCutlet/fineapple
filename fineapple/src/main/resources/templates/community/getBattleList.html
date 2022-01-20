@@ -100,35 +100,46 @@
 			        <div>
 			            <div class="col-md-6 col-xxl-4" >
 			                <div  class="card"  >
+			                	<th:block th:if = "${data.battleStt} == 2"> 
 			                    <div class="btn-sm battle-progress">진행중</div>
+			                    </th:block>
+			                    <th:block th:if = "${data.battleStt} == 3"> 
+			                    <div class="btn-sm battle-progress">승부종료</div>
+			                    </th:block>
 			                    <div class="card-body d-flex flex-center flex-column p-9">
 			                        <div class="symbol symbol-65px symbol-circle mb-5">
 			                            <img src="/assets/profile/돼지.png"/>
 			                        </div>
 			                        <!-- <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">김영희</a> -->
-			                        <div class="fw-bold text-gray-400 mb-6">bbb123@gmail.com</div>
+			                        <div class="fw-bold text-gray-400 mb-6" th:text = "${data.user.userId}"></div>
 			                        <div class="d-flex flex-center flex-wrap mb-5">
 			                            <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-			                                <div class="fs-6 fw-bolder text-gray-700">칼로리 섭취</div>
+			                                <th:block th:if = "${data.battleItemCate} == 1"> 
+						                     <div class="fs-6 fw-bolder text-gray-700">칼로리 소모</div>
+						                    </th:block>
+						                    <th:block th:if = "${data.battleItemCate} == 2"> 
+						                     <div class="fs-6 fw-bolder text-gray-700">칼로리섭취</div>
+						                    </th:block>
 			                                <div class="fw-bold text-gray-400">승부 유형</div>
 			                            </div>
 			                            <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-			                                <div class="fs-6 fw-bolder text-gray-700">10일</div>
+			                                <div class="fs-6 fw-bolder text-gray-700" th:text="|${data.battlePeriod}일|"></div>
 			                                <div class="fw-bold text-gray-400">승부 기간</div>
 			                            </div>
 			                        </div>
 			                        <div class="d-flex flex-center flex-wrap mb-5">
 			                            <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-			                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3">10000</span>Kcal</div>
+			                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3" th:text = "${data.userTrgtKcal}"></span>Kcal</div>
 			                                <div class="fw-bold text-gray-400">나의 목표 칼로리</div>
 			                            </div>
 			                            <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-			                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3">10000</span>Kcal</div>
+			                                <div class="fs-6 fw-bolder text-gray-700"><span class="comma-3" th:text = "${data.rivalTrgtKcal}" ></span>Kcal</div>
 			                                <div class="fw-bold text-gray-400">상대 목표 칼로리</div>
 			                            </div>
 			                        </div>
 			                        <div class="d-flex flex-center flex-wrap mb-5">
-			                            <a href="#" class="btn btn-sm btn-light mx-3" onclick="getBattleView(1);">
+			                           <!--  <a href="#" class="btn btn-sm btn-light mx-3" onclick="getBattleView(1);"> -->
+			                            <a href="#" class="btn btn-sm btn-light mx-3" th:onClick="|javascript:getBattleView(${data.battleNo})|"> 
 			                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 			                                <!--end::Svg Icon-->상세보기</a>
 			                        </div>
@@ -181,7 +192,7 @@
     }
 
     function getBattleView(no) {
-        location.href="/community/getBattleView?no="+no;
+        location.href="/community/getBattleView?battleNo="+no;
     }
 </script>
 

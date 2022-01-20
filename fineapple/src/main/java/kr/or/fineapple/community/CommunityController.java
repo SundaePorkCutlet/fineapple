@@ -424,7 +424,13 @@ public class CommunityController {
 	}
 
 	@GetMapping("getBattleView")
-	public String getBattleView(@RequestParam(value="no") int no,Model model){
+	public String getBattleView(@ModelAttribute Battle battle, Model model){
+		
+		System.out.println(battle);
+		
+		battle = communityService.getBattle(battle);
+		
+		model.addAttribute("battle", battle);
 		
 		model.addAttribute("NavName1","승부");
 		model.addAttribute("NavName2","승부리스트");
@@ -573,12 +579,13 @@ public class CommunityController {
 	}
 	
 	@GetMapping(value = "getReport")
-	public String getReport(@RequestParam(name = "reportNo", required = false)String str, Model model, HttpServletRequest request) {
+	public String getReport(@RequestParam(value = "reportNo") String str, Model model, HttpServletRequest request) {
 		
 		System.out.println(request.getHeader("content-type"));
 		System.out.println(request.getHeader("accept-encoding"));
 		System.out.println(request.getHeader("accept"));
 		
+		System.out.println(str);
 		
 		
 		System.out.println(str);
@@ -760,6 +767,9 @@ public class CommunityController {
 		
 		model.addAttribute("group", group);
 		
+		model.addAttribute("NavName1","소그룹");
+		model.addAttribute("NavName2","소그룹 상세보기");
+		
 		return "community/getGroup.html";
 		
 	}
@@ -853,7 +863,7 @@ public class CommunityController {
 	}
 
 
-
+	
 	
 	
 	

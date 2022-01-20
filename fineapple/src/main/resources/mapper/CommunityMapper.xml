@@ -176,12 +176,7 @@
 		(
 		seq_board_post_no.NEXTVAL,
 		#{user.userId},
-		<if test="group.groupNo == 0">
 		null,
-		</if>	
-		<if test="group.groupNo != 0">
-		#{group.groupNo},
-		</if>
 		#{cateName},
 		#{updateStt},
 		<if test="groupNo == 0">
@@ -241,6 +236,8 @@
 	<trim prefix="WHERE" prefixOverrides="AND | OR" suffixOverrides=",">
 	b.post_no = c.post_no(+)
 	AND b.post_no = sub.post_no(+)
+	AND post_cate = 1
+	
 	</trim>
 	<include refid="orderByPostNo"/>
 	</select>

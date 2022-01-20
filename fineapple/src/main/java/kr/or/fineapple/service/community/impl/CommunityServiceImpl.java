@@ -57,7 +57,14 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Board> getPostList() {
-		return communityMapper.getPostList();
+		List<Board> list = communityMapper.getPostList();
+		
+		for (Board board : list) {
+			board.setImg(communityMapper.getPostImg(board.getPostNo()));
+		}
+		
+		return list;
+		
 	}
 	
 	@Override
