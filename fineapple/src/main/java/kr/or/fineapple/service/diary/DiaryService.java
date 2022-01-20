@@ -51,6 +51,8 @@ public interface DiaryService {
 
 	public void updateBadgeByExer(String userId, int badgeCount, double inputKcal, LocalDate date);
 	
+	public void updateBadgeByWtr(String userId, int badgeCount, LocalDate date);
+	
 	public void addUserBodyInfo(String userId, int howManyDays);
 	
 	public void addBadge(Badge defaultBadge);

@@ -173,6 +173,15 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	@Override
+	public void updateBadgeByWtr(String userId, int badgeCount, LocalDate date) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("badgeCount", badgeCount);
+		map.put("date", date);
+		diaryMapper.updateBadgeByWtr(map);
+	}
+
+	@Override
 	public void addUserBodyInfo(String userId, int howManyDays) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);

@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.fineapple.domain.TotalRecord;
 import kr.or.fineapple.domain.TrgtHabit;
+import kr.or.fineapple.domain.UserServ;
+import kr.or.fineapple.domain.common.ViewDuration;
+import kr.or.fineapple.service.diary.DiaryService;
 import kr.or.fineapple.service.trgtHabit.TrgtHabitService;
 
 @RestController
@@ -21,6 +25,10 @@ public class TrgtHabitRestController {
 	@Autowired
 	@Qualifier("trgtHabitServiceImpl")
 	private TrgtHabitService trgtHabitService;
+	
+	@Autowired
+	@Qualifier("diaryServiceImpl")
+	private DiaryService diaryService;
 	
 	public TrgtHabitRestController() {
 		System.out.println(this.getClass());
@@ -98,6 +106,11 @@ public class TrgtHabitRestController {
 		System.out.println("/trgt/json/updateWtrIntake");
 		////사용자로부터 입력받은 수분섭취량 기록후 기록된값 조회하여 리턴
 		Double returnUserWtrIntake = trgtHabitService.updateWtrIntake(trgtHabit.getUserId(), trgtHabit.getUserWtrIntake());
+		
+		////뱃지기록 갱신
+		if(returnUserWtrIntake >= 2.0) {
+			diaryService.updateBadgeByWtr(trgtHabit.getUserId(), 1, LocalDate.now());
+		}
 		
 		return returnUserWtrIntake;
 	}
