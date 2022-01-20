@@ -19,7 +19,7 @@
 									<!--begin::user_daily_log-->
 									<div class="card mb-5 mb-xl-10" id="user_daily_log" data-kt-scroll-offset="{default: 100, md: 125}" tabindex="-1" style="outline: none;">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#user_daily_log">
+										<div class="card-header border-0" data-bs-target="#user_daily_log">
 											<div class="card-title">
 												<h2 class="fw-bolder m-0">일별 상세 정보 조회</h2>
 											</div>
@@ -39,7 +39,7 @@
 							                                 </div>
 															<div class="d-flex flex-column">
 							                                    <span class="fs-6 fw-bold text-gray-400">일자 선택</span>
-							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${viewDate}" id="kt_daterangepicker_3"/>
+							                                     <input class="form-control form-control-solid cursor-pointer" th:placeholder="${viewDate}" th:value="${viewDate}" id="kt_daterangepicker_3"/>
 							                                 </div>
 														</div>
 														<!--end::Profile-->
@@ -113,7 +113,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeCarbInPercentage}%|">섭취 탄수화물</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalDietRecord.totalIntakeCarb}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 권장 섭취량 ${userServ.dailyTrgtIntakeCarb}g 중 ${totalDietRecord.totalIntakeCarb}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -147,7 +147,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeProteinInPercentage}%|">섭취 단백질</span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalDietRecord.totalIntakeProtein}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 최소 권장 섭취량 ${userServ.dailyTrgtIntakeProtein}g 중 ${totalDietRecord.totalIntakeProtein}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -181,7 +181,7 @@
 														<!--begin::Text-->
 														<div class="d-flex text-muted fw-bolder fs-4 pb-3">
 															<span class="flex-grow-1 text-gray-800" th:text="|${achievement.intakeFatInPercentage}%|"></span>
-															<span class="text-gray-800" th:text="|목표 ${userServ.dailyTrgtIntakeFat}g 중 ${totalDietRecord.totalIntakeFat}g 섭취|"></span>
+															<span class="text-gray-800" th:text="|일일 권장 섭취량 ${userServ.dailyTrgtIntakeFat}g 중 ${totalDietRecord.totalIntakeFat}g 섭취|"></span>
 														</div>
 														<!--end::Text-->
 														<!--begin::Progress-->
@@ -631,7 +631,7 @@
 											<div class="card-title m-0">
 												<div class="card-title"><h3 class="fw-bolder m-0">나의 이벤트</h3></div>
 												<div class="card-toolbar">
-													<button class="btn btn-flex btn-primary" id="addUserEvent_bttn" data-kt-calendar="add">
+													<button class="btn btn-flex btn-primary" id="addUserEvent_bttn" th:if="${#lists.size(userEventList) <= 4}" data-kt-calendar="add">
 													<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 													<span class="svg-icon svg-icon-2">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1023,14 +1023,8 @@
 	        }, function(start, end, label) {
 				var startDate = start.toJSON().substring(0,10);
 				var endDate = end.toJSON().substring(0,10);
-				console.log(startDate , endDate);
-				
-				$.ajax({
-				    url: "/diary/getUserDailyLog?date="+endDate,
-				    type: "GET"
-				 }).done(function(info){
-				  self.location = "/diary/getUserDailyLog?date="+info.date;
-				 })
+				self.location = "/diary/getUserDailyLog?date="+endDate;
+
 	        });
 	         
 	       /* ///////////////////Date Picker End/////////////////// */

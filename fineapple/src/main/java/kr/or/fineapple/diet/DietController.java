@@ -634,13 +634,16 @@ public class DietController {
 		TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
 		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
 		UserServ userServ = diaryService.getUserServiceDetails(userId);
-		
-		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+		if(totalDietRecord != null) {
+			if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
 				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
-			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
-			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+				//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+				diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+			} else {
+				diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			}
 		} else {
-			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			diaryService.updateBadgeByDiet(userId, 0, 0, date);
 		}
 		
 		model.addAttribute("list", list);
@@ -705,13 +708,17 @@ public class DietController {
 		
 		if(totalDietRecord!=null && userServ!=null) {
 		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+
 				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
-			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
-			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+				//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+				diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+			} else {
+				diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			}
 		} else {
-			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			diaryService.updateBadgeByDiet(userId, 0, 0, date);
 		}
-		}
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("serv", serv);
@@ -828,13 +835,16 @@ public class DietController {
 		TotalRecord totalDietRecord = dietService.getTotalDietRecord(viewDuration);
 		//»ç¿ëÀÚÀÇ ¸ñÇ¥ ¼·Ãë Ä®·Î¸® Á¶È¸
 		UserServ userServ = diaryService.getUserServiceDetails(userId);
-		
-		if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
+		if(totalDietRecord != null) {
+			if(totalDietRecord.getTotalIntakeKcal() >= userServ.getDailyTrgtIntakeKcal()*0.9 &&
 				totalDietRecord.getTotalIntakeKcal() <= userServ.getDailyTrgtIntakeKcal()*1.1) {
-			//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
-			diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+				//¿À´Ã ÃÑ ¼·Ãë Ä®·Î¸®°¡ ¸ñÇ¥ ¼·Ãë Ä®·Î¸®*0.9~1.1 ±¸°£ »çÀÌÀÏ ½Ã
+				diaryService.updateBadgeByDiet(userId, 1, totalDietRecord.getTotalIntakeKcal(), date);
+			} else {
+				diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			}
 		} else {
-			diaryService.updateBadgeByDiet(userId, 0, totalDietRecord.getTotalIntakeKcal(), date);
+			diaryService.updateBadgeByDiet(userId, 0, 0, date);
 		}
 		
 		return "redirect:../diet/getDailyIntakeMeal?radio=0";
