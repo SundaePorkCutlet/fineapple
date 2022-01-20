@@ -137,6 +137,8 @@ public interface CommunityMapper {
 	
 	public void updateBattle(Battle battle);
 	
+	public List<Battle> getMyBattleList(User user);
+	
 
 	
 	

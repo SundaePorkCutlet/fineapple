@@ -71,9 +71,9 @@
         </div>
     </div>
 </div>
- <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
+<!--  <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
             <h3 class="fw-bolder my-2">승부 기록<span class="fs-6 text-gray-400 fw-bold ms-1">(3)</span></h3>
-            <!-- 필터 -->
+            필터
             <div class="d-flex my-2">
                 <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-transparent form-select-sm w-125px">
                     <option value="Active" selected="selected">전체</option>
@@ -82,7 +82,7 @@
                     <option value="Approved">패배</option>
                 </select>
             </div>
-        </div>
+        </div> -->
         
         
         
@@ -95,7 +95,7 @@
         </div>
         
         
-			<div th:each="num : ${#numbers.sequence(1,10)}" >
+			<div th:each="data : ${list}" >
 			       <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
 			        <div>
 			            <div class="col-md-6 col-xxl-4" >
@@ -105,7 +105,7 @@
 			                        <div class="symbol symbol-65px symbol-circle mb-5">
 			                            <img src="/assets/profile/돼지.png"/>
 			                        </div>
-			                        <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">김영희</a>
+			                        <!-- <a href="#" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">김영희</a> -->
 			                        <div class="fw-bold text-gray-400 mb-6">bbb123@gmail.com</div>
 			                        <div class="d-flex flex-center flex-wrap mb-5">
 			                            <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">

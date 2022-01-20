@@ -355,7 +355,7 @@
 	<selectKey  order="AFTER"></selectKey>
 	UPDATE BOARD
 	<set>
-	SET TITLE = #{title}
+	TITLE = #{title}
 	CONTENT = #{content}
 	</set>
 	<trim prefix="WHERE" prefixOverrides="WHERE | OR">
@@ -1155,15 +1155,33 @@
 	UPDATE battle
 	<trim prefix="SET" suffixOverrides=",">
 	battling_stt = #{battleStt},
-	rival_user_trgt_kcal = #{rivalTrgtKcal}
+	rival_user_trgt_kcal = #{rivalTrgtKcal},
+	battle_start_date = SYSDATE,
+	battle_end_date = SYSDATE + #{battlePeriod}
 	</trim>
 	<trim prefix="WHERE" prefixOverrides="AND | OR">
-	battle_no = #{battleNo}
+	battle_no = #{battleNo}	
 	</trim>
 	</update>
 	
+	<select id="getMyBattleList" parameterType="user" resultMap="battleMap">
+	SELECT
+	*
+	FROM
+	battle
+	<where>
+	(battling_stt = 2
+	OR
+	battling_Stt = 3)
+	AND
+	(user_id = #{userId}
+	OR
+	rival_user_id = #{userId})
+	</where>
+	</select>
 	
-
+	
+	
 	
 	
 </mapper>
