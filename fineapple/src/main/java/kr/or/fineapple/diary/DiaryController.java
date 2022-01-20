@@ -170,10 +170,10 @@ public class DiaryController {
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
 					Map<String, Object> bfTotal = new HashMap<>();
 					for(IntakeRecord item : breakfastIntakeRecordList) {
-						totalIntakeKcal += item.getFoodKcal();
-						totalIntakeCarb += item.getFoodCarb();
-						totalIntakeProtein += item.getFoodProtein();
-						totalIntakeFat += item.getFoodFat();
+						totalIntakeKcal += item.getFood().getFoodKcal();
+						totalIntakeCarb += item.getFood().getFoodCarb();
+						totalIntakeProtein += item.getFood().getFoodProtein();
+						totalIntakeFat += item.getFood().getFoodFat();
 					}
 					bfTotal.put("totalIntakeKcal", totalIntakeKcal);
 					bfTotal.put("totalIntakeCarb", totalIntakeCarb);
@@ -188,10 +188,10 @@ public class DiaryController {
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
 					Map<String, Object> lunchTotal = new HashMap<>();
 					for(IntakeRecord item : lunchIntakeRecordList) {
-						totalIntakeKcal += item.getFoodKcal();
-						totalIntakeCarb += item.getFoodCarb();
-						totalIntakeProtein += item.getFoodProtein();
-						totalIntakeFat += item.getFoodFat();
+						totalIntakeKcal += item.getFood().getFoodKcal();
+						totalIntakeCarb += item.getFood().getFoodCarb();
+						totalIntakeProtein += item.getFood().getFoodProtein();
+						totalIntakeFat += item.getFood().getFoodFat();
 					}
 					lunchTotal.put("totalIntakeKcal", totalIntakeKcal);
 					lunchTotal.put("totalIntakeCarb", totalIntakeCarb);
@@ -206,10 +206,10 @@ public class DiaryController {
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
 					Map<String, Object> dinnerTotal = new HashMap<>();
 					for(IntakeRecord item : dinnerIntakeRecordList) {
-						totalIntakeKcal += item.getFoodKcal();
-						totalIntakeCarb += item.getFoodCarb();
-						totalIntakeProtein += item.getFoodProtein();
-						totalIntakeFat += item.getFoodFat();
+						totalIntakeKcal += item.getFood().getFoodKcal();
+						totalIntakeCarb += item.getFood().getFoodCarb();
+						totalIntakeProtein += item.getFood().getFoodProtein();
+						totalIntakeFat += item.getFood().getFoodFat();
 					}
 					dinnerTotal.put("totalIntakeKcal", totalIntakeKcal);
 					dinnerTotal.put("totalIntakeCarb", totalIntakeCarb);
@@ -224,10 +224,10 @@ public class DiaryController {
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
 					Map<String, Object> snackTotal = new HashMap<>();
 					for(IntakeRecord item : snackIntakeRecordList) {
-						totalIntakeKcal += item.getFoodKcal();
-						totalIntakeCarb += item.getFoodCarb();
-						totalIntakeProtein += item.getFoodProtein();
-						totalIntakeFat += item.getFoodFat();
+						totalIntakeKcal += item.getFood().getFoodKcal();
+						totalIntakeCarb += item.getFood().getFoodCarb();
+						totalIntakeProtein += item.getFood().getFoodProtein();
+						totalIntakeFat += item.getFood().getFoodFat();
 					}
 					snackTotal.put("totalIntakeKcal", totalIntakeKcal);
 					snackTotal.put("totalIntakeCarb", totalIntakeCarb);
@@ -242,10 +242,10 @@ public class DiaryController {
 					double totalIntakeFat = 0.0;	//«ÿ¥Á ≥¢¥œ¿« √— º∑√Î ¡ˆπÊ
 					Map<String, Object> supperTotal = new HashMap<>();
 					for(IntakeRecord item : supperIntakeRecordList) {
-						totalIntakeKcal += item.getFoodKcal();
-						totalIntakeCarb += item.getFoodCarb();
-						totalIntakeProtein += item.getFoodProtein();
-						totalIntakeFat += item.getFoodFat();
+						totalIntakeKcal += item.getFood().getFoodKcal();
+						totalIntakeCarb += item.getFood().getFoodCarb();
+						totalIntakeProtein += item.getFood().getFoodProtein();
+						totalIntakeFat += item.getFood().getFoodFat();
 					}
 					supperTotal.put("totalIntakeKcal", totalIntakeKcal);
 					supperTotal.put("totalIntakeCarb", totalIntakeCarb);
