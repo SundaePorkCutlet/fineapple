@@ -123,8 +123,8 @@
         $(function(){
         	 $("#kt_contact_submit_button").on("click" , function() {
         	
-        	var title=$("title").val();
-        	var content=$("content").val();
+        	var title=$("#title").val();
+        	var content=$("#content").val();
         	
         	if(title ==""){
         		alert("제목이 입력되지 않았습니다.");
@@ -133,7 +133,7 @@
         		alert("내용이 입력되지 않았습니다.");
         		return;
         	}
-      		 $("form").attr("method" , "POST").attr("action" , "/community/addPost").submit();
+      		 $("#kt_contact_form").attr("method" , "POST").attr("action" , "/community/addPost").submit();
         	 });
         });
         	

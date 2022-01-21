@@ -14,6 +14,9 @@ public class Img {
 	private int postNo;
 
 	
-	
+	public Img() {
+		System.out.println("IMG »ý¼º");
+	}	
 
 }
+

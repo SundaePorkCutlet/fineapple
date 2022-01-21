@@ -307,7 +307,7 @@ public class CommunityRestController {
 		
 		BlackList blackList = new BlackList();
 		
-		User user = (User)request.getSession(true).getAttribute("user");
+		User user = new User();
 		
 		user.setUserId(jsonObject.get("blackUserId").toString());
 		

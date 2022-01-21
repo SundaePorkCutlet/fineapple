@@ -16,7 +16,7 @@
 										<div class="card-body d-flex flex-center flex-column p-9">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-65px symbol-circle mb-5">
-												<img src="/good/assets/media//avatars/150-1.jpg" alt="image">
+												<img th:if ="${session.user != null}" th:src ="@{../assets/profile/}+${session.user.userImg}" alt=""/>
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Name-->
@@ -53,19 +53,7 @@
 											
 											
 											
-											
-											<!--begin::Follow-->
-											<a href="#" class="btn btn-sm btn-light" th:onClick ="javascript:fnGetUser()">
-											<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-											<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-													<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-												</svg>
-											</span>
-											<!--end::Svg Icon-->Follow</a>
-											<!--end::Follow-->
-											
+									
 											
 											
 											<!--begin::Follow-->
@@ -111,19 +99,7 @@
 											<!--end::Follow-->
 											
 											
-											
-											<!--begin::Follow-->
-											<a href="#" class="btn btn-sm btn-light" th:onClick ="javascript:fnGetUser()">
-											<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-											<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-													<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-												</svg>
-											</span>
-											<!--end::Svg Icon-->Mute</a>
-											<!--end::Follow-->
-											
+									
 											
 											
 											

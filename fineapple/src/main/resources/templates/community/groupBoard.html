@@ -21,7 +21,7 @@
 										<div class="card-header justify-content-start align-items-center pt-4">
 											<!--begin::Photo-->
 											<div class="symbol symbol-45px me-5">
-												<img src="/good/assets/media/avatars/300-3.jpg" class="" alt="">
+												<img th:if ="${session.user != null}" th:src ="@{../assets/profile/}+${session.user.userImg}" alt=""/>
 											</div>
 											<!--end::Photo-->
 											<span class="text-gray-400 fw-bold fs-6" th:text = "${session.user.userName}"></span>
@@ -70,7 +70,7 @@
 												<div class="d-flex align-items-center">
 													<!--begin::Avatar-->
 													<div class="symbol symbol-50px me-5">
-														<img src="/good/assets/media/avatars/300-4.jpg" class="" alt="">
+														<img th:if ="${session.user != null}" th:src ="@{../assets/profile/}+${session.user.userImg}" alt=""/>
 													</div>
 													<!--end::Avatar-->
 													<!--begin::Info-->
@@ -205,7 +205,7 @@
 														<div th:each="dataa :${data.cmnt}" class="d-flex pt-6">
 															<!--begin::Avatar-->
 															<div class="symbol symbol-45px me-5">
-																<img src="/good/assets/media/avatars/300-2.jpg" alt="">
+																<img th:if ="${session.user != null}" th:src ="@{../assets/profile/}+${session.user.userImg}">
 															</div>
 															<!--end::Avatar-->
 															<!--begin::Wrapper-->
