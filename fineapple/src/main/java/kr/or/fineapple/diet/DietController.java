@@ -322,6 +322,12 @@ public class DietController {
 		User user = (User) request.getSession(true).getAttribute("user");
 		System.out.println(user);
 		
+		DietServ serv2 = new DietServ();
+		
+		
+		serv2 = dietService.getDietService(user.getUserId());
+		serv.setUserServiceNo(serv2.getUserServiceNo());
+		
 		String userId = user.getUserId();
 		serv.setUserId(userId);
 

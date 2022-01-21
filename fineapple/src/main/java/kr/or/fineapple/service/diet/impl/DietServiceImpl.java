@@ -64,8 +64,9 @@ public class DietServiceImpl implements DietService{
 	@Override
 	public int updateDietService(DietServ diet) throws Exception {
 				dietMapper.updateBodyInfo(diet);
-				dietMapper.updateDietServiceNo(diet);
-		return dietMapper.updateDietService(diet);
+				dietMapper.updateDietService(diet);
+				return	dietMapper.updateDietServiceNo(diet);
+		 
 	}
 
 
