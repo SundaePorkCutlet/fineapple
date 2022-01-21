@@ -2,416 +2,406 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 
-	<!-- 怨듯넻 header -->
-	<th:block th:replace="layout/fragments/header.html :: header"></th:block>
+<!-- 怨듯넻 header -->
+<th:block th:replace="layout/fragments/header.html :: header"></th:block>
 
 <style>
-.scrolltop2 {
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    position: fixed;
-    top: 60px;
-    right: 30px;
-    opacity:0.5;
+    .scrolltop2 {
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        position: fixed;
+        top: 60px;
+        right: 30px;
+        opacity: 0.5;
 
 
-}
-.button,i {
-    line-height: 1;
-    font-size: 3rem;
-    color: #eeb239;
- 
-}
+    }
 
-td.contents { display: inline-block; width: 100px; overflow: hidden;   display:-webkit-box; text-overflow: ellipsis;-webkit-box-orient: vertical;   -webkit-line-clamp: 2; }
+    .button, i {
+        line-height: 1;
+        font-size: 3rem;
+        color: #eeb239;
 
-.card .card-body {
-    padding: 0;
-}
-.card .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    flex-wrap: wrap;
-    min-height: 70px;
-    padding: 0 1rem;
-    background-color: transparent;
-    border-bottom: 1px dashed #e8e5dd;
-}
+    }
 
- .bdg{ 
- 	width:5%; 
- 	height:5%; 
+    td.contents {
+        display: inline-block;
+        width: 100px;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
 
- } 
- @media(max-width:991.98px){
- .bdg{ 
- 	width:10%; 
- 	height:10%;} 
- 	 .layer {
+    .card .card-body {
+        padding: 0;
+    }
+
+    .card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        flex-wrap: wrap;
+        min-height: 70px;
+        padding: 0 1rem;
+        background-color: transparent;
+        border-bottom: 1px dashed #e8e5dd;
+    }
+
+    .bdg {
+        width: 5%;
+        height: 5%;
+
+    }
+
+    @media (max-width: 991.98px) {
+        .bdg {
+            width: 10%;
+            height: 10%;
+        }
+
+        .layer {
             position: absolute;
             text-align: center;
-		}
- 
+        }
 
- } 
 
-@media (max-width: 991.98px) {
-    .row>* {
-    width:30%;
-    height:10%;}
-}
+    }
 
-  .card shadow-sm {
-    width:80%;
-    height:100%;}
+    @media (max-width: 991.98px) {
+        .row > * {
+            width: 30%;
+            height: 10%;
+        }
+    }
 
-@media (max-width: 991.98px) {
     .card shadow-sm {
-    width:40%;
-    height:50%;}
-}
+        width: 80%;
+        height: 100%;
+    }
 
-@media (max-width: 767.98px) {
-    .col-lg-4 {display:none}
-}
-@media (max-width: 767.98px) {
-.fs-1 {
-    font-size: calc(2.3rem + .6vw)!important;
-}
-}
+    @media (max-width: 991.98px) {
+        .card shadow-sm {
+            width: 40%;
+            height: 50%;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .col-lg-4 {
+            display: none
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .fs-1 {
+            font-size: calc(2.3rem + .6vw) !important;
+        }
+    }
 </style>
-	<!--begin::Body-->
-	<body id="kt_body" class="aside-enabled">
-		<!-- 怨듯넻 SideBar -->
-		<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
+<!--begin::Body-->
+<body id="kt_body" class="aside-enabled">
+<!-- 怨듯넻 SideBar -->
+<th:block th:replace="layout/fragments/sidebar.html :: sidebar"></th:block>
 
-      <div th:if="${session.user}!=null" id="alarm_button" class="scrolltop2">
-        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-<button type="button"  class="btn btn-success">
-              <span id="count" th:attr="data-session=${session.user}" style="position:absolute;top: -5px;right: -25px;" class="badge badge-square badge-danger"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"></path>
-</svg>
-
-                
-              </button>
-    </div>
+<div th:if="${session.user}!=null" id="alarm_button" class="scrolltop2">
+    <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+    <button type="button" class="btn btn-success">
+        <span id="count" th:attr="data-session=${session.user}" style="position:absolute;top: -5px;right: -25px;" class="badge badge-square badge-danger"></span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"></path>
+        </svg>
 
 
+    </button>
+</div>
 
-		<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-			<div id="kt_content_container" class="container-fluid">
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div id="kt_content_container" class="container-fluid">
 				<span id="kt_typedjs_example_1" class="fs-1 fw-bolder">
 				
 				</span>
-				<br>
-				<br>
-				
-				  <div>
-  <img class="bdg" src="../assets/img/diet.png" >&nbsp;&nbsp;
-  <img class="bdg"  src="../assets/img/exer.png" >&nbsp;&nbsp;
-  <img class="bdg"  src="../assets/img/water.png" >&nbsp;&nbsp;
-  <img class="bdg"  src="../assets/img/habbit.png" >&nbsp;&nbsp;
-  <img class="bdg"  src="../assets/img/battle.png" >&nbsp;&nbsp;
-  <img class="bdg"  src="../assets/img/group.png" >
-  </div>
-				<br>
-				<br>
-				  <br><br>
-				<br>
-				  <br>
-				<br>
-				<br>
-  <div class="row">
-    <div class="col-lg-4">
-    
-  <div align="center"class="card shadow-sm" >
-    <div class="card-header">
+        <br>
+        <br>
 
-        <h4 class="card-title" style="font-weight:bold;">내가 제일 많이 섭취한 식품</h4>
-       
-    </div>
-    <div class="card-body card-scroll h-200px">
-       <table class="table table-striped gy-7 gs-7">
-    <thead>
-        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-			<th>번호</th>
-            <th>식품명</th>
-            <th>섭취횟수</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr  th:each="data, i : ${list2}">
-            <td th:text="${i.count}"></td>
-            <td ><a href="#" class="foodCd" th:attr="data-foodCd=${data.food.foodCd}" th:text="${data.food.foodName}" th:onclick="|javascript:getFood()|"></a></td>
-            <td th:text="${data.count}"></td>
-        </tr>
-    </tbody>
-</table>
-    </div>
-   
-</div>
-  </div>
-  
-  <div class="col-lg-4"> 
-      <div class="card shadow-sm" style="height:100%;" >
-    <div class="card-header">
-        <h4 class="card-title" style="font-weight:bold;" th:text="|추천운동영상 : ${exer.exerName}|" ></h4>
-          <div class="card-toolbar">
-           <th:block th:if="${session.user}!=null">
-            <button type="button" class="btn btn-sm btn-light" th:attr="data-exerNo=${exer.exerNo}">
-                상세정보
-            </button>
-        	</th:block>
+        <div>
+            <img class="bdg" src="../assets/img/diet.png">&nbsp;&nbsp; <img class="bdg" src="../assets/img/exer.png">&nbsp;&nbsp;
+            <img class="bdg" src="../assets/img/water.png">&nbsp;&nbsp; <img class="bdg" src="../assets/img/habbit.png">&nbsp;&nbsp;
+            <img class="bdg" src="../assets/img/battle.png">&nbsp;&nbsp; <img class="bdg" src="../assets/img/group.png">
         </div>
-    </div>
-    <div class="card-body">
-        <iframe  height="100%" width="100%"
-               th:src=${exer.exerLink}
-               frameborder="0" ></iframe>
-    </div>
-    </div>
-</div>
- <div class="col-lg-4"> 
-      <div class="card shadow-sm"  >
-    <div class="card-header">
-        <h4 class="card-title" style="font-weight:bold;"  >게시판 최근글</h4>
-        <div class="card-toolbar">
+        <br>
+        <br>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-4">
+
+                <div align="center" class="card shadow-sm">
+                    <div class="card-header">
+
+                        <h4 class="card-title" style="font-weight:bold;">내가 제일 많이 섭취한 식품</h4>
+
+                    </div>
+                    <div class="card-body card-scroll h-200px">
+                        <table class="table table-striped gy-7 gs-7">
+                            <thead>
+                            <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                <th>번호</th>
+                                <th>식품명</th>
+                                <th>섭취횟수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="data, i : ${list2}">
+                                <td th:text="${i.count}"></td>
+                                <td>
+                                    <a href="#" class="foodCd" th:attr="data-foodCd=${data.food.foodCd}" th:text="${data.food.foodName}" th:onclick="|javascript:getFood()|"></a>
+                                </td>
+                                <td th:text="${data.count}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm" style="height:100%;">
+                    <div class="card-header">
+                        <h4 class="card-title" style="font-weight:bold;" th:text="|추천운동영상 : ${exer.exerName}|"></h4>
+                        <div class="card-toolbar">
+                            <th:block th:if="${session.user}!=null">
+                                <button type="button" class="btn btn-sm btn-light" th:attr="data-exerNo=${exer.exerNo}">
+                                    상세정보
+                                </button>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <iframe height="100%" width="100%" th:src=${exer.exerLink} frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h4 class="card-title" style="font-weight:bold;">게시판 최근글</h4>
+                        <div class="card-toolbar"></div>
+                    </div>
+                    <div class="card-body card-scroll h-200px">
+                        <table class="table table-striped gy-7 gs-7">
+                            <thead>
+                            <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>내용</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="data, i : ${list3}">
+                                <td th:text="${i.count}"></td>
+                                <td>
+                                    <a href="#" class="postNo" th:attr="data-postNo=${data.postNo}" th:text="${data.title}" th:onclick="|javascript:getPost()|"></a>
+                                </td>
+                                <td class="contents" th:text="${data.content}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-      <div class="card-body card-scroll h-200px">
-       <table class="table table-striped gy-7 gs-7">
-    <thead>
-        <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
-			<th>번호</th>
-            <th>제목</th>
-            <th>내용</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr  th:each="data, i : ${list3}">
-            <td th:text="${i.count}"></td>
-            <td ><a href="#" class="postNo" th:attr="data-postNo=${data.postNo}" th:text = "${data.title}" th:onclick="|javascript:getPost()|"></a></td>
-            <td class="contents" th:text = "${data.content}"></td>
-        </tr>
-    </tbody>
-</table>
-    </div>
+
     </div>
 </div>
-      </div>
 
-			</div>
-		</div>
+<div id="loginModalHolder" style="width:200px;"></div>
+<div id="dModalHolder"></div>
+<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
 
-		<div id="loginModalHolder" style="width:200px;"></div>
-		   <div id="dModalHolder"></div>
-		<th:block th:replace="layout/fragments/footer.html :: footer"></th:block>
+<script>
+    var hostUrl = "assets/";
 
-		<script>
-            var hostUrl = "assets/";
+    function timer() {
+        popWin = window.open("../exer/exerIndex", "popWin", "left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+    }
 
-            function timer(){
-                popWin = window.open("../exer/exerIndex","popWin","left=300, top=200, width=800, height=600, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+    var typed = new Typed("#kt_typedjs_example_1", {
+
+        strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리하자.", "정보를 공유하자.", "FineApple"],
+        typeSpeed: 50
+    });
+
+    function listroutine() {
+        popWin = window.open("../exer/getRoutineList", "popWin", "left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+
+
+    }
+
+    function listcart() {
+        popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+    }
+
+
+    //마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+
+    $("#alarm_button").on("click", function () {
+        /*  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+          alarm_button.onmouseup = function() {
+            document.removeEventListener('mousemove', onMouseMove);
+            alarm_button.onmouseup = null;
+          };
+
+        //마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+        alarm_button.ondragstart = function() {
+          return false;
+        };
+
+         $(".bi.bi-bell-fill").on("mousedown", function () {
+
+             //좌표값
+                  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
+                  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
+
+                  alarm_button.style.position = 'absolute';
+                  alarm_button.style.zIndex = 1000;
+                  document.body.append(alarm_button);
+
+                  moveAt(event.pageX, event.pageY);
+
+
+                  function moveAt(pageX, pageY) {
+                      alarm_button.style.left = pageX - shiftX + 'px';
+                      alarm_button.style.top = pageY - shiftY + 'px';
+                  }
+
+                  function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+                  }
+
+                  // mousemove로 알림 움직이게 하고
+                  document.addEventListener('mousemove', onMouseMove);
+
+                  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
+                  alarm_button.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    alarm_button.onmouseup = null;
+                  };
+
+
+                //마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
+                alarm_button.ondragstart = function() {
+                  return false;
+                };
+                })  */
+
+
+        $.ajax({
+            url: "../diet/getAlarm",
+            success: function (data) {
+
+                $("#dModalHolder").html(data);
+                $("#getalarm").modal("show");
+            }
+        });
+    });
+
+
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/firebase-messaging-sw.js");
+        });
+    }
+
+    $(document).ready(function () {
+
+        messaging.onMessage(function(payload){
+            console.log('onMessage: ', payload);
+            console.log('onMessage: ', payload.notification);
+            var title = "FineApple";
+            var options = {
+                body: payload.notification.body
+            };
+
+            var notification = new Notification(title, options);
+        });
+
+        $.ajax({
+            url: "../diet/rest/getAlarmCount",
+            success: function (data) {
+                var Count = data;
+
+                $("#count").text(Count);
             }
 
-		    var typed = new Typed("#kt_typedjs_example_1", {
 
-			    strings: ["칼로리를 알고 먹자.", "정보를 알고 운동하자.", "습관도 관리하자.", "정보를 공유하자.","FineApple"],
-			    typeSpeed: 50
-			});
-		    function listroutine(){
-		        popWin = window.open("../exer/getRoutineList","popWin","left=300, top=200, width=800, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-		       	        
-		        
-		   }  
-		    function listcart() {
-	            popWin = window.open("../diet/getFavMealList", "popWin", "left=300, top=200, width=600, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-	        }
-		   
-	     
-		    
-		   
-		    	
-		    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
-		    	
-			        $("#alarm_button").on("click", function () {
-			        	/*  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
-				    	  alarm_button.onmouseup = function() {
-				    	    document.removeEventListener('mousemove', onMouseMove);
-				    	    alarm_button.onmouseup = null;
-				    	  };
+        });
+    })
 
-			        	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
-				    	alarm_button.ondragstart = function() {
-				    	  return false;
-				    	};  
-				    	
-			        	 $(".bi.bi-bell-fill").on("mousedown", function () {
-	        
-			        		 //좌표값
-						    	  let shiftX = event.clientX - alarm_button.getBoundingClientRect().left;
-						    	  let shiftY = event.clientY - alarm_button.getBoundingClientRect().top;
 
-						    	  alarm_button.style.position = 'absolute';
-						    	  alarm_button.style.zIndex = 1000;
-						    	  document.body.append(alarm_button);
+    function getFood() {
 
-						    	  moveAt(event.pageX, event.pageY);
+        self.location = "../diet/getFood?foodCd=" + $(".foodCd").attr("data-foodCd");
+    }
 
-						    	
-						    	  function moveAt(pageX, pageY) {
-						    		  alarm_button.style.left = pageX - shiftX + 'px';
-						    		  alarm_button.style.top = pageY - shiftY + 'px';
-						    	  }
+    $(function () {
+        $(".btn.btn-sm.btn-light").on("click", function () {
 
-						    	  function onMouseMove(event) {
-						    	    moveAt(event.pageX, event.pageY);
-						    	  }
-
-						    	  // mousemove로 알림 움직이게 하고
-						    	  document.addEventListener('mousemove', onMouseMove);
-
-						    	  // 알림을 드롭하고, 불필요한 핸들러를 제거하는 함수임
-						    	  alarm_button.onmouseup = function() {
-						    	    document.removeEventListener('mousemove', onMouseMove);
-						    	    alarm_button.onmouseup = null;
-						    	  };
-
-						    	
-						    	//마우스 그만 따라오게 하는거 false로 해놔야 클릭했을때 멈춤
-						    	alarm_button.ondragstart = function() {
-						    	  return false;
-						    	};  
-						    	})  */
-						    	
-					      
-			            $.ajax({
-			                url: "../diet/getAlarm",
-			                success: function (data) {
-			                	
-			                    $("#dModalHolder").html(data);
-			                    $("#getalarm").modal("show");
-			                }
-			            });
-			        });
-			        
-			    
-		    
-			    
-		    $(document).ready(function () {
-		    	
-		    	$.ajax({
-		    		url: "../diet/rest/getAlarmCount",
-		    		success:function(data){
-		    			var Count = data;
-		    		
-		    			$("#count").text(Count);
-		    		}
-		    		
-		    		
-		    	});
-		    })
-		    
-		    
-		    if ("serviceWorker" in navigator) {
-    	window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/firebase-messaging-sw.js");
+            self.location = "../exer/getExer?exerNo=" + $(this).attr("data-exerNo");
+        })
     });
-}
-		    
-		    function getFood(){
-		    	
-		    	self.location="../diet/getFood?foodCd="+$(".foodCd").attr("data-foodCd");
-		    }
-		    
-		    $(function () {
-		        $(".btn.btn-sm.btn-light").on("click", function () {
-					
-		        self.location="../exer/getExer?exerNo="+$(this).attr("data-exerNo");
-		        })
-		    });
-		    
-		    function getPost(){
-		    	
-		    	self.location="../community/getPost?postNo="+$(".postNo").attr("data-postNo");
-		    	
-		    	
-		    }	
-		
-		    	
-		 </script>
-	
-	
-	<script type="module">
- // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-mLj16sn2IKg1NgpaYMayKicZqudslfE",
-    authDomain: "fineapple-67f2b.firebaseapp.com",
-    projectId: "fineapple-67f2b",
-    storageBucket: "fineapple-67f2b.appspot.com",
-    messagingSenderId: "950462114300",
-    appId: "1:950462114300:web:a762042fe15befa82b6a79",
-    measurementId: "G-KNDQ1YY7JY"
-  };
+    function getPost() {
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-			console.log("FCM INIT DONE");
+        self.location = "../community/getPost?postNo=" + $(".postNo").attr("data-postNo");
 
 
+    }
 
 
+</script>
 
-			
-		import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-messaging.js";
+<h1 id="order"></h1>
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyB-mLj16sn2IKg1NgpaYMayKicZqudslfE",
+        authDomain: "fineapple-67f2b.firebaseapp.com",
+        projectId: "fineapple-67f2b",
+        storageBucket: "fineapple-67f2b.appspot.com",
+        messagingSenderId: "950462114300",
+        appId: "1:950462114300:web:a762042fe15befa82b6a79",
+        measurementId: "G-KNDQ1YY7JY"
+    };
+    firebase.initializeApp(config);
 
-// Get registration token. Initially this makes a network call, once retrieved
-// subsequent calls to getToken will return from cache.
-const messaging = getMessaging();
-getToken(messaging, { vapidKey:'BD_JdwaMgwVf9JvHLKV6Nsv8dRhsPXMQFrXbYDgsY24HU2gWRvTw5XmYPPDyLYKZd42rvpx4quN_EcAySoX5JLo'}).then((currentToken) => {
-	var currentToken = currentToken;
-	//console.log(currentToken);
- if (currentToken) {
-    // Send the token to your server and update the UI if necessary
-    // ...
+    const messaging = firebase.messaging();
 
-		$.ajax({
-	    		url: "../diet/rest/addAlarm?tokenId="+currentToken,
-	    		success:function(data){
-	    			
-	    		}
-	    		
-	    		
-	    	});
+    //token값 알아내기
+    messaging.requestPermission()
+        .then(function(){
+            console.log("Have permission");
+            return messaging.getToken();
+        })
+        .then(function(token){
+            console.log(token);
+        })
+        .catch(function(arr){
+            console.log("Error Occured");
+        });
 
 
+</script>
 
-
-  } else {
-    // Show permission request UI
-    console.log('No registration token available. Request permission to generate one.');
-    // ...
-  }
-}).catch((err) => {
-  console.log('An error occurred while retrieving token. ', err);
-  // ...
-});
-
-	</script>
-		 
-		 
-	</body>
-	<!--end::Body-->
+</body>
+<!--end::Body-->
 </html>
