@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,16 +230,16 @@ public class UserRestController {
 	public JavaMailSender emailSender;
 	
 	@RequestMapping(value="/sendMail")
-	public String SendMail(@RequestBody User user, HttpSession session) {
-		SimpleMailMessage message =  new SimpleMailMessage();
-		
+	public String SendMail(@RequestBody User user, HttpSession session) throws Exception{
+		//SimpleMailMessage message =  new SimpleMailMessage();
+		MimeMessage message = emailSender.createMimeMessage();
 		System.out.println("email 전송 시작");
 		
 		Random random  = new Random();
 		String key ="";
 		
 		System.out.println(user.getUserId());
-		message.setTo(user.getUserId());
+		message.addRecipients(RecipientType.TO,user.getUserId());
 		System.out.println(message);
 		for(int i =0; i<3;i++) {
 			int index=random.nextInt(25)+65; 
@@ -245,9 +247,16 @@ public class UserRestController {
 		}
 		int numIndex=random.nextInt(9999)+1000; 
 		key+=numIndex;
+		
+		String msg;
+		msg="";
+		msg+="<p align =\"center\"><img alt=\"Logo\" src=\"https://fineapple.or.kr/assets/img/banner.png\" style=\"height:150px\"class=\"ban\"></p>";
+		msg+="<p align=\"center\" style=\"text-align: center; \">FineApple에 가입해주셔서 감사합니다.&nbsp;</p><p align=\"center\" style=\"text-align: center; \">아래 번호를 입력해 인증완료 해주세요.</p><p style=\"text-align: center; \" align=\"center\">감사합니다.&nbsp;</p><br><br>\r\n";
+		msg+="<div align=\"center\"style=\"font-weight:bold;\">"+key+"</div>";
+		
 		System.out.println("여기까지 왔니");
 		message.setSubject("[FineApple] 이메일 인증번호");
-		message.setText("Fineapple에서 전송된 인증번호 : "+key);
+		message.setText(msg,"utf-8","html");
 		System.out.println("마지막 메세지: " + message);
 		emailSender.send(message);
         return key;
