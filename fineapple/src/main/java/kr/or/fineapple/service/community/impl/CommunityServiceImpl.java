@@ -253,10 +253,22 @@ public class CommunityServiceImpl implements CommunityService {
 	//블랙리스트
 	@Override
 	public void addUserBlc(User userId) {
-	
+		
+		Alarm alarm = new Alarm();
+		
+		alarm.setAlarmCntnt("블랙리스트에 추가 되었습니다.");
+		alarm.setAlarmTitle("블랙리스트");
+		
+		alarm.setUser(userId);
+		
+		System.out.println(alarm+"서어비스");
+		
+		communityMapper.addAlarm(alarm);
+		
 		communityMapper.addUserBlc(userId);
 		
 	}
+	
 
 	//신고처리 완료
 	@Override
@@ -304,7 +316,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Battle> getMybattleInter(Battle battle) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getMybattleInter(battle);
 	}
 
@@ -429,48 +441,7 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	
 

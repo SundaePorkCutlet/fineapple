@@ -215,6 +215,8 @@
 	)
 	</insert>
 	
+
+	
 	<!-- //////////////////////////////////////////////////////// -->
 
 	<select id="getPostList" resultMap="boardMap">
@@ -602,7 +604,6 @@
 		(
 		seq_alarm_alarm_no.NEXTVAL,
 		#{user.userId},
-		#{otherUser.userId:VARCHAR},
 		#{alarmTitle},
 		#{alarmCntnt},
 		SYSDATE

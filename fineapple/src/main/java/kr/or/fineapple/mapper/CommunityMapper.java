@@ -139,6 +139,7 @@ public interface CommunityMapper {
 	
 	public List<Battle> getMyBattleList(User user);
 	
+	public void addAlarm(Alarm alarm);
 
 	
 	
