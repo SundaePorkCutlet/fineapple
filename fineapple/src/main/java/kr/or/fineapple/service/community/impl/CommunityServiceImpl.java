@@ -22,8 +22,6 @@ import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
 
-
-
 @Service
 public class CommunityServiceImpl implements CommunityService {
 	
@@ -42,6 +40,7 @@ public class CommunityServiceImpl implements CommunityService {
 			map.put("postNo", board.getPostNo() + "");
 			map.put("time", time);
 			communityMapper.addPostImg(map);
+			
 		}
 	}
 
@@ -57,7 +56,14 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Board> getPostList() {
-		return communityMapper.getPostList();
+		List<Board> list = communityMapper.getPostList();
+		
+		for (Board board : list) {
+			board.setImg(communityMapper.getPostImg(board.getPostNo()));
+		}
+		
+		return list;
+		
 	}
 	
 	@Override
@@ -247,10 +253,22 @@ public class CommunityServiceImpl implements CommunityService {
 	//블랙리스트
 	@Override
 	public void addUserBlc(User userId) {
-	
+		
+		Alarm alarm = new Alarm();
+		
+		alarm.setAlarmCntnt("블랙리스트에 추가 되었습니다.");
+		alarm.setAlarmTitle("블랙리스트");
+		
+		alarm.setUser(userId);
+		
+		System.out.println(alarm+"서어비스");
+		
+		communityMapper.addAlarm(alarm);
+		
 		communityMapper.addUserBlc(userId);
 		
 	}
+	
 
 	//신고처리 완료
 	@Override
@@ -294,12 +312,11 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.addBattleInter(battle);
 		
 		
-		
 	}
 
 	@Override
 	public List<Battle> getMybattleInter(Battle battle) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getMybattleInter(battle);
 	}
 
@@ -374,8 +391,6 @@ public class CommunityServiceImpl implements CommunityService {
 			System.out.println(groupBorad2);
 		}
 		
-		
-		
 		return list;
 	}
 
@@ -401,7 +416,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public Battle getBattle(Battle battle) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getBattle(battle);
 	}
 
@@ -419,55 +434,14 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Battle> getMyBattleList(User user) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getMyBattleList(user);
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	
 

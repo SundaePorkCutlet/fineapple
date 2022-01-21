@@ -139,7 +139,16 @@ th, td {
 													<tbody>	
 												<tr th:each = "data , i: ${list}" class="py-5 fw-bolder  border-bottom  border-gray-400 fs-4" >
 													<td th:text = "${i.count}"></td>
-												 	<td ><img src="../assets/img/exer_silver_badge.png" style="max-width:60px;max-height:60px;"></td>
+												 	<td >
+												 	<div th:if = "${data.img.size()} != 0">
+												 	<div th:each = "dataa : ${data.img}">
+												 		<img  th:src="@{../assets/community/}+${dataa.imgName}" style= "max-width:60px;max-height:60px;">
+												 	</div>
+												 	</div>
+												 	<div th:if = "${data.img.size()} == 0">
+												 	<img src="../assets/img/exer_silver_badge.png" style="max-width:60px;max-height:60px;">
+												 	</div>
+												 	</td>
 													<td  th:text = "${data.title}"></td>
 													<td>
 														<a th:href="@{/community/getPost(postNo=${data.postNo})}" class="content" th:text = "${data.content}"></a>

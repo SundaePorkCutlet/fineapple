@@ -18,17 +18,6 @@
         <div class="table-responsive">
             <!--begin::Table-->
 
-            <!--begin::Follow-->
-            <a href="#" class="btn btn-sm btn-light" th:onClick="javascript:fcAddGroupView()">
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                <span class="svg-icon svg-icon-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-								</svg>
-							</span>
-                <!--end::Svg Icon-->승부생성</a>
-            <!--end::Follow-->
 
 
             <!--begin::Follow-->
@@ -77,29 +66,45 @@
     <div id="kt_content_container" class="container-fluid">
 
         <div class="d-flex flex-wrap flex-stack mb-6 mt-4">
-            <h3 class="fw-bolder my-2" th:text = "||"></h3>
+            <h3 class="fw-bolder my-2"></h3>
         </div>
 
         <div class="row g-6 mb-6 g-xl-9 mb-xl-9 col-sm-12 col-xl-10">
             <div class="col">
                 <div class="card p-0">
+                	<th:block th:if = "${battle.battleStt} ==2">
                     <div class="btn-sm battle-progress">진행중</div>
-                    <!--                    <div class="btn-sm battle-win">승리</div>-->
-                    <!--                    <div class="btn-sm battle-lose">패배</div>-->
+                    </th:block>
+                    <th:block th:if = "${battle.battleStt} ==3">
+                    <div class="btn-sm battle-progress">승부종료</div>
+                    </th:block>
+                    <th:block th:if = "${battle.battleResultCate}==1">
+                    <div class="btn-sm battle-win">승리</div>
+                    </th:block>
+                    <th:block th:if = "${battle.battleResultCate}==3">
+                    <div class="btn-sm battle-lose">패배</div>
+                    </th:block>
+                                  
+                                   
                     <div class="card-body">
                         <div class="row mb-8">
                             <div class="col-xl-12">
                                 <div class="d-flex flex-center flex-wrap mb-5">
                                     <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-                                        <div class="fs-6 fw-bolder text-gray-700">칼로리 섭취</div>
+                                    	<th:block th:if = "${battle.battleItemCate} == 1">
+                                    	<div  class="fs-6 fw-bolder text-gray-700" >칼로리 소모</div>
+                                    	</th:block>
+                                        <th:block  th:if = "${battle.battleItemCate} == 2">
+                                    	<div class="fs-6 fw-bolder text-gray-700">칼로리 섭취</div>
+                                    	</th:block>
                                         <div class="fw-bold text-gray-400">승부 유형</div>
                                     </div>
                                     <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-                                        <div class="fs-6 fw-bolder text-gray-700">10일</div>
+                                        <div class="fs-6 fw-bolder text-gray-700" th:text="|${battle.battlePeriod}일|"></div>
                                         <div class="fw-bold text-gray-400">승부 기간</div>
                                     </div>
                                     <div class="border border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3">
-                                        <div class="fs-6 fw-bolder text-gray-700">2022-01-11 ~ 2022-01-21</div>
+                                        <div class="fs-6 fw-bolder text-gray-700" th:text = "|${battle.battleStartDate} ~ ${battle.battleEndDate}|"></div>
                                         <div class="fw-bold text-gray-400">승부 기간</div>
                                     </div>
                                 </div>
@@ -107,36 +112,36 @@
                             <div class="col-xl-12">
                                 <div class="d-flex flex-column mt-5 mb-5">
                                     <div class="d-flex justify-content-between w-100 fs-4 fw-bolder mb-3">
-                                        <span class="mt-auto mb-auto">나의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green">1000</span>Kcal</span>
+                                        <span class="mt-auto mb-auto">나의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green" th:text = "|${battle.userTrgtKcal}Kcal|"></span></span>
                                         <div>
-                                            <span>2 / 10</span>
+                                            <span th:text = "|${battle.userScore} / ${battle.battlePeriod}|"></span>
                                             <div class="fs-10 opacity-50">성공 / 전체</div>
                                         </div>
                                     </div>
-                                    <div class="h-8px bg-light rounded mb-3">
-                                        <div class="bg-success rounded h-8px" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                    <!-- <div class="h-8px bg-light rounded mb-3">
+                                       <div class="bg-success rounded h-8px" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div> -->
                                     <!--                                    <div class="fw-bold text-gray-600">14 Targets are remaining</div>-->
                                 </div>
                             </div>
                             <div class="col-xl-12">
                                 <div class="d-flex flex-column mt-5 mb-5">
                                     <div class="d-flex justify-content-between w-100 fs-4 fw-bolder mb-3">
-                                        <span class="mt-auto mb-auto">상대의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green">500</span>Kcal</span>
+                                        <span class="mt-auto mb-auto">상대의 하루 섭취 칼로리 목표: <span class="comma-3 text-color-green" th:text = "|${battle.rivalTrgtKcal}Kcal|"></span></span>
                                         <div>
-                                            <span>4 / 10</span>
+                                            <span th:text = "|${battle.rivalUserScore} / ${battle.battlePeriod}|"></span>
                                             <div class="fs-10 opacity-50">성공 / 전체</div>
                                         </div>
                                     </div>
-                                    <div class="h-8px bg-light rounded mb-3">
+                                    <!-- <div class="h-8px bg-light rounded mb-3">
                                         <div class="bg-success rounded h-8px" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                    </div> -->
                                     <!--                                    <div class="fw-bold text-gray-600">14 Targets are remaining</div>-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-end py-6">
+                    <div class="card-footer d-flex justify-content-end py-6" th:if = "${battle.battleStt} == 2">
                         <button type="reset" class="btn btn-light btn-active-light-danger me-2 btn-surrender">기권하기</button>
                     </div>
                 </div>
@@ -186,6 +191,7 @@
                 if (result.isConfirmed) {
                     // 예 클릭
                     swalWithBootstrapButtons.fire(
+                    	
                         '승부에서 패배하셨습니다.',
                         '',
                         'warning'
@@ -198,20 +204,6 @@
         })
     });
 
-    function fcAddGroupView(no, cateNo) {
-        console.log("안녕");
-        $.ajax({
-            url: "/community/addBattleView", //url : 요청 Url
-            type: "POST", //type : 데이터를 전송하는 방법 (get, post)
-            dataType: "html", //서버측에서 전송받은 데이터의 형식 (default : xml, json, script, text, html) //=> default는 html
-            contentType: "text/html", // 서버에 보내는 데이터의 타입이다.
-            success: function (data) { //  요청이 성공 했을 때 호출할 콜백 함수
-                console.log("성공" + data);
-                $("#mmodalHolder").html(data);
-                $("#addBattleViewModal").modal("show");
-            }
-        })
-    };
 
     function addComma() {
         if ($(".comma-3").length > 0) {
