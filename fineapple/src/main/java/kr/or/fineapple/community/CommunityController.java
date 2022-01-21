@@ -426,13 +426,16 @@ public class CommunityController {
 	@GetMapping("getBattleView")
 	public String getBattleView(@ModelAttribute Battle battle, Model model){
 		
-		System.out.println(battle);
+		
 		
 		battle = communityService.getBattle(battle);
+		
+		System.out.println(battle);
 		
 		model.addAttribute("battle", battle);
 		
 		model.addAttribute("NavName1","½ÂºÎ");
+		
 		model.addAttribute("NavName2","½ÂºÎ¸®½ºÆ®");
 
 		return "community/getBattleView.html";

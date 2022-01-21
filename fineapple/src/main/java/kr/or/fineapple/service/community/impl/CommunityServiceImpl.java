@@ -22,8 +22,6 @@ import kr.or.fineapple.domain.community.Report;
 import kr.or.fineapple.mapper.CommunityMapper;
 import kr.or.fineapple.service.community.CommunityService;
 
-
-
 @Service
 public class CommunityServiceImpl implements CommunityService {
 	
@@ -42,6 +40,7 @@ public class CommunityServiceImpl implements CommunityService {
 			map.put("postNo", board.getPostNo() + "");
 			map.put("time", time);
 			communityMapper.addPostImg(map);
+			
 		}
 	}
 
@@ -301,7 +300,6 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.addBattleInter(battle);
 		
 		
-		
 	}
 
 	@Override
@@ -381,8 +379,6 @@ public class CommunityServiceImpl implements CommunityService {
 			System.out.println(groupBorad2);
 		}
 		
-		
-		
 		return list;
 	}
 
@@ -408,7 +404,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public Battle getBattle(Battle battle) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getBattle(battle);
 	}
 
@@ -426,7 +422,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Battle> getMyBattleList(User user) {
-		// TODO Auto-generated method stub
+		
 		return communityMapper.getMyBattleList(user);
 	}
 	
