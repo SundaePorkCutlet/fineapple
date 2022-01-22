@@ -2,6 +2,7 @@ package kr.or.fineapple.index;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,26 +125,23 @@ public class IndexController {
      		//사용자 신체 정보 테이블 가장 마지막 날짜 조회
      		LocalDate theLatestDateUserBodyInfo = diaryService.getTheLatestDateUserBodyInfo(userId);
      		//가장 마지막 날짜와 오늘 일자의 차 계산
-     		int howManyDays = Period.between(theLatestDateUserBodyInfo, today).getDays();
-     		
+     		int howManyDays = (int) ChronoUnit.DAYS.between(theLatestDateUserBodyInfo, today);
+
      		//지난 정보가 없는 경우에만 실행
      		if(howManyDays >= 1) {
-     			System.out.println(theLatestDateUserBodyInfo);
 	     		//지난 정보 업데이트
 	     		for(int i=howManyDays; i>0; i--) {
 	     			diaryService.addUserBodyInfo(userId, i);
-	     			System.out.println(i);
 	     		}
      		}
      		
      		//벳지 테이블 가장 마지막 날짜 조회
      		LocalDate theLatestDateBadge = diaryService.getTheLatestDateBadge(userId);
      		//가장 마지막 날짜와 오늘 일자의 차 계산
-     		howManyDays = Period.between(theLatestDateBadge, today).getDays();
+     		howManyDays = (int) ChronoUnit.DAYS.between(theLatestDateBadge, today);
      		
      		//지난 정보가 없는 경우에만 실행
      		if(howManyDays >= 1) {
-     			System.out.println(theLatestDateBadge);
 	     		Badge defaultBadge = new Badge();
 	     		////사용자의 서비스 활성 여부 조회하여 조건에 따라 지난 정보 업데이트
 	     		if(user.getDietServiceNo() != 0 && user.getExerServiceNo() != 0) {
@@ -154,7 +152,6 @@ public class IndexController {
 	         			defaultBadge.setDailyBurnningKcal(0.0);
 	         			defaultBadge.setDailyIntakeKcal(0.0);
 	         			diaryService.addBadge(defaultBadge);
-	         			System.out.println(defaultBadge);
 	         		}
 	     		} else if(user.getDietServiceNo() == 0 && user.getExerServiceNo() != 0) {
 	     			//식단 서비스 이용
@@ -163,7 +160,6 @@ public class IndexController {
 	         			defaultBadge.setBadgeDate(LocalDate.now().minusDays(i-1));
 	         			defaultBadge.setDailyIntakeKcal(0.0);
 	         			diaryService.addBadge(defaultBadge);
-	         			System.out.println(defaultBadge);
 	         		}
 	     		} else if(user.getDietServiceNo() != 0 && user.getExerServiceNo() == 0) {
 					//운동 서비스만 이용
@@ -172,7 +168,6 @@ public class IndexController {
 	         			defaultBadge.setBadgeDate(LocalDate.now().minusDays(i-1));
 	         			defaultBadge.setDailyBurnningKcal(0.0);
 	         			diaryService.addBadge(defaultBadge);
-	         			System.out.println(defaultBadge);
 	         		}
 	     		} else {
 					//식단, 운동 모두 이용하지 않음
@@ -180,7 +175,6 @@ public class IndexController {
 	         			defaultBadge.setUserId(userId);
 	         			defaultBadge.setBadgeDate(LocalDate.now().minusDays(i-1));
 	         			diaryService.addBadge(defaultBadge);
-	         			System.out.println(defaultBadge);
 	         		}
 	     		}
      		}
