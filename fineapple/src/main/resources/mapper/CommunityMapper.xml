@@ -147,14 +147,11 @@
 	<result property="postDate" column="post_date"/>
 	<result property="postLikeCount" column="post_like_count"/>
 	<result property="cmntCount" column="cmnt_count"/>
-
-	
 	</resultMap>
 	
 	<sql id="orderByPostNo">
 	ORDER BY post_no
 	</sql>
-	
 
 	<insert id="addPost" parameterType="board">
 		<selectKey keyProperty="postNo" resultType="int" order="AFTER">
@@ -167,7 +164,6 @@
 		GROUP_NO,
 		POST_CATE,
 		UPDATE_STT,
-		GROUP_NO,
 		TITLE, 
 		CONTENT,
 		POST_DATE
@@ -179,12 +175,6 @@
 		null,
 		#{cateName},
 		#{updateStt},
-		<if test="groupNo == 0">
-		null,
-		</if>
-		<if test="groupNo != 0">
-		group_no = #{group.groupNo},
-		</if>
 		#{title:VARCHAR},
 		#{content},
 		SYSDATE

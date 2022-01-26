@@ -119,22 +119,26 @@ public class CommunityController {
 	
 
 	@PostMapping(value = "addPost")
-	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam("mtmFile") MultipartFile[] files) throws IllegalStateException, IOException {
+	public String addPost(@ModelAttribute Board board, @ModelAttribute Group group, HttpServletRequest request,  @RequestParam(value ="mtmFile", required = false) MultipartFile[] files) throws IllegalStateException, IOException {
+		
+		
 		
 		String[] times = new String[files.length];
 		
+		System.out.println(files);
+		System.out.println(files.length+"files의 length");
+		System.out.println();
+		
 		int i = 0;
-		
-		for (MultipartFile multipartFile : files) {
-			
-			
-			System.out.println(multipartFile.getOriginalFilename());
-			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
-			multipartFile.transferTo(new File(mtmFilePath, time));
-			times[i] = time; 
-			i += 1;
+		if (!files[0].getOriginalFilename().equals("")) { // isEmpty써도 된다.
+			for (MultipartFile multipartFile : files) {
+				System.out.println(multipartFile.getOriginalFilename());
+				String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
+				multipartFile.transferTo(new File(mtmFilePath, time));
+				times[i] = time; 
+				i += 1;
+			}
 		}
-		
 		board.setUser((User)request.getSession().getAttribute("user"));
 		
 		board.setGroup(group);
@@ -639,19 +643,19 @@ public class CommunityController {
 		return "community/addblackListView :: addBlackListView";
 	}
 	
-//	@GetMapping(value = "getMtmList")
-//	public String getMtmList(Model model, HttpServletRequest request) {
-//		
-//		User user = new User();
-//		
-//		user = (User)request.getSession(true).getAttribute("user");
-//		
-//		model.addAttribute("user", user);
-//		
-//		model.addAttribute("list", communityService.getMyMtmList(user));
-//		
-//		return "community/getMtmList.html";
-//	}
+	@GetMapping(value = "getMtmList")
+	public String getMtmList(Model model, HttpServletRequest request) {
+		
+		User user = new User();
+		
+		user = (User)request.getSession(true).getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
+		model.addAttribute("list", communityService.getMyMtmList(user));
+		
+		return "community/getMtmList.html";
+	}
 	
 	@GetMapping(value = "addMtmView")
 	public String addMtm(Model model, HttpServletRequest request) {
@@ -713,21 +717,21 @@ public class CommunityController {
 		return modelAndView;
 	}
 	
-	@GetMapping("getMtmList")
-	public String getMtmList(HttpServletRequest request, Model model) {
-		
-		User user = (User)request.getSession(true).getAttribute("user");
-		
-		List<MtmQna> list = communityService.getMyMtmList(user);
-		
-		for (MtmQna mtmQna : list) {
-			System.out.println(mtmQna);
-		}
-		
-		model.addAttribute("list", list);
-		
-		return "community/getMtmList.html";
-	}
+//	@GetMapping("getMtmList")
+//	public String getMtmList(HttpServletRequest request, Model model) {
+//		
+//		User user = (User)request.getSession(true).getAttribute("user");
+//		
+//		List<MtmQna> list = communityService.getMyMtmList(user);
+//		
+//		for (MtmQna mtmQna : list) {
+//			System.out.println(mtmQna);
+//		}
+//		
+//		model.addAttribute("list", list);
+//		
+//		return "community/getMtmList.html";
+//	}
 	
 	
 	@PostMapping(value = "delPost")

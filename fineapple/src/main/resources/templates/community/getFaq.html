@@ -42,7 +42,7 @@
 							
 							
 							<!--begin::Follow-->
-							<a th:if = "${session.user.role == 'user'}" th:href="@{../community/getMyMtmList}" class="btn btn-sm btn-light">
+							<a th:if = "${session.user.role == 'user'}" th:href="@{../community/getMtmList}" class="btn btn-sm btn-light">
 							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 							<span class="svg-icon svg-icon-3">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -78,17 +78,7 @@
 							<!--end::Follow-->
 							
 							
-							<!--begin::Follow-->
-							<a th:href="@{../community/getBlackList}" class="btn btn-sm btn-light">
-							<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-							<span class="svg-icon svg-icon-3">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"></rect>
-									<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>
-								</svg>
-							</span>
-							<!--end::Svg Icon-->블랙리스트 조회(관리자)</a>
-							<!--end::Follow-->
+							
 						
 	<div align="right" class="accordion-header" th:if = "${session.user.role == 'admin'}" >
 	<button type="button" id="add" class="btn btn-success">작성하기</button>
@@ -145,7 +135,6 @@ function fncGetUserList(currentPage) {
 	   		
 	      	console.log(count)
 	      	
-	      	alert(a)
 	      	
 	      	
 	   $("form").attr("method" , "GET").attr("action" , "/community/getAddFaq").submit();

@@ -370,20 +370,24 @@ public class CommunityRestController {
 	}
 	
 	@PostMapping(value = "addGroupPost")
-	public void addGroupPost(@RequestParam("content") String str, @RequestParam("uploadFile") MultipartFile[] files, @RequestParam("groupNo") String str2, HttpServletRequest request) throws IllegalStateException, IOException {
-			String[] times = new String[files.length];
-			
+	public void addGroupPost(@RequestParam("content") String str, @RequestParam(value = "uploadFile", required = false) MultipartFile[] files, @RequestParam(value = "groupNo") String str2, HttpServletRequest request) throws IllegalStateException, IOException {
+		String[] times = null;
 		
-			
+		
+		
+		
+		if (files != null) { // Rest가 아닌 Controller에서의 files의 즉 이미지가 없을때의 처리가 다르다 그 이유는? Rest의 경우 내가 직접 form data에 담아서 넘겨준다 그래서 null이 오지만 그냥 Controller의 경우에는 nullString이 담겨져서 온다 그 이유는? 아닐수도 있고...
+			times = new String[files.length];
 			int i = 0;
-			for (MultipartFile multipartFile : files) {
-			
-			
-			System.out.println(multipartFile.getOriginalFilename());
-			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
-			multipartFile.transferTo(new File(mtmFilePath, time));
-			times[i] = time; 
-			i += 1;
+			if (!files[0].getOriginalFilename().equals("")) {
+				for (MultipartFile multipartFile : files) {
+					System.out.println(multipartFile.getOriginalFilename());
+					String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY_MM_DD_HH_mm_ss_SSS"))+multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf("."), multipartFile.getOriginalFilename().length());
+					multipartFile.transferTo(new File(mtmFilePath, time));
+					times[i] = time; 
+					i += 1;
+				}
+			}
 		}
 		System.out.println(str + "내용");
 		

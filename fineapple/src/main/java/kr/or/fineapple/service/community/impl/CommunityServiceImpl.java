@@ -35,12 +35,14 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public void addPost(Board board, String[] times) {
 		communityMapper.addPost(board);
-		for (String time : times) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("postNo", board.getPostNo() + "");
-			map.put("time", time);
-			communityMapper.addPostImg(map);
-			
+		if (times[0] != null) {		
+			for (String time : times) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("postNo", board.getPostNo() + "");
+				map.put("time", time);
+				communityMapper.addPostImg(map);
+				
+			}
 		}
 	}
 
@@ -398,13 +400,14 @@ public class CommunityServiceImpl implements CommunityService {
 	public void addGroupPost(GroupBorad groupBorad, String[] times) {
 		
 		communityMapper.addGroupPost(groupBorad);
-		for (String time : times) {
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("postNo", groupBorad.getPostNo() + "");
-			map.put("time", time);
-			communityMapper.addPostImg(map);
+		if (times != null) {
+			for (String time : times) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("postNo", groupBorad.getPostNo() + "");
+				map.put("time", time);
+				communityMapper.addPostImg(map);
+			}
 		}
-		
 		
 	}
 

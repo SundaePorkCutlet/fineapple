@@ -64,7 +64,8 @@
 									</form>
 
 										<div th:each = " data : ${list}"> 
-										<div >
+										<input type="hidden" th:value="${data.postNo}">
+										<div>
 											<div  class="card-header pt-9" >
 												<!--begin::Author-->
 												<div class="d-flex align-items-center">
@@ -153,7 +154,7 @@
 																<div>
 																	<div th:each = "dataa : ${data.img}">
 																	<div align="center">
-																		<img th:src="@{../assets/community/}+${dataa.imgName}" style="width: 30%;  height: 60%;">
+																		<img th:src="@{../assets/community/}+${dataa.imgName}" >
 																	</div>
 																	</div>
 																</div>
@@ -235,13 +236,14 @@
 												<div class="d-flex align-items-center">
 													<!--begin::Author-->
 													<div class="symbol symbol-35px me-3">
-														<img src="/good/assets/media/avatars/300-3.jpg" alt="">
+														<img th:if ="${session.user != null}" th:src ="@{../assets/profile/}+${session.user.userImg}">
 													</div>
 													<!--end::Author-->
 													<!--begin::Input group-->
 													<div class="position-relative w-100">
 														<!--begin::Input-->
-														<input type="text" class="form-control form-control-solid border ps-5" name="search" value="" data-kt-autosize="true" placeholder="Write your comment.." style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 59.9907px;"/>
+														<input type="text" id = "content"  class="form-control form-control-solid border ps-5" name="search" value="" data-kt-autosize="true" placeholder="Write your comment.." style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 59.9907px;"/>
+														<button type="button" class="btn btn-info" th:onclick="javascript:fnAddCmnt()"> 댓글작성</button>
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
@@ -343,16 +345,39 @@
                 timeout: 600000, //ajax 대기 시간
                 //async : false //true가 default, false시 동기로 처리
                 success: function (data) {
-                	alert('success');
+                	
                 	window.location.reload();
                 	
                 },
                 error: function (e) {
-                    alert('fail');
+                    
                 }
             });
         });
         });
+        
+        
+        function fnAddCmnt(){
+    		var data = {
+    				postNo : $("#postNo").val(),
+    				cmntContent : $("#content").val()
+    				};
+    		console.log(data)
+    		$.ajax({
+    			url: "/community/json/addCmnt",
+    			type: "POST",
+    			dataType: 'json',
+    			contentType: "application/json",
+    			data: JSON.stringify(data),
+    			success : (function(data){
+    				console.log(data)
+    				//$("#postNo").attr("data-cmntList", data.list);
+    				location.reload();
+    				
+    			})
+    		})
+    					
+    	}; 
         
         
         	
